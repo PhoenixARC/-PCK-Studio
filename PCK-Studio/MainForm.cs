@@ -648,7 +648,7 @@ namespace PckStudio
 				
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					SkinModelImporter.ExportBlockBenchModel(openFileDialog.FileName, model, textures);
+					GameModelImporter.Default.Export(openFileDialog.FileName, new GameModelInfo(model, textures));
 				}
 			}
 		}

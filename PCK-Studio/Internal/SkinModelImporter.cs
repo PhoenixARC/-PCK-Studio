@@ -18,124 +18,40 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 using System.Numerics;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using PckStudio.Extensions;
-using PckStudio.External.Format;
+using PckStudio.Interfaces;
+using PckStudio.Properties;
+using PckStudio.Internal.Skin;
+using PckStudio.Internal.Json;
 using PckStudio.Internal.IO.PSM;
+using PckStudio.External.Format;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
-using System.Drawing;
-using PckStudio.Internal.Skin;
-using OMI.Formats.Model;
-using PckStudio.Internal.Json;
-using System.Collections.ObjectModel;
-using PckStudio.Properties;
-using PckStudio.Interfaces;
 
 namespace PckStudio.Internal
 {
-    internal static class SkinModelImporter
+    internal sealed class SkinModelImporter : ModelImporter<SkinModelInfo>
     {
-        private static Dictionary<string, ISkinModelImportProvider> _importProviders = new Dictionary<string, ISkinModelImportProvider>();
-
-        private sealed class SimpleSkinImportProvider : ISkinModelImportProvider
-        {
-            public string Name => nameof(SimpleSkinImportProvider);
-
-            public FileDialogFilter DialogFilter => _dialogFilter;
-
-            private FileDialogFilter _dialogFilter;
-            private Func<string, SkinModelInfo> _import;
-            private Action<string, SkinModelInfo> _export;
-
-            public SimpleSkinImportProvider(FileDialogFilter dialogFilter, Func<string, SkinModelInfo> import, Action<string, SkinModelInfo> export)
-            {
-                _dialogFilter = dialogFilter;
-                _import = import;
-                _export = export;
-            }
-
-            public void Export(string filename, SkinModelInfo model)
-            {
-                _ = _export ?? throw new NotImplementedException();
-                _export(filename, model);
-            }
-
-            public SkinModelInfo Import(string filename)
-            {
-                _ = _import ?? throw new NotImplementedException();
-                return _import(filename);
-            }
-
-            public void Export(ref Stream stream, SkinModelInfo model)
-            {
-                throw new NotImplementedException();
-            }
-
-            public SkinModelInfo Import(Stream stream)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        internal static string SupportedModelFileFormatsFilter => string.Join("|", _importProviders.Values.Select(p => p.DialogFilter));
+        public static SkinModelImporter Default { get; } = new SkinModelImporter();
 
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; private set; }
 
-        internal static void Initialize()
+        internal SkinModelImporter()
         {
             ModelTextureLocations = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
             InternalAddProvider(new("Pck skin model(*.psm)", "*.psm"), ImportPsm, ExportPsm);
             InternalAddProvider(new("Block bench model(*.bbmodel)", "*.bbmodel"), ImportBlockBenchModel, ExportBlockBenchModel);
             InternalAddProvider(new("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"), ImportBedrockJson, ExportBedrockJson);
-        }
-
-        internal static bool AddProvider(ISkinModelImportProvider provider)
-        {
-            if (_importProviders.ContainsKey(provider.DialogFilter.Extension))
-                return false;
-
-            _importProviders.Add(provider.DialogFilter.Extension, provider);
-            return true;
-        }
-
-        private static bool InternalAddProvider(FileDialogFilter dialogFilter, Func<string, SkinModelInfo> import, Action<string, SkinModelInfo> export)
-        {
-            if (import == null || export == null)
-                return false;
-
-            return AddProvider(new SimpleSkinImportProvider(dialogFilter, import, export));
-        }
-
-        internal static SkinModelInfo Import(string fileName)
-        {
-            string fileExtension = Path.GetExtension(fileName);
-            if (_importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null)
-                return _importProviders[fileExtension].Import(fileName);
-    
-            Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Import] No provider found for '{fileExtension}'.");
-            return null;
-        }
-
-        internal static void Export(string fileName, SkinModelInfo model)
-        {
-            if (model is null)
-            {
-                Trace.TraceError($"[{nameof(SkinModelImporter)}:Export] Model is null.");
-                return;
-            }
-            string fileExtension = Path.GetExtension(fileName);
-            if (_importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null)
-                _importProviders[fileExtension].Export(fileName, model);
-           
-            Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Export] No provider found for '{fileExtension}'.");
         }
 
         internal static SkinModelInfo ImportPsm(string fileName)
@@ -250,7 +166,7 @@ namespace PckStudio.Internal
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
             Image exportTexture = FixTexture(modelInfo);
-            BlockBenchModel blockBenchModel = CreateBlockBenchModel(Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
+            BlockBenchModel blockBenchModel = BlockBenchModel.Create(Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
@@ -290,69 +206,6 @@ namespace PckStudio.Internal
             File.WriteAllText(fileName, content);
         }
 
-        internal static void ExportBlockBenchModel(string fileName, Model model, IEnumerable<NamedTexture> textures)
-        {
-            BlockBenchModel blockBenchModel = CreateBlockBenchModel(Path.GetFileNameWithoutExtension(fileName), model.TextureSize, textures.Select(nt => (Texture)nt));
-
-            Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
-            List<Element> elements = new List<Element>(model.Parts.Count);
-
-            Vector3 transformAxis = new Vector3(1, 1, 0);
-
-            Outline GetOrCreateOutline(string partName)
-            {
-                if (!outliners.ContainsKey(partName))
-                    outliners.Add(partName, new Outline(partName));
-                return outliners[partName];
-            }
-
-            foreach (ModelPart part in model.Parts.Values)
-            {
-                //Outline outline = GetOrCreateOutline(part.Name);
-
-                var outline = new Outline(part.Name);
-
-                Vector3 partTranslation = part.Translation;
-                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, transformAxis);
-                outline.Origin += Vector3.UnitY * 24f;
-
-                Vector3 rotation = part.Rotation + part.AdditionalRotation;
-                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, transformAxis);
-
-                foreach (ModelBox box in part.Boxes)
-                {
-                    Element element = CreateElement(box, partTranslation, part.Name);
-                    element.Origin = outline.Origin;
-                    elements.Add(element);
-                    outline.Children.Add(element.Uuid);
-                }
-                outliners.Add(part.Name, outline);
-            }
-
-            blockBenchModel.Elements = elements.ToArray();
-            blockBenchModel.Outliner = JArray.FromObject(outliners);
-
-            string content = JsonConvert.SerializeObject(blockBenchModel);
-            File.WriteAllText(fileName, content);
-        }
-
-        private static BlockBenchModel CreateBlockBenchModel(string name, Size textureResolution, IEnumerable<Texture> textures)
-        {
-            return new BlockBenchModel()
-            {
-                Name = name,
-                Textures = textures.ToArray(),
-                TextureResolution = textureResolution,
-                ModelIdentifier = "",
-                Metadata = new Meta()
-                {
-                    FormatVersion = "4.5",
-                    ModelFormat = "free",
-                    UseBoxUv = true,
-                }
-            };
-        }
-
         private static Element CreateElement(SkinBOX box)
         {
             Vector3 transformPos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
@@ -362,35 +215,9 @@ namespace PckStudio.Internal
             return element;
         }
 
-        private static Element CreateElement(ModelBox box, Vector3 origin, string name)
-        {
-            Vector3 pos = box.Position;
-            Vector3 size = box.Size;
-            Vector3 transformPos = TranslateToInternalPosition("", pos + origin, size, new Vector3(1, 1, 0));
-            return CreateElement(name, box.Uv, transformPos, size, box.Scale, box.Mirror);
-        }
-
         private static Element CreateElement(Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
         {
-            return CreateElement("cube", uvOffset, pos, size, inflate, mirror);
-        }
-
-        private static Element CreateElement(string name, Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
-        {
-            return new Element
-            {
-                Name = name,
-                UseBoxUv = true,
-                Locked = false,
-                Rescale = false,
-                Type = "cube",
-                Uuid = Guid.NewGuid(),
-                UvOffset = uvOffset,
-                MirrorUv = mirror,
-                Inflate = inflate,
-                From = pos,
-                To = pos + size
-            };
+            return Element.CreateCube("cube", uvOffset, pos, size, inflate, mirror);
         }
 
         internal static SkinModelInfo ImportBedrockJson(string fileName)
@@ -698,7 +525,7 @@ namespace PckStudio.Internal
             return result;
         }
 
-        private static Vector3 GetOffset(string name, ref Dictionary<string, SkinPartOffset> offsetLookUp, IReadOnlyList<SkinPartOffset> partOffsets)
+        private static Vector3 GetOffset(string name, ref Dictionary<string, SkinPartOffset> offsetLookUp, IEnumerable<SkinPartOffset> partOffsets)
         {
             if (offsetLookUp.ContainsKey(name))
             {
@@ -736,31 +563,6 @@ namespace PckStudio.Internal
         private static Vector3 TranslateFromInternalPosistion(SkinBOX skinBox, Vector3 translationUnit)
         {
             return TranslateToInternalPosition(skinBox.Type, skinBox.Pos, skinBox.Size, translationUnit);
-        }
-
-        /// <summary>
-        /// Translates coordinate unit system into our coordinate system
-        /// </summary>
-        /// <param name="origin">Position/Origin of the Object(Cube).</param>
-        /// <param name="size">The Size of the Object(Cube).</param>
-        /// <param name="translationUnit">Describes what axises need translation.</param>
-        /// <returns>The translated position</returns>
-        private static Vector3 TransformSpace(Vector3 origin, Vector3 size, Vector3 translationUnit)
-        {
-            // The translation unit describes what axises need to be swapped
-            // Example:
-            //      translation unit = (1, 0, 0) => This translation unit will ONLY swap the X axis
-            translationUnit = Vector3.Clamp(translationUnit, Vector3.Zero, Vector3.One);
-            // To better understand see:
-            // https://sharplab.io/#v2:C4LgTgrgdgNAJiA1AHwAICYCMBYAUKgBgAJVMA6AOQgFsBTMASwGMBnAbj1QGYT0iBhIgG88RMb3SjxI3OLlEAbgEMwRBlAAOEYEQC8RKLQDuRAGq0mwAPZguACkwwijogQCUHWfLHLVtAB4aFsC0cHoGxmbBNvYAtC7xTpgeUt6+RGC0LOEAKmBKUCwAYjbU/FY2cOpKISx26lrAKV7epACcdpkszd5i7Z1ZevoBQZahPeIAvqlEM9wkmABsUZYxRHkFxaXlldW1duartmqa2m4zMr2KKhmD+ofWtmT8ADZK1Br1p8BODzFkAC16FZftEngB5QwTbxdIgAKn06E8V1hsXuYK4ZEhtGRvVQAHYiLEurixNNcJMgA
-            Vector3 transformUnit = -((translationUnit * 2) - Vector3.One);
-
-            Vector3 pos = origin;
-            // The next line essentialy does uses the fomular below just on all axis.
-            // x = -(pos.x + size.x)
-            pos *= transformUnit;
-            pos -= size * translationUnit;
-            return pos;
         }
     }
 }

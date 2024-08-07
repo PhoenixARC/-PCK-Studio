@@ -151,7 +151,7 @@
     </Compile>
     <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
     <Compile Include="Interfaces\IModelImportProvider.cs" />
-    <Compile Include="Interfaces\ISkinModelImportProvider.cs" />
+    <Compile Include="Internal\GameModelInfo.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
     <Compile Include="Internal\GameConstants.cs" />
@@ -169,6 +169,8 @@
     <Compile Include="Internal\FileDialogFilter.cs" />
     <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
     <Compile Include="Internal\Misc\RichPresenceClient.cs" />
+    <Compile Include="Internal\GameModelImporter.cs" />
+    <Compile Include="Internal\ModelImporter.cs" />
     <Compile Include="Internal\SkinModelImporter.cs" />
     <Compile Include="Internal\ModelPartSpecifics.cs" />
     <Compile Include="Internal\Json\JsonModelMetaData.cs" />

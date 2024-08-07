@@ -155,6 +155,25 @@ namespace PckStudio.External.Format
 
         [JsonProperty("uuid")]
         internal Guid Uuid;
+
+        internal static Element CreateCube(string name, Vector2 uvOffset, Vector3 pos, Vector3 size, float inflate, bool mirror)
+        {
+            return new Element
+            {
+                Name = name,
+                UseBoxUv = true,
+                Locked = false,
+                Rescale = false,
+                Type = "cube",
+                Uuid = Guid.NewGuid(),
+                UvOffset = uvOffset,
+                MirrorUv = mirror,
+                Inflate = inflate,
+                From = pos,
+                To = pos + size
+            };
+        }
+
     }
 
     internal class Texture
@@ -321,6 +340,22 @@ namespace PckStudio.External.Format
         
         [JsonProperty("textures")]
         internal Texture[] Textures;
-        
+
+        internal static BlockBenchModel Create(string name, Size textureResolution, IEnumerable<Texture> textures)
+        {
+            return new BlockBenchModel()
+            {
+                Name = name,
+                Textures = textures.ToArray(),
+                TextureResolution = textureResolution,
+                ModelIdentifier = "",
+                Metadata = new Meta()
+                {
+                    FormatVersion = "4.5",
+                    ModelFormat = "free",
+                    UseBoxUv = true,
+                }
+            };
+        }
     }
 }
