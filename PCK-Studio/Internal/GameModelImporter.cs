@@ -19,7 +19,7 @@ namespace PckStudio.Internal
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
         
-        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
+        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
         
         private GameModelImporter()
         {

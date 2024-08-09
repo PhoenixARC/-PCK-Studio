@@ -41,7 +41,6 @@ namespace PckStudio.Internal
 
         private SkinModelImporter()
         {
-            
             InternalAddProvider(new("Pck skin model(*.psm)", "*.psm"), ImportPsm, ExportPsm);
             InternalAddProvider(new("Block bench model(*.bbmodel)", "*.bbmodel"), ImportBlockBenchModel, ExportBlockBenchModel);
             InternalAddProvider(new("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"), ImportBedrockJson, ExportBedrockJson);

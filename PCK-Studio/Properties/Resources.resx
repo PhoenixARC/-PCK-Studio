@@ -421,7 +421,7 @@
   <data name="file_restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_restore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="modelTextureLocations" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\model\modelTextureLocations.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="modelMetaData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\model\modelMetaData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

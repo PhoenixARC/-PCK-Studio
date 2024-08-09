@@ -815,32 +815,49 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to // TODO: Add parent detection
+        ///
+        ///{
+        ///  &quot;bat&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/mob/bat&quot;
+        ///    ],
+        ///    &quot;parents&quot;: {
+        ///      &quot;rightEar&quot;: &quot;head&quot;,
+        ///      &quot;leftEar&quot;: &quot;head&quot;
+        ///    }
+        ///  },
+        ///  &quot;bed&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/item/bed&quot;
+        ///    ]
+        ///  },
+        ///  &quot;blaze&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/mob/fire&quot;
+        ///    ]
+        ///
+        ///  },
+        ///  &quot;boat&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/item/boat/boat_acacia&quot;,
+        ///      &quot;res/item/boat/boat_birch&quot;,
+        ///      &quot;res/item/boat/boat_darkoak&quot;,
+        ///      &quot;res/item/boat/boat [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string modelMetaData {
+            get {
+                return ResourceManager.GetString("modelMetaData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap MODELS_ICON {
             get {
                 object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;bat&quot;: [ &quot;res/mob/bat&quot; ],
-        ///  &quot;bed&quot;: [ &quot;res/item/bed&quot; ],
-        ///  &quot;blaze&quot;: [ &quot;res/mob/fire&quot; ],
-        ///  &quot;boat&quot;: [ &quot;res/item/boat/boat_acacia&quot;, &quot;res/item/boat/boat_birch&quot;, &quot;res/item/boat/boat_darkoak&quot;, &quot;res/item/boat/boat_jungle&quot;, &quot;res/item/boat/boat_oak&quot;, &quot;res/item/boat/boat_spruce&quot; ],
-        ///  &quot;chicken&quot;: [ &quot;res/mob/chicken&quot; ],
-        ///  &quot;cow&quot;: [ &quot;res/mob/cow&quot; ],
-        ///  &quot;creeper&quot;: [ &quot;res/mob/creeper&quot; ],
-        ///  &quot;creeper_head&quot;: [ &quot;res/mob/creeper&quot; ],
-        ///  &quot;dolphin&quot;: [ &quot;res/mob/dolphin&quot; ],
-        ///  &quot;dragon&quot;: [ &quot;res/mob/enderdragon/ender&quot; ],
-        ///  &quot;d [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string modelTextureLocations {
-            get {
-                return ResourceManager.GetString("modelTextureLocations", resourceCulture);
             }
         }
         
@@ -1085,7 +1102,7 @@ namespace PckStudio.Properties {
         ///void main()
         ///{
         ///	color = a_Color;
-        ///	gl_Position = ViewProjection * Transform * vec4(a_Pos.x, a_Pos.yz * -1.0, 1.0);
+        ///	gl_Position = ViewProjection * Transform * vec4(a_Pos.xyz, 1.0);
         ///};.
         /// </summary>
         public static string plainColorVertexShader {
@@ -1226,8 +1243,7 @@ namespace PckStudio.Properties {
         ///void main()
         ///{
         ///	dataOut.TexCoord = texCoord;
-        ///	vec4 invertedVertex = vec4(vertexPosition.x, vertexPosition.yz * -1.0, 1.0);
-        ///	gl_Position = u_ViewProjection * u_Transform * invertedVertex;
+        ///	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
         ///};.
         /// </summary>
         public static string skinVertexShader {
