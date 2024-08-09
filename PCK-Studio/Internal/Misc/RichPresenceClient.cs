@@ -43,7 +43,7 @@ namespace PckStudio.Internal.Misc
             {
                 Client.Initialize();
             }
-            SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.ShowRichPresence), state =>
+            SettingsManager.Default.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.ShowRichPresence), state =>
             {
                 if (state)
                 {
