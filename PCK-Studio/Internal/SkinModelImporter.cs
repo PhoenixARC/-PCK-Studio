@@ -20,19 +20,14 @@ using System.IO;
 using System.Linq;
 using System.Drawing;
 using System.Numerics;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using PckStudio.Extensions;
-using PckStudio.Interfaces;
-using PckStudio.Properties;
 using PckStudio.Internal.Skin;
-using PckStudio.Internal.Json;
 using PckStudio.Internal.IO.PSM;
 using PckStudio.External.Format;
 using PckStudio.Internal.FileFormats;
@@ -44,11 +39,9 @@ namespace PckStudio.Internal
     {
         public static SkinModelImporter Default { get; } = new SkinModelImporter();
 
-        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; private set; }
-
-        internal SkinModelImporter()
+        private SkinModelImporter()
         {
-            ModelTextureLocations = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
+            
             InternalAddProvider(new("Pck skin model(*.psm)", "*.psm"), ImportPsm, ExportPsm);
             InternalAddProvider(new("Block bench model(*.bbmodel)", "*.bbmodel"), ImportBlockBenchModel, ExportBlockBenchModel);
             InternalAddProvider(new("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"), ImportBedrockJson, ExportBedrockJson);

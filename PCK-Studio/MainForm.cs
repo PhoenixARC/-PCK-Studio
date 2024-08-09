@@ -632,10 +632,10 @@ namespace PckStudio
 
 				IEnumerable<NamedTexture> GetModelTextures(string modelName)
 				{
-					if (!SkinModelImporter.ModelTextureLocations.ContainsKey(modelName) || SkinModelImporter.ModelTextureLocations[modelName]?.TextureLocations?.Length <= 0)
-						return Array.Empty<NamedTexture>();
+					if (!GameModelImporter.ModelTextureLocations.ContainsKey(modelName) || GameModelImporter.ModelTextureLocations[modelName]?.TextureLocations?.Length <= 0)
+						return Enumerable.Empty<NamedTexture>();
 
-                    return SkinModelImporter.ModelTextureLocations[modelName].TextureLocations.Select(texturePath =>
+					return GameModelImporter.ModelTextureLocations[modelName].TextureLocations.Select(texturePath =>
 					{
 						if (currentPCK.TryGetAsset(texturePath + ".png", PckAssetType.TextureFile, out PckAsset modelTextureAsset) ||
 							currentPCK.TryGetAsset(texturePath + ".tga", PckAssetType.TextureFile, out modelTextureAsset))
@@ -644,11 +644,11 @@ namespace PckStudio
                     });
                 }
 
-                IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
-				
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					GameModelImporter.Default.Export(openFileDialog.FileName, new GameModelInfo(model, textures));
+					IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
+					var modelInfo = new GameModelInfo(model, textures);
+					GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
 				}
 			}
 		}

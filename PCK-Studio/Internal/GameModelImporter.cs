@@ -9,13 +9,18 @@ using OMI.Formats.Model;
 using PckStudio.External.Format;
 using System.Numerics;
 using System.IO;
+using PckStudio.Internal.Json;
+using System.Collections.ObjectModel;
+using PckStudio.Properties;
 
 namespace PckStudio.Internal
 {
     internal sealed class GameModelImporter : ModelImporter<GameModelInfo>
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
-
+        
+        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelTextureLocations);
+        
         private GameModelImporter()
         {
             // TODO: add import functionality -miku
