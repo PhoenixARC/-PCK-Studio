@@ -29,7 +29,7 @@ namespace PckStudio.Internal
 
         private static void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
         {
-            BlockBenchModel blockBenchModel = BlockBenchModel.Create(Path.GetFileNameWithoutExtension(fileName), modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
+            BlockBenchModel blockBenchModel = BlockBenchModel.Create(modelInfo.Model.Name, modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.Model.Parts.Count);
