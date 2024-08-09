@@ -23,21 +23,25 @@ using PckStudio.Properties;
 
 namespace PckStudio.Internal.App
 {
-    internal static class SettingsManager
+    internal sealed class SettingsManager
     {
-        private static Dictionary<string, Action<object>> _registery = new Dictionary<string, Action<object>>();
+        public static SettingsManager Default { get; } = new SettingsManager(Settings.Default);
 
-        private static object _newValue = null;
+        private Dictionary<string, Action<object>> _registery = new Dictionary<string, Action<object>>();
 
-        internal static void Initialize()
+        private object _newValue = null;
+        private SettingsBase _settings = null;
+
+        internal SettingsManager(ApplicationSettingsBase settings)
         {
-            Settings.Default.PropertyChanged += PropertyChangedHandler;
-            Settings.Default.SettingChanging += SettingChangingHandler;
+            _settings = settings;
+            settings.PropertyChanged += PropertyChangedHandler;
+            settings.SettingChanging += SettingChangingHandler;
         }
 
-        internal static bool RegisterPropertyChangedCallback<TSettingsType>(string propertyName, Action<TSettingsType> callback)
+        internal bool RegisterPropertyChangedCallback<TSettingsType>(string propertyName, Action<TSettingsType> callback)
         {
-            Type propertyType = Settings.Default[propertyName].GetType();
+            Type propertyType = _settings[propertyName].GetType();
             if (!propertyType.Equals(typeof(TSettingsType)))
             {
                 return false;
@@ -45,12 +49,12 @@ namespace PckStudio.Internal.App
             return RegisterPropertyChangedCallback(propertyName, delegate (object obj) { callback((TSettingsType)obj); });
         }
 
-        internal static bool RegisterPropertyChangedCallback(string propertyName, Action callback)
+        internal bool RegisterPropertyChangedCallback(string propertyName, Action callback)
         {
             return RegisterPropertyChangedCallback(propertyName, delegate (object _) { callback(); });
         }
 
-        private static bool RegisterPropertyChangedCallback(string propertyName, Action<object> callback)
+        private bool RegisterPropertyChangedCallback(string propertyName, Action<object> callback)
         {
             if (_registery.ContainsKey(propertyName))
                 return false;
@@ -58,7 +62,7 @@ namespace PckStudio.Internal.App
             return true;
         }
 
-        private static void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+        private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
             if (_registery.ContainsKey(e.PropertyName))
             {
@@ -67,7 +71,7 @@ namespace PckStudio.Internal.App
             }
         }
 
-        private static void SettingChangingHandler(object sender, SettingChangingEventArgs e)
+        private void SettingChangingHandler(object sender, SettingChangingEventArgs e)
         {
             if (_registery.ContainsKey(e.SettingName))
             {

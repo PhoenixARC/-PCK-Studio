@@ -163,11 +163,11 @@ namespace PckStudio
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			SettingsManager.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
+			SettingsManager.Default.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
 			{
 				LittleEndianCheckBox.Checked = state;
 			});
-			SettingsManager.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
+			SettingsManager.Default.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
 			{
 				if (currentPCK is not null)
 				{

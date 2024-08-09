@@ -45,7 +45,6 @@ namespace PckStudio.Internal.App
                 _ = Tiles.ExperienceOrbImageList;
                 _ = Tiles.MoonPhaseImageList;
                 _ = Tiles.PaintingImageList;
-                SettingsManager.Initialize();
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Task.Run(GetContributors);
             }
