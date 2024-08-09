@@ -62,9 +62,15 @@ namespace PckStudio.Internal
 
         public T Import(string filename)
         {
+            if (!File.Exists(filename))
+            {
+                Trace.TraceWarning($"[{nameof(ModelImporter<T>)}:Import] Failed to import '{filename}'. File does not exist.");
+                return default;
+            }
+
             if (!HasProvider(filename))
             {
-                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Import] No provider found for '{Path.GetExtension(filename)}'.");
+                Trace.TraceWarning($"[{nameof(ModelImporter<T>)}:Import] No provider found for '{Path.GetExtension(filename)}'.");
                 return default;
             }
 
@@ -81,13 +87,13 @@ namespace PckStudio.Internal
         {
             if (model is null)
             {
-                Trace.TraceError($"[{nameof(SkinModelImporter)}:Export] Model is null.");
+                Trace.TraceError($"[{nameof(ModelImporter<T>)}:Export] Model is null.");
                 return;
             }
 
             if (!HasProvider(filename))
             {
-                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:Export] No provider found for '{Path.GetExtension(filename)}'.");
+                Trace.TraceWarning($"[{nameof(ModelImporter<T>)}:Export] No provider found for '{Path.GetExtension(filename)}'.");
                 return;
             }
 
