@@ -14,9 +14,9 @@ namespace PckStudio.Internal
     {
         private Dictionary<string, IModelImportProvider<T>> _importProviders = new Dictionary<string, IModelImportProvider<T>>();
 
-        private sealed class SimpleSkinImportProvider : IModelImportProvider<T>
+        private sealed class InternalImportProvider : IModelImportProvider<T>
         {
-            public string Name => nameof(SimpleSkinImportProvider);
+            public string Name => nameof(InternalImportProvider);
 
             public FileDialogFilter DialogFilter => _dialogFilter;
 
@@ -28,7 +28,7 @@ namespace PckStudio.Internal
             private Func<string, T> _import;
             private Action<string, T> _export;
 
-            public SimpleSkinImportProvider(FileDialogFilter dialogFilter, Func<string, T> import, Action<string, T> export)
+            public InternalImportProvider(FileDialogFilter dialogFilter, Func<string, T> import, Action<string, T> export)
             {
                 _dialogFilter = dialogFilter;
                 _import = import;
@@ -58,7 +58,7 @@ namespace PckStudio.Internal
             }
         }
 
-        internal string SupportedModelFileFormatsFilter => string.Join("|", _importProviders.Values.Select(p => p.DialogFilter));
+        public string SupportedModelFileFormatsFilter => string.Join("|", _importProviders.Values.Select(p => p.DialogFilter));
 
         public T Import(string filename)
         {
@@ -108,21 +108,9 @@ namespace PckStudio.Internal
             return true;
         }
 
-        protected bool HasProvider(string filename)
-        {
-            string fileExtension = Path.GetExtension(filename);
-            return _importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null;
-        }
-
-        protected IModelImportProvider<T> GetProvider(string filename)
-        {
-            string fileExtension = Path.GetExtension(filename);
-            return _importProviders.ContainsKey(fileExtension) ? _importProviders[fileExtension] : null;
-        }
-
         protected bool InternalAddProvider(FileDialogFilter dialogFilter, Func<string, T> import, Action<string, T> export)
         {
-            return AddProvider(new SimpleSkinImportProvider(dialogFilter, import, export));
+            return AddProvider(new InternalImportProvider(dialogFilter, import, export));
         }
 
         /// <summary>
@@ -148,6 +136,18 @@ namespace PckStudio.Internal
             pos *= transformUnit;
             pos -= size * translationUnit;
             return pos;
+        }
+
+        private bool HasProvider(string filename)
+        {
+            string fileExtension = Path.GetExtension(filename);
+            return _importProviders.ContainsKey(fileExtension) && _importProviders[fileExtension] is not null;
+        }
+
+        private IModelImportProvider<T> GetProvider(string filename)
+        {
+            string fileExtension = Path.GetExtension(filename);
+            return _importProviders.ContainsKey(fileExtension) ? _importProviders[fileExtension] : null;
         }
     }
 }
