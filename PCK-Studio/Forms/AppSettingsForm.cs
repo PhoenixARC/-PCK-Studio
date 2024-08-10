@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
+using PckStudio.Internal.App;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms
@@ -33,7 +34,7 @@ namespace PckStudio.Forms
             Text = title;
             _applicationSettings = applicationSettings;
             if (keyToStringMap is not null)
-                _applicationSettings.Context.Add(keyToStringContextKey, keyToStringMap);
+                _applicationSettings.Context.Add(SettingsManager.KeyToStringContextKeyConst, keyToStringMap);
             LoadSettings();
         }
 
@@ -41,8 +42,8 @@ namespace PckStudio.Forms
         {
             value = default;
             return
-                context.ContainsKey(keyToStringContextKey) &&
-                context[keyToStringContextKey] is Dictionary<string, string> keyToString &&
+                context.ContainsKey(SettingsManager.KeyToStringContextKeyConst) &&
+                context[SettingsManager.KeyToStringContextKeyConst] is Dictionary<string, string> keyToString &&
                 keyToString.TryGetValue(key, out value);
         }
 

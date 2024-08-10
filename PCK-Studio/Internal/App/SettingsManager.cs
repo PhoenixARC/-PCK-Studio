@@ -25,18 +25,34 @@ namespace PckStudio.Internal.App
 {
     internal sealed class SettingsManager
     {
-        public static SettingsManager Default { get; } = new SettingsManager(Settings.Default);
+        public static SettingsManager Default { get; } = new SettingsManager(Settings.Default, isReadOnly: true);
+        
+        public bool IsReadOnly => _isReadOnly;
+
+        internal const string KeyToStringContextKeyConst = "keyToString";
 
         private Dictionary<string, Action<object>> _registery = new Dictionary<string, Action<object>>();
 
         private object _newValue = null;
-        private SettingsBase _settings = null;
+        private ApplicationSettingsBase _settings = null;
+        private bool _isReadOnly;
 
-        internal SettingsManager(ApplicationSettingsBase settings)
+        private class InternalSettings : ApplicationSettingsBase
+        { }
+
+        internal SettingsManager(ApplicationSettingsBase settings, bool isReadOnly = false)
         {
             _settings = settings;
+            _isReadOnly = isReadOnly;
             settings.PropertyChanged += PropertyChangedHandler;
             settings.SettingChanging += SettingChangingHandler;
+        }
+
+        internal ApplicationSettingsBase GetSettings() => _settings;
+
+        internal static SettingsManager CreateSettings()
+        {
+            return new SettingsManager(new InternalSettings());
         }
 
         internal bool RegisterPropertyChangedCallback<TSettingsType>(string propertyName, Action<TSettingsType> callback)
@@ -77,6 +93,24 @@ namespace PckStudio.Internal.App
             {
                 _newValue = e.NewValue;
             }
+        }
+
+        internal bool AddSetting<T>(string name, T initialValue, string description, Action<T> callback)
+        {
+            if (_isReadOnly)
+                throw new SettingsPropertyIsReadOnlyException("Can't add setting. Underlying SettingsBase is readonly.");
+
+            if (!_settings.Context.ContainsKey(KeyToStringContextKeyConst))
+                _settings.Context.Add(KeyToStringContextKeyConst, new Dictionary<string, string>());
+            
+            var settingsProperty = new SettingsProperty(
+                name, typeof(T), null, false, default(T), SettingsSerializeAs.String, null, false, false);
+            _settings.Properties.Add(settingsProperty);
+            _settings.PropertyValues.Add(new SettingsPropertyValue(settingsProperty) { PropertyValue = initialValue });
+            if (_settings.Context[KeyToStringContextKeyConst] is Dictionary<string, string> dict)
+                dict.Add(name, description);
+            callback(initialValue);
+            return RegisterPropertyChangedCallback(name, callback);
         }
     }
 }

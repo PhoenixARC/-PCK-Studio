@@ -33,45 +33,6 @@ namespace PckStudio.Forms.Editor
         private BindingSource skinPartListBindingSource;
         private BindingSource skinOffsetListBindingSource;
 
-        private class RenderSettings : ApplicationSettingsBase
-        {
-            internal bool ShouldAnimate
-            {
-                get => (bool)this["shouldAnimate"];
-            }
-
-            internal bool LockMouse
-            {
-                get => (bool)this["lockMouse"];
-            }
-
-            internal bool ShowGuidelines
-            {
-                get => (bool)this["showGuidelines"];
-            }
-
-            public RenderSettings()
-            {
-                AddSetting("shouldAnimate", "Animate skin", true);
-                AddSetting("lockMouse", "Lock mouse when paning or rotating", true);
-                AddSetting("showGuidelines", "Show guidelines", false);
-            }
-
-            void AddSetting<T>(string name, string displayName, T value)
-            {
-                if (!Context.ContainsKey(AppSettingsForm.keyToStringContextKey))
-                {
-                    Context.Add(AppSettingsForm.keyToStringContextKey, new Dictionary<string, string>());
-                }
-                var settingsProperty = new SettingsProperty(name, typeof(T), null, false, default(T), SettingsSerializeAs.String, null, false, false);
-                Properties.Add(settingsProperty);
-                PropertyValues.Add(new SettingsPropertyValue(settingsProperty) { PropertyValue = value });
-                if (Context[AppSettingsForm.keyToStringContextKey] is Dictionary<string, string> dict)
-                    dict.Add(name, displayName);
-            }
-        }
-
-        private RenderSettings _renderSettings;
         private SettingsManager _settingsManager;
 
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
@@ -87,12 +48,10 @@ namespace PckStudio.Forms.Editor
             skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
             skinPartListBox.DataSource = skinPartListBindingSource;
             skinPartListBox.DisplayMember = "Type";
-            _renderSettings = new RenderSettings();
-            _settingsManager = new SettingsManager(_renderSettings);
-            _settingsManager.RegisterPropertyChangedCallback<bool>("shouldAnimate", state => renderer3D1.Animate = state);
-            _settingsManager.RegisterPropertyChangedCallback<bool>("lockMouse", state => renderer3D1.LockMousePosition = state);
-            _settingsManager.RegisterPropertyChangedCallback<bool>("showGuidelines", state => renderer3D1.ShowGuideLines = state);
-            LoadRenderSettings();
+            _settingsManager = SettingsManager.CreateSettings();
+            _settingsManager.AddSetting("shouldAnimate" , true , "Animate skin"                   , state => renderer3D1.Animate = state);
+            _settingsManager.AddSetting("lockMouse"     , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
+            _settingsManager.AddSetting("showGuidelines", false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
         }
 
         public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()
@@ -100,13 +59,6 @@ namespace PckStudio.Forms.Editor
             _skin = skin;
             _allowInflate = allowInflate;
             _inflateOverlayParts = inflateOverlayParts;
-        }
-
-        private void LoadRenderSettings()
-        {
-            renderer3D1.Animate = _renderSettings.ShouldAnimate;
-            renderer3D1.LockMousePosition = _renderSettings.LockMouse;
-            outlineColorButton.Visible = renderer3D1.ShowGuideLines = _renderSettings.ShowGuidelines;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -473,7 +425,7 @@ namespace PckStudio.Forms.Editor
 
         private void renderSettingsButton_Click(object sender, EventArgs e)
         {
-            using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", _renderSettings);
+            using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", _settingsManager.GetSettings());
             settingsForm.ShowDialog();
         }
     }
