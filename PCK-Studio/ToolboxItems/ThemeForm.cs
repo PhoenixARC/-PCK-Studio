@@ -7,7 +7,7 @@
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
  * 
- * 1.The origin of this software must not be misrepresented; you must not
+ * 1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
  *    appreciated but is not required.
@@ -15,14 +15,25 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+
+using Dark.Net;
 using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace PckStudio.ToolboxItems
 {
-    public class ThemeForm : Form
+    public partial class ThemeForm : Form
     {
+        public ThemeForm(Theme theme)
+            : base()
+        {
+            DarkNet.Instance.SetWindowThemeForms(this, theme);
+            StartPosition = FormStartPosition.Manual; // Set the StartPosition to Manual
+            Invalidate();
+        }
+
         public ThemeForm()
+            : this(Theme.Auto)
         {
         }
 
@@ -30,6 +41,18 @@ namespace PckStudio.ToolboxItems
             : this()
         {
             container.Add(this);
+        }
+
+        protected override void OnLoad(System.EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Check if the form is not in design mode
+            if (!DesignMode)
+            {
+                // Center the form on the screen manually
+                CenterToScreen();
+            }
         }
     }
 }

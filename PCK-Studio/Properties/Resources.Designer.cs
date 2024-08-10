@@ -235,9 +235,8 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 7.0 (IN DEVELOPMENT)  
+        ///   Looks up a localized string similar to 7.0.0.0
         ///====================  
-        ///Some features may be completely missing or incomplete at this point in time!  
         ///
         ///-Added .3dst (3DS Texture) support  
         ///-Semi-added Sub-Pck editing  
@@ -248,7 +247,8 @@ namespace PckStudio.Properties {
         ///-Massive codebase overhaul and optimization lead by miku-666 (aka NessieHax)!!!  
         ///-Some UI redesigned by yaboiFoxx  
         ///-Improved the changelog!  
-        ///-New icons for each o [rest of string was truncated]&quot;;.
+        ///-New icons for each of the file types, with unique image icons for skin, texture, and cape files  
+        ///-Added the abili [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CHANGELOG {
             get {
@@ -309,9 +309,29 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap creditsAsset {
+            get {
+                object obj = ResourceManager.GetObject("creditsAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Discord {
             get {
                 object obj = ResourceManager.GetObject("Discord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap editAsset {
+            get {
+                object obj = ResourceManager.GetObject("editAsset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -611,6 +631,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap fileAsset {
+            get {
+                object obj = ResourceManager.GetObject("fileAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap GRF_ICON {
             get {
                 object obj = ResourceManager.GetObject("GRF_ICON", resourceCulture);
@@ -634,6 +664,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap HamburgerMenuIcon {
             get {
                 object obj = ResourceManager.GetObject("HamburgerMenuIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap helpAsset {
+            get {
+                object obj = ResourceManager.GetObject("helpAsset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -666,9 +706,9 @@ namespace PckStudio.Properties {
         ///		{
         ///			&quot;internalName&quot;: &quot;helmetCloth&quot;,
         ///			&quot;displayName&quot;: &quot;Leather Cap&quot;,
+        ///			&quot;allowCustomColour&quot;: true,
         ///			&quot;hasColourEntry&quot;: true,
         ///			&quot;colourEntry&quot;: {
-        ///				&quot;hasCustomColour&quot;: true,
         ///				&quot;defaultName&quot;: &quot;Armour_Default_Leather_Colour&quot;,
         ///				&quot;variants&quot;: [ &quot;Armour_Default_Leather_Colour&quot; ]
         ///			}
@@ -678,7 +718,7 @@ namespace PckStudio.Properties {
         ///			&quot;displayName&quot;: &quot;Chain Helmet&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;: &quot; [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string itemData {
             get {
@@ -942,6 +982,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap pckCenterAsset {
+            get {
+                object obj = ResourceManager.GetObject("pckCenterAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap pckClosed {
             get {
                 object obj = ResourceManager.GetObject("pckClosed", resourceCulture);
@@ -1196,6 +1246,16 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap whatsNewAsset {
+            get {
+                object obj = ResourceManager.GetObject("whatsNewAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

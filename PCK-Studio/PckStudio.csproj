@@ -106,6 +106,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DarkNet">
+      <HintPath>..\..\FUI-Enforcer\FUI-Enforcer\bin\Debug\DarkNet.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -141,6 +144,12 @@
     </Compile>
     <Compile Include="Forms\Additional-Popups\FilterPrompt.Designer.cs">
       <DependentUpon>FilterPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\ChangeLogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Additional-Popups\ChangeLogForm.Designer.cs">
+      <DependentUpon>ChangeLogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ContributorsForm.cs">
       <SubType>Form</SubType>
@@ -580,6 +589,9 @@
     <EmbeddedResource Include="ToolboxItems\GithubUserPanel.resx">
       <DependentUpon>GithubUserPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ToolboxItems\ThemeForm.resx">
+      <DependentUpon>ThemeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="CommunityKey.snk" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -596,6 +608,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\whatsNewAsset.png" />
+    <None Include="Resources\pckCenterAsset.png" />
     <None Include="Resources\atlases\bannerData.json" />
     <None Include="Resources\atlases\blockData.json" />
     <None Include="Resources\atlases\entityBehavioursData.json" />
@@ -666,6 +680,10 @@
     <Content Include="Resources\atlases\terrain.png" />
     <None Include="Resources\external\trello.png" />
     <None Include="Resources\icons\file_copy.png" />
+    <None Include="Resources\creditsAsset.png" />
+    <None Include="Resources\editAsset.png" />
+    <None Include="Resources\fileAsset.png" />
+    <None Include="Resources\helpAsset.png" />
     <Content Include="Resources\icons\file_delete.png" />
     <Content Include="Resources\icons\file_empty.png" />
     <None Include="Resources\icons\file_export.png" />
@@ -690,9 +708,6 @@
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="DarkNet">
-      <Version>2.3.0</Version>
     </PackageReference>
     <PackageReference Include="DiscordRichPresence">
       <Version>1.1.4.20</Version>

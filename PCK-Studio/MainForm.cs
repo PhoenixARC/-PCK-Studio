@@ -1,4 +1,5 @@
-﻿using OMI.Formats.Behaviour;
+﻿using CBH_WinForm_Theme_Library_NET;
+using OMI.Formats.Behaviour;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Material;
@@ -29,6 +30,7 @@ using PckStudio.Internal.Misc;
 using PckStudio.Internal.Serializer;
 using PckStudio.Popups;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,7 +44,7 @@ using System.Windows.Forms;
 
 namespace PckStudio
 {
-    public partial class MainForm : MetroFramework.Forms.MetroForm
+    public partial class MainForm : ThemeForm
     {
         private PckManager PckManager = null;
         string saveLocation;
@@ -87,12 +89,11 @@ namespace PckStudio
 
             treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
 
-            pckOpen.AllowDrop = true;
+            buttomBox.AllowDrop = true;
 
             Text = Application.ProductName;
 
-            labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
-            ChangelogRichTextBox.Text = Resources.CHANGELOG;
+            this.Text = $"PCK Studio - {ApplicationScope.CurrentVersion}"; // Version title
 
             pckFileTypeHandler = new Dictionary<PckAssetType, Action<PckAsset>>(15)
             {
@@ -1933,12 +1934,12 @@ namespace PckStudio
 
         private void OpenPck_MouseEnter(object sender, EventArgs e)
         {
-            pckOpen.Image = Resources.pckOpen;
+            buttomBox.Image = Resources.pckOpen;
         }
 
         private void OpenPck_MouseLeave(object sender, EventArgs e)
         {
-            pckOpen.Image = Resources.pckClosed;
+            buttomBox.Image = Resources.pckClosed;
         }
 
         private void CheckSaveState()
@@ -1958,7 +1959,7 @@ namespace PckStudio
 
         private void OpenPck_DragEnter(object sender, DragEventArgs e)
         {
-            pckOpen.Image = Resources.pckDrop;
+            buttomBox.Image = Resources.pckDrop;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
             foreach (string file in files)
             {
@@ -1979,7 +1980,7 @@ namespace PckStudio
 
         private void OpenPck_DragLeave(object sender, EventArgs e)
         {
-            pckOpen.Image = Resources.pckClosed;
+            buttomBox.Image = Resources.pckClosed;
         }
 
         private void OpenPck_Click(object sender, EventArgs e)
