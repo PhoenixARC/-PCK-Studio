@@ -131,11 +131,11 @@
             this.editAllEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.openTab = new MetroFramework.Controls.MetroTabPage();
+            this.buttomBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.whatsNewBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.pckCenterBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
             this.creditsBtn = new CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton();
-            this.buttomBox = new System.Windows.Forms.PictureBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
             this.pckFileLabel = new MetroFramework.Controls.MetroLabel();
             this.labelImageSize = new MetroFramework.Controls.MetroLabel();
@@ -163,8 +163,8 @@
             this.contextMenuMetaTree.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.openTab.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttomBox)).BeginInit();
+            this.panel1.SuspendLayout();
             this.editorTab.SuspendLayout();
             this.PropertiesTabControl.SuspendLayout();
             this.MetaTab.SuspendLayout();
@@ -901,6 +901,19 @@
             this.openTab.VerticalScrollbarHighlightOnWheel = false;
             this.openTab.VerticalScrollbarSize = 12;
             // 
+            // buttomBox
+            // 
+            this.buttomBox.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.buttomBox, "buttomBox");
+            this.buttomBox.Name = "buttomBox";
+            this.buttomBox.TabStop = false;
+            this.buttomBox.Click += new System.EventHandler(this.OpenPck_Click);
+            this.buttomBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
+            this.buttomBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
+            this.buttomBox.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
+            this.buttomBox.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
+            this.buttomBox.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(logoPictureBox);
@@ -969,19 +982,6 @@
             this.creditsBtn.Name = "creditsBtn";
             this.creditsBtn.TextColor = System.Drawing.Color.White;
             this.creditsBtn.UseVisualStyleBackColor = false;
-            // 
-            // buttomBox
-            // 
-            this.buttomBox.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.buttomBox, "buttomBox");
-            this.buttomBox.Name = "buttomBox";
-            this.buttomBox.TabStop = false;
-            this.buttomBox.Click += new System.EventHandler(this.OpenPck_Click);
-            this.buttomBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragDrop);
-            this.buttomBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.OpenPck_DragEnter);
-            this.buttomBox.DragLeave += new System.EventHandler(this.OpenPck_DragLeave);
-            this.buttomBox.MouseEnter += new System.EventHandler(this.OpenPck_MouseEnter);
-            this.buttomBox.MouseLeave += new System.EventHandler(this.OpenPck_MouseLeave);
             // 
             // editorTab
             // 
@@ -1218,8 +1218,8 @@
             this.contextMenuMetaTree.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.openTab.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.buttomBox)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.editorTab.ResumeLayout(false);
             this.editorTab.PerformLayout();
             this.PropertiesTabControl.ResumeLayout(false);
