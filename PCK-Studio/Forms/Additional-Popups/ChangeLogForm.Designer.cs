@@ -54,7 +54,6 @@
             this.Controls.Add(this.ChangelogRichTextBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "ChangeLogForm";
             this.Padding = new System.Windows.Forms.Padding(10);

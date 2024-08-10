@@ -2578,5 +2578,21 @@ namespace PckStudio
             if (e.Node is not null)
                 treeViewMain.SelectedNode = e.Node;
         }
+
+        private void whatsNewBtn_Click(object sender, EventArgs e)
+        {
+            new ChangeLogForm().Show(); // Shows what's new
+        }
+
+        private void pckCenterBtn_Click(object sender, EventArgs e)
+        {
+            //new PckCenter().Show();
+            // Will add PCK Center later...
+        }
+
+        private void creditsBtn_Click(object sender, EventArgs e)
+        {
+            new ContributorsForm().Show(); // PCK Studio's credits/contributors page launcher
+        }
     }
 }

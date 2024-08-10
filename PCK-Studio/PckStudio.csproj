@@ -605,6 +605,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\toolsAsset.png" />
     <None Include="Resources\whatsNewAsset.png" />
     <None Include="Resources\pckCenterAsset.png" />
     <None Include="Resources\atlases\bannerData.json" />

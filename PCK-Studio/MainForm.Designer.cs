@@ -522,7 +522,7 @@
             // menuStrip
             // 
             resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.Transparent;
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -647,8 +647,9 @@
             this.openPckManagerToolStripMenuItem,
             this.convertMusicFilesToolStripMenuItem});
             this.miscToolStripMenuItem.ForeColor = System.Drawing.Color.Silver;
-            resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
+            this.miscToolStripMenuItem.Image = global::PckStudio.Properties.Resources.toolsAsset;
             this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
+            resources.ApplyResources(this.miscToolStripMenuItem, "miscToolStripMenuItem");
             // 
             // openPckManagerToolStripMenuItem
             // 
@@ -875,7 +876,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 1;
+            this.tabControl.SelectedIndex = 0;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -942,6 +943,7 @@
             this.whatsNewBtn.Name = "whatsNewBtn";
             this.whatsNewBtn.TextColor = System.Drawing.Color.White;
             this.whatsNewBtn.UseVisualStyleBackColor = false;
+            this.whatsNewBtn.Click += new System.EventHandler(this.whatsNewBtn_Click);
             // 
             // pckCenterBtn
             // 
@@ -962,6 +964,7 @@
             this.pckCenterBtn.Name = "pckCenterBtn";
             this.pckCenterBtn.TextColor = System.Drawing.Color.White;
             this.pckCenterBtn.UseVisualStyleBackColor = false;
+            this.pckCenterBtn.Click += new System.EventHandler(this.pckCenterBtn_Click);
             // 
             // creditsBtn
             // 
@@ -982,6 +985,7 @@
             this.creditsBtn.Name = "creditsBtn";
             this.creditsBtn.TextColor = System.Drawing.Color.White;
             this.creditsBtn.UseVisualStyleBackColor = false;
+            this.creditsBtn.Click += new System.EventHandler(this.creditsBtn_Click);
             // 
             // editorTab
             // 

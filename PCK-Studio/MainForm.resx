@@ -806,7 +806,7 @@
     <value>NoControl</value>
   </data>
   <data name="logoPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>115, 93</value>
+    <value>115, 90</value>
   </data>
   <data name="logoPictureBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -1619,28 +1619,6 @@
   </data>
   <data name="quickChangeToolStripMenuItem.Text" xml:space="preserve">
     <value>Quick Change</value>
-  </data>
-  <data name="miscToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAA6pJREFUeF7tms9vDVEYhouqpFZVRFpdd+cPkFphQeKPqIUfSVl0Y9OQWNpXE/ak
-        SEhYkEjZUFZERCxtCaKKWKDe787jpNftmTlzz4x0rvMkb3Lzzfu9c8690zkz0+lLJBKJRCKRqIOVlZUx
-        6Yb0WSqL9dyUxolrFhq4Tf6DFMtHaYzY5qBB2y9fFdeIbQ4adDeHvY8lYpsDA3dQDoY2B+XmwLgdlIOh
-        zUG5OTBuB+VgaHNQbg6M20E5GNoclP8N2l/M+r3eKHc9IWNV6/d6I+x6QqYq1+/1RvH1hEy9cNj7KL6e
-        wNizME0/+HoWpukHX8/CNP3gK8NeWq13IivVStT+aPUjz6R0S/pmDUXQ5qBcG+zGQbmIr5LNaZK2YmQe
-        lA5K56V70hvpu9QGdgfl2mA3DsqrsTHaWO9KNvYD0iD2RKIIHS7T0h5pA6XGY3NhTtOU/Mj0h7fSFem4
-        ZGfbXdIWbOsWGyNjtTGfkK5KNpcW2PzgC4Y2B+XaYDcOysHQ5gdfMLQ5KNcGu3FQDoY2P/jKMEGr9e7L
-        SrUStT9a/eDrWZimH3x18Ez6kX3M5af0PPtYPUzTD74qeS0dJnumVclnBu9+6UWrUiGWnQu+KrBHUGek
-        AaIte6N0X/LxUNqE3fz90jHpnVQJRPvBF8ttaZjINlQfkeyXfSktSA+kV5IdKSPY2lB9WLojRUOkH3yx
-        XCCuMiwzi46DOD/4YrHDfyuR0SjL7kzfW3AsRPrBVwUniYzGsrLIeIj0g68KFoiMRll2nqgEIv3gi+WX
-        dITIaJR1iMxoiPSDL5aLxFWGZWbRcRDnB18M9ixxB3EdaJvdrp6WnkhfkH0+JXlvt7Vtu2TP9qIgzg++
-        GOaI6kDbRqW8y1y7XB7F3oG2zbZcERDlB18ZHkmXpLOSPVEeIqoN1e2XD7nGty9hzSNB9SHpqHROuiw9
-        lkpBlB98ZeinNRf57LAPZYq2XOTbnNnDodUPvmBoK0TWp1lHEIu0FYI/GNr84AuGtkJkXc46glimrRD8
-        wdDmB18wtBUia5kvIPi1OPzB0OYHXzC0FSJrY/4Eyr4gEXoStHU+lLpOgp9o9SOTvVBUBluKbEmypcmW
-        qLxl0Ja4IszjHqKsRvVtUswyOE+UH5nGJbud7ZZZojrQNrsQyvsSii6E5lqu7rDb6d1E5SOjvSl2Xerm
-        fSG7XF3zaZChbQPSlLQo2YnRZL+k1db85Q1t2ykF/cv+L5akeSls8olEIpFIJP4T+vp+A8lMcFIN42ej
-        AAAAAElFTkSuQmCC
-</value>
   </data>
   <data name="miscToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 21</value>
@@ -3113,108 +3091,6 @@
   <data name="editAllEntriesToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit All Entries</value>
   </data>
-  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 5</value>
-  </data>
-  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1234, 756</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;buttomBox.Name" xml:space="preserve">
-    <value>buttomBox</value>
-  </data>
-  <data name="&gt;&gt;buttomBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttomBox.Parent" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;buttomBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="openTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>21, 35, 23, 6</value>
-  </data>
-  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 719</value>
-  </data>
-  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="buttomBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -4212,7 +4088,7 @@
     <value>23, 23, 23, 23</value>
   </data>
   <data name="buttomBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>719, 678</value>
+    <value>719, 673</value>
   </data>
   <data name="buttomBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -4232,69 +4108,6 @@
   <data name="&gt;&gt;buttomBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;whatsNewBtn.Name" xml:space="preserve">
-    <value>whatsNewBtn</value>
-  </data>
-  <data name="&gt;&gt;whatsNewBtn.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;whatsNewBtn.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;whatsNewBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;pckCenterBtn.Name" xml:space="preserve">
-    <value>pckCenterBtn</value>
-  </data>
-  <data name="&gt;&gt;pckCenterBtn.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;pckCenterBtn.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;pckCenterBtn.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;creditsBtn.Name" xml:space="preserve">
-    <value>creditsBtn</value>
-  </data>
-  <data name="&gt;&gt;creditsBtn.Type" xml:space="preserve">
-    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;creditsBtn.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;creditsBtn.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>740, 35</value>
-  </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 678</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="whatsNewBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -4311,7 +4124,7 @@
     <value>NoControl</value>
   </data>
   <data name="whatsNewBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 183</value>
+    <value>65, 180</value>
   </data>
   <data name="whatsNewBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4356,7 +4169,7 @@
     <value>NoControl</value>
   </data>
   <data name="pckCenterBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 305</value>
+    <value>65, 302</value>
   </data>
   <data name="pckCenterBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4398,7 +4211,7 @@
     <value>BottomCenter</value>
   </data>
   <data name="creditsBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 428</value>
+    <value>65, 425</value>
   </data>
   <data name="creditsBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4426,6 +4239,60 @@
   </data>
   <data name="&gt;&gt;creditsBtn.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>740, 35</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>463, 673</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="openTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>21, 35, 23, 6</value>
+  </data>
+  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 714</value>
+  </data>
+  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -4543,6 +4410,33 @@
   </data>
   <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 5</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1234, 756</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="pckFileLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 20</value>

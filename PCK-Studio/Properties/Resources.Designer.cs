@@ -1122,6 +1122,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap toolsAsset {
+            get {
+                object obj = ResourceManager.GetObject("toolsAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap trello {
             get {
                 object obj = ResourceManager.GetObject("trello", resourceCulture);
