@@ -3091,6 +3091,492 @@
   <data name="editAllEntriesToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit All Entries</value>
   </data>
+  <data name="&gt;&gt;buttomBox.Name" xml:space="preserve">
+    <value>buttomBox</value>
+  </data>
+  <data name="&gt;&gt;buttomBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttomBox.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;buttomBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="openTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>21, 35, 23, 6</value>
+  </data>
+  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 714</value>
+  </data>
+  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="editorTab.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="pckFileLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 20</value>
+  </data>
+  <data name="pckFileLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="pckFileLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>387, 27</value>
+  </data>
+  <data name="pckFileLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Name" xml:space="preserve">
+    <value>pckFileLabel</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;pckFileLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="labelImageSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 344</value>
+  </data>
+  <data name="labelImageSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 19</value>
+  </data>
+  <data name="labelImageSize.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="labelImageSize.Text" xml:space="preserve">
+    <value>Skin Res</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
+    <value>labelImageSize</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="fileEntryCountLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="fileEntryCountLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 323</value>
+  </data>
+  <data name="fileEntryCountLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="fileEntryCountLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 19</value>
+  </data>
+  <data name="fileEntryCountLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="fileEntryCountLabel.Text" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Name" xml:space="preserve">
+    <value>fileEntryCountLabel</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="metroLabel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="metroLabel2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 6</value>
+  </data>
+  <data name="metroLabel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="metroLabel2.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
+    <value>metroLabel2</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="treeMeta.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeMeta.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 3</value>
+  </data>
+  <data name="treeMeta.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
+    <value>550, 277</value>
+  </data>
+  <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
+    <value>treeMeta</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
+    <value>buttonEdit</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
+    <value>editorControlBox</value>
+  </data>
+  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
+    <value>metroLabel1</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
+    <value>editorControlBox</value>
+  </data>
+  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
+    <value>entryDataTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
+    <value>editorControlBox</value>
+  </data>
+  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
+    <value>entryTypeTextBox</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
+    <value>editorControlBox</value>
+  </data>
+  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="editorControlBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="editorControlBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>554, 3</value>
+  </data>
+  <data name="editorControlBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>263, 277</value>
+  </data>
+  <data name="editorControlBox.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;editorControlBox.Name" xml:space="preserve">
+    <value>editorControlBox</value>
+  </data>
+  <data name="&gt;&gt;editorControlBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;editorControlBox.Parent" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;editorControlBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="MetaTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>821, 283</value>
+  </data>
+  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="MetaTab.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
+    <value>MetaTab</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PropertiesTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>391, 381</value>
+  </data>
+  <data name="PropertiesTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>829, 325</value>
+  </data>
+  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
+    <value>PropertiesTabControl</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>505, 82</value>
+  </data>
+  <data name="label11.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="treeViewMain.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="treeViewMain.ImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>467, 14</value>
+  </metadata>
+  <data name="imageList.ImageSize" type="System.Drawing.Size, System.Drawing">
+    <value>32, 32</value>
+  </data>
+  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 58</value>
+  </data>
+  <data name="treeViewMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="treeViewMain.SelectedImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>385, 648</value>
+  </data>
+  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
+    <value>treeViewMain</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="previewPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="previewPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="previewPictureBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 58</value>
+  </data>
+  <data name="previewPictureBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="previewPictureBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 262</value>
+  </data>
+  <data name="previewPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="previewPictureBox.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Name" xml:space="preserve">
+    <value>previewPictureBox</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 38</value>
+  </data>
+  <data name="editorTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="editorTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 58, 6, 8</value>
+  </data>
+  <data name="editorTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 714</value>
+  </data>
+  <data name="editorTab.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
+    <value>editorTab</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 5</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1234, 756</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="buttomBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -4108,6 +4594,69 @@
   <data name="&gt;&gt;buttomBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;whatsNewBtn.Name" xml:space="preserve">
+    <value>whatsNewBtn</value>
+  </data>
+  <data name="&gt;&gt;whatsNewBtn.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;whatsNewBtn.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;whatsNewBtn.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;pckCenterBtn.Name" xml:space="preserve">
+    <value>pckCenterBtn</value>
+  </data>
+  <data name="&gt;&gt;pckCenterBtn.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;pckCenterBtn.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;pckCenterBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;creditsBtn.Name" xml:space="preserve">
+    <value>creditsBtn</value>
+  </data>
+  <data name="&gt;&gt;creditsBtn.Type" xml:space="preserve">
+    <value>CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton, CBH-WinForm-Theme-Library, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;creditsBtn.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;creditsBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>740, 35</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>463, 673</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>openTab</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="whatsNewBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -4240,518 +4789,35 @@
   <data name="&gt;&gt;creditsBtn.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>740, 35</value>
-  </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 673</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="openTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="openTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="openTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>21, 35, 23, 6</value>
-  </data>
-  <data name="openTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 714</value>
-  </data>
-  <data name="openTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;openTab.Name" xml:space="preserve">
-    <value>openTab</value>
-  </data>
-  <data name="&gt;&gt;openTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;openTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;openTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="editorTab.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Name" xml:space="preserve">
-    <value>pckFileLabel</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
-    <value>labelImageSize</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Name" xml:space="preserve">
-    <value>fileEntryCountLabel</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
-    <value>treeViewMain</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Name" xml:space="preserve">
-    <value>previewPictureBox</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="editorTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="editorTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="editorTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 58, 6, 8</value>
-  </data>
-  <data name="editorTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 714</value>
-  </data>
-  <data name="editorTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Name" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;editorTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;editorTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 5</value>
-  </data>
-  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1234, 756</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="pckFileLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 20</value>
-  </data>
-  <data name="pckFileLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="pckFileLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>387, 27</value>
-  </data>
-  <data name="pckFileLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Name" xml:space="preserve">
-    <value>pckFileLabel</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;pckFileLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="labelImageSize.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelImageSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 344</value>
-  </data>
-  <data name="labelImageSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="labelImageSize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 19</value>
-  </data>
-  <data name="labelImageSize.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="labelImageSize.Text" xml:space="preserve">
-    <value>Skin Res</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Name" xml:space="preserve">
-    <value>labelImageSize</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;labelImageSize.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="fileEntryCountLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="fileEntryCountLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 323</value>
-  </data>
-  <data name="fileEntryCountLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="fileEntryCountLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 19</value>
-  </data>
-  <data name="fileEntryCountLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="fileEntryCountLabel.Text" xml:space="preserve">
-    <value>Index</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Name" xml:space="preserve">
-    <value>fileEntryCountLabel</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;fileEntryCountLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PropertiesTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="PropertiesTabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>391, 381</value>
-  </data>
-  <data name="PropertiesTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="PropertiesTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>829, 325</value>
-  </data>
-  <data name="PropertiesTabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Name" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;PropertiesTabControl.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
-    <value>metroLabel2</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
-    <value>treeMeta</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;entryTypeTextBox.Name" xml:space="preserve">
-    <value>entryTypeTextBox</value>
-  </data>
-  <data name="&gt;&gt;entryTypeTextBox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;entryDataTextBox.Name" xml:space="preserve">
-    <value>entryDataTextBox</value>
-  </data>
-  <data name="&gt;&gt;entryDataTextBox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Name" xml:space="preserve">
-    <value>buttonEdit</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Name" xml:space="preserve">
-    <value>metroLabel1</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="MetaTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 38</value>
-  </data>
-  <data name="MetaTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="MetaTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="MetaTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>821, 283</value>
-  </data>
-  <data name="MetaTab.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MetaTab.Text" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Name" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabPage, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.Parent" xml:space="preserve">
-    <value>PropertiesTabControl</value>
-  </data>
-  <data name="&gt;&gt;MetaTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="metroLabel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="metroLabel2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>256, 6</value>
-  </data>
-  <data name="metroLabel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="metroLabel2.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Name" xml:space="preserve">
-    <value>metroLabel2</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;metroLabel2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="treeMeta.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="treeMeta.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="treeMeta.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 3</value>
-  </data>
-  <data name="treeMeta.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="treeMeta.Size" type="System.Drawing.Size, System.Drawing">
-    <value>238, 277</value>
-  </data>
-  <data name="treeMeta.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Name" xml:space="preserve">
-    <value>treeMeta</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.Parent" xml:space="preserve">
-    <value>MetaTab</value>
-  </data>
-  <data name="&gt;&gt;treeMeta.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="entryTypeTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="resource.ImeMode1" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="resource.Location1" type="System.Drawing.Point, System.Drawing">
     <value>191, 1</value>
   </data>
-  <data name="resource.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="resource.Margin1" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
   </data>
-  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="resource.Size1" type="System.Drawing.Size, System.Drawing">
     <value>25, 25</value>
   </data>
-  <data name="resource.TabIndex" type="System.Int32, mscorlib">
+  <data name="resource.TabIndex1" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="resource.Visible" type="System.Boolean, mscorlib">
+  <data name="resource.Visible1" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="entryTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 71</value>
+    <value>23, 68</value>
   </data>
   <data name="entryTypeTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4769,40 +4835,40 @@
     <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;entryTypeTextBox.Parent" xml:space="preserve">
-    <value>MetaTab</value>
+    <value>editorControlBox</value>
   </data>
   <data name="&gt;&gt;entryTypeTextBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="entryDataTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="resource.Image1" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="resource.ImeMode1" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="resource.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="resource.Location1" type="System.Drawing.Point, System.Drawing">
+  <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
     <value>223, 1</value>
   </data>
-  <data name="resource.Margin1" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="resource.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
   </data>
-  <data name="resource.Size1" type="System.Drawing.Size, System.Drawing">
+  <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 29</value>
   </data>
-  <data name="resource.TabIndex1" type="System.Int32, mscorlib">
+  <data name="resource.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="resource.Visible1" type="System.Boolean, mscorlib">
+  <data name="resource.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="entryDataTextBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="entryDataTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 104</value>
+    <value>23, 101</value>
   </data>
   <data name="entryDataTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4820,16 +4886,16 @@
     <value>MetroFramework.Controls.MetroTextBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;entryDataTextBox.Parent" xml:space="preserve">
-    <value>MetaTab</value>
+    <value>editorControlBox</value>
   </data>
   <data name="&gt;&gt;entryDataTextBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="buttonEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="buttonEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 143</value>
+    <value>23, 140</value>
   </data>
   <data name="buttonEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 3, 4, 3</value>
@@ -4853,10 +4919,10 @@
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;buttonEdit.Parent" xml:space="preserve">
-    <value>MetaTab</value>
+    <value>editorControlBox</value>
   </data>
   <data name="&gt;&gt;buttonEdit.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>0</value>
   </data>
   <data name="metroLabel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -4865,7 +4931,7 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 143</value>
+    <value>152, 128</value>
   </data>
   <data name="metroLabel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -4883,115 +4949,10 @@
     <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;metroLabel1.Parent" xml:space="preserve">
-    <value>MetaTab</value>
+    <value>editorControlBox</value>
   </data>
   <data name="&gt;&gt;metroLabel1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <metadata name="label11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>505, 82</value>
-  </data>
-  <data name="label11.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="treeViewMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="treeViewMain.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="treeViewMain.ImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>467, 14</value>
-  </metadata>
-  <data name="imageList.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>32, 32</value>
-  </data>
-  <data name="treeViewMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 58</value>
-  </data>
-  <data name="treeViewMain.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="treeViewMain.SelectedImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="treeViewMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 648</value>
-  </data>
-  <data name="treeViewMain.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Name" xml:space="preserve">
-    <value>treeViewMain</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;treeViewMain.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="previewPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="previewPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="previewPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 58</value>
-  </data>
-  <data name="previewPictureBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 3, 4, 3</value>
-  </data>
-  <data name="previewPictureBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 262</value>
-  </data>
-  <data name="previewPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="previewPictureBox.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Name" xml:space="preserve">
-    <value>previewPictureBox</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.Parent" xml:space="preserve">
-    <value>editorTab</value>
-  </data>
-  <data name="&gt;&gt;previewPictureBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>1</value>
   </data>
   <data name="LittleEndianCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>

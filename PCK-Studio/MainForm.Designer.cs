@@ -153,6 +153,7 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.editorControlBox = new System.Windows.Forms.Panel();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -169,6 +170,7 @@
             this.PropertiesTabControl.SuspendLayout();
             this.MetaTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
+            this.editorControlBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripSeparator1
@@ -876,7 +878,7 @@
             this.tabControl.Controls.Add(this.editorTab);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
+            this.tabControl.SelectedIndex = 1;
             this.tabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.tabControl.TabStop = false;
             this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -1042,10 +1044,7 @@
             this.MetaTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.MetaTab.Controls.Add(this.metroLabel2);
             this.MetaTab.Controls.Add(this.treeMeta);
-            this.MetaTab.Controls.Add(this.entryTypeTextBox);
-            this.MetaTab.Controls.Add(this.entryDataTextBox);
-            this.MetaTab.Controls.Add(this.buttonEdit);
-            this.MetaTab.Controls.Add(this.metroLabel1);
+            this.MetaTab.Controls.Add(this.editorControlBox);
             this.MetaTab.HorizontalScrollbarBarColor = true;
             this.MetaTab.HorizontalScrollbarHighlightOnWheel = false;
             this.MetaTab.HorizontalScrollbarSize = 12;
@@ -1081,17 +1080,17 @@
             // 
             // 
             // 
-            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.entryTypeTextBox.CustomButton.Margin = ((System.Windows.Forms.Padding)(resources.GetObject("resource.Margin")));
+            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
+            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.entryTypeTextBox.CustomButton.Margin = ((System.Windows.Forms.Padding)(resources.GetObject("resource.Margin1")));
             this.entryTypeTextBox.CustomButton.Name = "";
-            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
+            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
             this.entryTypeTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
+            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
             this.entryTypeTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.entryTypeTextBox.CustomButton.UseSelectable = true;
-            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
+            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
             this.entryTypeTextBox.Lines = new string[0];
             this.entryTypeTextBox.MaxLength = 32767;
             this.entryTypeTextBox.Name = "entryTypeTextBox";
@@ -1112,17 +1111,17 @@
             // 
             // 
             // 
-            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
-            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
-            this.entryDataTextBox.CustomButton.Margin = ((System.Windows.Forms.Padding)(resources.GetObject("resource.Margin1")));
+            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
+            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.entryDataTextBox.CustomButton.Margin = ((System.Windows.Forms.Padding)(resources.GetObject("resource.Margin")));
             this.entryDataTextBox.CustomButton.Name = "";
-            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.entryDataTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
             this.entryDataTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.entryDataTextBox.CustomButton.UseSelectable = true;
-            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
             this.entryDataTextBox.Lines = new string[0];
             this.entryDataTextBox.MaxLength = 32767;
             this.entryDataTextBox.Name = "entryDataTextBox";
@@ -1202,6 +1201,16 @@
             this.LittleEndianCheckBox.UseCustomBackColor = true;
             this.LittleEndianCheckBox.UseSelectable = true;
             // 
+            // editorControlBox
+            // 
+            this.editorControlBox.BackColor = System.Drawing.Color.Transparent;
+            this.editorControlBox.Controls.Add(this.buttonEdit);
+            this.editorControlBox.Controls.Add(this.metroLabel1);
+            this.editorControlBox.Controls.Add(this.entryDataTextBox);
+            this.editorControlBox.Controls.Add(this.entryTypeTextBox);
+            resources.ApplyResources(this.editorControlBox, "editorControlBox");
+            this.editorControlBox.Name = "editorControlBox";
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1230,6 +1239,8 @@
             this.MetaTab.ResumeLayout(false);
             this.MetaTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();
+            this.editorControlBox.ResumeLayout(false);
+            this.editorControlBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1355,6 +1366,7 @@
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton whatsNewBtn;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton pckCenterBtn;
         private CBH.Ultimate.Controls.CrEaTiiOn_Ultimate_GradientButton creditsBtn;
+        private System.Windows.Forms.Panel editorControlBox;
     }
 }
 
