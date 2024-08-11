@@ -24,6 +24,7 @@ namespace PckStudio.Forms
                 ["AutoUpdate"] = "Auto Update",
                 ["LoadSubPcks"] = "Load Sub Pcks",
                 ["UsePrerelease"] = "Use Prerelease",
+                ["ValidateImageDimension"] = "Validate skin dimension",
             })
         {
         }
