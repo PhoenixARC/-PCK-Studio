@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using PckStudio.Extensions;
 using PckStudio.Internal.Misc;
 using System.Diagnostics;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Features
 {
@@ -40,6 +41,12 @@ namespace PckStudio.Forms.Features
         public CemuPanel()
         {
             InitializeComponent();
+            var imgList = new ImageList();
+            imgList.ColorDepth = ColorDepth.Depth32Bit;
+            imgList.ImageSize = new System.Drawing.Size(28, 28);
+            imgList.Images.Add(Resources.SKIN_ICON);
+            imgList.Images.Add(Resources.TEXTURE_ICON);
+            DLCTreeView.ImageList = imgList;
             if (!TryApplyPermanentCemuConfig() &&
                 MessageBox.Show(this, "Failed to get Cemu perma settings\nDo you want to open your local settings.xml file?",
                 "Cemu mlc path not found",
@@ -223,8 +230,10 @@ namespace PckStudio.Forms.Features
             {
                 if (directoryInfo.GetFileSystemInfos().Length != 0)
                 {
+                    DLCDirectoryInfo dlcDirectoryInfo = new DLCDirectoryInfo(directoryInfo);
                     TreeNode node = DLCTreeView.Nodes.Add(directoryInfo.Name);
-                    node.Tag = new DLCDirectoryInfo(directoryInfo);
+                    node.ImageIndex = dlcDirectoryInfo.HasTexturePack ? 1 : 0;
+                    node.Tag = dlcDirectoryInfo;
                 }
             }
         }
