@@ -264,23 +264,6 @@ namespace PckStudio.External.Format
                 rotation[2] = value.Z;
             }
         }
-        
-        [JsonProperty("pivot")]
-        private float[] pivot;
-
-        [JsonIgnore]
-        public Vector3 Pivot
-        {
-            get => new Vector3(pivot?[0] ?? 0, pivot?[1] ?? 0, pivot?[2] ?? 0);
-            set
-            {
-                if (pivot is null || pivot.Length < 3)
-                    pivot = new float[3];
-                pivot[0] = value.X;
-                pivot[1] = value.Y;
-                pivot[2] = value.Z;
-            }
-        }
 
         [JsonProperty("uuid")]
         internal Guid Uuid;

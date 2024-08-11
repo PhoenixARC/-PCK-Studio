@@ -12,6 +12,7 @@ using System.IO;
 using PckStudio.Internal.Json;
 using System.Collections.ObjectModel;
 using PckStudio.Properties;
+using System.Diagnostics;
 
 namespace PckStudio.Internal
 {
@@ -36,17 +37,8 @@ namespace PckStudio.Internal
 
             Vector3 transformAxis = new Vector3(1, 1, 0);
 
-            Outline GetOrCreateOutline(string partName)
-            {
-                if (!outliners.ContainsKey(partName))
-                    outliners.Add(partName, new Outline(partName));
-                return outliners[partName];
-            }
-
             foreach (ModelPart part in modelInfo.Model.Parts.Values)
             {
-                //Outline outline = GetOrCreateOutline(part.Name);
-
                 var outline = new Outline(part.Name);
 
                 Vector3 partTranslation = part.Translation;
@@ -65,12 +57,57 @@ namespace PckStudio.Internal
                 }
                 outliners.Add(part.Name, outline);
             }
+            
+            if (!ModelTextureLocations.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
+            {
+                Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ExportBlockBenchModel)}] Failed to get model meta data for '{modelInfo.Model.Name}'.");
+                return;
+            }
+
+            TraverseChildren(modelMetaData.RootParts, ref outliners);
 
             blockBenchModel.Elements = elements.ToArray();
-            blockBenchModel.Outliner = JArray.FromObject(outliners.Values);
+            blockBenchModel.Outliner = JArray.FromObject(outliners.Values.Where(value => modelMetaData.RootParts.Count == 0 || modelMetaData.RootParts.ContainsKey(value.Name)));
 
-            string content = JsonConvert.SerializeObject(blockBenchModel);
+            string content = JsonConvert.SerializeObject(blockBenchModel, Formatting.Indented);
             File.WriteAllText(fileName, content);
+        }
+
+        private static void TraverseChildren(IReadOnlyDictionary<string, JArray> keyValues, ref Dictionary<string, Outline> outliners)
+        {
+            foreach (KeyValuePair<string, JArray> item in keyValues)
+            {
+                if (!outliners.ContainsKey(item.Key))
+                {
+                    Debug.WriteLine($"{item.Key} not in {nameof(outliners)}.");
+                    continue;
+                }
+                Outline partentOutline = outliners[item.Key];
+                foreach (JToken child in item.Value)
+                {
+                    if (child.Type == JTokenType.String && outliners.TryGetValue(child.ToString(), out Outline childOutline))
+                    {
+                        childOutline.Rotation += -partentOutline.Rotation;
+                        partentOutline.Children.Add(JToken.FromObject(childOutline));
+                    }
+                    if (child.Type == JTokenType.Object)
+                    {
+                        IReadOnlyDictionary<string, JArray> childKeyValues = child.ToObject<ReadOnlyDictionary<string, JArray>>();
+                        TraverseChildren(childKeyValues, ref outliners);
+                        foreach (var key in childKeyValues.Keys)
+                        {
+                            if (!outliners.ContainsKey(key))
+                            {
+                                Debug.WriteLine($"{key} not in {nameof(outliners)}.");
+                                continue;
+                            }
+                            childOutline = outliners[key];
+                            childOutline.Rotation += -partentOutline.Rotation;
+                            partentOutline.Children.Add(JToken.FromObject(childOutline));
+                        }
+                    }
+                }
+            }
         }
 
         private static Element CreateElement(ModelBox box, Vector3 origin, string name)

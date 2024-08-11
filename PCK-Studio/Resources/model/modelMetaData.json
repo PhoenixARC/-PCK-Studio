@@ -1,13 +1,23 @@
-// TODO: Add parent detection
-
 {
   "bat": {
     "textureLocations": [
       "res/mob/bat"
     ],
-    "parents": {
-      "rightEar": "head",
-      "leftEar": "head"
+    "root": {
+      "head": [
+        "rightEar",
+        "leftEar"
+      ],
+      "body": [
+        {
+          "rightWing": [
+            "rightWingTip"
+          ],
+          "leftWing": [
+            "leftWingTip"
+          ]
+        }
+      ]
     }
   },
   "bed": {
@@ -19,7 +29,6 @@
     "textureLocations": [
       "res/mob/fire"
     ]
-
   },
   "boat": {
     "textureLocations": [
@@ -34,11 +43,7 @@
   "chicken": {
     "textureLocations": [
       "res/mob/chicken"
-    ],
-    "parents": {
-      "comb": "head",
-      "beak": "head"
-    }
+    ]
   },
   "cow": {
     "textureLocations": [
@@ -58,26 +63,73 @@
   "dolphin": {
     "textureLocations": [
       "res/mob/dolphin"
-    ]
+    ],
+    "root": {
+      "body": [
+        { "head": [ "nose" ] },
+        "left_fin",
+        "right_fin",
+        "back_fin",
+        { "tail": [ "tail_fin" ] }
+      ]
+    }
+    // - body
+    //   - head
+    //     - nose
+    //   - left_fin
+    //   - right_fin
+    //   - back_fin
+    //   - tail
+    //     - tail_fin
   },
   "dragon": {
     "textureLocations": [
       "res/mob/enderdragon/ender"
-    ]
+    ],
+    "root": {
+      "head": [ "jaw" ],
+      "body": [],
+      "wing": [ "wingtip" ],
+      "wing1": [ "wingtip1" ],
+      "rearleg": [ { "rearlegtip": [ "rearfoot" ] } ],
+      "rearleg1": [ { "rearlegtip1": [ "rearfoot1" ] } ],
+      "frontleg": [ { "frontlegtip": [ "frontfoot" ] } ],
+      "frontleg1": [ { "frontlegtip1": [ "frontfoot1" ] } ]
+    }
+    // TODO: Finish!
+    // - head
+    //   - jaw
+    // - body
+    // - wing
+    //   - wingtip
+    // - wing1
+    //   - wingtip1
+    // - rearleg
+    //   - rearlegtip
+    //     - rearfoot
+    // - rearleg1
+    //   - rearlegtip1
+    //     - rearfoot1
+    // - frontleg
+    //   - frontlegtip
+    //     - frontfoot
+    // - frontleg1
+    //   - frontlegtip1
+    //     - frontfoot1
   },
   "dragon_head": {
     "textureLocations": [
       "res/mob/enderdragon/ender"
-    ]
+    ],
+    "root": {
+      "head": [ "jaw" ]
+    }
+    // - head
+    //   - jaw
   },
   "enderman": {
     "textureLocations": [
       "res/mob/enderman"
-    ]
-  },
-  "evoker": {
-    "textureLocations": [
-      "res/mob/illager/evoker"
     ]
   },
   "ghast": {
@@ -90,7 +142,15 @@
     "textureLocations": [
       "res/mob/guardian",
       "res/mob/guardian_elder"
-    ]
+    ],
+    "root": {
+      "head": [
+        "eye",
+        {
+          "tailpart0": [ { "tailpart1": [ "tailpart2" ] } ]
+        }
+      ]
+    }
   },
   "irongolem": {
     "textureLocations": [
@@ -116,6 +176,7 @@
       "res/item/cart"
     ]
   },
+  // the ocelot model is weird.. -miku
   "ocelot": {
     "textureLocations": [
       "res/mob/ozelot"
@@ -128,12 +189,29 @@
       "res/mob/parrot/parrot_grey",
       "res/mob/parrot/parrot_red_blue",
       "res/mob/parrot/parrot_yellow_blue"
-    ]
+    ],
+    "root": {
+      "head": [ "head2", "beak1", "beak2", "feather" ],
+      "body": [],
+      "tail": [],
+      "wing0": [],
+      "wing1": [],
+      "leg0": [],
+      "leg1": []
+    }
   },
   "phantom": {
     "textureLocations": [
       "res/mob/phantom"
-    ]
+    ],
+    "root": {
+      "body": [
+        "head",
+        { "wing0": [ "wingtip0" ] },
+        { "wing1": [ "wingtip1" ] },
+        { "tail": [ "tailtip" ] }
+      ]
+    }
   },
   "pig": {
     "textureLocations": [
@@ -165,12 +243,13 @@
   },
   "sheep": {
     "textureLocations": [
-      "res/mob/sheep"
+      // locations not tested
+      "res/mob/sheep_fur"
     ]
   },
   "sheep.sheared": {
     "textureLocations": [
-      ""
+      "res/mob/sheep"
     ]
   },
   "shulker": {
@@ -234,12 +313,6 @@
       "res/mob/sea_turtle"
     ]
   },
-  "vex": {
-    "textureLocations": [
-      "res/mob/illager/vex",
-      "res/mob/illager/vex_charging"
-    ]
-  },
   "villager": {
     "textureLocations": [
       "res/mob/villager/villager",
@@ -253,6 +326,17 @@
   "villager.witch": {
     "textureLocations": [
       "res/mob/witch"
+    ]
+  },
+  "vex": {
+    "textureLocations": [
+      "res/mob/illager/vex",
+      "res/mob/illager/vex_charging"
+    ]
+  },
+  "evoker": {
+    "textureLocations": [
+      "res/mob/illager/evoker"
     ]
   },
   "vindicator": {
@@ -307,18 +391,26 @@
       "res/mob/horse/horse_white",
       "res/mob/horse/horse_zombie",
       "res/mob/horse/mule"
-    ]
+    ],
+    "root": {
+      "Neck": [ { "Head": [ "UMouth", "Ear1", "Ear2", "MuleEarL", "MuleEarR", "SaddleMouthL", "SaddleMouthR", "HeadSaddle" ] } ],
+      "Body": [ "TailA", "Saddle" ],
+      "Mane": [],
+      "Leg1A": [],
+      "Leg2A": [],
+      "Leg3A": [],
+      "Leg4A": [],
+      "Bag1": [],
+      "Bag2": [],
+      "SaddleMouthLine": [],
+      "SaddleMouthLineR": []
+    }
   },
   "cat": {
     "textureLocations": [
       "res/mob/cat_black",
       "res/mob/cat_red",
       "res/mob/cat_siamese"
-    ]
-  },
-  "cod": {
-    "textureLocations": [
-      "res/mob/fish/cod"
     ]
   },
   "zombie.drowned": {
@@ -336,7 +428,12 @@
       null
     ]
   },
-  "pufferfish.large": {
+  "cod": {
+    "textureLocations": [
+      "res/mob/fish/cod"
+    ]
+  },
+  "pufferfish.small": {
     "textureLocations": [
       "res/mob/fish/pufferfish"
     ]
@@ -346,7 +443,7 @@
       "res/mob/fish/pufferfish"
     ]
   },
-  "pufferfish.small": {
+  "pufferfish.large": {
     "textureLocations": [
       "res/mob/fish/pufferfish"
     ]
