@@ -33,7 +33,7 @@ namespace PckStudio.Forms
             InitializeComponent();
             Text = title;
             _applicationSettings = applicationSettings;
-            if (keyToStringMap is not null)
+            if (keyToStringMap is not null && !_applicationSettings.Context.ContainsKey(SettingsManager.KeyToStringContextKeyConst))
                 _applicationSettings.Context.Add(SettingsManager.KeyToStringContextKeyConst, keyToStringMap);
             LoadSettings();
         }
