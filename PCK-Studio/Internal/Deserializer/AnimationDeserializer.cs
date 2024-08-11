@@ -23,8 +23,11 @@ namespace PckStudio.Internal.Deserializer
             {
                 Image texture = asset.GetTexture();
                 IEnumerable<Image> frameTextures = texture.Split(ImageLayoutDirection.Vertical);
-                Animation animation = new Animation(frameTextures);
-                DeserializeAnimationAnim(ref animation, asset.GetProperty("ANIM"));
+                string animString = asset.GetProperty("ANIM");
+                bool animStringIsEmpty = string.IsNullOrEmpty(animString);
+                Animation animation = new Animation(frameTextures, animStringIsEmpty);
+                if (!animStringIsEmpty)
+                    DeserializeAnimationAnim(ref animation, animString);
                 return animation;
             }
             return Animation.CreateEmpty();
@@ -32,11 +35,6 @@ namespace PckStudio.Internal.Deserializer
 
         private static bool DeserializeAnimationAnim(ref Animation animation, string animString)
         {
-            if (string.IsNullOrEmpty(animString))
-            {
-                Trace.TraceError($"[{nameof(AnimationExtensions)}:{nameof(DeserializeAnimationAnim)}] Failed to parse anim. anim was null or empty.");
-                return false;
-            }
             animString = animString.Trim();
 
             animation.Interpolate = animString.StartsWith("#");
