@@ -510,7 +510,7 @@ namespace PckStudio.Internal
 
         private static Vector3 GetSkinBoxPivot(string partName)
         {
-            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, Vector3.UnitY) + (24f * Vector3.UnitY);
+            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, new Vector3(1, 1, 0)) + (24f * Vector3.UnitY);
         }
 
         private static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
