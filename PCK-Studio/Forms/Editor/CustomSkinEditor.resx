@@ -154,7 +154,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelTextureMapping.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <metadata name="groupBox1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -238,7 +238,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="positionLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -271,7 +271,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;positionLabel.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>23</value>
   </data>
   <data name="sizeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -304,7 +304,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;sizeLabel.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="uvLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -337,7 +337,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uvLabel.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <metadata name="skinPartTabContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -445,7 +445,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="importSkinButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -472,7 +472,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;importSkinButton.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="exportSkinButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -499,7 +499,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;exportSkinButton.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="outlineColorButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -529,7 +529,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;outlineColorButton.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="generateTextureCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -559,7 +559,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;generateTextureCheckBox.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="showArmorCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -589,7 +589,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;showArmorCheckbox.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="skinPartListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -616,13 +616,13 @@
     <value>0</value>
   </data>
   <data name="captureScreenshotButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+    <value>Bottom, Right</value>
   </data>
   <data name="captureScreenshotButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 553</value>
+    <value>510, 553</value>
   </data>
   <data name="captureScreenshotButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 21</value>
+    <value>111, 21</value>
   </data>
   <data name="captureScreenshotButton.TabIndex" type="System.Int32, mscorlib">
     <value>163</value>
@@ -640,7 +640,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;captureScreenshotButton.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="showToolsCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -670,16 +670,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;showToolsCheckBox.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="skinNameLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+    <value>Top, Left, Right</value>
   </data>
   <data name="skinNameLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="skinNameLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 553</value>
+    <value>364, 36</value>
   </data>
   <data name="skinNameLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 19</value>
@@ -700,7 +700,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;skinNameLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="skinPartsTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
@@ -817,7 +817,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -841,7 +841,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;renderer3D1.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="uvPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -874,7 +874,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>24</value>
   </data>
   <data name="centerSelectionCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -904,7 +904,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;centerSelectionCheckbox.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="textureSizeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -937,7 +937,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textureSizeLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="framerateSlider.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -964,7 +964,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;framerateSlider.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="framerateLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -997,16 +997,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;framerateLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="renderSettingsButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="renderSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>527, 553</value>
+    <value>343, 551</value>
   </data>
   <data name="renderSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 21</value>
+    <value>94, 23</value>
   </data>
   <data name="renderSettingsButton.TabIndex" type="System.Int32, mscorlib">
     <value>175</value>
@@ -1024,6 +1024,33 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;renderSettingsButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="exportTemplateButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="exportTemplateButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 553</value>
+  </data>
+  <data name="exportTemplateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 21</value>
+  </data>
+  <data name="exportTemplateButton.TabIndex" type="System.Int32, mscorlib">
+    <value>176</value>
+  </data>
+  <data name="exportTemplateButton.Text" xml:space="preserve">
+    <value>Export template</value>
+  </data>
+  <data name="&gt;&gt;exportTemplateButton.Name" xml:space="preserve">
+    <value>exportTemplateButton</value>
+  </data>
+  <data name="&gt;&gt;exportTemplateButton.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="&gt;&gt;exportTemplateButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;exportTemplateButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

@@ -428,5 +428,22 @@ namespace PckStudio.Forms.Editor
             using AppSettingsForm settingsForm = new AppSettingsForm("Render Settings", _settingsManager.GetSettings());
             settingsForm.ShowDialog();
         }
+
+        private void exportTemplateButton_Click(object sender, EventArgs e)
+        {
+            Image templateTexture = Resources.classic_template;
+            string templateFilename = "template";
+            SkinAnimMask templateAnimMask = SkinAnimMask.RESOLUTION_64x64;
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Save Template Model";
+            saveFileDialog.Filter = SkinModelImporter.Default.SupportedModelFileFormatsFilter;
+            saveFileDialog.FileName = templateFilename.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, new SkinANIM(templateAnimMask));
+                SkinModelImporter.Default.Export(saveFileDialog.FileName, modelInfo);
+            }
+        }
     }
 }

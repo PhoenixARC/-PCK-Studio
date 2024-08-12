@@ -66,6 +66,7 @@
             this.framerateSlider = new System.Windows.Forms.TrackBar();
             this.framerateLabel = new MetroFramework.Controls.MetroLabel();
             this.renderSettingsButton = new MetroFramework.Controls.MetroButton();
+            this.exportTemplateButton = new MetroFramework.Controls.MetroButton();
             labelTextureMapping = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
@@ -369,10 +370,20 @@
             this.renderSettingsButton.UseSelectable = true;
             this.renderSettingsButton.Click += new System.EventHandler(this.renderSettingsButton_Click);
             // 
+            // exportTemplateButton
+            // 
+            resources.ApplyResources(this.exportTemplateButton, "exportTemplateButton");
+            this.exportTemplateButton.ForeColor = System.Drawing.Color.White;
+            this.exportTemplateButton.Name = "exportTemplateButton";
+            this.exportTemplateButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.exportTemplateButton.UseSelectable = true;
+            this.exportTemplateButton.Click += new System.EventHandler(this.exportTemplateButton_Click);
+            // 
             // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.exportTemplateButton);
             this.Controls.Add(this.renderSettingsButton);
             this.Controls.Add(this.framerateLabel);
             this.Controls.Add(this.framerateSlider);
@@ -447,5 +458,6 @@
         private System.Windows.Forms.TrackBar framerateSlider;
         private MetroFramework.Controls.MetroLabel framerateLabel;
         private MetroFramework.Controls.MetroButton renderSettingsButton;
+        private MetroFramework.Controls.MetroButton exportTemplateButton;
     }
 }
