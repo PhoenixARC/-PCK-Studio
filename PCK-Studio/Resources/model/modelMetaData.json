@@ -96,26 +96,6 @@
       "frontleg": [ { "frontlegtip": [ "frontfoot" ] } ],
       "frontleg1": [ { "frontlegtip1": [ "frontfoot1" ] } ]
     }
-    // TODO: Finish!
-    // - head
-    //   - jaw
-    // - body
-    // - wing
-    //   - wingtip
-    // - wing1
-    //   - wingtip1
-    // - rearleg
-    //   - rearlegtip
-    //     - rearfoot
-    // - rearleg1
-    //   - rearlegtip1
-    //     - rearfoot1
-    // - frontleg
-    //   - frontlegtip
-    //     - frontfoot
-    // - frontleg1
-    //   - frontlegtip1
-    //     - frontfoot1
   },
   "dragon_head": {
     "textureLocations": [
@@ -124,8 +104,6 @@
     "root": {
       "head": [ "jaw" ]
     }
-    // - head
-    //   - jaw
   },
   "enderman": {
     "textureLocations": [
