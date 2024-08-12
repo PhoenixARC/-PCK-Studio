@@ -473,6 +473,11 @@ namespace PckStudio.Internal
 
         private static Image FixTexture(Image texture, IEnumerable<Rectangle> areasToFix)
         {
+            if (texture == null)
+            {
+                Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(FixTexture)}] Failed to fix texture: texture is null.");
+                return null;
+            }
             Image result = new Bitmap(texture);
             using var g = Graphics.FromImage(result);
             g.ApplyConfig(new GraphicsConfig()
