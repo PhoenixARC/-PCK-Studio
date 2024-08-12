@@ -184,6 +184,11 @@ namespace PckStudio.External.Format
         
         private const string _TEXTUREDATAHEAD = "data:image/png;base64,";
 
+        [JsonConstructor]
+        private Texture()
+        {
+        }
+        
         internal Texture(string name, Image image)
             : this(image)
         {
