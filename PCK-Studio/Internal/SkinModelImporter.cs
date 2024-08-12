@@ -92,8 +92,6 @@ namespace PckStudio.Internal
                 if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
                 {
                     Element element = blockBenchModel.Elements.First(e => e.Uuid.Equals(tokenGuid));
-                    if (!SkinBOX.IsValidType(element.Name) || element.Type != "cube")
-                        continue;
                     LoadElement(element.Name, element, ref modelInfo);
                     continue;
                 }
@@ -101,8 +99,6 @@ namespace PckStudio.Internal
                 {
                     Outline outline = token.ToObject<Outline>();
                     string type = outline.Name;
-                    if (!SkinBOX.IsValidType(type))
-                        continue;
                     ReadOutliner(token, type, blockBenchModel.Elements, ref modelInfo);
                 }
             }
@@ -138,9 +134,12 @@ namespace PckStudio.Internal
 
         private static void LoadElement(string boxType, Element element, ref SkinModelInfo modelInfo)
         {
-            if (!element.UseBoxUv || !element.IsVisibile)
+            if (element.Type != "cube" || !element.UseBoxUv || !element.IsVisibile)
                 return;
 
+            boxType = TryConvertToSkinBoxType(boxType);
+            if (!SkinBOX.IsValidType(boxType))
+                return;
             var boundingBox = new Rendering.BoundingBox(element.From, element.To);
             Vector3 pos = boundingBox.Start;
             Vector3 size = boundingBox.Volume;
@@ -285,55 +284,9 @@ namespace PckStudio.Internal
 
             foreach (Bone bone in geometry.Bones)
             {
-                string boxType = bone.Name;
+                string boxType = TryConvertToSkinBoxType(bone.Name);
                 if (!SkinBOX.IsValidType(boxType))
-                {
-                    switch (bone.Name)
-                    {
-                        case "head":
-                        case "helmet":
-                            boxType = "HEAD";
-                            break;
-                        case "body":
-                            boxType = "BODY";
-                            break;
-                        case "rightArm":
-                            boxType = "ARM0";
-                            break;
-                        case "leftArm":
-                            boxType = "ARM1";
-                            break;
-                        case "rightLeg":
-                            boxType = "LEG0";
-                            break;
-                        case "leftLeg":
-                            boxType = "LEG1";
-                            break;
-                        case "hat":
-                            boxType = "HEADWEAR";
-                            break;
-                        case "jacket":
-                            boxType = "JACKET";
-                            break;
-                        case "bodyArmor":
-                            boxType = "BODY";
-                            break;
-                        case "rightSleeve":
-                            boxType = "SLEEVE0";
-                            break;
-                        case "leftSleeve":
-                            boxType = "SLEEVE1";
-                            break;
-                        case "rightPants":
-                            boxType = "PANTS0";
-                            break;
-                        case "leftPants":
-                            boxType = "PANTS1";
-                            break;
-                        default:
                             continue;
-                    }
-                }
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
                     Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
@@ -483,6 +436,29 @@ namespace PckStudio.Internal
                 return true;
             }
             return false;
+        }
+
+        private static string TryConvertToSkinBoxType(string name)
+        {
+            if (!SkinBOX.IsValidType(name) && SkinBOX.IsValidType(name.ToUpper()))
+            {
+                return name.ToUpper();
+            }
+            return name switch
+            {
+                "helmet"      => "HEAD",
+                "rightArm"    => "ARM0",
+                "leftArm"     => "ARM1",
+                "rightLeg"    => "LEG0",
+                "leftLeg"     => "LEG1",
+                "hat"         => "HEADWEAR",
+                "bodyArmor"   => "BODY",
+                "rightSleeve" => "SLEEVE0",
+                "leftSleeve"  => "SLEEVE1",
+                "rightPants"  => "PANTS0",
+                "leftPants"   => "PANTS1",
+                _             => name,
+            };
         }
 
         private static Image FixTexture(SkinModelInfo modelInfo)
