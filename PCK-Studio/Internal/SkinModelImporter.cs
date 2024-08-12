@@ -32,6 +32,7 @@ using PckStudio.Internal.IO.PSM;
 using PckStudio.External.Format;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
+using System.Diagnostics;
 
 namespace PckStudio.Internal
 {
@@ -140,10 +141,14 @@ namespace PckStudio.Internal
             boxType = TryConvertToSkinBoxType(boxType);
             if (!SkinBOX.IsValidType(boxType))
                 return;
+
+            Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, element.Origin, ref modelInfo);
+
             var boundingBox = new Rendering.BoundingBox(element.From, element.To);
-            Vector3 pos = boundingBox.Start;
+            Vector3 pos = boundingBox.Start - offset;
             Vector3 size = boundingBox.Volume;
             Vector2 uv = element.UvOffset;
+
             pos = TranslateToInternalPosition(boxType, pos, size, new Vector3(1, 1, 0));
 
             var box = new SkinBOX(boxType, pos, size, uv, mirror: element.MirrorUv);
@@ -286,10 +291,13 @@ namespace PckStudio.Internal
             {
                 string boxType = TryConvertToSkinBoxType(bone.Name);
                 if (!SkinBOX.IsValidType(boxType))
-                            continue;
+                    continue;
+
+                Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, bone.Pivot, ref modelInfo);
+
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
-                    Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
+                    Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin - offset, cube.Size, Vector3.UnitY);
                     var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv, mirror: cube.Mirror);
                     if (bone.Name == "helmet")
                     {
@@ -459,6 +467,18 @@ namespace PckStudio.Internal
                 "leftPants"   => "PANTS1",
                 _             => name,
             };
+        }
+
+        private static Vector3 GetModelOffsetAndAddToModelInfo(string boxType, Vector3 origin, ref SkinModelInfo modelInfo)
+        {
+            Vector3 partTranslation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
+            Vector3 offset = partTranslation - ((Vector3.UnitY * 24f) - origin);
+            if (offset.X != 0f || offset.Z != 0f)
+                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:{nameof(LoadElement)}] Warning: skin part({boxType}) offsets only support horizontal offsets.");
+
+            if (offset.Y != 0f)
+                modelInfo.PartOffsets.Add(new SkinPartOffset(boxType, -offset.Y));
+            return offset * Vector3.UnitY;
         }
 
         private static Image FixTexture(SkinModelInfo modelInfo)
