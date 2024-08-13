@@ -406,7 +406,34 @@
   <data name="whatsNewAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\whatsNewAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="aboutAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\aboutAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="audioAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\audioAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="closeAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\closeAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="exitAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\exitAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="newFileAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\newFileAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="packSettingsAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\packSettingsAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="recentlyOpenedAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\recentlyOpenedAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settingsAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settingsAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="toolsAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toolsAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="updateAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\updateAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

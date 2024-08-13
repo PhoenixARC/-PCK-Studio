@@ -73,6 +73,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap aboutAsset {
+            get {
+                object obj = ResourceManager.GetObject("aboutAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap additional_map_icons_atlas {
             get {
                 object obj = ResourceManager.GetObject("additional_map_icons_atlas", resourceCulture);
@@ -96,6 +106,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap ARROW {
             get {
                 object obj = ResourceManager.GetObject("ARROW", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap audioAsset {
+            get {
+                object obj = ResourceManager.GetObject("audioAsset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -289,6 +309,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap closeAsset {
+            get {
+                object obj = ResourceManager.GetObject("closeAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap COL_ICON {
             get {
                 object obj = ResourceManager.GetObject("COL_ICON", resourceCulture);
@@ -463,6 +493,16 @@ namespace PckStudio.Properties {
         public static string entityModelsData {
             get {
                 return ResourceManager.GetString("entityModelsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap exitAsset {
+            get {
+                object obj = ResourceManager.GetObject("exitAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -870,6 +910,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap newFileAsset {
+            get {
+                object obj = ResourceManager.GetObject("newFileAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap NoImageFound {
             get {
                 object obj = ResourceManager.GetObject("NoImageFound", resourceCulture);
@@ -883,6 +933,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap pack {
             get {
                 object obj = ResourceManager.GetObject("pack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap packSettingsAsset {
+            get {
+                object obj = ResourceManager.GetObject("packSettingsAsset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1052,9 +1112,29 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap recentlyOpenedAsset {
+            get {
+                object obj = ResourceManager.GetObject("recentlyOpenedAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Replace {
             get {
                 object obj = ResourceManager.GetObject("Replace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap settingsAsset {
+            get {
+                object obj = ResourceManager.GetObject("settingsAsset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1256,6 +1336,16 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("tu69colours", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap updateAsset {
+            get {
+                object obj = ResourceManager.GetObject("updateAsset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

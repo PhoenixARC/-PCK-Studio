@@ -1927,6 +1927,11 @@ namespace PckStudio
             Process.Start("https://ko-fi.com/mattnl");
         }
 
+        private void forEternalModzContributorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://bio.link/EternalModz");
+        }
+
         private void joinDevelopmentDiscordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.gg/aJtZNFVQTv");
