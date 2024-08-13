@@ -34,7 +34,7 @@ namespace PckStudio.Internal
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
         
-        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelTextureLocations { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
+        internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
         
         private GameModelImporter()
         {
@@ -72,7 +72,7 @@ namespace PckStudio.Internal
                 outliners.Add(part.Name, outline);
             }
             
-            if (!ModelTextureLocations.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
+            if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ExportBlockBenchModel)}] Failed to get model meta data for '{modelInfo.Model.Name}'.");
                 return;

@@ -632,10 +632,10 @@ namespace PckStudio
 
 				IEnumerable<NamedTexture> GetModelTextures(string modelName)
 				{
-					if (!GameModelImporter.ModelTextureLocations.ContainsKey(modelName) || GameModelImporter.ModelTextureLocations[modelName]?.TextureLocations?.Length <= 0)
+					if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
 						return Enumerable.Empty<NamedTexture>();
 
-					return GameModelImporter.ModelTextureLocations[modelName].TextureLocations.Select(texturePath =>
+					return GameModelImporter.ModelMetaData[modelName].TextureLocations.Select(texturePath =>
 					{
 						if (currentPCK.TryGetAsset(texturePath + ".png", PckAssetType.TextureFile, out PckAsset modelTextureAsset) ||
 							currentPCK.TryGetAsset(texturePath + ".tga", PckAssetType.TextureFile, out modelTextureAsset))
