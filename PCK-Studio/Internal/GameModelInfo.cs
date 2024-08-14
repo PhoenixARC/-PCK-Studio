@@ -3,7 +3,7 @@ using OMI.Formats.Model;
 
 namespace PckStudio.Internal
 {
-    internal class GameModelInfo
+    internal sealed class GameModelInfo
     {
         public Model Model { get; }
 
