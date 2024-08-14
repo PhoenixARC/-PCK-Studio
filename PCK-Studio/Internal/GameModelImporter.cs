@@ -64,7 +64,7 @@ namespace PckStudio.Internal
 
                 foreach (ModelBox box in part.Boxes)
                 {
-                    Element element = CreateElement(box, partTranslation, part.Name);
+                    Element element = CreateElement(part.Name, box, partTranslation);
                     element.Origin = outline.Origin;
                     elements.Add(element);
                     outline.Children.Add(element.Uuid);
@@ -124,7 +124,7 @@ namespace PckStudio.Internal
             }
         }
 
-        private static Element CreateElement(ModelBox box, Vector3 origin, string name)
+        private static Element CreateElement(string name, ModelBox box, Vector3 origin)
         {
             Vector3 pos = box.Position;
             Vector3 size = box.Size;
