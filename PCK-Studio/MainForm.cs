@@ -573,11 +573,11 @@ namespace PckStudio
 
 		public void HandleSkinFile(PckAsset asset)
 		{
-			var skin = asset.GetSkin();
+            Skin skin = asset.GetSkin();
             if (asset.HasProperty("CAPEPATH"))
 			{
 				string capePath = asset.GetProperty("CAPEPATH");
-				if (currentPCK.TryGetAsset(capePath, PckAssetType.CapeFile, out var cape))
+				if (currentPCK.TryGetAsset(capePath, PckAssetType.CapeFile, out PckAsset cape))
 				{
 					skin.CapeTexture = cape.GetTexture();
 				}
@@ -586,7 +586,7 @@ namespace PckStudio
 			using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, currentPCK.HasVerionString);
 			if (skinEditor.ShowDialog() == DialogResult.OK)
 			{
-				if (!TryGetLocFile(out var locFile))
+				if (!TryGetLocFile(out LOCFile locFile))
 					Debug.Fail("Failed to aquire loc file.");
                 asset.SetSkin(skinEditor.ResultSkin, locFile);
 
@@ -604,20 +604,6 @@ namespace PckStudio
 				MessageBox.Show("No models found.", "Empty Model file", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
-
-#if false
-			Dictionary<string, JsonModelMetaData> modelMetaData = new();
-			foreach (Model model in modelContainer.Models.Values)
-			{
-				bool hasMetaData = ModelImporter.ModelTextureLocations.ContainsKey(model.Name);
-				if (!hasMetaData)
-				{
-					Debug.WriteLine("No meta data found for: " + model.Name);
-					modelMetaData.Add(model.Name, new JsonModelMetaData() { TextureLocations = new string[1] });
-				}
-			}
-			Debug.WriteLineIf(modelMetaData.Count > 0, JsonConvert.SerializeObject(modelMetaData, Formatting.Indented));
-#endif
 
 			using ItemSelectionPopUp itemSelection = new ItemSelectionPopUp(modelContainer.GetModelNames().ToArray());
 			if (itemSelection.ShowDialog() == DialogResult.OK && modelContainer.ContainsModel(itemSelection.SelectedItem))
