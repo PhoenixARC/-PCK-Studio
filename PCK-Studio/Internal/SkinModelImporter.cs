@@ -66,6 +66,11 @@ namespace PckStudio.Internal
         internal static SkinModelInfo ImportBlockBenchModel(string fileName)
         {
             BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(fileName));
+            if (!blockBenchModel.Format.UseBoxUv)
+            {
+                Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import skin '{blockBenchModel.Name}': Skin does not use box uv.");
+                return null;
+            }
             SkinModelInfo modelInfo = new SkinModelInfo();
             modelInfo.ANIM.SetMask(
                    SkinAnimMask.HEAD_DISABLED |
