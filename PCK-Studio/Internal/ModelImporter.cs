@@ -73,6 +73,9 @@ namespace PckStudio.Internal
             }
         }
 
+        /// <summary>
+        /// Filter that can be used for <see cref="System.Windows.Forms.OpenFileDialog"/> or <see cref="System.Windows.Forms.SaveFileDialog"/>
+        /// </summary>
         public string SupportedModelFileFormatsFilter => string.Join("|", _importProviders.Values.Select(p => p.DialogFilter));
 
         public T Import(string filename)
