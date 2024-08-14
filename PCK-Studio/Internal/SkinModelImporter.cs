@@ -162,7 +162,7 @@ namespace PckStudio.Internal
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
             Image exportTexture = FixTexture(modelInfo);
-            BlockBenchModel blockBenchModel = BlockBenchModel.Create(Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
+            BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.Free, Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);

@@ -16,16 +16,31 @@ using PckStudio.Internal;
 
 namespace PckStudio.External.Format
 {
-    internal class Meta
+    internal static class BlockBenchFormatInfos
+    {
+        internal static readonly string FormatVersion = "4.5";
+
+        internal static BlockBenchFormatInfo Free { get; } = new BlockBenchFormatInfo(FormatVersion, "free", true);
+        internal static BlockBenchFormatInfo BedrockEntity { get; } = new BlockBenchFormatInfo(FormatVersion, "bedrock", true);
+    }
+
+    internal sealed class BlockBenchFormatInfo
     {
         [JsonProperty("format_version")]
-        internal string FormatVersion;
+        internal string FormatVersion { get; }
        
         [JsonProperty("model_format")]
-        internal string ModelFormat;
+        internal string ModelFormat { get; }
        
         [JsonProperty("box_uv")]
-        internal bool UseBoxUv;
+        internal bool UseBoxUv { get; }
+
+        internal BlockBenchFormatInfo(string formatVersion, string modelFormat, bool useBoxUv)
+        {
+            FormatVersion = formatVersion;
+            ModelFormat = modelFormat;
+            UseBoxUv = useBoxUv;
+        }
     }
 
     internal class Element
@@ -309,7 +324,7 @@ namespace PckStudio.External.Format
         internal string Name;
 
         [JsonProperty("meta")]
-        internal Meta Metadata;
+        internal BlockBenchFormatInfo Format;
 
         [JsonProperty("model_identifier")]
         internal string ModelIdentifier { get; set; } = "";
@@ -329,7 +344,7 @@ namespace PckStudio.External.Format
         [JsonProperty("textures")]
         internal Texture[] Textures;
 
-        internal static BlockBenchModel Create(string name, Size textureResolution, IEnumerable<Texture> textures)
+        internal static BlockBenchModel Create(BlockBenchFormatInfo formatInfo, string name, Size textureResolution, IEnumerable<Texture> textures)
         {
             return new BlockBenchModel()
             {
@@ -337,12 +352,7 @@ namespace PckStudio.External.Format
                 Textures = textures.ToArray(),
                 TextureResolution = textureResolution,
                 ModelIdentifier = "",
-                Metadata = new Meta()
-                {
-                    FormatVersion = "4.5",
-                    ModelFormat = "free",
-                    UseBoxUv = true,
-                }
+                Format = formatInfo,
             };
         }
     }
