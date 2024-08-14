@@ -626,6 +626,11 @@ namespace PckStudio
 				Debug.WriteLine(model.Name + "; ");
 				Debug.WriteLine(model.TextureSize + "; ");
 			
+				GameModelImporter.Default.CreateModelOutline =
+					MessageBox.Show(
+						$"Do you wish to have all model parts contained in a group called '{model.Name}'?",
+						"Group model parts", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
 				using SaveFileDialog openFileDialog = new SaveFileDialog();
 				openFileDialog.FileName = model.Name;
 				openFileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;

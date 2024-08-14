@@ -34,6 +34,8 @@ namespace PckStudio.Internal
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
         
+        public bool CreateModelOutline { get; set; } = true;
+
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
         
         private GameModelImporter()
@@ -42,7 +44,7 @@ namespace PckStudio.Internal
             InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
         }
 
-        private static void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
+        private void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
         {
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(modelInfo.Model.Name, modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
 
@@ -81,7 +83,14 @@ namespace PckStudio.Internal
             TraverseChildren(modelMetaData.RootParts, ref outliners);
 
             blockBenchModel.Elements = elements.ToArray();
-            blockBenchModel.Outliner = JArray.FromObject(outliners.Values.Where(value => modelMetaData.RootParts.Count == 0 || modelMetaData.RootParts.ContainsKey(value.Name)));
+            IEnumerable<Outline> outlines = outliners.Values.Where(value => modelMetaData.RootParts.Count == 0 || modelMetaData.RootParts.ContainsKey(value.Name));
+            if (CreateModelOutline)
+                outlines = new Outline[1]
+                {
+                    new Outline(modelInfo.Model.Name) { Children = JArray.FromObject(outlines) }
+                };
+
+            blockBenchModel.Outliner = JArray.FromObject(outlines);
 
             string content = JsonConvert.SerializeObject(blockBenchModel, Formatting.Indented);
             File.WriteAllText(fileName, content);
