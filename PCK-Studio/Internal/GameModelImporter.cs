@@ -53,6 +53,12 @@ namespace PckStudio.Internal
 
             Vector3 transformAxis = new Vector3(1, 1, 0);
 
+            if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
+            {
+                Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ExportBlockBenchModel)}] Failed to get model meta data for '{modelInfo.Model.Name}'.");
+                return;
+            }
+
             foreach (ModelPart part in modelInfo.Model.Parts.Values)
             {
                 var outline = new Outline(part.Name);
@@ -74,12 +80,6 @@ namespace PckStudio.Internal
                 outliners.Add(part.Name, outline);
             }
             
-            if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
-            {
-                Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ExportBlockBenchModel)}] Failed to get model meta data for '{modelInfo.Model.Name}'.");
-                return;
-            }
-
             TraverseChildren(modelMetaData.RootParts, ref outliners);
 
             blockBenchModel.Elements = elements.ToArray();
