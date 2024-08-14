@@ -102,7 +102,7 @@ namespace PckStudio.Internal
             {
                 if (!outliners.ContainsKey(item.Key))
                 {
-                    Debug.WriteLine($"{item.Key} not in {nameof(outliners)}.");
+                    Debug.WriteLine($"{nameof(item.Key)}: '{item.Key}' not in {nameof(outliners)}.");
                     continue;
                 }
                 Outline partentOutline = outliners[item.Key];
@@ -121,7 +121,7 @@ namespace PckStudio.Internal
                         {
                             if (!outliners.ContainsKey(key))
                             {
-                                Debug.WriteLine($"{key} not in {nameof(outliners)}.");
+                                Debug.WriteLine($"{nameof(key)}: '{key}' not in {nameof(outliners)}.");
                                 continue;
                             }
                             childOutline = outliners[key];
