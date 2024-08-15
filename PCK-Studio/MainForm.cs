@@ -263,16 +263,14 @@ namespace PckStudio
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
-			{
-				ofd.CheckFileExists = true;
-				ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
-				if (ofd.ShowDialog(this) == DialogResult.OK)
-				{
-					LoadPckFromFile(ofd.FileName);
-				}
-			}
-		}
+            using var ofd = new OpenFileDialog();
+            ofd.CheckFileExists = true;
+            ofd.Filter = "PCK (Minecraft Console Package)|*.pck";
+            if (ofd.ShowDialog(this) == DialogResult.OK)
+            {
+                LoadPckFromFile(ofd.FileName);
+            }
+        }
 
 		private PckFile OpenPck(string filePath)
 		{
@@ -1047,7 +1045,7 @@ namespace PckStudio
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}
-			}
+		}
 
         private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
@@ -1351,12 +1349,12 @@ namespace PckStudio
 		{
 			List<TreeNode> childNodes = new List<TreeNode>(root.Count);
 			foreach (TreeNode childNode in root)
-            {
+			{
 				childNodes.Add(childNode);
 				childNodes.AddRange(GetAllChildNodes(childNode.Nodes));
-				}
+			}
 			return childNodes;
-            }
+		}
 
 
         private void ImportFiles(string[] files)
@@ -1570,7 +1568,7 @@ namespace PckStudio
 			if (e.KeyData == Keys.Delete)
 				deleteEntryToolStripMenuItem_Click(sender, e);
 		}
-
+		
 		private bool TryGetLocFile(out LOCFile locFile)
 		{
 			if (!currentPCK.TryGetAsset("localisation.loc", PckAssetType.LocalisationFile, out PckAsset locAsset) &&
@@ -1681,12 +1679,12 @@ namespace PckStudio
 					{
 						string[] txtProperties = File.ReadAllLines(propertyFile);
 						importSkinAsset.DeserializeProperties(txtProperties);
-						
-						// Because extracting/exporting an assest doesn't export
+
+                        // Because extracting/exporting an assest doesn't export
                         // the actual loc value we just get an undefined loc key.
                         // That's why why remove them after deserializing.
-						// - Miku
-						importSkinAsset.RemoveProperty("DISPLAYNAMEID");
+                        // - Miku
+                        importSkinAsset.RemoveProperty("DISPLAYNAMEID");
 						importSkinAsset.RemoveProperty("THEMENAMEID");
                         BuildMainTreeView();
                         wasModified = true;
@@ -1814,13 +1812,9 @@ namespace PckStudio
 		{
 			pckOpen.Image = Resources.pckDrop;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
-			foreach (string file in files)
-			{
-                string ext = Path.GetExtension(file);
-				if (ext.Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
-					e.Effect = DragDropEffects.Copy;
-				return;
-			}
+			e.Effect = files.Any(file => Path.GetExtension(file).Equals(".pck", StringComparison.CurrentCultureIgnoreCase))
+				? DragDropEffects.Copy
+				: DragDropEffects.None;
 		}
 
 		private void OpenPck_DragDrop(object sender, DragEventArgs e)
@@ -2058,14 +2052,14 @@ namespace PckStudio
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
                 using var input = new MultiTextPrompt();
-					if (input.ShowDialog(this) == DialogResult.OK)
-					{
+                if (input.ShowDialog(this) == DialogResult.OK)
+                {
                     asset.DeserializeProperties(input.TextOutput);
-						ReloadMetaTreeView();
-						wasModified = true;
-					}
-				}
-			}
+                    ReloadMetaTreeView();
+                    wasModified = true;
+                }
+            }
+		}
 
 		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
