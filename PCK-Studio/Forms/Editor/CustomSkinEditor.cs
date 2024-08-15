@@ -12,7 +12,6 @@ using PckStudio.Extensions;
 using PckStudio.Internal.Skin;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
-using System.Configuration;
 using System.Collections.Generic;
 using PckStudio.Internal.App;
 
@@ -20,11 +19,7 @@ namespace PckStudio.Forms.Editor
 {
     public partial class CustomSkinEditor : MetroForm
     {
-        public Image PreviewImage => _previewImage;
-
         public Skin ResultSkin => _skin;
-
-        private Image _previewImage;
         private Skin _skin;
         private Random rng;
         private bool _inflateOverlayParts;
