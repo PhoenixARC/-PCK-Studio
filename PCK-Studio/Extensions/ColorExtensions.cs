@@ -19,6 +19,12 @@ namespace PckStudio.Extensions
             return Color.FromArgb(color.A, 255 - color.R, 255 - color.G, 255 - color.B);
         }
 
+        internal static Color GreyScaled(this Color color)
+        {
+            int greyScaleValue = (color.R + color.G + color.B) / 3;
+            return Color.FromArgb(color.A, greyScaleValue, greyScaleValue, greyScaleValue);
+        }
+
         internal static int ToBGR(this Color color)
         {
             return color.B << 16 | color.G << 8 | color.R;

@@ -289,7 +289,8 @@ namespace PckStudio.Forms.Editor
                     g.DrawImage(uvArea, new Rectangle(0, 0, 1, 1));
                 }
 
-                renderer3D1.HighlightlingColor = refImg.GetPixel(0, 0).Inversed();
+                Color avgColor = refImg.GetPixel(0, 0);
+                renderer3D1.HighlightlingColor = avgColor.Inversed();
 
                 Size scaleSize = new Size(_skin.Model.Texture.Width * scale, _skin.Model.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
@@ -297,7 +298,7 @@ namespace PckStudio.Forms.Editor
                 {
                     float lineWidth = ((_skin.Model.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Model.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
-                    var brush = new SolidBrush(Color.FromArgb(127, renderer3D1.HighlightlingColor));
+                    var brush = new SolidBrush(Color.FromArgb(127, avgColor.GreyScaled()));
                     g.ApplyConfig(_graphicsConfig);
                     g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
                     g.FillPath(brush, graphicsPath);
