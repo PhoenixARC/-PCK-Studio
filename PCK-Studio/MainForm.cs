@@ -2251,7 +2251,7 @@ namespace PckStudio
 
 		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Program.UpdateToLatest();
+			Updater.UpdateToLatest();
 		}
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -31,74 +31,18 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            AutoUpdater.SetOwner(MainInstance);
-            //AutoUpdater.ClearAppDirectory = true;
-#if DEBUG
-            AutoUpdater.ReportErrors = true;
-#endif
-            AutoUpdater.DownloadPath = Application.StartupPath;
-            AutoUpdater.ExecutablePath = "./PCK-Studio.exe";
-            AutoUpdater.TopMost = true;
-
-            string jsonPath = Path.Combine(Environment.CurrentDirectory, "updates.json");
-            AutoUpdater.PersistenceProvider = new JsonFilePersistenceProvider(jsonPath);
-            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.Icon = Resources.ProjectLogo.ToBitmap();
-           
-            if (Settings.Default.AutoUpdate)
-            {
-                UpdateToLatest();
-            }
+            Updater.Initialize(RawProjectUrl);
 
             ApplicationScope.Initialize();
             Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
+            Updater.SetOwner(MainInstance);
             if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
                 MainInstance.InitPckFromFile(args[0]);
             Application.ApplicationExit += (sender, e) => { RPC.Deinitialize(); };
             MainInstance.FocusMe();
             Application.Run(MainInstance);
         }
-
-
-        internal static void UpdateToLatest()
-        {
-#if NDEBUG
-            string url = $"{RawProjectUrl}/main/Version.json";
-            AutoUpdater.Start(url);
-#endif
-        }
-
-        class UpdateInfo
-        {
-            [JsonProperty("version")]
-            public string Version { get; set; }
-            
-            [JsonProperty("url")]
-            public string Url { get; set; }
-
-            [JsonProperty("changelog")]
-            public string Changelog { get; set; }
-            
-            [JsonProperty("mandatory")]
-            public bool Mandatory { get; set; }
-        }
-
-        private static void AutoUpdaterOnParseUpdateInfoEvent(ParseUpdateInfoEventArgs args)
-        {
-            UpdateInfo json = JsonConvert.DeserializeObject<UpdateInfo>(args.RemoteData);
-            args.UpdateInfo = new UpdateInfoEventArgs
-            {
-                CurrentVersion = json.Version,
-                DownloadURL = json.Url,
-                ChangelogURL = json.Changelog,
-                Mandatory = new Mandatory()
-                {
-                    Value = json.Mandatory,
-                }
-            };
-        }
-
     }
 }
