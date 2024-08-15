@@ -63,6 +63,10 @@ namespace PckStudio.External.Format
         [JsonProperty("locked")]
         internal bool Locked;
 
+        [DefaultValue(true)]
+        [JsonProperty("export", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        internal bool Export { get; } = true;
+
         [JsonProperty("inflate")]
         internal float Inflate;
         
@@ -328,9 +332,6 @@ namespace PckStudio.External.Format
 
         [JsonProperty("model_identifier")]
         internal string ModelIdentifier { get; set; } = "";
-
-        [JsonProperty("visible_box")]
-        internal int[] VisibleBox;
 
         [JsonProperty("resolution")]
         internal TextureRes TextureResolution;

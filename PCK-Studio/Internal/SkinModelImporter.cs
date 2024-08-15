@@ -140,7 +140,7 @@ namespace PckStudio.Internal
 
         private static void LoadElement(string boxType, Element element, ref SkinModelInfo modelInfo)
         {
-            if (element.Type != "cube" || !element.UseBoxUv || !element.IsVisibile)
+            if (element.Type != "cube" || !element.UseBoxUv || !element.Export)
                 return;
 
             boxType = TryConvertToSkinBoxType(boxType);
