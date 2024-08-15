@@ -735,27 +735,10 @@ namespace PckStudio
 
 			string selectedFolder = node.FullPath;
 
-			if (IsSubPCKNode(node.FullPath))
-			{
-				GetAllChildNodes(node.Nodes).ForEach(fileNode =>
-				{
-					if (fileNode.TryGetTagData(out PckAsset asset))
-					{
-						extractFolderFile(outPath, asset);
-					}
-				}
-				);
-			}
-			else
-			{
-				foreach (PckAsset asset in currentPCK.GetAssets())
-				{
-					if (asset.Filename.StartsWith(selectedFolder))
-					{
-						extractFolderFile(outPath, asset);
-					}
-				}
-			}
+            foreach (PckAsset asset in currentPCK.GetAssets().Where(asset => asset.Filename.StartsWith(selectedFolder)))
+            {
+				extractFolderFile(outPath, asset);
+            }
 		}
 
 		private void extractToolStripMenuItem_Click(object sender, EventArgs e)
@@ -848,7 +831,6 @@ namespace PckStudio
 					string newFileExt = Path.GetExtension(ofd.FileName);
 					asset.SetData(File.ReadAllBytes(ofd.FileName));
 					asset.Filename = asset.Filename.Replace(fileExt, newFileExt);
-					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					wasModified = true;
 					BuildMainTreeView();
 				}
@@ -914,7 +896,6 @@ namespace PckStudio
 				node.Remove();
 				wasModified = true;
 			}
-			RebuildSubPCK(path);
 		}
 
 		private void renameFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -953,7 +934,6 @@ namespace PckStudio
 					}
 				}
 				wasModified = true;
-				RebuildSubPCK(path);
 				BuildMainTreeView();
 			}
 		}
@@ -1221,7 +1201,6 @@ namespace PckStudio
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
 									asset.SetProperty(asset.GetPropertyIndex(property), new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));
-									RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 									ReloadMetaTreeView();
 									wasModified = true;
 								}
@@ -1238,11 +1217,10 @@ namespace PckStudio
 						case "BOX" when asset.Type == PckAssetType.SkinFile:
 							try
 							{
-								using BoxEditor diag = new BoxEditor(property.Value, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+								using BoxEditor diag = new BoxEditor(property.Value, false);
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
 									asset.SetProperty(asset.GetPropertyIndex(property), new KeyValuePair<string, string>("BOX", diag.Result.ToString()));
-									RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 									ReloadMetaTreeView();
 									wasModified = true;
 								}
@@ -1266,7 +1244,6 @@ namespace PckStudio
 						if (addProperty.ShowDialog(this) == DialogResult.OK)
 						{
 							asset.SetProperty(asset.GetPropertyIndex(property), addProperty.Property);
-							RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 							ReloadMetaTreeView();
 							wasModified = true;
 						}
@@ -1320,10 +1297,7 @@ namespace PckStudio
 					else
 						node.Parent.Nodes.Insert(node.Index + 1, newNode);
 
-					if (!IsSubPCKNode(node.FullPath))
-						currentPCK.InsertAsset(node.Index + 1, newFile);
-					else
-						RebuildSubPCK(node.FullPath);
+					currentPCK.InsertAsset(node.Index + 1, newFile);
 					BuildMainTreeView();
 					wasModified = true;
 				}
@@ -1337,7 +1311,6 @@ namespace PckStudio
 				asset.RemoveProperty(property))
 			{
 				treeMeta.SelectedNode.Remove();
-				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 				wasModified = true;
 			}
 		}
@@ -1364,7 +1337,6 @@ namespace PckStudio
 				if (addProperty.ShowDialog(this) == DialogResult.OK)
 				{
 					asset.AddProperty(addProperty.Property);
-					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;
 				}
@@ -2012,23 +1984,23 @@ namespace PckStudio
 					break;
 				case PckAssetType.TexturePackInfoFile:
                     goto default;
-					node.ImageIndex = 4;
-					node.SelectedImageIndex = 4;
-					break;
+					//node.ImageIndex = 4;
+					//node.SelectedImageIndex = 4;
+					//break;
 				case PckAssetType.ColourTableFile:
 					node.ImageIndex = 6;
 					node.SelectedImageIndex = 6;
 					break;
 				case PckAssetType.ModelsFile:
                     goto default;
-					node.ImageIndex = 8;
-					node.SelectedImageIndex = 8;
-					break;
+					//node.ImageIndex = 8;
+					//node.SelectedImageIndex = 8;
+					//break;
 				case PckAssetType.SkinDataFile:
 					goto default;
-					node.ImageIndex = 7;
-					node.SelectedImageIndex = 7;
-					break;
+					//node.ImageIndex = 7;
+					//node.SelectedImageIndex = 7;
+					//break;
 				case PckAssetType.GameRulesFile:
 					node.ImageIndex = 9;
 					node.SelectedImageIndex = 9;
@@ -2075,11 +2047,9 @@ namespace PckStudio
 				Debug.WriteLine($"Setting {asset.Type} to {type}");
 				asset.Type = type;
 				SetNodeIcon(treeViewMain.SelectedNode, type);
-				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 			}
 		}
 
-		[Obsolete()]
 		private void addTextureToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using OpenFileDialog fileDialog = new OpenFileDialog();
@@ -2217,7 +2187,6 @@ namespace PckStudio
 							asset.AddProperty(line.Substring(0, idx), line.Substring(idx + 1));
 						}
 						ReloadMetaTreeView();
-						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 						wasModified = true;
 					}
 				}
@@ -2235,7 +2204,6 @@ namespace PckStudio
 						asset.SetProperty(asset.GetPropertyIndex(p), new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.')));
 				}
 				ReloadMetaTreeView();
-				RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 				wasModified = true;
 			}
 		}
@@ -2272,7 +2240,6 @@ namespace PckStudio
 							asset.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
 						}
 						ReloadMetaTreeView();
-						RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 						wasModified = true;
 					}
 				}
@@ -2298,8 +2265,6 @@ namespace PckStudio
 						return;
 					}
 					PckAsset asset = currentPCK.CreateNewAsset(diag.Filepath, diag.Filetype, () => File.ReadAllBytes(ofd.FileName));
-
-					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 
 					BuildMainTreeView();
 					wasModified = true;
@@ -2396,11 +2361,10 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckAsset asset)
 			{
-				using BoxEditor diag = new BoxEditor(SkinBOX.Empty, IsSubPCKNode(treeViewMain.SelectedNode.FullPath));
+				using BoxEditor diag = new BoxEditor(SkinBOX.Empty, false);
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					asset.AddProperty("BOX", diag.Result);
-					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;
 				}
@@ -2416,7 +2380,6 @@ namespace PckStudio
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					asset.AddProperty("ANIM", diag.ResultAnim);
-					RebuildSubPCK(treeViewMain.SelectedNode.FullPath);
 					ReloadMetaTreeView();
 					wasModified = true;
 				}
