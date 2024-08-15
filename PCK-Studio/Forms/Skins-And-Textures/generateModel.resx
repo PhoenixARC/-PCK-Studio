@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>19</value>
   </data>
   <metadata name="label5.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -184,7 +184,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>31</value>
+    <value>28</value>
   </data>
   <metadata name="label3.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>30</value>
+    <value>27</value>
   </data>
   <metadata name="label7.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -250,7 +250,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>22</value>
   </data>
   <metadata name="labelTextureMappingPreview.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -283,7 +283,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelTextureMappingPreview.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>16</value>
   </data>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -394,7 +394,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>29</value>
+    <value>26</value>
   </data>
   <data name="labelView.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -424,7 +424,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelView.ZOrder" xml:space="preserve">
-    <value>28</value>
+    <value>25</value>
   </data>
   <data name="rotateRightBtn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -454,7 +454,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rotateRightBtn.ZOrder" xml:space="preserve">
-    <value>27</value>
+    <value>24</value>
   </data>
   <data name="rotateLeftBtn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -484,7 +484,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rotateLeftBtn.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>23</value>
   </data>
   <data name="tabArmor.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -859,7 +859,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>21</value>
   </data>
   <data name="comboParent.Items" xml:space="preserve">
     <value>HEAD</value>
@@ -898,7 +898,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboParent.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>18</value>
   </data>
   <data name="buttonEXPORT.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -928,7 +928,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonEXPORT.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>15</value>
   </data>
   <data name="buttonIMPORT.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -958,7 +958,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonIMPORT.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>20</value>
   </data>
   <data name="uvPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -979,42 +979,12 @@
     <value>uvPictureBox</value>
   </data>
   <data name="&gt;&gt;uvPictureBox.Type" xml:space="preserve">
-    <value>PckStudio.PictureBoxWithInterpolationMode, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.InterpolationPictureBox, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uvPictureBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="buttonImportModel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonImportModel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonImportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 677</value>
-  </data>
-  <data name="buttonImportModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 21</value>
-  </data>
-  <data name="buttonImportModel.TabIndex" type="System.Int32, mscorlib">
-    <value>96</value>
-  </data>
-  <data name="buttonImportModel.Text" xml:space="preserve">
-    <value>OPEN CSM</value>
-  </data>
-  <data name="&gt;&gt;buttonImportModel.Name" xml:space="preserve">
-    <value>buttonImportModel</value>
-  </data>
-  <data name="&gt;&gt;buttonImportModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonImportModel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonImportModel.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
   <data name="displayBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -1043,66 +1013,6 @@
   </data>
   <data name="&gt;&gt;displayBox.ZOrder" xml:space="preserve">
     <value>13</value>
-  </data>
-  <data name="buttonExportModel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="buttonExportModel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonExportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 677</value>
-  </data>
-  <data name="buttonExportModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 21</value>
-  </data>
-  <data name="buttonExportModel.TabIndex" type="System.Int32, mscorlib">
-    <value>97</value>
-  </data>
-  <data name="buttonExportModel.Text" xml:space="preserve">
-    <value>EXPORT CSM</value>
-  </data>
-  <data name="&gt;&gt;buttonExportModel.Name" xml:space="preserve">
-    <value>buttonExportModel</value>
-  </data>
-  <data name="&gt;&gt;buttonExportModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonExportModel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonExportModel.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="OpenJSONButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="OpenJSONButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="OpenJSONButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 677</value>
-  </data>
-  <data name="OpenJSONButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 21</value>
-  </data>
-  <data name="OpenJSONButton.TabIndex" type="System.Int32, mscorlib">
-    <value>145</value>
-  </data>
-  <data name="OpenJSONButton.Text" xml:space="preserve">
-    <value>OPEN JSON</value>
-  </data>
-  <data name="&gt;&gt;OpenJSONButton.Name" xml:space="preserve">
-    <value>OpenJSONButton</value>
-  </data>
-  <data name="&gt;&gt;OpenJSONButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OpenJSONButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;OpenJSONButton.ZOrder" xml:space="preserve">
-    <value>15</value>
   </data>
   <data name="buttonTemplate.Location" type="System.Drawing.Point, System.Drawing">
     <value>23, 511</value>

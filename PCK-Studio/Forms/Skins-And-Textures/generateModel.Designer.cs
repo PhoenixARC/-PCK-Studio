@@ -61,10 +61,7 @@
             this.buttonEXPORT = new System.Windows.Forms.Button();
             this.buttonIMPORT = new System.Windows.Forms.Button();
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
-            this.buttonImportModel = new System.Windows.Forms.Button();
             this.displayBox = new System.Windows.Forms.PictureBox();
-            this.buttonExportModel = new System.Windows.Forms.Button();
-            this.OpenJSONButton = new System.Windows.Forms.Button();
             this.buttonTemplate = new MetroFramework.Controls.MetroButton();
             this.generateTextureCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.checkGuide = new MetroFramework.Controls.MetroCheckBox();
@@ -333,14 +330,6 @@
             this.uvPictureBox.Name = "uvPictureBox";
             this.uvPictureBox.TabStop = false;
             // 
-            // buttonImportModel
-            // 
-            resources.ApplyResources(this.buttonImportModel, "buttonImportModel");
-            this.buttonImportModel.ForeColor = System.Drawing.Color.White;
-            this.buttonImportModel.Name = "buttonImportModel";
-            this.buttonImportModel.UseVisualStyleBackColor = true;
-            this.buttonImportModel.Click += new System.EventHandler(this.buttonImportModel_Click);
-            // 
             // displayBox
             // 
             this.displayBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -348,22 +337,6 @@
             resources.ApplyResources(this.displayBox, "displayBox");
             this.displayBox.Name = "displayBox";
             this.displayBox.TabStop = false;
-            // 
-            // buttonExportModel
-            // 
-            resources.ApplyResources(this.buttonExportModel, "buttonExportModel");
-            this.buttonExportModel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportModel.Name = "buttonExportModel";
-            this.buttonExportModel.UseVisualStyleBackColor = true;
-            this.buttonExportModel.Click += new System.EventHandler(this.buttonExportModel_Click);
-            // 
-            // OpenJSONButton
-            // 
-            resources.ApplyResources(this.OpenJSONButton, "OpenJSONButton");
-            this.OpenJSONButton.ForeColor = System.Drawing.Color.White;
-            this.OpenJSONButton.Name = "OpenJSONButton";
-            this.OpenJSONButton.UseVisualStyleBackColor = true;
-            this.OpenJSONButton.Click += new System.EventHandler(this.OpenJSONButton_Click);
             // 
             // buttonTemplate
             // 
@@ -573,9 +546,6 @@
             this.Controls.Add(this.buttonTemplate);
             this.Controls.Add(this.displayBox);
             this.Controls.Add(this.listViewBoxes);
-            this.Controls.Add(this.OpenJSONButton);
-            this.Controls.Add(this.buttonExportModel);
-            this.Controls.Add(this.buttonImportModel);
             this.Controls.Add(this.buttonEXPORT);
             this.Controls.Add(labelTextureMappingPreview);
             this.Controls.Add(this.uvPictureBox);
@@ -625,10 +595,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
         private System.Windows.Forms.Button buttonDone;
-        private System.Windows.Forms.Button OpenJSONButton;
-        private System.Windows.Forms.Button buttonExportModel;
         private System.Windows.Forms.PictureBox displayBox;
-        private System.Windows.Forms.Button buttonImportModel;
         private PckStudio.ToolboxItems.InterpolationPictureBox uvPictureBox;
         private System.Windows.Forms.Button buttonIMPORT;
         private System.Windows.Forms.Button buttonEXPORT;

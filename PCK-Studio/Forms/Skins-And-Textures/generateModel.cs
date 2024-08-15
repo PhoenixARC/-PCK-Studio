@@ -1166,62 +1166,6 @@ namespace PckStudio.Forms
             }
         }
 
-        // Exports model as csm file
-        private void buttonExportModel_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
-                return;
-            string contents = "";
-            foreach (ListViewItem listViewItem in listViewBoxes.Items)
-            {
-                string str = "";
-                foreach (ListViewItem.ListViewSubItem subItem in listViewItem.SubItems)
-                {
-                    if (subItem.Text != "unchecked")
-                        str = str + subItem.Text + Environment.NewLine;
-                }
-                contents += (listViewItem.Text + Environment.NewLine + listViewItem.Tag) + Environment.NewLine + str;
-            }
-
-            File.WriteAllText(saveFileDialog.FileName, contents);
-        }
-
-
-        // Imports model from csm file
-        private void buttonImportModel_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Custom Skin Model File | *.CSM";
-            openFileDialog.Title = "Select Custom Skin Model File";
-            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                listViewBoxes.Items.Clear();
-                modelBoxes.Clear();
-                StreamReader reader = new StreamReader(openFileDialog.FileName);
-                while (!reader.EndOfStream)
-                {
-                    reader.ReadLine();
-                    string part = reader.ReadLine();
-                    reader.ReadLine();
-                    var posX = reader.ReadLine();
-                    var posY = reader.ReadLine();
-                    var posZ = reader.ReadLine();
-                    var sizeX = reader.ReadLine();
-                    var sizeY = reader.ReadLine();
-                    var sizeZ = reader.ReadLine();
-                    var uvX = reader.ReadLine();
-                    var uvY = reader.ReadLine();
-                    modelBoxes.Add(SkinBOX.FromString($"{part} {posX} {posY} {posZ} {sizeX} {sizeY} {sizeZ} {uvX} {uvY}"));
-                }
-
-            }
-            comboParent.Enabled = true;
-            UpdateListView();
-            Rerender();
-        }
-
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -1341,7 +1285,6 @@ namespace PckStudio.Forms
             e.Cancel = false;*/
         }
 
-        //Del stuff using key
         private void delStuffUsingDelKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete && listViewBoxes.SelectedItems.Count != 0 &&
@@ -1357,124 +1300,5 @@ namespace PckStudio.Forms
         {
             Rerender();
         }
-
-        // TODO
-        private void OpenJSONButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JSON Model File | *.JSON";
-            openFileDialog.Title = "Select JSON Model File";
-            if (MessageBox.Show(this, "Import custom model project file? Your current work will be lost!", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) == DialogResult.Yes && openFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                listViewBoxes.Items.Clear();
-                string str1 = JSONToCSM(openFileDialog.FileName);
-                int x = 0;
-                foreach (string str2 in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                    ++x;
-                int y = x / 11;
-                ListView listView = new ListView();
-                int num3 = 0;
-                do
-                {
-                    listView.Items.Add("BOX");
-                    ++num3;
-                }
-                while (num3 < y);
-
-
-                foreach (ListViewItem current in listView.Items)
-                {
-                    ListViewItem listViewItem = new ListViewItem();
-                    int num4 = 0;
-                        foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                        {
-                            ++num4;
-                            if (num4 == 1 + 11 * current.Index)
-                                listViewItem.Text = text;
-                            else if (num4 == 2 + 11 * current.Index)
-                                listViewItem.Tag = text;
-                            else if (num4 == 4 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 5 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 6 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 7 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 8 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 9 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 10 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 11 + 11 * current.Index)
-                            {
-                                listViewItem.SubItems.Add(text);
-                                listViewBoxes.Items.Add(listViewItem);
-                            }
-                        }
-                }
-            }
-            Rerender();
-        }
-
-        [Obsolete("Just whyyyyy")]
-        public string JSONToCSM(string inputFilePath)
-        {
-            CSMJObject jsonDe = JsonConvert.DeserializeObject<CSMJObject>(File.ReadAllText(inputFilePath));
-            StringBuilder sb = new StringBuilder();
-            foreach (CSMJObjectGroup group in jsonDe.Groups)
-            {
-                string parent = group.Name;
-                foreach (int i in group.children)
-                {
-                    string name = jsonDe.Elements[i].Name;
-                    float posX = jsonDe.Elements[i].from[0] + group.origin[0];
-                    float posY = jsonDe.Elements[i].from[1] + group.origin[1];
-                    float posZ = jsonDe.Elements[i].from[2] + group.origin[2];
-                    float sizeX = jsonDe.Elements[i].to[0] - jsonDe.Elements[i].from[0];
-                    float sizeY = jsonDe.Elements[i].to[1] - jsonDe.Elements[i].from[1];
-                    float sizeZ = jsonDe.Elements[i].to[2] - jsonDe.Elements[i].from[2];
-                    float u = 0;
-                    float v = 0;
-
-                    sb.AppendLine(name + "\n" + parent + "\n" + name + "\n" + posX + "\n" + posY + "\n" + posZ + "\n" + sizeX + "\n" + sizeY + "\n" + sizeZ + "\n" + u + "\n" + v);
-                }
-            }
-            return sb.ToString();
-        }
-    }
-
-    class CSMJObject
-    {
-        [JsonProperty("credit")]
-        public string Credit { get; set; }
-
-        [JsonProperty("texture_size")]
-        public int[] TextureSize;
-
-        [JsonProperty("elements")]
-        public CSMJObjectElement[] Elements;
-
-        [JsonProperty("groups")]
-        public CSMJObjectGroup[] Groups;
-    }
-    
-    class CSMJObjectElement
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        public float[] from;
-        public float[] to;
-    }
-
-    class CSMJObjectGroup
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        public float[] origin;
-        public int[] children;
     }
 }
