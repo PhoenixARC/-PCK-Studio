@@ -1539,16 +1539,19 @@ namespace PckStudio
 			e.CancelEdit = true;
 		}
 
+		[Obsolete("Move this")]
 		public string GetDataPath()
 		{
 			return Path.Combine(Path.GetDirectoryName(saveLocation), "Data");
 		}
 
+		[Obsolete("Move this")]
 		public bool HasDataFolder()
 		{
 			return Directory.Exists(GetDataPath());
 		}
 
+		[Obsolete("Move this")]
 		public bool CreateDataFolder()
 		{
 			if (!HasDataFolder())
