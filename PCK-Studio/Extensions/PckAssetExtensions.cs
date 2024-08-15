@@ -1,10 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Collections.Generic;
+
 using OMI.Formats.Pck;
 using OMI.Workers;
+
 using PckStudio.Interfaces;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
@@ -85,26 +88,22 @@ namespace PckStudio.Extensions
             return asset.Filename.Remove(asset.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
         }
 
-        internal static void DeserializePropertiesFromString(this PckAsset asset, string serializedData)
+        internal static void DeserializeProperties(this PckAsset asset, IEnumerable<string> serializedData)
         {
-            string[] lines = serializedData.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string line in lines)
+            IEnumerable<KeyValuePair<string, string>> lines = serializedData
+                .Select(line => line.Split([' '], 2))
+                .Where (keyValue => keyValue.Length == 2)
+                .Select(keyValue => new KeyValuePair<string, string>(keyValue[0].Replace(":", ""), keyValue[1]));
+            foreach (KeyValuePair<string, string> kv in lines)
             {
-                int idx = line.IndexOf(' ');
-                if (idx == -1 || line.Length - 1 == idx)
-                    continue;
-                asset.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
+                asset.AddProperty(kv);
             }
         }
 
-        internal static string SerializePropertiesToString(this PckAsset asset)
+        internal static IEnumerable<string> SerializeProperties(this PckAsset asset, string seperater = ":")
         {
-            StringBuilder builder = new StringBuilder(asset.PropertyCount * 20);
-            foreach (KeyValuePair<string, string> property in asset.GetProperties())
-            {
-                builder.AppendLine(property.Key + ": " + property.Value);
-            }
-            return builder.ToString();
+            IReadOnlyList<KeyValuePair<string, string>> properties = asset.GetProperties();
+            return properties.Select(property => property.Key + seperater + property.Value);
         }
     }
 }

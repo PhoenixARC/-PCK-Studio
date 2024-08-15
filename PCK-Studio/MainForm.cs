@@ -709,7 +709,7 @@ namespace PckStudio
 			File.WriteAllBytes(outFilePath, asset.Data);
 			if (asset.PropertyCount > 0)
 			{
-				File.WriteAllText($"{outFilePath}.txt", asset.SerializePropertiesToString());
+				File.WriteAllLines($"{outFilePath}.txt", asset.SerializeProperties());
 			}
 		}
 
@@ -1047,121 +1047,7 @@ namespace PckStudio
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}
-		}
-
-		[Obsolete()]
-		bool IsSubPCKNode(string nodePath, string extention = ".pck")
-		{
-			// written by miku, implemented and modified by MattNL
-			if (nodePath.EndsWith(extention))
-				return false;
-
-			string[] subpaths = nodePath.Split('/');
-
-			bool isSubFile = subpaths.Any(s => Path.GetExtension(s).Equals(extention));
-
-			Debug.WriteLineIf(isSubFile, $"{nodePath} is a Sub-PCK File", category: nameof(IsSubPCKNode));
-
-			return isSubFile;
-		}
-
-		List<TreeNode> GetAllChildNodes(TreeNodeCollection root)
-		{
-			List<TreeNode> childNodes = new List<TreeNode>();
-			foreach (TreeNode node in root)
-			{
-				childNodes.Add(node);
-				if (node.Nodes.Count > 0)
-				{
-					childNodes.AddRange(GetAllChildNodes(node.Nodes));
-				}
 			}
-			return childNodes;
-		}
-
-		[Obsolete()]
-		TreeNode GetSubPCK(string childPath)
-		{
-			string parentPath = childPath.Replace('\\', '/');
-			Debug.WriteLine(parentPath);
-			string[] s = parentPath.Split('/');
-			Debug.WriteLine(s.Length);
-			foreach (string node in s)
-			{
-				TreeNode parent = treeViewMain.Nodes.Find(node, true)[0];
-				if (parent.TryGetTagData(out PckAsset asset) &&
-					(asset.Type is PckAssetType.TexturePackInfoFile ||
-					 asset.Type is PckAssetType.SkinDataFile))
-					return parent;
-			}
-
-			return null;
-		}
-
-		[Obsolete()]
-		void RebuildSubPCK(string childPath)
-		{
-			// Support for if a file is edited within a nested PCK File (AKA SubPCK)
-
-			if (!IsSubPCKNode(childPath))
-				return;
-
-			TreeNode parent = GetSubPCK(childPath);
-			Debug.WriteLine(parent.Name);
-            if (parent == null)
-                return;
-
-			PckAsset parentAsset = parent.Tag as PckAsset;
-			PckFile parentAssetPck = 
-				new PckFileReader(
-					LittleEndianCheckBox.Checked ? 
-					OMI.Endianness.LittleEndian : 
-					OMI.Endianness.BigEndian
-					).FromStream(new MemoryStream(parentAsset.Data));
-
-			if (parentAsset.Type is PckAssetType.TexturePackInfoFile || parentAsset.Type is PckAssetType.SkinDataFile)
-			{
-				Debug.WriteLine("Rebuilding " + parentAsset.Filename);
-				PckFile newPCKFile = new PckFile(3, parentAsset.Type is PckAssetType.SkinDataFile);
-
-				bool hasSkinsFolder = false;
-
-				// add original pck files to prevent data loss
-				foreach (PckAsset asset in parentAssetPck.GetAssets())
-				{
-					PckAsset newAsset = newPCKFile.CreateNewAsset(asset.Filename, asset.Type);
-					// check for skins folder so files are placed consistently in final pck
-					if (asset.Filename.StartsWith("Skins/") && parentAsset.Type is PckAssetType.SkinDataFile)
-						hasSkinsFolder = true;
-					foreach (KeyValuePair<string, string> prop in asset.GetProperties())
-						newAsset.AddProperty(prop);
-					newAsset.SetData(asset.Data);
-				}
-
-				foreach (TreeNode node in GetAllChildNodes(parent.Nodes))
-				{
-					if (node.Tag is PckAsset nodeAsset)
-					{
-						PckAsset newAsset = newPCKFile.CreateNewAsset(
-							(hasSkinsFolder ? "Skins/" : String.Empty) 
-							+ nodeAsset.Filename.Replace(parentAsset.Filename + "/", String.Empty), nodeAsset.Type);
-						foreach (KeyValuePair<string, string> prop in nodeAsset.GetProperties())
-							newAsset.AddProperty(prop);
-						newAsset.SetData(nodeAsset.Data);
-					}
-				}
-
-				parentAsset.SetData(new PckFileWriter(newPCKFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
-				parent.Tag = parentAsset;
-
-				// erase hidden sub-pck nodes to prevent duplication
-				parent.Nodes.Clear();
-
-				BuildMainTreeView();
-
-				MessageBox.Show(this, $"Files added successfully to {parentAsset.Filename}");
-			}
-        }
 
         private void treeViewMain_DoubleClick(object sender, EventArgs e)
 		{
@@ -1280,7 +1166,7 @@ namespace PckStudio
 					newNode.ImageIndex = node.ImageIndex;
 					newNode.SelectedImageIndex = node.SelectedImageIndex;
 
-					if (GetAllChildNodes(treeViewMain.Nodes).Find(n => n.FullPath == diag.NewText) != null)
+					if (GetAllChildNodes(treeViewMain.Nodes).FirstOrDefault(n => n.FullPath == diag.NewText) is not null)
 					{
 						MessageBox.Show(
 							this,
@@ -1290,12 +1176,8 @@ namespace PckStudio
 						return;
 					}
 
-					// adds generated file node
-					if (node.Parent == null)
-						treeViewMain.Nodes.Insert(node.Index + 1, newNode);
-					// adds generated file node to selected folder
-					else
-						node.Parent.Nodes.Insert(node.Index + 1, newNode);
+                    TreeNodeCollection nodeCollection = node.Parent?.Nodes ?? treeViewMain.Nodes;
+                    nodeCollection.Insert(node.Index + 1, newNode);
 
 					currentPCK.InsertAsset(node.Index + 1, newFile);
 					BuildMainTreeView();
@@ -1453,7 +1335,7 @@ namespace PckStudio
 			}
 			else
 			{
-				List<PckAsset> pckFiles = GetEndingNodes(draggedNode.Nodes).Where(t => t.IsTagOfType<PckAsset>()).Select(t => t.Tag as PckAsset).ToList();
+                IEnumerable<PckAsset> pckFiles = GetAllChildNodes(draggedNode.Nodes).Where(t => t.IsTagOfType<PckAsset>()).Select(t => t.Tag as PckAsset);
 				string oldPath = draggedNode.FullPath;
 				string newPath = Path.Combine(isTargetPckFile ? Path.GetDirectoryName(targetNode.FullPath) : targetNode.FullPath, draggedNode.Text).Replace('\\', '/');
 				foreach (PckAsset pckFile in pckFiles)
@@ -1465,20 +1347,17 @@ namespace PckStudio
             }
 		}
 
-		private IEnumerable<TreeNode> GetEndingNodes(TreeNodeCollection collection)
+		IEnumerable<TreeNode> GetAllChildNodes(TreeNodeCollection root)
 		{
-			List<TreeNode> trailingNodes = new List<TreeNode>(collection.Count);
-            foreach (TreeNode node in collection)
+			List<TreeNode> childNodes = new List<TreeNode>(root.Count);
+			foreach (TreeNode childNode in root)
             {
-				if (node.Nodes.Count > 0)
-				{
-					trailingNodes.AddRange(GetEndingNodes(node.Nodes));
-					continue;
+				childNodes.Add(childNode);
+				childNodes.AddRange(GetAllChildNodes(childNode.Nodes));
 				}
-                trailingNodes.Add(node);
+			return childNodes;
             }
-			return trailingNodes;
-        }
+
 
         private void ImportFiles(string[] files)
         {
@@ -1491,14 +1370,14 @@ namespace PckStudio
 
                 if (currentPCK.Contains(addFile.Filepath, addFile.Filetype))
                 {
-                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.", "Import failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.\nSkiping file.", "File already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                     continue;
                 }
                 PckAsset importedAsset = currentPCK.CreateNewAsset(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(filepath));
                 string propertyFile = filepath + ".txt";
 				if (File.Exists(propertyFile))
 				{
-					importedAsset.DeserializePropertiesFromString(File.ReadAllText(propertyFile));
+					importedAsset.DeserializeProperties(File.ReadAllLines(propertyFile));
 				}
                 addedCount++;
 
@@ -1689,48 +1568,6 @@ namespace PckStudio
 				deleteEntryToolStripMenuItem_Click(sender, e);
 		}
 
-		private void importExtractedSkinsFolder(object sender, EventArgs e)
-		{
-			using FolderBrowserDialog contents = new FolderBrowserDialog();
-			if (contents.ShowDialog(this) == DialogResult.OK && Directory.Exists(contents.SelectedPath))
-			{
-				string filepath = treeViewMain.SelectedNode?.FullPath ?? "";
-				if (treeViewMain.SelectedNode is not null && treeViewMain.SelectedNode.IsTagOfType<PckAsset>())
-					filepath = treeViewMain.SelectedNode.Parent?.FullPath ?? "";
-
-                foreach (var fullfilename in Directory.GetFiles(contents.SelectedPath, "dlc*.png"))
-				{
-					string filename = Path.GetFileName(fullfilename);
-					// only accept skin or cape named files
-					if (!filename.StartsWith("dlcskin") && !filename.StartsWith("dlccape"))
-						continue;
-					// sets file type based on wether its a cape or skin
-					PckAssetType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
-						? PckAssetType.CapeFile
-						: PckAssetType.SkinFile;
-					string pckfilepath = Path.Combine(filepath, filename);
-
-					if (currentPCK.Contains(pckfilepath, pckfiletype))
-					{
-						Trace.TraceInformation("[{0}] {1} already exists.", nameof(importExtractedSkinsFolder), pckfilepath);
-						continue;
-					}
-
-					PckAsset newAsset = currentPCK.CreateNewAsset(pckfilepath, pckfiletype);
-					byte[] filedata = File.ReadAllBytes(fullfilename);
-					newAsset.SetData(filedata);
-
-					if (File.Exists(fullfilename + ".txt"))
-					{
-						string propertiesFileContent = File.ReadAllText(fullfilename + ".txt");
-						newAsset.DeserializePropertiesFromString(propertiesFileContent);
-					}
-				}
-				BuildMainTreeView();
-				wasModified = true;
-			}
-		}
-
 		private bool TryGetLocFile(out LOCFile locFile)
 		{
 			if (!currentPCK.TryGetAsset("localisation.loc", PckAssetType.LocalisationFile, out PckAsset locAsset) &&
@@ -1773,6 +1610,47 @@ namespace PckStudio
 			return false;
 		}
 
+		private void importExtractedSkinsFolder(object sender, EventArgs e)
+		{
+			OpenFolderDialog contents = new OpenFolderDialog();
+			if (contents.ShowDialog(Handle) == true && Directory.Exists(contents.ResultPath))
+			{
+				string filepath = treeViewMain.SelectedNode?.FullPath ?? "";
+				if (treeViewMain.SelectedNode is not null && treeViewMain.SelectedNode.IsTagOfType<PckAsset>())
+					filepath = treeViewMain.SelectedNode.Parent?.FullPath ?? "";
+
+                foreach (var fullfilename in Directory.GetFiles(contents.ResultPath, "dlc*.png"))
+				{
+					string filename = Path.GetFileName(fullfilename);
+					// only accept skin or cape named files
+					if (!filename.StartsWith("dlcskin") && !filename.StartsWith("dlccape"))
+						continue;
+					// sets file type based on wether its a cape or skin
+					PckAssetType pckfiletype = filename.StartsWith("dlccape", StringComparison.OrdinalIgnoreCase)
+						? PckAssetType.CapeFile
+						: PckAssetType.SkinFile;
+					string pckfilepath = Path.Combine(filepath, filename);
+
+					if (currentPCK.Contains(pckfilepath, pckfiletype))
+					{
+						Trace.TraceInformation("[{0}] {1} already exists.", nameof(importExtractedSkinsFolder), pckfilepath);
+						continue;
+					}
+
+					PckAsset newAsset = currentPCK.CreateNewAsset(pckfilepath, pckfiletype);
+					byte[] filedata = File.ReadAllBytes(fullfilename);
+					newAsset.SetData(filedata);
+
+					if (File.Exists(fullfilename + ".txt"))
+					{
+						string[] propertiesFileContent = File.ReadAllLines(fullfilename + ".txt");
+						newAsset.DeserializeProperties(propertiesFileContent);
+					}
+				}
+				BuildMainTreeView();
+				wasModified = true;
+			}
+		}
 
 		[Obsolete("Refactor or remove this")]
 		private void importSkinToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1798,11 +1676,12 @@ namespace PckStudio
 					string propertyFile = contents.FileName + ".txt";
 					if (File.Exists(propertyFile))
 					{
-						string txtProperties = File.ReadAllText(propertyFile);
-						importSkinAsset.DeserializePropertiesFromString(txtProperties);
+						string[] txtProperties = File.ReadAllLines(propertyFile);
+						importSkinAsset.DeserializeProperties(txtProperties);
 						
 						// Because extracting/exporting an assest doesn't export
-						// the actual loc value we just get an undefined loc key
+                        // the actual loc value we just get an undefined loc key.
+                        // That's why why remove them after deserializing.
 						// - Miku
 						importSkinAsset.RemoveProperty("DISPLAYNAMEID");
 						importSkinAsset.RemoveProperty("THEMENAMEID");
@@ -2175,23 +2054,15 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
-				using (var input = new MultiTextPrompt())
-				{
+                using var input = new MultiTextPrompt();
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
-						foreach (string line in input.TextOutput)
-						{
-							int idx = line.IndexOf(' ');
-							if (idx == -1 || line.Length - 1 == idx)
-								continue;
-							asset.AddProperty(line.Substring(0, idx), line.Substring(idx + 1));
-						}
+                    asset.DeserializeProperties(input.TextOutput);
 						ReloadMetaTreeView();
 						wasModified = true;
 					}
 				}
 			}
-		}
 
 		private void correctSkinDecimalsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -2226,19 +2097,13 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
-                string[] props = asset.GetProperties().Select(p => p.Key + " " + p.Value).ToArray();
+                IEnumerable<string> props = asset.SerializeProperties(seperater:" ");
 				using (var input = new MultiTextPrompt(props))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
 					{
 						asset.ClearProperties();
-						foreach (string line in input.TextOutput)
-						{
-							int idx = line.IndexOf(' ');
-							if (idx == -1 || line.Length - 1 == idx)
-								continue;
-							asset.AddProperty(line.Substring(0, idx).Replace(":", string.Empty), line.Substring(idx + 1));
-						}
+						asset.DeserializeProperties(input.TextOutput);
 						ReloadMetaTreeView();
 						wasModified = true;
 					}
@@ -2430,6 +2295,7 @@ namespace PckStudio
 		}
 
 		private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
+		
 		private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
 
 		private void SetModelVersion(int version)
