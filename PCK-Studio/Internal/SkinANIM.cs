@@ -26,15 +26,10 @@ namespace PckStudio.Internal
     /// </summary>
     public class SkinANIM : ICloneable, IEquatable<SkinANIM>, IEquatable<SkinAnimMask>
     {
-		public static readonly SkinANIM Empty = new SkinANIM();
+		public static readonly SkinANIM Empty = new SkinANIM(0);
 
 		private BitVector32 _flags;
 		private static readonly Regex _validator = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
-
-		public SkinANIM()
-			: this(SkinAnimMask.NONE)
-		{
-		}
 
 		public SkinANIM(SkinAnimMask mask)
 			: this((int)mask)
@@ -56,18 +51,18 @@ namespace PckStudio.Internal
 		public static SkinANIM FromString(string value)
 			=> IsValidANIM(value)
 				? new SkinANIM(Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
-				: new SkinANIM();
+                : Empty;
 
-		public static SkinANIM operator |(SkinANIM _this, SkinANIM other) => new SkinANIM(_this._flags.Data | other._flags.Data);
-		
-		public static SkinANIM operator |(SkinANIM _this, SkinAnimMask mask) => new SkinANIM(_this._flags.Data | (int)mask);
+		public static SkinANIM operator |(SkinANIM @this, SkinANIM other) => new SkinANIM(@this._flags.Data | other._flags.Data);
+
+		public static SkinANIM operator |(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data | (int)mask);
 
 		public static implicit operator SkinANIM(SkinAnimMask mask) => new SkinANIM(mask);
 
-		public static bool operator ==(SkinANIM _this, SkinAnimMask mask) => _this.Equals(mask);
-		public static bool operator !=(SkinANIM _this, SkinAnimMask mask) => !_this.Equals(mask);
-		public static bool operator ==(SkinANIM _this, SkinANIM other) => _this.Equals(other);
-		public static bool operator !=(SkinANIM _this, SkinANIM other) => !_this.Equals(other);
+		public static bool operator ==(SkinANIM @this, SkinAnimMask mask) => @this.Equals(mask);
+		public static bool operator !=(SkinANIM @this, SkinAnimMask mask) => !@this.Equals(mask);
+		public static bool operator ==(SkinANIM @this, SkinANIM other) => @this.Equals(other);
+		public static bool operator !=(SkinANIM @this, SkinANIM other) => !@this.Equals(other);
 
         public bool Equals(SkinANIM other)
         {
@@ -88,11 +83,11 @@ namespace PckStudio.Internal
 		/// </summary>
 		/// <param name="flag">ANIM Flag to set</param>
 		/// <param name="state">State of the flag</param>
-		public void SetFlag(SkinAnimFlag flag, bool state)
+		public SkinANIM SetFlag(SkinAnimFlag flag, bool state)
 		{
 			if (!Enum.IsDefined(typeof(SkinAnimFlag), flag))
 				throw new ArgumentOutOfRangeException(nameof(flag));
-			_flags[1 << (int)flag] = state;
+			return new SkinANIM(state ? _flags.Data | 1 << (int)flag : _flags.Data & ~(1 << (int)flag));
 		}
 
 		/// <summary>
@@ -110,6 +105,11 @@ namespace PckStudio.Internal
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        internal SkinANIM SetMask(SkinAnimMask skinAnimMask)
+        {
+			return new SkinANIM(skinAnimMask);
         }
     }
 }
