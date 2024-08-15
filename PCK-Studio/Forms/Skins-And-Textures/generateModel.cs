@@ -20,12 +20,8 @@ using System.Text;
 
 namespace PckStudio.Forms
 {
-    [Obsolete]
     public partial class generateModel : MetroForm
     {
-        [Obsolete("We don't need a full control to get an image")]
-        private PictureBox _skinPreview = new PictureBox();
-
         private Image _previewImage;
         public Image PreviewImage => _previewImage;
 

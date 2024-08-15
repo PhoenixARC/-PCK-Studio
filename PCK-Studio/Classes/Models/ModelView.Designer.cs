@@ -57,8 +57,6 @@ namespace PckStudio.Models
 
         private System.Drawing.Image backgroundTexture;
 
-        private System.Drawing.Image usernameImage;
-
         internal PckStudio.Models.Matrix3D GlobalTransformation = PckStudio.Models.Matrix3D.Identity;
 
         private System.Collections.Generic.List<PckStudio.Models.Texel> texelList = new System.Collections.Generic.List<PckStudio.Models.Texel>();
