@@ -56,6 +56,7 @@ namespace PckStudio.Internal.Skin
 		public static SkinANIM operator |(SkinANIM @this, SkinANIM other) => new SkinANIM(@this._flags.Data | other._flags.Data);
 
 		public static SkinANIM operator |(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data | (int)mask);
+		public static SkinANIM operator &(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data & (int)mask);
 		
 		public static SkinANIM FromValue(int value) => new SkinANIM(value);
 		

@@ -72,7 +72,7 @@ namespace PckStudio.Internal
                 return null;
             }
             SkinModelInfo modelInfo = new SkinModelInfo();
-            modelInfo.ANIM.SetMask(
+            modelInfo.ANIM = (
                    SkinAnimMask.HEAD_DISABLED |
                    SkinAnimMask.HEAD_OVERLAY_DISABLED |
                    SkinAnimMask.BODY_DISABLED |
@@ -89,79 +89,60 @@ namespace PckStudio.Internal
             if (blockBenchModel.Textures.IndexInRange(0))
             {
                 modelInfo.Texture = blockBenchModel.Textures[0];
-                modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
+                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
             }
 
+            IEnumerable<SkinBOX> boxes = ReadOutliner(blockBenchModel.Outliner, null, blockBenchModel.Elements);
+            modelInfo.AdditionalBoxes.AddRange(boxes.Where(box => !SkinBOX.KnownHashes.ContainsKey(box.GetHashCode())));
 
-            foreach (JToken token in blockBenchModel.Outliner)
-            {
-                if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
-                {
-                    Element element = blockBenchModel.Elements.First(e => e.Uuid.Equals(tokenGuid));
-                    LoadElement(element.Name, element, ref modelInfo);
-                    continue;
-                }
-                if (token.Type == JTokenType.Object)
-                {
-                    Outline outline = token.ToObject<Outline>();
-                    string type = outline.Name;
-                    ReadOutliner(token, type, blockBenchModel.Elements, ref modelInfo);
-                }
-            }
+            // check for know boxes and filter them out
+
+            SkinAnimMask mask = (SkinAnimMask)boxes
+                .Where(box => SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()) && Enum.IsDefined(typeof(SkinAnimMask), (1 >> (int)SkinBOX.KnownHashes[box.GetHashCode()])))
+                .Select(box => SkinBOX.KnownHashes[box.GetHashCode()])
+                .Select(i => 1 << (int)i)
+                .DefaultIfEmpty()
+                .Aggregate((a, b) => a | b);
+
+            if (mask != SkinAnimMask.NONE)
+                modelInfo.ANIM &= ~mask;
+
             modelInfo.Texture = FixTexture(modelInfo);
             return modelInfo;
         }
 
-        private static void ReadOutliner(JToken token, string type, IReadOnlyCollection<Element> elements, ref SkinModelInfo modelInfo)
+        private static IEnumerable<SkinBOX> ReadOutliner(JArray ouliner, string outlineName, IReadOnlyCollection<Element> elements)
         {
-            if (TryReadElement(token, type, elements, ref modelInfo))
-                return;
+            IEnumerable<SkinBOX> boxes = ouliner
+                .Where(token => token.Type == JTokenType.String && Guid.TryParse(token.ToString(), out Guid elementUuid) && elements.Any(e => e.Uuid == elementUuid))
+                .Select(token => elements.First(e => Guid.Parse(token.ToString()) == e.Uuid))
+                .Where(element => element.Type == "cube" && element.UseBoxUv && element.Export && SkinBOX.IsValidType(TryConvertToSkinBoxType(outlineName ?? element.Name)))
+                .Select(element => LoadElement(element, TryConvertToSkinBoxType(outlineName ?? element.Name), Vector3.Zero));
 
-            if (token.Type == JTokenType.Object)
-            {
-                Outline outline = token.ToObject<Outline>();
-                foreach (JToken childToken in outline.Children)
-                {
-                    ReadOutliner(childToken, type, elements, ref modelInfo);
-                }
+            IEnumerable<Outline> childOutlines = ouliner
+                .Where(token => token.Type == JTokenType.Object)
+                .Select(token => token.ToObject<Outline>());
+
+            foreach (Outline childOutline in childOutlines)
+        {
+                boxes = boxes.Concat(ReadOutliner(childOutline.Children, childOutline.Name, elements));
             }
+            return boxes;
         }
 
-        private static bool TryReadElement(JToken token, string type, IReadOnlyCollection<Element> elements, ref SkinModelInfo modelInfo)
+        private static SkinBOX LoadElement(Element element, string outlineName, Vector3 offset)
         {
-            if (token.Type == JTokenType.String && Guid.TryParse((string)token, out Guid tokenGuid))
-            {
-                Element element = elements.First(e => e.Uuid.Equals(tokenGuid));
-                LoadElement(type, element, ref modelInfo);
-                return true;
-            }
-            return false;
-        }
-
-        private static void LoadElement(string boxType, Element element, ref SkinModelInfo modelInfo)
-        {
-            if (element.Type != "cube" || !element.UseBoxUv || !element.Export)
-                return;
-
-            boxType = TryConvertToSkinBoxType(boxType);
-            if (!SkinBOX.IsValidType(boxType))
-                return;
-
-            Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, element.Origin, ref modelInfo);
-
             var boundingBox = new Rendering.BoundingBox(element.From, element.To);
             Vector3 pos = boundingBox.Start - offset;
             Vector3 size = boundingBox.Volume;
             Vector2 uv = element.UvOffset;
 
-            pos = TranslateToInternalPosition(boxType, pos, size, new Vector3(1, 1, 0));
+            pos = TranslateToInternalPosition(outlineName, pos, size, new Vector3(1, 1, 0));
 
-            var box = new SkinBOX(boxType, pos, size, uv, mirror: element.MirrorUv);
-            if (box.IsBasePart() && ((boxType == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
+            var box = new SkinBOX(outlineName, pos, size, uv, mirror: element.MirrorUv);
+            if (box.IsBasePart() && ((outlineName == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
                 box.Type = box.GetOverlayType();
-
-            if (!BOX2ANIM(modelInfo.ANIM, box))
-                modelInfo.AdditionalBoxes.Add(box);
+            return box;
         }
 
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)

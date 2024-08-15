@@ -33,7 +33,10 @@ namespace PckStudio.External.Format
         internal string ModelFormat { get; }
        
         [JsonProperty("box_uv")]
-        internal bool UseBoxUv { get; }
+        internal bool UseBoxUv { get; set; }
+
+        [JsonConstructor]
+        private BlockBenchFormatInfo() { }
 
         internal BlockBenchFormatInfo(string formatVersion, string modelFormat, bool useBoxUv)
         {
