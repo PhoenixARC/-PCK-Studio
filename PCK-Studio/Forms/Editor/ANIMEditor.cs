@@ -90,7 +90,7 @@ namespace PckStudio.Forms.Editor
                                     checkbox.Checked = false;
                                 break;
 						}
-                        _anim.SetFlag(item.Value, checkbox.Checked);
+                        _anim = _anim.SetFlag(item.Value, checkbox.Checked);
                     });
                 }
                 OnCheckboxChanged?.Invoke(_anim);
@@ -155,7 +155,7 @@ namespace PckStudio.Forms.Editor
                         default:
                             break;
                     }
-                    _anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
+                    _anim = _anim.SetFlag(checkBoxLinkage[checkBox], checkBox.Checked && checkBox.Enabled);
                     OnCheckboxChanged?.Invoke(_anim);
                 }
             }
@@ -178,18 +178,6 @@ namespace PckStudio.Forms.Editor
             InitializeComponent();
             InitializeRuleSet();
             saveButton.Visible = !Settings.Default.AutoSaveChanges;
-        }
-
-        public ANIMEditor(string animString) : this()
-        {
-            if (!SkinANIM.IsValidANIM(animString))
-            {
-                DialogResult = DialogResult.Abort;
-                Close();
-            }
-            SkinANIM anim = initialANIM = SkinANIM.FromString(animString);
-            setDisplayAnim(anim);
-            ruleset.ApplyAnim(anim);
         }
 
         public ANIMEditor(SkinANIM skinANIM) : this()
@@ -348,8 +336,8 @@ namespace PckStudio.Forms.Editor
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            ruleset.ApplyAnim((SkinANIM)initialANIM.Clone());
-            setDisplayAnim((SkinANIM)initialANIM.Clone());
+            ruleset.ApplyAnim(initialANIM);
+            setDisplayAnim(initialANIM);
         }
 
         static readonly Dictionary<string, SkinAnimMask> Templates = new Dictionary<string, SkinAnimMask>()
@@ -375,7 +363,7 @@ namespace PckStudio.Forms.Editor
             if (diag.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            var templateANIM = new SkinANIM(Templates[diag.SelectedItem]);
+            SkinANIM templateANIM = SkinANIM.Empty.SetMask(Templates[diag.SelectedItem]);
             DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
             if (prompt == DialogResult.Yes)
                 templateANIM |= ruleset.Value;

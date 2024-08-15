@@ -26,15 +26,10 @@ namespace PckStudio.Internal.Skin
     /// </summary>
     public class SkinANIM : ICloneable, IEquatable<SkinANIM>, IEquatable<SkinAnimMask>
     {
-		public static readonly SkinANIM Empty = new SkinANIM();
+		public static readonly SkinANIM Empty = new SkinANIM(0);
 
 		private BitVector32 _flags;
 		private static readonly Regex _validator = new Regex(@"^0x[0-9a-f]{1,8}\b", RegexOptions.IgnoreCase);
-
-		public SkinANIM()
-			: this(SkinAnimMask.NONE)
-		{
-		}
 
 		public SkinANIM(SkinAnimMask mask)
 			: this((int)mask)
@@ -56,15 +51,15 @@ namespace PckStudio.Internal.Skin
 		public static SkinANIM FromString(string value)
 			=> IsValidANIM(value)
 				? new SkinANIM(Convert.ToInt32(value.TrimEnd(' ', '\n', '\r'), 16))
-				: new SkinANIM();
+                : Empty;
+
+		public static SkinANIM operator |(SkinANIM @this, SkinANIM other) => new SkinANIM(@this._flags.Data | other._flags.Data);
+
+		public static SkinANIM operator |(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data | (int)mask);
 		
 		public static SkinANIM FromValue(int value) => new SkinANIM(value);
 		
 		public int ToValue() => _flags.Data;
-
-		public static SkinANIM operator |(SkinANIM @this, SkinANIM other) => new SkinANIM(@this._flags.Data | other._flags.Data);
-		
-		public static SkinANIM operator |(SkinANIM @this, SkinAnimMask mask) => new SkinANIM(@this._flags.Data | (int)mask);
 
 		public static implicit operator SkinANIM(SkinAnimMask mask) => new SkinANIM(mask);
 
@@ -92,11 +87,11 @@ namespace PckStudio.Internal.Skin
 		/// </summary>
 		/// <param name="flag">ANIM Flag to set</param>
 		/// <param name="state">State of the flag</param>
-		public void SetFlag(SkinAnimFlag flag, bool state)
+		public SkinANIM SetFlag(SkinAnimFlag flag, bool state)
 		{
 			if (!Enum.IsDefined(typeof(SkinAnimFlag), flag))
 				throw new ArgumentOutOfRangeException(nameof(flag));
-			_flags[1 << (int)flag] = state;
+			return new SkinANIM(state ? _flags.Data | 1 << (int)flag : _flags.Data & ~(1 << (int)flag));
 		}
 
 		/// <summary>
@@ -116,9 +111,9 @@ namespace PckStudio.Internal.Skin
             return MemberwiseClone();
         }
 
-        internal void SetMask(SkinAnimMask skinAnimMask)
+        internal SkinANIM SetMask(SkinAnimMask skinAnimMask)
         {
-			_flags = new BitVector32((int)skinAnimMask);
+			return new SkinANIM(skinAnimMask);
         }
     }
 }

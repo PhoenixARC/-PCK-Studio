@@ -1136,7 +1136,7 @@ namespace PckStudio
 						case "ANIM" when asset.Type == PckAssetType.SkinFile:
 							try
 							{
-								using ANIMEditor diag = new ANIMEditor(property.Value);
+								using ANIMEditor diag = new ANIMEditor(SkinANIM.FromString(property.Value));
 								if (diag.ShowDialog(this) == DialogResult.OK)
 								{
 									asset.SetProperty(asset.GetPropertyIndex(property), new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));

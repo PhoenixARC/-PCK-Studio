@@ -19,7 +19,7 @@ namespace PckStudio.Internal.Skin
         }
 
         public SkinModelInfo(Image texture)
-            : this(texture, new SkinANIM())
+            : this(texture, SkinANIM.Empty)
         {
             Texture = texture;
         }
