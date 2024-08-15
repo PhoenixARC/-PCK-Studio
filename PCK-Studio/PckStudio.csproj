@@ -45,6 +45,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>CS0618</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -175,6 +177,7 @@
     <Compile Include="Internal\ModelPartSpecifics.cs" />
     <Compile Include="Internal\Json\JsonModelMetaData.cs" />
     <Compile Include="Internal\NamedTexture.cs" />
+    <Compile Include="Internal\Json\UpdateInformation.cs" />
     <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
     <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
     <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
@@ -192,6 +195,7 @@
     <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\Skin\SkinAnimFlag.cs" />
     <Compile Include="Internal\Skin\SkinAnimMask.cs" />
+    <Compile Include="Internal\Updater.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
