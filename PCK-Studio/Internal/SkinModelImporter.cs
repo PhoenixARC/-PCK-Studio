@@ -488,6 +488,7 @@ namespace PckStudio.Internal
                 Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(FixTexture)}] Failed to fix texture: texture is null.");
                 return null;
             }
+            areasToFix = areasToFix.Where(rect => rect.Size.Width > 0 && rect.Size.Height > 0);
             Image result = new Bitmap(texture);
             using var g = Graphics.FromImage(result);
             g.ApplyConfig(new GraphicsConfig()
