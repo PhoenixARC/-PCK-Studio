@@ -362,7 +362,7 @@ namespace PckStudio.Forms.Editor
             if (diag.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            SkinANIM templateANIM = SkinANIM.Empty.SetMask(Templates[diag.SelectedItem]);
+            SkinANIM templateANIM = Templates[diag.SelectedItem];
             DialogResult prompt = MessageBox.Show(this, "Would you like to add this preset's effects to your current ANIM? Otherwise all of your effects will be cleared. Either choice can be undone by pressing \"Restore ANIM\".", "", MessageBoxButtons.YesNo);
             if (prompt == DialogResult.Yes)
                 templateANIM |= ruleset.Value;

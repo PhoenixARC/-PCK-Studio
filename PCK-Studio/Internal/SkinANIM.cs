@@ -106,10 +106,5 @@ namespace PckStudio.Internal
         {
             return MemberwiseClone();
         }
-
-        internal SkinANIM SetMask(SkinAnimMask skinAnimMask)
-        {
-			return new SkinANIM(skinAnimMask);
-        }
     }
 }
