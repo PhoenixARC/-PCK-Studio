@@ -947,19 +947,17 @@ namespace PckStudio.Rendering
                     {
                         armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(animationCurrentRotationAngle));
                         armLeftMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians((ANIM.GetFlag(SkinAnimFlag.SYNCED_ARMS) ? 1f : -1f) * animationCurrentRotationAngle));
-                    }
-
-                    if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
-                    {
-                        var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
-                        armRightMatrix = rotation;
-                        armLeftMatrix = rotation;
-                    }
-
-                    if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
-                    {
-                        armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
-                        armLeftMatrix = Matrix4.CreateRotationX(0f);
+                        if (ANIM.GetFlag(SkinAnimFlag.STATUE_OF_LIBERTY))
+                        {
+                            armRightMatrix = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-180f));
+                            armLeftMatrix = Matrix4.CreateRotationX(0f);
+                        }
+                        if (ANIM.GetFlag(SkinAnimFlag.ZOMBIE_ARMS))
+                        {
+                            var rotation = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90f));
+                            armRightMatrix = rotation;
+                            armLeftMatrix = rotation;
+                        }
                     }
 
                     if (!ANIM.GetFlag(SkinAnimFlag.STATIC_LEGS))
