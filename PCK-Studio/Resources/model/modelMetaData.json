@@ -66,21 +66,15 @@
     ],
     "root": {
       "body": [
-        { "head": [ "nose" ] },
+        {
+          "head": [ "nose" ],
+          "tail": [ "tail_fin" ]
+        },
         "left_fin",
         "right_fin",
-        "back_fin",
-        { "tail": [ "tail_fin" ] }
+        "back_fin"
       ]
     }
-    // - body
-    //   - head
-    //     - nose
-    //   - left_fin
-    //   - right_fin
-    //   - back_fin
-    //   - tail
-    //     - tail_fin
   },
   "dragon": {
     "textureLocations": [
@@ -147,6 +141,11 @@
       "res/mob/llama/llama_creamy",
       "res/mob/llama/llama_gray",
       "res/mob/llama/llama_white"
+    ]
+  },
+  "llamaspit": {
+    "textureLocations": [
+      "res/mob/llama/spit"
     ]
   },
   "minecart": {
@@ -221,7 +220,6 @@
   },
   "sheep": {
     "textureLocations": [
-      // locations not tested
       "res/mob/sheep_fur"
     ]
   },
@@ -356,7 +354,7 @@
     ]
   },
   "horse.v2": {
-    // markings and armor no included
+    // markings and armor not included
     "textureLocations": [
       "res/mob/horse/donkey",
       "res/mob/horse/horse_black",
@@ -399,11 +397,6 @@
   "endermite": {
     "textureLocations": [
       "res/mob/endermite"
-    ]
-  },
-  "panda": {
-    "textureLocations": [
-      null
     ]
   },
   "cod": {
@@ -476,6 +469,102 @@
   "witherBoss.armor": {
     "textureLocations": [
       "res/mob/wither/wither_armor"
+    ]
+  },
+
+  "villager_v2": {
+    "textureLocations": [
+      "res/mob/villager/villagerBase1",
+      "res/mob/villager/villagerBase2",
+      "res/mob/villager/villagerBase3",
+      "res/mob/villager/villagerBase4",
+      "res/mob/villager/villagerBase5",
+      "res/mob/villager/villagerBase6",
+
+      "res/mob/wandering_trader",
+
+      "res/mob/villager/professions/armorer",
+      "res/mob/villager/professions/butcher",
+      "res/mob/villager/professions/cartographer",
+      "res/mob/villager/professions/cleric",
+      "res/mob/villager/professions/farmer",
+      "res/mob/villager/professions/fisherman",
+      "res/mob/villager/professions/fletcher",
+      "res/mob/villager/professions/leatherworker",
+      "res/mob/villager/professions/librarian",
+      "res/mob/villager/professions/nitwit",
+      "res/mob/villager/professions/shepherd",
+      "res/mob/villager/professions/stonemason",
+      "res/mob/villager/professions/toolsmith",
+      "res/mob/villager/professions/unskilled",
+      "res/mob/villager/professions/weaponsmith",
+
+      "res/mob/villager/biomes/biome_desert",
+      "res/mob/villager/biomes/biome_jungle",
+      "res/mob/villager/biomes/biome_plains",
+      "res/mob/villager/biomes/biome_savanna",
+      "res/mob/villager/biomes/biome_snow",
+      "res/mob/villager/biomes/biome_swamp",
+      "res/mob/villager/biomes/biome_taiga",
+
+      "res/mob/villager/levels/level_diamond",
+      "res/mob/villager/levels/level_gold",
+      "res/mob/villager/levels/level_iron"
+    ]
+  },
+  "zombie.villager_v2": {
+    "textureLocations": [
+      "res/mob/zombie_villager/zombie_villager",
+      "res/mob/zombie_villager/zombie_butcher",
+      "res/mob/zombie_villager/zombie_farmer",
+      "res/mob/zombie_villager/zombie_librarian",
+      "res/mob/zombie_villager/zombie_priest",
+      "res/mob/zombie_villager/zombie_smith",
+
+      "res/mob/zombie_villager/biomes/biome-desert-zombie",
+      "res/mob/zombie_villager/biomes/biome-jungle-zombie",
+      "res/mob/zombie_villager/biomes/biome-plains-zombie",
+      "res/mob/zombie_villager/biomes/biome-savanna-zombie",
+      "res/mob/zombie_villager/biomes/biome-snow-zombie",
+      "res/mob/zombie_villager/biomes/biome-swamp-zombie",
+      "res/mob/zombie_villager/biomes/biome-taiga-zombie",
+
+      "res/mob/zombie_villager/professions/armorer",
+      "res/mob/zombie_villager/professions/butcher",
+      "res/mob/zombie_villager/professions/cartographer",
+      "res/mob/zombie_villager/professions/cleric",
+      "res/mob/zombie_villager/professions/farmer",
+      "res/mob/zombie_villager/professions/fisherman",
+      "res/mob/zombie_villager/professions/fletcher",
+      "res/mob/zombie_villager/professions/leatherworker",
+      "res/mob/zombie_villager/professions/librarian",
+      "res/mob/zombie_villager/professions/nitwit",
+      "res/mob/zombie_villager/professions/shepherd",
+      "res/mob/zombie_villager/professions/stonemason",
+      "res/mob/zombie_villager/professions/toolsmith",
+      "res/mob/zombie_villager/professions/weaponsmith",
+    ]
+  },
+  "pillager": {
+    "textureLocations": [
+      "res/mob/pillager"
+    ]
+  },
+  "ravager": {
+    "textureLocations": [
+      "res/mob/illager/ravager"
+    ]
+  },
+
+  "panda": {
+    "textureLocations": [
+      "res/mob/panda/panda",
+      "res/mob/panda/panda_aggressive",
+      "res/mob/panda/panda_brown",
+      "res/mob/panda/panda_lazy",
+      "res/mob/panda/panda_playful",
+      "res/mob/panda/panda_sneezy",
+      "res/mob/panda/panda_worried"
     ]
   }
 }
