@@ -438,19 +438,19 @@ namespace PckStudio.Internal
             {
                 return name.ToUpper();
             }
-            return name switch
+            return name.ToLower() switch
             {
                 "helmet"      => "HEAD",
-                "rightArm"    => "ARM0",
-                "leftArm"     => "ARM1",
-                "rightLeg"    => "LEG0",
-                "leftLeg"     => "LEG1",
+                "rightarm"    => "ARM0",
+                "leftarm"     => "ARM1",
+                "rightleg"    => "LEG0",
+                "leftleg"     => "LEG1",
                 "hat"         => "HEADWEAR",
-                "bodyArmor"   => "BODY",
-                "rightSleeve" => "SLEEVE0",
-                "leftSleeve"  => "SLEEVE1",
-                "rightPants"  => "PANTS0",
-                "leftPants"   => "PANTS1",
+                "bodyarmor"   => "BODY",
+                "rightsleeve" => "SLEEVE0",
+                "leftsleeve"  => "SLEEVE1",
+                "rightpants"  => "PANTS0",
+                "leftpants"   => "PANTS1",
                 _             => name,
             };
         }
