@@ -1254,17 +1254,6 @@ namespace PckStudio
 
 		private void treeViewMain_DragDrop(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Data.GetData(DataFormats.FileDrop) is string[] files)
-			{
-				ImportFiles(files);
-				return;
-			}
-
-			string dataFormat = typeof(TreeNode).FullName;
-
-            if (!e.Data.GetDataPresent(dataFormat))
-				return;
-
 			// Retrieve the client coordinates of the drop location.
 			Point dragLocation = new Point(e.X, e.Y);
 			Point targetPoint = treeViewMain.PointToClient(dragLocation);
@@ -1274,7 +1263,28 @@ namespace PckStudio
 
             // Retrieve the node at the drop location.
             TreeNode targetNode = treeViewMain.GetNodeAt(targetPoint);
+
+			if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Data.GetData(DataFormats.FileDrop) is string[] filesDropped)
+			{
+                IEnumerable<string> files = filesDropped.Where(File.Exists);
+				IEnumerable<string> directoryFiles = filesDropped
+					.Where(f => (File.GetAttributes(f) & FileAttributes.Directory) != 0)
+					.SelectMany(dir => Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories));
+
+				string baseDirectory = Path.GetDirectoryName(filesDropped.First());
+
+				IEnumerable<string> importPaths = files.Concat(directoryFiles);
+
+				ImportFiles(baseDirectory, importPaths, string.IsNullOrWhiteSpace(targetNode?.FullPath) ? string.Empty : targetNode?.FullPath);
+				return;
+			}
+
+			string dataFormat = typeof(TreeNode).FullName;
+
 			if (targetNode is null)
+				return;
+
+            if (!e.Data.GetDataPresent(dataFormat))
 				return;
 
 			bool isTargetPckFile = targetNode.IsTagOfType<PckAsset>();
@@ -1356,33 +1366,79 @@ namespace PckStudio
 			return childNodes;
 		}
 
-
-        private void ImportFiles(string[] files)
+        private void ImportFiles(string baseDirectory, IEnumerable<string> files, string prefix)
         {
+			int fileCount = files.Count();
 			int addedCount = 0;
+			int skippedFiles = 0;
+			int skipAttempts = 3;
+			int typeDuplication = 0;
+			PckAssetType lastSelectedAssetType = PckAssetType.SkinFile;
+			bool askForAssetType = true;
             foreach (var filepath in files)
             {
-                using AddFilePrompt addFile = new AddFilePrompt(Path.GetFileName(filepath));
+				string assetPath = Path.Combine(prefix + filepath.Substring(baseDirectory.Length)).TrimStart('/', '\\');
+				PckAssetType assetType = lastSelectedAssetType;
+
+                if (askForAssetType)
+				{
+					using AddFilePrompt addFile = new AddFilePrompt(assetPath);
                 if (addFile.ShowDialog(this) != DialogResult.OK)
+					{
+						skippedFiles++;
+						skipAttempts--;
+						if (skipAttempts > 0)
                     continue;
 
-                if (currentPCK.Contains(addFile.Filepath, addFile.Filetype))
+						int remainingFileCount = fileCount - addedCount - skippedFiles;
+						DialogResult abortFurtherImport = MessageBox.Show($"Do you wan't to abort further file imports?\n{remainingFileCount} file(s) left.", "Abort further import", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+						if (abortFurtherImport == DialogResult.Yes)
+						{
+							skippedFiles += remainingFileCount;
+							break;
+						}
+						skipAttempts = 3;
+						continue;
+					}
+
+					assetType = addFile.Filetype;
+					assetPath = addFile.Filepath;
+
+					if (lastSelectedAssetType == assetType)
+						typeDuplication++;
+					lastSelectedAssetType = addFile.Filetype;
+					if (typeDuplication > 1)
+					{
+						DialogResult useSameTypeForRest = MessageBox.Show($"Do you want to import all remaining files as {lastSelectedAssetType}?", "Import all as", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+						if (useSameTypeForRest == DialogResult.Yes)
                 {
-                    MessageBox.Show(this, $"'{addFile.Filepath}' of type {addFile.Filetype} already exists.\nSkiping file.", "File already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+							askForAssetType = false;
+						}
+					}
+				}
+
+                if (currentPCK.Contains(filepath, assetType))
+                {
+                    if (askForAssetType)
+						MessageBox.Show(this, $"'{assetPath}' of type {assetType} already exists.\nSkiping file.", "File already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    Debug.WriteLine($"'{assetPath}' of type {assetType} already exists.\nSkiping file.");
                     continue;
                 }
-                PckAsset importedAsset = currentPCK.CreateNewAsset(addFile.Filepath, addFile.Filetype, () => File.ReadAllBytes(filepath));
+                PckAsset importedAsset = currentPCK.CreateNewAsset(assetPath, assetType, () => File.ReadAllBytes(filepath));
                 string propertyFile = filepath + ".txt";
 				if (File.Exists(propertyFile))
 				{
 					importedAsset.DeserializeProperties(File.ReadAllLines(propertyFile));
 				}
                 addedCount++;
-
-                BuildMainTreeView();
-                wasModified = true;
             }
-			Trace.TraceInformation("[{0}] Imported {1} file(s).", nameof(ImportFiles), addedCount);	
+			Trace.TraceInformation("[{0}] Imported {1} file(s).", nameof(ImportFiles), addedCount);
+			Trace.TraceInformation("[{0}] Skipped {1} file(s).", nameof(ImportFiles), skippedFiles);
+            if (addedCount > 0)
+			{
+                wasModified = true;
+                BuildMainTreeView();
+            }
         }
 
         #endregion
