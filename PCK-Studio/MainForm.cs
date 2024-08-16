@@ -1461,8 +1461,7 @@ namespace PckStudio
 			if (namePrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
-				isTemplateFile = true;
-				wasModified = true;
+                MarkTemplateFile();
 				LoadEditorTab();
 			}
 		}
@@ -1474,8 +1473,7 @@ namespace PckStudio
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
-				isTemplateFile = true;
-				wasModified = true;
+                MarkTemplateFile();
 				LoadEditorTab();
 			}
 		}
@@ -1487,10 +1485,16 @@ namespace PckStudio
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
 				currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
-				isTemplateFile = true;
-				wasModified = false;
+                MarkTemplateFile();
 				LoadEditorTab();
 			}
+		}
+
+        private void MarkTemplateFile()
+        {
+            isTemplateFile = true;
+            wasModified = true;
+            saveLocation = string.Empty;
 		}
 
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1839,6 +1843,8 @@ namespace PckStudio
 		{
 			if (!string.IsNullOrEmpty(saveLocation))
 				Save(saveLocation);
+			if (string.IsNullOrWhiteSpace(saveLocation) || isTemplateFile)
+				SaveTemplate();
 		}
 
 		private void saveAsPCK(object sender, EventArgs e)
