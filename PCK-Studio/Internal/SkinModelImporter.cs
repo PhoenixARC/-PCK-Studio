@@ -124,7 +124,7 @@ namespace PckStudio.Internal
                 .Select(token => token.ToObject<Outline>());
 
             foreach (Outline childOutline in childOutlines)
-        {
+            {
                 boxes = boxes.Concat(ReadOutliner(childOutline.Children, childOutline.Name, elements));
             }
             return boxes;
@@ -162,7 +162,7 @@ namespace PckStudio.Internal
                 {
                     outliners.Add(box.Type, new Outline(box.Type)
                     {
-                        Origin = GetSkinBoxPivot(box.Type) + offset
+                        Origin = GetSkinBoxPivot(box.Type, new Vector3(1, 1, 0)) + offset
                     });
                 }
 
@@ -257,7 +257,7 @@ namespace PckStudio.Internal
         private static SkinModelInfo LoadGeometry(Geometry geometry)
         {
             SkinModelInfo modelInfo = new SkinModelInfo();
-            modelInfo.ANIM.SetMask(
+            modelInfo.ANIM = (
                     SkinAnimMask.HEAD_DISABLED |
                     SkinAnimMask.HEAD_OVERLAY_DISABLED |
                     SkinAnimMask.BODY_DISABLED |
@@ -271,7 +271,7 @@ namespace PckStudio.Internal
                     SkinAnimMask.LEFT_LEG_DISABLED |
                     SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
             if (geometry.Description?.TextureSize.Width == geometry.Description?.TextureSize.Height)
-                modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
 
             foreach (Bone bone in geometry.Bones)
             {
@@ -279,7 +279,9 @@ namespace PckStudio.Internal
                 if (!SkinBOX.IsValidType(boxType))
                     continue;
 
-                Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, bone.Pivot, ref modelInfo);
+                Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, bone.Pivot);
+                if (offset.Y != 0f)
+                    modelInfo.PartOffsets.Add(new SkinPartOffset(boxType, -offset.Y));
 
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
@@ -289,8 +291,12 @@ namespace PckStudio.Internal
                     {
                         skinBox.HideWithArmor = true;
                     }
-                    if (!BOX2ANIM(modelInfo.ANIM, skinBox))
-                        modelInfo.AdditionalBoxes.Add(skinBox);
+                    SkinANIM skinANIM = modelInfo.ANIM;
+                    if (BOX2ANIM(ref skinANIM, skinBox))
+                    {
+                        modelInfo.ANIM = skinANIM;
+                    }
+                    modelInfo.AdditionalBoxes.Add(skinBox);
                 }
             }
             return modelInfo;
@@ -312,19 +318,20 @@ namespace PckStudio.Internal
                 {
                     Bone bone = new Bone(box.Type)
                     {
-                        Pivot = GetSkinBoxPivot(box.Type) + offset
+                        Pivot = GetSkinBoxPivot(box.Type, new Vector3(0, 1, 0)) + offset
                     };
                     bones.Add(box.Type, bone);
                 }
-
-                Vector3 pos = TranslateFromInternalPosistion(box, new Vector3(1,1,0));
+                Vector3 pivot = bones.ContainsKey(box.Type) ? bones[box.Type].Pivot : Vector3.Zero;
+                Vector3 pos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
+                pos = TransformSpace(pos, box.Size, new Vector3(1, 0, 0));
 
                 bones[box.Type].Cubes.Add(new External.Format.Cube()
                 {
                     Origin = pos + offset,
                     Size = box.Size,
                     Uv = box.UV,
-                    Inflate = box.Scale,
+                    Inflate = box.Scale + (box.IsOverlayPart() ? box.Type == "HEAD" ? 0.5f : 0.25f : 0f),
                     Mirror = box.Mirror,
                 });
             }
@@ -421,12 +428,12 @@ namespace PckStudio.Internal
             }
         }
 
-        private static bool BOX2ANIM(SkinANIM anim, SkinBOX box)
+        private static bool BOX2ANIM(ref SkinANIM anim, SkinBOX box)
         {
             int hash = box.GetHashCode();
             if (SkinBOX.KnownHashes.ContainsKey(hash))
             {
-                anim.SetFlag(SkinBOX.KnownHashes[hash], false);
+                anim = anim.SetFlag(SkinBOX.KnownHashes[hash], false);
                 return true;
             }
             return false;
@@ -455,15 +462,12 @@ namespace PckStudio.Internal
             };
         }
 
-        private static Vector3 GetModelOffsetAndAddToModelInfo(string boxType, Vector3 origin, ref SkinModelInfo modelInfo)
+        private static Vector3 GetModelOffsetAndAddToModelInfo(string boxType, Vector3 origin)
         {
             Vector3 partTranslation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
             Vector3 offset = partTranslation - ((Vector3.UnitY * 24f) - origin);
             if (offset.X != 0f || offset.Z != 0f)
                 Trace.TraceWarning($"[{nameof(SkinModelImporter)}:{nameof(LoadElement)}] Warning: skin part({boxType}) offsets only support horizontal offsets.");
-
-            if (offset.Y != 0f)
-                modelInfo.PartOffsets.Add(new SkinPartOffset(boxType, -offset.Y));
             return offset * Vector3.UnitY;
         }
 
@@ -519,9 +523,9 @@ namespace PckStudio.Internal
             return Vector3.Zero;
         }
 
-        private static Vector3 GetSkinBoxPivot(string partName)
+        private static Vector3 GetSkinBoxPivot(string partName, Vector3 translationUnit)
         {
-            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, new Vector3(1, 1, 0)) + (24f * Vector3.UnitY);
+            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
         }
 
         private static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
@@ -534,7 +538,7 @@ namespace PckStudio.Internal
             Vector3 pivot = ModelPartSpecifics.GetPositioningInfo(boxType).Pivot;
 
             // This will cancel out the part specific translation and pivot.
-            pos += translation * -Vector3.UnitX - pivot * Vector3.UnitY;
+            pos += translation * -translationUnit;
 
             return pos;
         }
