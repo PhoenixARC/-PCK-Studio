@@ -836,16 +836,6 @@ namespace PckStudio.Rendering
                 case Keys.C:
                     CenterSelectedObject();
                     break;
-                case Keys.A:
-                    ReleaseMouse();
-                    {
-                        using var animeditor = new ANIMEditor(ANIM);
-                        if (animeditor.ShowDialog() == DialogResult.OK)
-                        {
-                            ANIM = animeditor.ResultAnim;
-                        }
-                    }
-                    return true;
             }
             return base.ProcessDialogKey(keyData);
         }

@@ -67,6 +67,7 @@
             this.framerateLabel = new MetroFramework.Controls.MetroLabel();
             this.renderSettingsButton = new MetroFramework.Controls.MetroButton();
             this.exportTemplateButton = new MetroFramework.Controls.MetroButton();
+            this.animEditorButton = new MetroFramework.Controls.MetroButton();
             labelTextureMapping = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
@@ -379,10 +380,19 @@
             this.exportTemplateButton.UseSelectable = true;
             this.exportTemplateButton.Click += new System.EventHandler(this.exportTemplateButton_Click);
             // 
+            // animEditorButton
+            // 
+            resources.ApplyResources(this.animEditorButton, "animEditorButton");
+            this.animEditorButton.Name = "animEditorButton";
+            this.animEditorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.animEditorButton.UseSelectable = true;
+            this.animEditorButton.Click += new System.EventHandler(this.animEditorButton_Click);
+            // 
             // CustomSkinEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.animEditorButton);
             this.Controls.Add(this.exportTemplateButton);
             this.Controls.Add(this.renderSettingsButton);
             this.Controls.Add(this.framerateLabel);
@@ -459,5 +469,6 @@
         private MetroFramework.Controls.MetroLabel framerateLabel;
         private MetroFramework.Controls.MetroButton renderSettingsButton;
         private MetroFramework.Controls.MetroButton exportTemplateButton;
+        private MetroFramework.Controls.MetroButton animEditorButton;
     }
 }

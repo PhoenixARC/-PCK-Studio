@@ -68,6 +68,21 @@ namespace PckStudio.Forms.Editor
             LoadModelData();
         }
 
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (keyData == Keys.A)
+            {
+                using var animeditor = new ANIMEditor(_skin.Model.ANIM);
+                if (animeditor.ShowDialog() == DialogResult.OK)
+                {
+                    renderer3D1.ANIM = _skin.Model.ANIM = animeditor.ResultAnim;
+                    DrawDefaultUvAreas(_hightlightDefaultUvAreas);
+                }
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
+
         private void LoadModelData()
         {
             SkinModelInfo modelInfo = _skin.Model;
@@ -440,6 +455,11 @@ namespace PckStudio.Forms.Editor
                 SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, new SkinANIM(templateAnimMask));
                 SkinModelImporter.Default.Export(saveFileDialog.FileName, modelInfo);
             }
+        }
+
+        private void animEditorButton_Click(object sender, EventArgs e)
+        {
+            ProcessDialogKey(Keys.A);
         }
     }
 }
