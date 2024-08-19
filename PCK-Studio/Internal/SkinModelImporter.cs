@@ -92,12 +92,30 @@ namespace PckStudio.Internal
                 modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
             }
 
-            IEnumerable<SkinBOX> boxes = ReadOutliner(blockBenchModel.Outliner, null, blockBenchModel.Elements);
-            modelInfo.AdditionalBoxes.AddRange(boxes.Where(box => !SkinBOX.KnownHashes.ContainsKey(box.GetHashCode())));
+            IEnumerable<SkinPartOffset> partOffsets = blockBenchModel.Outliner
+                .Where(token => token.Type == JTokenType.Object && SkinBOX.IsValidType(TryConvertToSkinBoxType(token.ToObject<Outline>().Name)))
+                .Select(token => token.ToObject<Outline>())
+                .Select(outline => new SkinPartOffset(TryConvertToSkinBoxType(outline.Name), -GetOffsetFromOrigin(TryConvertToSkinBoxType(outline.Name), outline.Origin).Y))
+                .Where(offset => offset.Value != 0f);
 
+            modelInfo.PartOffsets.AddRange(partOffsets);
+
+            SkinBOX ApplyOffset(SkinBOX box)
+            {
+                SkinPartOffset offset = modelInfo.PartOffsets.FirstOrDefault(offset => offset.Type == (box.IsOverlayPart() ? box.GetBaseType() : box.Type));
+                return string.IsNullOrEmpty(offset.Type) ? box : new SkinBOX(box.Type, box.Pos - (Vector3.UnitY * offset.Value), box.Size, box.UV, box.HideWithArmor, box.Mirror, box.Scale);
+            }
+
+            IEnumerable<SkinBOX> convertedBoxes =
+                ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Elements)
+                .Select(ApplyOffset);
+
+            IEnumerable<SkinBOX> customBoxes = convertedBoxes.Where(box => !SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()));
+
+            modelInfo.AdditionalBoxes.AddRange(customBoxes);
+        
             // check for know boxes and filter them out
-
-            SkinAnimMask mask = (SkinAnimMask)boxes
+            SkinAnimMask mask = (SkinAnimMask)convertedBoxes
                 .Where(box => SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()) && Enum.IsDefined(typeof(SkinAnimMask), (1 >> (int)SkinBOX.KnownHashes[box.GetHashCode()])))
                 .Select(box => SkinBOX.KnownHashes[box.GetHashCode()])
                 .Select(i => 1 << (int)i)
@@ -111,29 +129,29 @@ namespace PckStudio.Internal
             return modelInfo;
         }
 
-        private static IEnumerable<SkinBOX> ReadOutliner(JArray ouliner, string outlineName, IReadOnlyCollection<Element> elements)
+        private static IEnumerable<SkinBOX> ReadOutliner(string parentName, JArray oulineChildren, IReadOnlyCollection<Element> elements)
         {
-            IEnumerable<SkinBOX> boxes = ouliner
+            IEnumerable<SkinBOX> boxes = oulineChildren
                 .Where(token => token.Type == JTokenType.String && Guid.TryParse(token.ToString(), out Guid elementUuid) && elements.Any(e => e.Uuid == elementUuid))
                 .Select(token => elements.First(e => Guid.Parse(token.ToString()) == e.Uuid))
-                .Where(element => element.Type == "cube" && element.UseBoxUv && element.Export && SkinBOX.IsValidType(TryConvertToSkinBoxType(outlineName ?? element.Name)))
-                .Select(element => LoadElement(element, TryConvertToSkinBoxType(outlineName ?? element.Name), Vector3.Zero));
+                .Where(element => element.Type == "cube" && element.UseBoxUv && element.Export && SkinBOX.IsValidType(TryConvertToSkinBoxType(parentName ?? element.Name)))
+                .Select(element => LoadElement(element, TryConvertToSkinBoxType(parentName ?? element.Name)));
 
-            IEnumerable<Outline> childOutlines = ouliner
+            IEnumerable<Outline> childOutlines = oulineChildren
                 .Where(token => token.Type == JTokenType.Object)
                 .Select(token => token.ToObject<Outline>());
 
             foreach (Outline childOutline in childOutlines)
             {
-                boxes = boxes.Concat(ReadOutliner(childOutline.Children, childOutline.Name, elements));
+                boxes = boxes.Concat(ReadOutliner(parentName ?? childOutline.Name, childOutline.Children, elements));
             }
             return boxes;
         }
 
-        private static SkinBOX LoadElement(Element element, string outlineName, Vector3 offset)
+        private static SkinBOX LoadElement(Element element, string outlineName)
         {
             var boundingBox = new Rendering.BoundingBox(element.From, element.To);
-            Vector3 pos = boundingBox.Start - offset;
+            Vector3 pos = boundingBox.Start;
             Vector3 size = boundingBox.Volume;
             Vector2 uv = element.UvOffset;
 
@@ -148,7 +166,7 @@ namespace PckStudio.Internal
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
             Image exportTexture = FixTexture(modelInfo);
-            BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.Free, Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
+            BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
@@ -157,12 +175,14 @@ namespace PckStudio.Internal
 
             void AddElement(SkinBOX box)
             {
-                Vector3 offset = GetOffset(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
-                if (!outliners.ContainsKey(box.Type))
+                string offsetType = box.IsOverlayPart() ? box.GetBaseType() : box.Type;
+
+                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.PartOffsets);
+                if (!outliners.ContainsKey(offsetType))
                 {
-                    outliners.Add(box.Type, new Outline(box.Type)
+                    outliners.Add(offsetType, new Outline(offsetType)
                     {
-                        Origin = GetSkinBoxPivot(box.Type, new Vector3(1, 1, 0)) + offset
+                        Origin = GetSkinBoxPivot(offsetType, new Vector3(1, 1, 0)) + offset
                     });
                 }
 
@@ -172,7 +192,7 @@ namespace PckStudio.Internal
                 element.To += offset;
 
                 elements.Add(element);
-                outliners[box.Type].Children.Add(element.Uuid);
+                outliners[offsetType].Children.Add(element.Uuid);
             }
 
             ANIM2BOX(modelInfo.ANIM, AddElement);
@@ -279,7 +299,7 @@ namespace PckStudio.Internal
                 if (!SkinBOX.IsValidType(boxType))
                     continue;
 
-                Vector3 offset = GetModelOffsetAndAddToModelInfo(boxType, bone.Pivot);
+                Vector3 offset = GetOffsetFromOrigin(boxType, bone.Pivot);
                 if (offset.Y != 0f)
                     modelInfo.PartOffsets.Add(new SkinPartOffset(boxType, -offset.Y));
 
@@ -312,7 +332,7 @@ namespace PckStudio.Internal
 
             void AddElement(SkinBOX box)
             {
-                Vector3 offset = GetOffset(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
+                Vector3 offset = GetOffsetForPart(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
 
                 if (!bones.ContainsKey(box.Type))
                 {
@@ -462,13 +482,28 @@ namespace PckStudio.Internal
             };
         }
 
-        private static Vector3 GetModelOffsetAndAddToModelInfo(string boxType, Vector3 origin)
+        private static Vector3 GetOffsetFromOrigin(string boxType, Vector3 origin)
         {
-            Vector3 partTranslation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
+            Vector3 partTranslation = ModelPartSpecifics.GetPositioningInfo(boxType).Pivot;
             Vector3 offset = partTranslation - ((Vector3.UnitY * 24f) - origin);
             if (offset.X != 0f || offset.Z != 0f)
-                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:{nameof(LoadElement)}] Warning: skin part({boxType}) offsets only support horizontal offsets.");
+                Trace.TraceWarning($"[{nameof(SkinModelImporter)}:{nameof(GetOffsetFromOrigin)}] Warning: skin part({boxType}) offsets only support horizontal offsets.");
             return offset * Vector3.UnitY;
+        }
+
+        private static Vector3 GetOffsetForPart(string offsetType, ref Dictionary<string, SkinPartOffset> offsetLookUp, IEnumerable<SkinPartOffset> partOffsets)
+        {
+            if (offsetLookUp.ContainsKey(offsetType))
+            {
+                return -offsetLookUp[offsetType].Value * Vector3.UnitY;
+            }
+            if (partOffsets.Any(o => o.Type == offsetType))
+            {
+                SkinPartOffset partOffset = partOffsets.First(o => o.Type == offsetType);
+                offsetLookUp.Add(offsetType, partOffset);
+                return -partOffset.Value * Vector3.UnitY;
+            }
+            return Vector3.Zero;
         }
 
         private static Image FixTexture(SkinModelInfo modelInfo)
@@ -507,21 +542,6 @@ namespace PckStudio.Internal
                 g.Clip = clip;
             }
             return result;
-        }
-
-        private static Vector3 GetOffset(string name, ref Dictionary<string, SkinPartOffset> offsetLookUp, IEnumerable<SkinPartOffset> partOffsets)
-        {
-            if (offsetLookUp.ContainsKey(name))
-            {
-                return -offsetLookUp[name].Value * Vector3.UnitY;
-            }
-            if (partOffsets.Any(o => o.Type == name))
-            {
-                SkinPartOffset partOffset = partOffsets.First(o => o.Type == name);
-                offsetLookUp.Add(name, partOffset);
-                return -partOffset.Value * Vector3.UnitY;
-            }
-            return Vector3.Zero;
         }
 
         private static Vector3 GetSkinBoxPivot(string partName, Vector3 translationUnit)
