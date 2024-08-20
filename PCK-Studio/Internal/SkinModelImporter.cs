@@ -89,6 +89,7 @@ namespace PckStudio.Internal
             if (blockBenchModel.Textures.IndexInRange(0))
             {
                 modelInfo.Texture = blockBenchModel.Textures[0];
+                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
                 modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
             }
 
@@ -125,7 +126,6 @@ namespace PckStudio.Internal
             if (mask != SkinAnimMask.NONE)
                 modelInfo.ANIM &= ~mask;
 
-            modelInfo.Texture = FixTexture(modelInfo);
             return modelInfo;
         }
 
@@ -165,7 +165,7 @@ namespace PckStudio.Internal
 
         internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
         {
-            Image exportTexture = FixTexture(modelInfo);
+            Image exportTexture = SwapBoxBottomTexture(modelInfo);
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
@@ -270,7 +270,7 @@ namespace PckStudio.Internal
             {
                 modelInfo = LoadGeometry(selectedGeometry);
             }
-            modelInfo.Texture = FixTexture(modelInfo);
+            modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
             return modelInfo;
         }
 
@@ -399,7 +399,7 @@ namespace PckStudio.Internal
                 string content = JsonConvert.SerializeObject(bedrockModel);
                 File.WriteAllText(fileName, content);
                 string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
-                FixTexture(modelInfo).Save(texturePath, ImageFormat.Png);
+                SwapBoxBottomTexture(modelInfo).Save(texturePath, ImageFormat.Png);
             }
         }
 
@@ -491,6 +491,11 @@ namespace PckStudio.Internal
             return offset * Vector3.UnitY;
         }
 
+        private static Vector3 GetSkinBoxPivot(string partName, Vector3 translationUnit)
+        {
+            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
+        }
+
         private static Vector3 GetOffsetForPart(string offsetType, ref Dictionary<string, SkinPartOffset> offsetLookUp, IEnumerable<SkinPartOffset> partOffsets)
         {
             if (offsetLookUp.ContainsKey(offsetType))
@@ -506,21 +511,21 @@ namespace PckStudio.Internal
             return Vector3.Zero;
         }
 
-        private static Image FixTexture(SkinModelInfo modelInfo)
+        private static Image SwapBoxBottomTexture(SkinModelInfo modelInfo)
         {
-            return FixTexture(modelInfo.Texture, modelInfo.AdditionalBoxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
+            return SwapTextureAreas(modelInfo.Texture, modelInfo.AdditionalBoxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
             {
                 var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
                 var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
                 return Rectangle.Truncate(area);
-            }));
+            }), RotateFlipType.RotateNoneFlipY);
         }
 
-        private static Image FixTexture(Image texture, IEnumerable<Rectangle> areasToFix)
+        private static Image SwapTextureAreas(Image texture, IEnumerable<Rectangle> areasToFix, RotateFlipType type)
         {
             if (texture == null)
             {
-                Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(FixTexture)}] Failed to fix texture: texture is null.");
+                Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(SwapBoxBottomTexture)}] Failed to fix texture: texture is null.");
                 return null;
             }
             areasToFix = areasToFix.Where(rect => rect.Size.Width > 0 && rect.Size.Height > 0);
@@ -534,7 +539,7 @@ namespace PckStudio.Internal
             foreach (Rectangle area in areasToFix)
             {
                 Image targetAreaImage = texture.GetArea(area);
-                targetAreaImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                targetAreaImage.RotateFlip(type);
                 Region clip = g.Clip;
                 g.SetClip(area);
                 g.Clear(Color.Transparent);
@@ -544,21 +549,14 @@ namespace PckStudio.Internal
             return result;
         }
 
-        private static Vector3 GetSkinBoxPivot(string partName, Vector3 translationUnit)
-        {
-            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
-        }
-
         private static Vector3 TranslateToInternalPosition(string boxType, Vector3 origin, Vector3 size, Vector3 translationUnit)
         {
             Vector3 pos = TransformSpace(origin, size, translationUnit);
             // Skin Renderer (and Game) specific offset value.
             pos.Y += 24f;
 
+            // This will cancel out the part specific translation.
             Vector3 translation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
-            Vector3 pivot = ModelPartSpecifics.GetPositioningInfo(boxType).Pivot;
-
-            // This will cancel out the part specific translation and pivot.
             pos += translation * -translationUnit;
 
             return pos;
