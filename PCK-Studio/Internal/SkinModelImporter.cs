@@ -328,23 +328,25 @@ namespace PckStudio.Internal
             Dictionary<string, Bone> bones = new Dictionary<string, Bone>(5);
             Dictionary<string, SkinPartOffset> offsetLookUp = new Dictionary<string, SkinPartOffset>(5);
 
-            void AddElement(SkinBOX box)
+            void AddBone(SkinBOX box)
             {
-                Vector3 offset = GetOffsetForPart(box.Type, ref offsetLookUp, modelInfo.PartOffsets);
+                string offsetType = box.IsOverlayPart() ? box.GetBaseType() : box.Type;
 
-                if (!bones.ContainsKey(box.Type))
+                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.PartOffsets);
+
+                if (!bones.ContainsKey(offsetType))
                 {
-                    Bone bone = new Bone(box.Type)
+                    Bone bone = new Bone(offsetType)
                     {
-                        Pivot = GetSkinBoxPivot(box.Type, new Vector3(0, 1, 0)) + offset
+                        Pivot = GetSkinBoxPivot(offsetType, new Vector3(0, 1, 0)) + offset
                     };
-                    bones.Add(box.Type, bone);
+                    bones.Add(offsetType, bone);
                 }
-                Vector3 pivot = bones.ContainsKey(box.Type) ? bones[box.Type].Pivot : Vector3.Zero;
+                Vector3 pivot = bones.ContainsKey(offsetType) ? bones[offsetType].Pivot : Vector3.Zero;
                 Vector3 pos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
                 pos = TransformSpace(pos, box.Size, new Vector3(1, 0, 0));
 
-                bones[box.Type].Cubes.Add(new External.Format.Cube()
+                bones[offsetType].Cubes.Add(new External.Format.Cube()
                 {
                     Origin = pos + offset,
                     Size = box.Size,
@@ -354,11 +356,11 @@ namespace PckStudio.Internal
                 });
             }
 
-            ANIM2BOX(modelInfo.ANIM, AddElement);
+            ANIM2BOX(modelInfo.ANIM, AddBone);
 
             foreach (SkinBOX box in modelInfo.AdditionalBoxes)
             {
-                AddElement(box);
+                AddBone(box);
             }
 
             Geometry selectedGeometry = new Geometry();
