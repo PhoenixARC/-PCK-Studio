@@ -15,18 +15,20 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using OMI.Formats.Model;
-using PckStudio.External.Format;
-using System.Numerics;
 using System.IO;
-using PckStudio.Internal.Json;
-using System.Collections.ObjectModel;
-using PckStudio.Properties;
+using System.Linq;
+using System.Numerics;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OMI.Formats.Model;
+
+using PckStudio.External.Format;
+using PckStudio.Internal.Json;
+using PckStudio.Properties;
 
 namespace PckStudio.Internal
 {
