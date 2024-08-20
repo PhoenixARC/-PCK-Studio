@@ -232,12 +232,11 @@ namespace PckStudio.Internal
                 var availableModels = bedrockModel.Models.Select(m => m.Description.Identifier).ToArray();
                 if (availableModels.Length > 1)
                 {
-                    ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                    using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
                     if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
                     {
                         selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
                     }
-                    itemSelectionPopUp.Dispose();
                 }
                 else
                 {
@@ -252,12 +251,11 @@ namespace PckStudio.Internal
                 var availableModels = bedrockModel.Select(m => m.Key).ToArray();
                 if (availableModels.Length > 1)
                 {
-                    ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
-                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && itemSelectionPopUp.SelectedItem is not null)
+                    using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.ContainsKey(itemSelectionPopUp.SelectedItem))
                     {
                         selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
                     }
-                    itemSelectionPopUp.Dispose();
                 }
                 else
                 {
@@ -269,8 +267,8 @@ namespace PckStudio.Internal
             if (selectedGeometry is not null)
             {
                 modelInfo = LoadGeometry(selectedGeometry);
-            }
             modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+            }
             return modelInfo;
         }
 
