@@ -1675,6 +1675,7 @@ namespace PckStudio
 			return false;
 		}
 
+        [Obsolete("Refactor or remove this")]
 		private void importExtractedSkinsFolder(object sender, EventArgs e)
 		{
 			OpenFolderDialog contents = new OpenFolderDialog();
