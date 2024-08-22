@@ -76,7 +76,7 @@ namespace PckStudio.Forms.Editor
                 if (animeditor.ShowDialog() == DialogResult.OK)
                 {
                     renderer3D1.ANIM = _skin.Model.ANIM = animeditor.ResultAnim;
-                    DrawDefaultUvAreas(_hightlightDefaultUvAreas);
+                    skinPartListBox_SelectedIndexChanged(this, EventArgs.Empty);
                 }
                 return true;
             }
@@ -311,13 +311,11 @@ namespace PckStudio.Forms.Editor
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
-                    float lineWidth = ((_skin.Model.Texture.Width / renderer3D1.TextureSize.Width) + (_skin.Model.Texture.Height / renderer3D1.TextureSize.Height)) / 2f;
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     var brush = new SolidBrush(Color.FromArgb(127, avgColor.GreyScaled()));
                     g.ApplyConfig(_graphicsConfig);
                     g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
                     g.FillPath(brush, graphicsPath);
-                    //g.DrawPath(new Pen(brush), graphicsPath);
                 }
                 uvPictureBox.Invalidate();
             }
