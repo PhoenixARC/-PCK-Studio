@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PckStudio.Internal.Misc;
-using PckStudio.Internal;
-using PckStudio.Properties;
 using PckStudio.Internal.App;
-using AutoUpdaterDotNET;
-using Newtonsoft.Json;
 
 
 namespace PckStudio

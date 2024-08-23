@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
     <Compile Include="Interfaces\IModelImportProvider.cs" />
+    <Compile Include="Internal\App\Updater.cs" />
     <Compile Include="Internal\GameModelInfo.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
@@ -195,7 +196,6 @@
     <Compile Include="Internal\Serializer\ImageSerializer.cs" />
     <Compile Include="Internal\Skin\SkinAnimFlag.cs" />
     <Compile Include="Internal\Skin\SkinAnimMask.cs" />
-    <Compile Include="Internal\Updater.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
