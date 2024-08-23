@@ -86,13 +86,6 @@ namespace PckStudio.Internal
                    SkinAnimMask.LEFT_LEG_DISABLED |
                    SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
 
-            if (blockBenchModel.Textures.IndexInRange(0))
-            {
-                modelInfo.Texture = blockBenchModel.Textures[0];
-                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
-                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
-            }
-
             IEnumerable<SkinPartOffset> partOffsets = blockBenchModel.Outliner
                 .Where(token => token.Type == JTokenType.Object && SkinBOX.IsValidType(TryConvertToSkinBoxType(token.ToObject<Outline>().Name)))
                 .Select(token => token.ToObject<Outline>())
@@ -122,6 +115,14 @@ namespace PckStudio.Internal
                 .Select(i => 1 << (int)i)
                 .DefaultIfEmpty()
                 .Aggregate((a, b) => a | b);
+
+
+            if (blockBenchModel.Textures.IndexInRange(0))
+            {
+                modelInfo.Texture = blockBenchModel.Textures[0];
+                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
+            }
 
             if (mask != SkinAnimMask.NONE)
                 modelInfo.ANIM &= ~mask;
