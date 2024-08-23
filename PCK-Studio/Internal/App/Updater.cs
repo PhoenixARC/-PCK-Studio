@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using PckStudio.Internal.Json;
 using PckStudio.Properties;
 
-namespace PckStudio.Internal
+namespace PckStudio.Internal.App
 {
     internal static class Updater
     {
