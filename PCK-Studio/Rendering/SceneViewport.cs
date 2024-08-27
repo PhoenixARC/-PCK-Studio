@@ -89,11 +89,11 @@ namespace PckStudio.Rendering
         };
 #endif
 
-        protected void Init()
+        protected void Initialize()
         {
             if (isInitialized)
             {
-                Debug.Fail("Already Initializted.");
+                Debug.Fail("Already Initialized.");
                 return;
             }
             MakeCurrent();
@@ -106,9 +106,8 @@ namespace PckStudio.Rendering
             var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
             boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
 
-            InitializeFramebuffer();
-
 #if USE_FRAMEBUFFER
+            InitializeFramebuffer();
             // Framebuffer shader
             {
                 framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);

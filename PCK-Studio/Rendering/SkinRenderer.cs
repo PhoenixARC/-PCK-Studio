@@ -315,7 +315,7 @@ namespace PckStudio.Rendering
             cape.Initialize(layout);
             cape.UploadData();
             GLErrorCheck();
-            base.Init();
+            base.Initialize();
             GLErrorCheck();
             initialized = true;
         }
