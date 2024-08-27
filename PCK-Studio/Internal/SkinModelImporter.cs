@@ -265,10 +265,16 @@ namespace PckStudio.Internal
             }
 
             SkinModelInfo modelInfo = null;
+
             if (selectedGeometry is not null)
             {
                 modelInfo = LoadGeometry(selectedGeometry);
+                string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
+                if (File.Exists(texturePath))
+                {
+                    modelInfo.Texture = Image.FromFile(texturePath).ReleaseFromFile();
             modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+            }
             }
             return modelInfo;
         }
