@@ -183,7 +183,7 @@ namespace PckStudio.Internal
                 {
                     outliners.Add(offsetType, new Outline(offsetType)
                     {
-                        Origin = GetSkinBoxPivot(offsetType, new Vector3(1, 1, 0)) + offset
+                        Origin = GetSkinPartPivot(offsetType, new Vector3(1, 1, 0)) + offset
                     });
                 }
 
@@ -339,7 +339,7 @@ namespace PckStudio.Internal
                 {
                     Bone bone = new Bone(offsetType)
                     {
-                        Pivot = GetSkinBoxPivot(offsetType, new Vector3(0, 1, 0)) + offset
+                        Pivot = GetSkinPartPivot(offsetType, new Vector3(0, 1, 0)) + offset
                     };
                     bones.Add(offsetType, bone);
                 }
@@ -492,7 +492,7 @@ namespace PckStudio.Internal
             return offset * Vector3.UnitY;
         }
 
-        private static Vector3 GetSkinBoxPivot(string partName, Vector3 translationUnit)
+        private static Vector3 GetSkinPartPivot(string partName, Vector3 translationUnit)
         {
             return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
         }
