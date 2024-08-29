@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Drawing;
 using System.Numerics;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
@@ -32,7 +33,6 @@ using PckStudio.Internal.IO.PSM;
 using PckStudio.External.Format;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms.Additional_Popups;
-using System.Diagnostics;
 
 namespace PckStudio.Internal
 {
@@ -71,6 +71,29 @@ namespace PckStudio.Internal
                 Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import skin '{blockBenchModel.Name}': Skin does not use box uv.");
                 return null;
             }
+
+            IEnumerable<SkinPartOffset> partOffsets = blockBenchModel.Outliner
+                .Where(token => token.Type == JTokenType.Object && SkinBOX.IsValidType(TryConvertToSkinBoxType(token.ToObject<Outline>().Name)))
+                .Select(token => token.ToObject<Outline>())
+                .Select(outline => new SkinPartOffset(TryConvertToSkinBoxType(outline.Name), -GetOffsetFromOrigin(TryConvertToSkinBoxType(outline.Name), outline.Origin).Y))
+                .Where(offset => offset.Value != 0f);
+
+            IEnumerable<SkinBOX> boxes = ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Elements);
+
+            SkinModelInfo modelInfo = CreateSkinModelInfo(boxes, partOffsets);
+
+            if (blockBenchModel.Textures.IndexInRange(0))
+            {
+                modelInfo.Texture = blockBenchModel.Textures[0];
+                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
+            }
+
+            return modelInfo;
+        }
+
+        private static SkinModelInfo CreateSkinModelInfo(IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets)
+        {
             SkinModelInfo modelInfo = new SkinModelInfo();
             modelInfo.ANIM = (
                    SkinAnimMask.HEAD_DISABLED |
@@ -86,12 +109,6 @@ namespace PckStudio.Internal
                    SkinAnimMask.LEFT_LEG_DISABLED |
                    SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
 
-            IEnumerable<SkinPartOffset> partOffsets = blockBenchModel.Outliner
-                .Where(token => token.Type == JTokenType.Object && SkinBOX.IsValidType(TryConvertToSkinBoxType(token.ToObject<Outline>().Name)))
-                .Select(token => token.ToObject<Outline>())
-                .Select(outline => new SkinPartOffset(TryConvertToSkinBoxType(outline.Name), -GetOffsetFromOrigin(TryConvertToSkinBoxType(outline.Name), outline.Origin).Y))
-                .Where(offset => offset.Value != 0f);
-
             modelInfo.PartOffsets.AddRange(partOffsets);
 
             SkinBOX ApplyOffset(SkinBOX box)
@@ -100,14 +117,12 @@ namespace PckStudio.Internal
                 return string.IsNullOrEmpty(offset.Type) ? box : new SkinBOX(box.Type, box.Pos - (Vector3.UnitY * offset.Value), box.Size, box.UV, box.HideWithArmor, box.Mirror, box.Scale);
             }
 
-            IEnumerable<SkinBOX> convertedBoxes =
-                ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Elements)
-                .Select(ApplyOffset);
+            IEnumerable<SkinBOX> convertedBoxes = boxes.Select(ApplyOffset);
 
             IEnumerable<SkinBOX> customBoxes = convertedBoxes.Where(box => !SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()));
 
             modelInfo.AdditionalBoxes.AddRange(customBoxes);
-        
+
             // check for know boxes and filter them out
             SkinAnimMask mask = (SkinAnimMask)convertedBoxes
                 .Where(box => SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()) && Enum.IsDefined(typeof(SkinAnimMask), (1 >> (int)SkinBOX.KnownHashes[box.GetHashCode()])))
@@ -116,17 +131,9 @@ namespace PckStudio.Internal
                 .DefaultIfEmpty()
                 .Aggregate((a, b) => a | b);
 
-
-            if (blockBenchModel.Textures.IndexInRange(0))
-            {
-                modelInfo.Texture = blockBenchModel.Textures[0];
-                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
-                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
-            }
-
             if (mask != SkinAnimMask.NONE)
                 modelInfo.ANIM &= ~mask;
-
+            
             return modelInfo;
         }
 
@@ -223,25 +230,20 @@ namespace PckStudio.Internal
             return Element.CreateCube("cube", uvOffset, pos, size, inflate, mirror);
         }
 
-        internal static SkinModelInfo ImportBedrockJson(string fileName)
+        private static Geometry GetGeometry(string fileName)
         {
-            Geometry selectedGeometry = null;
             // Bedrock Entity (Model)
             if (fileName.EndsWith(".geo.json"))
             {
                 BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(fileName));
                 var availableModels = bedrockModel.Models.Select(m => m.Description.Identifier).ToArray();
-                if (availableModels.Length > 1)
+                if (availableModels.Length < 2)
+                    return availableModels.Length == 1 ? bedrockModel.Models[0] : null;
+
+                using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
                 {
-                    using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
-                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.Models.IndexInRange(itemSelectionPopUp.SelectedIndex))
-                    {
-                        selectedGeometry = bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
-                    }
-                }
-                else
-                {
-                    selectedGeometry = bedrockModel.Models[0];
+                    return bedrockModel.Models[itemSelectionPopUp.SelectedIndex];
                 }
             }
 
@@ -250,53 +252,45 @@ namespace PckStudio.Internal
             {
                 BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(fileName));
                 var availableModels = bedrockModel.Select(m => m.Key).ToArray();
-                if (availableModels.Length > 1)
+                if (availableModels.Length < 2)
+                    return availableModels.Length == 1 ? bedrockModel[availableModels[0]] : null;
+                using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
+                if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.ContainsKey(itemSelectionPopUp.SelectedItem))
                 {
-                    using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(availableModels);
-                    if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && bedrockModel.ContainsKey(itemSelectionPopUp.SelectedItem))
-                    {
-                        selectedGeometry = bedrockModel[itemSelectionPopUp.SelectedItem];
-                    }
-                }
-                else
-                {
-                    selectedGeometry = bedrockModel[availableModels[0]];
+                    return bedrockModel[itemSelectionPopUp.SelectedItem];
                 }
             }
 
-            SkinModelInfo modelInfo = null;
+            return null;
+        }
 
-            if (selectedGeometry is not null)
+        private static SkinModelInfo ImportBedrockJson(string fileName)
+        {
+            Geometry geometry = GetGeometry(fileName);
+            if (geometry is null)
+                return null;
+
+            (IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets) = LoadGeometry(geometry);
+
+            SkinModelInfo modelInfo = CreateSkinModelInfo(boxes, partOffsets);
+
+            string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
+            if (File.Exists(texturePath))
             {
-                modelInfo = LoadGeometry(selectedGeometry);
-                string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
-                if (File.Exists(texturePath))
-                {
-                    modelInfo.Texture = Image.FromFile(texturePath).ReleaseFromFile();
-            modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+                modelInfo.Texture = Image.FromFile(texturePath).ReleaseFromFile();
+                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
             }
-            }
+
+            if (geometry.Description?.TextureSize.Width == geometry.Description?.TextureSize.Height)
+                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+
             return modelInfo;
         }
 
-        private static SkinModelInfo LoadGeometry(Geometry geometry)
+        private static (IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets) LoadGeometry(Geometry geometry)
         {
-            SkinModelInfo modelInfo = new SkinModelInfo();
-            modelInfo.ANIM = (
-                    SkinAnimMask.HEAD_DISABLED |
-                    SkinAnimMask.HEAD_OVERLAY_DISABLED |
-                    SkinAnimMask.BODY_DISABLED |
-                    SkinAnimMask.BODY_OVERLAY_DISABLED |
-                    SkinAnimMask.RIGHT_ARM_DISABLED |
-                    SkinAnimMask.RIGHT_ARM_OVERLAY_DISABLED |
-                    SkinAnimMask.LEFT_ARM_DISABLED |
-                    SkinAnimMask.LEFT_ARM_OVERLAY_DISABLED |
-                    SkinAnimMask.RIGHT_LEG_DISABLED |
-                    SkinAnimMask.RIGHT_LEG_OVERLAY_DISABLED |
-                    SkinAnimMask.LEFT_LEG_DISABLED |
-                    SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
-            if (geometry.Description?.TextureSize.Width == geometry.Description?.TextureSize.Height)
-                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+            List<SkinPartOffset> skinPartOffsets = new List<SkinPartOffset>();
+            List<SkinBOX> boxes = new List<SkinBOX>();
 
             foreach (Bone bone in geometry.Bones)
             {
@@ -304,27 +298,21 @@ namespace PckStudio.Internal
                 if (!SkinBOX.IsValidType(boxType))
                     continue;
 
-                Vector3 offset = GetOffsetFromOrigin(boxType, bone.Pivot);
+                string offsetType = SkinBOX.IsOverlayPart(boxType) ? SkinBOXExtensions.GetBaseType(boxType) : boxType;
+                Vector3 offset = GetOffsetFromOrigin(offsetType, bone.Pivot * new Vector3(-1, 1, 1));
                 if (offset.Y != 0f)
-                    modelInfo.PartOffsets.Add(new SkinPartOffset(boxType, -offset.Y));
+                    skinPartOffsets.Add(new SkinPartOffset(offsetType, -offset.Y));
 
                 foreach (External.Format.Cube cube in bone.Cubes)
                 {
-                    Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin - offset, cube.Size, Vector3.UnitY);
-                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv, mirror: cube.Mirror);
-                    if (bone.Name == "helmet")
-                    {
-                        skinBox.HideWithArmor = true;
-                    }
-                    SkinANIM skinANIM = modelInfo.ANIM;
-                    if (BOX2ANIM(ref skinANIM, skinBox))
-                    {
-                        modelInfo.ANIM = skinANIM;
-                    }
-                    modelInfo.AdditionalBoxes.Add(skinBox);
+                    Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
+                    var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv, hideWithArmor: bone.Name == "helmet", mirror: cube.Mirror);
+                    if (skinBox.IsBasePart() && ((boxType == "HEAD" && cube.Inflate == 0.5f) || (cube.Inflate >= 0.25f && cube.Inflate <= 0.5f)))
+                        skinBox.Type = skinBox.GetOverlayType();
+                    boxes.Add(skinBox);
                 }
             }
-            return modelInfo;
+            return (boxes, skinPartOffsets);
         }
 
         internal static void ExportBedrockJson(string fileName, SkinModelInfo modelInfo)
@@ -455,17 +443,6 @@ namespace PckStudio.Internal
             }
         }
 
-        private static bool BOX2ANIM(ref SkinANIM anim, SkinBOX box)
-        {
-            int hash = box.GetHashCode();
-            if (SkinBOX.KnownHashes.ContainsKey(hash))
-            {
-                anim = anim.SetFlag(SkinBOX.KnownHashes[hash], false);
-                return true;
-            }
-            return false;
-        }
-
         private static string TryConvertToSkinBoxType(string name)
         {
             if (!SkinBOX.IsValidType(name) && SkinBOX.IsValidType(name.ToUpper()))
@@ -564,7 +541,7 @@ namespace PckStudio.Internal
 
             // This will cancel out the part specific translation.
             Vector3 translation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
-            pos += translation * -translationUnit;
+            pos -= translation;
 
             return pos;
         }
