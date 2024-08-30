@@ -30,7 +30,7 @@ namespace PckStudio.Internal
             ["terrain.png"]                  = new ResourceLocation("terrain.png", ResourceCategory.BlockAtlas, 16),
             ["items.png"]                    = new ResourceLocation("items.png", ResourceCategory.ItemAtlas, 16),
             ["particles.png"]                = new ResourceLocation("particles.png", ResourceCategory.ParticleAtlas, 16),
-            ["item/banner/Banner_Atlas.png"] = new ResourceLocation("item/banner/Banner_Atlas.png", ResourceCategory.BannerAtlas, new Size(6, 7), TillingMode.Custom),
+            ["item/banner/Banner_Atlas.png"] = new ResourceLocation("item/banner/Banner_Atlas.png", ResourceCategory.BannerAtlas, new Size(6, 7), TillingMode.WidthAndHeight),
             ["art/kz.png"]                   = new ResourceLocation("art/kz.png", ResourceCategory.PaintingAtlas, 16),
             ["misc/explosion.png"]           = new ResourceLocation("misc/explosion.png", ResourceCategory.ExplosionAtlas, 4),
             ["item/xporb.png"]               = new ResourceLocation("item/xporb.png", ResourceCategory.ExperienceOrbAtlas, 4),
@@ -61,17 +61,7 @@ namespace PckStudio.Internal
 
         public static ResourceCategory GetCategoryFromPath(string path)
         {
-            if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("res/"))
-                return ResourceCategory.Unknown;
-
-            if (path.StartsWith("res/textures/items"))
-                return ResourceCategory.ItemAnimation;
-
-            if (path.StartsWith("res/textures/blocks"))
-                return ResourceCategory.BlockAnimation;
-
-            string categoryPath = path.Substring("res/".Length);
-            return _categoryLookUp.ContainsKey(categoryPath) ? _categoryLookUp[categoryPath].Category : ResourceCategory.Unknown;
+            return GetFromPath(path)?.Category ?? ResourceCategory.Unknown;
         }
 
         public static ResourceLocation GetFromPath(string path)
@@ -90,39 +80,39 @@ namespace PckStudio.Internal
         { 
             Width,
             Height,
-            Custom
+            WidthAndHeight
         }
 
         public readonly string Path;
         public readonly ResourceCategory Category;
         public readonly Size TillingFactor;
-        public readonly TillingMode TillingResolution;
+        public readonly TillingMode Tilling;
         public readonly bool IsGroup;
 
         public Size GetTileArea(Size imgSize)
         {
             int tileFactorWidth  = Math.Max(1, TillingFactor.Width);
             int tileFactorHeight = Math.Max(1, TillingFactor.Height);
-            return TillingResolution switch
+            return Tilling switch
             {
                 TillingMode.Width => new Size(imgSize.Width / tileFactorWidth, imgSize.Width / tileFactorHeight),
                 TillingMode.Height => new Size(imgSize.Height / tileFactorWidth, imgSize.Height / tileFactorHeight),
-                TillingMode.Custom => new Size(imgSize.Width / tileFactorWidth, imgSize.Height / tileFactorHeight),
+                TillingMode.WidthAndHeight => new Size(imgSize.Width / tileFactorWidth, imgSize.Height / tileFactorHeight),
                 _ => Size.Empty,
             };
         }
 
-        private ResourceLocation(string path, ResourceCategory category, int tillingFactor, TillingMode tillingResolution = TillingMode.Width, bool isGroup = false)
-            : this(path, category, new Size(tillingFactor, tillingFactor), tillingResolution, isGroup)
+        private ResourceLocation(string path, ResourceCategory category, int tillingFactor, TillingMode tilling = TillingMode.Width, bool isGroup = false)
+            : this(path, category, new Size(tillingFactor, tillingFactor), tilling, isGroup)
         {
         }
 
-        private ResourceLocation(string path, ResourceCategory category, Size tillingFactor, TillingMode tillingResolution = TillingMode.Width, bool isGroup = false)
+        private ResourceLocation(string path, ResourceCategory category, Size tillingFactor, TillingMode tilling = TillingMode.Width, bool isGroup = false)
         {
             Path = path;
             Category = category;
             TillingFactor = tillingFactor;
-            TillingResolution = tillingResolution;
+            Tilling = tilling;
             IsGroup = isGroup;
         }
 
