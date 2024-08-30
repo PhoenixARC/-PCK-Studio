@@ -46,7 +46,7 @@ namespace PckStudio.Internal
             InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
         }
 
-        private void ExportBlockBenchModel(string fileName, GameModelInfo modelInfo)
+        private void ExportBlockBenchModel(string filepath, GameModelInfo modelInfo)
         {
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, modelInfo.Model.Name, modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
 
@@ -95,7 +95,7 @@ namespace PckStudio.Internal
             blockBenchModel.Outliner = JArray.FromObject(outlines);
 
             string content = JsonConvert.SerializeObject(blockBenchModel, Formatting.Indented);
-            File.WriteAllText(fileName, content);
+            File.WriteAllText(filepath, content);
         }
 
         private static void TraverseChildren(IReadOnlyDictionary<string, JArray> keyValues, ref Dictionary<string, Outline> outliners)

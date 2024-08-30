@@ -47,25 +47,25 @@ namespace PckStudio.Internal
             InternalAddProvider(new("Bedrock (Legacy) Model(*.geo.json;*.json)", "*.geo.json;*.json"), ImportBedrockJson, ExportBedrockJson);
         }
 
-        internal static SkinModelInfo ImportPsm(string fileName)
+        internal static SkinModelInfo ImportPsm(string filepath)
         {
             var reader = new PSMFileReader();
-            PSMFile csmbFile = reader.FromFile(fileName);
+            PSMFile csmbFile = reader.FromFile(filepath);
             return new SkinModelInfo(null, csmbFile.SkinANIM, csmbFile.Parts, csmbFile.Offsets);
         }
 
-        internal static void ExportPsm(string fileName, SkinModelInfo modelInfo)
+        internal static void ExportPsm(string filepath, SkinModelInfo modelInfo)
         {
             PSMFile psmFile = new PSMFile(PSMFile.CurrentVersion, modelInfo.ANIM);
             psmFile.Parts.AddRange(modelInfo.AdditionalBoxes);
             psmFile.Offsets.AddRange(modelInfo.PartOffsets);
             var writer = new PSMFileWriter(psmFile);
-            writer.WriteToFile(fileName);
+            writer.WriteToFile(filepath);
         }
 
-        internal static SkinModelInfo ImportBlockBenchModel(string fileName)
+        internal static SkinModelInfo ImportBlockBenchModel(string filepath)
         {
-            BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(fileName));
+            BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(filepath));
             if (!blockBenchModel.Format.UseBoxUv)
             {
                 Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import skin '{blockBenchModel.Name}': Skin does not use box uv.");
@@ -171,10 +171,10 @@ namespace PckStudio.Internal
             return box;
         }
 
-        internal static void ExportBlockBenchModel(string fileName, SkinModelInfo modelInfo)
+        internal static void ExportBlockBenchModel(string filepath, SkinModelInfo modelInfo)
         {
             Image exportTexture = SwapBoxBottomTexture(modelInfo);
-            BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(fileName), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
+            BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(filepath), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
@@ -213,7 +213,7 @@ namespace PckStudio.Internal
             blockBenchModel.Outliner = JArray.FromObject(outliners.Values);
 
             string content = JsonConvert.SerializeObject(blockBenchModel);
-            File.WriteAllText(fileName, content);
+            File.WriteAllText(filepath, content);
         }
 
         private static Element CreateElement(SkinBOX box)
@@ -230,12 +230,12 @@ namespace PckStudio.Internal
             return Element.CreateCube("cube", uvOffset, pos, size, inflate, mirror);
         }
 
-        private static Geometry GetGeometry(string fileName)
+        private static Geometry GetGeometry(string filepath)
         {
             // Bedrock Entity (Model)
-            if (fileName.EndsWith(".geo.json"))
+            if (filepath.EndsWith(".geo.json"))
             {
-                BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(fileName));
+                BedrockModel bedrockModel = JsonConvert.DeserializeObject<BedrockModel>(File.ReadAllText(filepath));
                 var availableModels = bedrockModel.Models.Select(m => m.Description.Identifier).ToArray();
                 if (availableModels.Length < 2)
                     return availableModels.Length == 1 ? bedrockModel.Models[0] : null;
@@ -248,9 +248,9 @@ namespace PckStudio.Internal
             }
 
             // Bedrock Legacy Model
-            else if (fileName.EndsWith(".json"))
+            else if (filepath.EndsWith(".json"))
             {
-                BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(fileName));
+                BedrockLegacyModel bedrockModel = JsonConvert.DeserializeObject<BedrockLegacyModel>(File.ReadAllText(filepath));
                 var availableModels = bedrockModel.Select(m => m.Key).ToArray();
                 if (availableModels.Length < 2)
                     return availableModels.Length == 1 ? bedrockModel[availableModels[0]] : null;
@@ -264,9 +264,9 @@ namespace PckStudio.Internal
             return null;
         }
 
-        private static SkinModelInfo ImportBedrockJson(string fileName)
+        private static SkinModelInfo ImportBedrockJson(string filepath)
         {
-            Geometry geometry = GetGeometry(fileName);
+            Geometry geometry = GetGeometry(filepath);
             if (geometry is null)
                 return null;
 
@@ -274,7 +274,7 @@ namespace PckStudio.Internal
 
             SkinModelInfo modelInfo = CreateSkinModelInfo(boxes, partOffsets);
 
-            string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
+            string texturePath = Path.Combine(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath)) + ".png";
             if (File.Exists(texturePath))
             {
                 modelInfo.Texture = Image.FromFile(texturePath).ReleaseFromFile();
@@ -315,9 +315,9 @@ namespace PckStudio.Internal
             return (boxes, skinPartOffsets);
         }
 
-        internal static void ExportBedrockJson(string fileName, SkinModelInfo modelInfo)
+        internal static void ExportBedrockJson(string filepath, SkinModelInfo modelInfo)
         {
-            if (string.IsNullOrEmpty(fileName) || !fileName.EndsWith(".json"))
+            if (string.IsNullOrEmpty(filepath) || !filepath.EndsWith(".json"))
                 return;
 
             Dictionary<string, Bone> bones = new Dictionary<string, Bone>(5);
@@ -362,11 +362,11 @@ namespace PckStudio.Internal
             selectedGeometry.Bones.AddRange(bones.Values);
             object bedrockModel = null;
             // Bedrock Entity (Model)
-            if (fileName.EndsWith(".geo.json"))
+            if (filepath.EndsWith(".geo.json"))
             {
                 selectedGeometry.Description = new GeometryDescription()
                 {
-                    Identifier = $"geometry.{Application.ProductName}.{Path.GetFileNameWithoutExtension(fileName)}",
+                    Identifier = $"geometry.{Application.ProductName}.{Path.GetFileNameWithoutExtension(filepath)}",
                     TextureSize = modelInfo.Texture.Size,
                 };
                 bedrockModel = new BedrockModel
@@ -376,11 +376,11 @@ namespace PckStudio.Internal
                 };
             }
             // Bedrock Legacy Model
-            else if (fileName.EndsWith(".json") && modelInfo.Texture.Height == modelInfo.Texture.Width)
+            else if (filepath.EndsWith(".json") && modelInfo.Texture.Height == modelInfo.Texture.Width)
             {
                 bedrockModel = new BedrockLegacyModel
                 {
-                    { $"geometry.{Application.ProductName}.{Path.GetFileNameWithoutExtension(fileName)}", selectedGeometry }
+                    { $"geometry.{Application.ProductName}.{Path.GetFileNameWithoutExtension(filepath)}", selectedGeometry }
                 };
             }
             else
@@ -392,8 +392,8 @@ namespace PckStudio.Internal
             if (bedrockModel is not null)
             {
                 string content = JsonConvert.SerializeObject(bedrockModel);
-                File.WriteAllText(fileName, content);
-                string texturePath = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName)) + ".png";
+                File.WriteAllText(filepath, content);
+                string texturePath = Path.Combine(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath)) + ".png";
                 SwapBoxBottomTexture(modelInfo).Save(texturePath, ImageFormat.Png);
             }
         }
