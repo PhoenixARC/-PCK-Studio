@@ -594,53 +594,30 @@ namespace PckStudio
 			}
         }
 
-		public void HandleModelsFile(PckAsset file)
+		public void HandleModelsFile(PckAsset asset)
 		{
-			ModelContainer modelContainer = file.GetData(new ModelFileReader());
+			ModelContainer modelContainer = asset.GetData(new ModelFileReader());
 			if (modelContainer.ModelCount == 0)
 			{
 				MessageBox.Show("No models found.", "Empty Model file", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
-			using ItemSelectionPopUp itemSelection = new ItemSelectionPopUp(modelContainer.GetModelNames().ToArray());
-			if (itemSelection.ShowDialog() == DialogResult.OK && modelContainer.ContainsModel(itemSelection.SelectedItem))
+			ModelEditor.TryGetTextureDelegate tryGetTexture =
+				(string path, out Image img) =>
 			{
-				Model model = modelContainer.GetModelByName(itemSelection.SelectedItem);
-				Debug.WriteLine(model.Name + "; ");
-				Debug.WriteLine(model.TextureSize + "; ");
+					bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset asset) ||
+								 currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out asset);
+					img = found ? asset.GetTexture() : default;
+					return found;
+				};
 			
-				GameModelImporter.Default.CreateModelOutline =
-					MessageBox.Show(
-						$"Do you wish to have all model parts contained in a group called '{model.Name}'?",
-						"Group model parts", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
-
-				using SaveFileDialog openFileDialog = new SaveFileDialog();
-				openFileDialog.FileName = model.Name;
-				openFileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;
-
-				IEnumerable<NamedTexture> GetModelTextures(string modelName)
+			var editor = new ModelEditor(modelContainer, tryGetTexture);
+			if (editor.ShowDialog() == DialogResult.OK)
 				{
-					if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
-						return Enumerable.Empty<NamedTexture>();
-
-					return GameModelImporter.ModelMetaData[modelName].TextureLocations
-						.Where(texturePath => currentPCK.Contains(texturePath + ".png", PckAssetType.TextureFile) || currentPCK.Contains(texturePath + ".tga", PckAssetType.TextureFile))
-                        .Select(texturePath =>
-					{
-						PckAsset modelTextureAsset = currentPCK.GetAsset(texturePath + ".png", PckAssetType.TextureFile) ?? currentPCK.GetAsset(texturePath + ".tga", PckAssetType.TextureFile);
-							return new NamedTexture(Path.GetFileName(texturePath), modelTextureAsset.GetTexture());
-                    });
+				return;
                 }
-
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
-					var modelInfo = new GameModelInfo(model, textures);
-					GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
 				}
-			}
-		}
 
 		public void HandleBehavioursFile(PckAsset asset)
 		{
@@ -2216,7 +2193,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
 			{
-                IEnumerable<string> props = asset.SerializeProperties(seperater:" ");
+				IEnumerable<string> props = asset.SerializeProperties(seperater: " ");
 				using (var input = new MultiTextPrompt(props))
 				{
 					if (input.ShowDialog(this) == DialogResult.OK)
@@ -2305,7 +2282,7 @@ namespace PckStudio
 					ButtonText = "OK"
 				};
 
-				if(dialog.ShowDialog(this) == DialogResult.OK)
+				if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
 					BinkaConverter.ToBinka(
 						fileDialog.FileNames, 

@@ -152,6 +152,12 @@
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
+    <Compile Include="Forms\Editor\ModelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor\ModelEditor.Designer.cs">
+      <DependentUpon>ModelEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IModelImportProvider.cs" />
     <Compile Include="Internal\App\Updater.cs" />
     <Compile Include="Internal\GameModelInfo.cs" />
@@ -477,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ContributorsForm.resx">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor\ModelEditor.resx">
+      <DependentUpon>ModelEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>

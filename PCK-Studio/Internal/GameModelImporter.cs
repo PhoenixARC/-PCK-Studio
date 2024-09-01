@@ -15,8 +15,10 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 using System.Numerics;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -24,6 +26,7 @@ using System.Collections.ObjectModel;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using OMI.Formats.Model;
 
 using PckStudio.External.Format;
@@ -36,8 +39,12 @@ namespace PckStudio.Internal
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
         
+        public class ModelExportSettings
+        {
         public bool CreateModelOutline { get; set; } = true;
+        }
 
+        public ModelExportSettings ExportSettings { get; } = new ModelExportSettings();
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
         
         private GameModelImporter()
@@ -46,14 +53,16 @@ namespace PckStudio.Internal
             InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
         }
 
+        Vector3 bbModelTransformAxis = new Vector3(1, 1, 0);
+        Vector3 _heightOffset = Vector3.Zero;
+
         private void ExportBlockBenchModel(string filepath, GameModelInfo modelInfo)
         {
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, modelInfo.Model.Name, modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
+            blockBenchModel.ModelIdentifier = modelInfo.Model.Name;
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
-            List<Element> elements = new List<Element>(modelInfo.Model.Parts.Count);
-
-            Vector3 transformAxis = new Vector3(1, 1, 0);
+            List<Element> elements = new List<Element>(modelInfo.Model.PartCount);
 
             if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
             {
@@ -61,20 +70,23 @@ namespace PckStudio.Internal
                 return;
             }
 
-            foreach (ModelPart part in modelInfo.Model.Parts.Values)
+            _heightOffset = Vector3.UnitY * 24f;
+
+            foreach (ModelPart part in modelInfo.Model.GetParts())
             {
                 var outline = new Outline(part.Name);
 
                 Vector3 partTranslation = part.Translation;
-                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, transformAxis);
-                outline.Origin += Vector3.UnitY * 24f;
+                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, bbModelTransformAxis);
+                outline.Origin += _heightOffset;
 
-                Vector3 rotation = part.Rotation + part.AdditionalRotation;
-                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, transformAxis);
+                Vector3 rotation = part.Rotation;
+                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
 
-                foreach (ModelBox box in part.Boxes)
+                foreach (ModelBox box in part.GetBoxes())
                 {
                     Element element = CreateElement(part.Name, box, partTranslation);
+                    element.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
                     element.Origin = outline.Origin;
                     elements.Add(element);
                     outline.Children.Add(element.Uuid);
@@ -86,7 +98,7 @@ namespace PckStudio.Internal
 
             blockBenchModel.Elements = elements.ToArray();
             IEnumerable<Outline> outlines = outliners.Values.Where(value => modelMetaData.RootParts.Count == 0 || modelMetaData.RootParts.ContainsKey(value.Name));
-            if (CreateModelOutline)
+            if (ExportSettings.CreateModelOutline)
                 outlines = new Outline[1]
                 {
                     new Outline(modelInfo.Model.Name) { Children = JArray.FromObject(outlines) }
@@ -112,7 +124,7 @@ namespace PckStudio.Internal
                 {
                     if (child.Type == JTokenType.String && outliners.TryGetValue(child.ToString(), out Outline childOutline))
                     {
-                        childOutline.Rotation += -partentOutline.Rotation;
+                        childOutline.Rotation -= partentOutline.Rotation;
                         partentOutline.Children.Add(JToken.FromObject(childOutline));
                     }
                     if (child.Type == JTokenType.Object)
@@ -127,7 +139,7 @@ namespace PckStudio.Internal
                                 continue;
                             }
                             childOutline = outliners[key];
-                            childOutline.Rotation += -partentOutline.Rotation;
+                            childOutline.Rotation -= partentOutline.Rotation;
                             partentOutline.Children.Add(JToken.FromObject(childOutline));
                         }
                     }
@@ -135,12 +147,12 @@ namespace PckStudio.Internal
             }
         }
 
-        private static Element CreateElement(string name, ModelBox box, Vector3 origin)
+        private Element CreateElement(string name, ModelBox box, Vector3 origin)
         {
             Vector3 pos = box.Position;
             Vector3 size = box.Size;
-            Vector3 transformPos = TransformSpace(pos + origin, size, new Vector3(1, 1, 0)) + 24f * Vector3.UnitY;
-            return Element.CreateCube(name, box.Uv, transformPos, size, box.Scale, box.Mirror);
+            Vector3 transformPos = TransformSpace(pos + origin, size, bbModelTransformAxis) + _heightOffset;
+            return Element.CreateCube(name, box.Uv, transformPos, size, box.Inflate, box.Mirror);
         }
     }
 }
