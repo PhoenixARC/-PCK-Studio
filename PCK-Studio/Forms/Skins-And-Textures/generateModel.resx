@@ -207,7 +207,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonDone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>654, 676</value>
+    <value>650, 659</value>
   </data>
   <data name="buttonDone.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 22</value>
@@ -238,7 +238,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>289, 647</value>
+    <value>285, 630</value>
   </data>
   <data name="labelView.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -268,7 +268,7 @@
     <value>NoControl</value>
   </data>
   <data name="rotateRightBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>554, 642</value>
+    <value>550, 625</value>
   </data>
   <data name="rotateRightBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 23</value>
@@ -298,7 +298,7 @@
     <value>NoControl</value>
   </data>
   <data name="rotateLeftBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 643</value>
+    <value>190, 626</value>
   </data>
   <data name="rotateLeftBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 23</value>
@@ -673,7 +673,7 @@
     <value>0</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>654, 459</value>
+    <value>650, 442</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 177</value>
@@ -703,7 +703,7 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 459</value>
+    <value>19, 442</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 13</value>
@@ -745,7 +745,7 @@
     <value>LEG1</value>
   </data>
   <data name="comboParent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 484</value>
+    <value>19, 467</value>
   </data>
   <data name="comboParent.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 21</value>
@@ -772,7 +772,7 @@
     <value>NoControl</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>691, 357</value>
+    <value>687, 340</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 13</value>
@@ -802,7 +802,7 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>691, 259</value>
+    <value>687, 242</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>27, 13</value>
@@ -832,7 +832,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonEXPORT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>722, 206</value>
+    <value>718, 189</value>
   </data>
   <data name="buttonEXPORT.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -862,7 +862,7 @@
     <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>654, 236</value>
+    <value>650, 219</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>22, 13</value>
@@ -892,7 +892,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonIMPORT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>655, 206</value>
+    <value>651, 189</value>
   </data>
   <data name="buttonIMPORT.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -919,7 +919,7 @@
     <value>NoControl</value>
   </data>
   <data name="texturePreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>655, 72</value>
+    <value>651, 55</value>
   </data>
   <data name="texturePreview.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 128</value>
@@ -949,7 +949,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelTextureMappingPreview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>655, 56</value>
+    <value>651, 39</value>
   </data>
   <data name="labelTextureMappingPreview.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 13</value>
@@ -979,7 +979,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonImportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 677</value>
+    <value>302, 660</value>
   </data>
   <data name="buttonImportModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 21</value>
@@ -1006,7 +1006,7 @@
     <value>NoControl</value>
   </data>
   <data name="displayBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 56</value>
+    <value>190, 39</value>
   </data>
   <data name="displayBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 580</value>
@@ -1036,7 +1036,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonExportModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 677</value>
+    <value>414, 660</value>
   </data>
   <data name="buttonExportModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 21</value>
@@ -1066,7 +1066,7 @@
     <value>NoControl</value>
   </data>
   <data name="OpenJSONButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 677</value>
+    <value>190, 660</value>
   </data>
   <data name="OpenJSONButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 21</value>
@@ -1090,7 +1090,7 @@
     <value>15</value>
   </data>
   <data name="buttonTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 511</value>
+    <value>19, 494</value>
   </data>
   <data name="buttonTemplate.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 21</value>
@@ -1117,7 +1117,7 @@
     <value>True</value>
   </data>
   <data name="checkTextureGenerate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 556</value>
+    <value>19, 539</value>
   </data>
   <data name="checkTextureGenerate.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 15</value>
@@ -1144,7 +1144,7 @@
     <value>True</value>
   </data>
   <data name="checkGuide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 577</value>
+    <value>19, 560</value>
   </data>
   <data name="checkGuide.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 15</value>
@@ -1171,7 +1171,7 @@
     <value>True</value>
   </data>
   <data name="checkBoxArmor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 598</value>
+    <value>19, 581</value>
   </data>
   <data name="checkBoxArmor.Size" type="System.Drawing.Size, System.Drawing">
     <value>129, 15</value>
@@ -1195,7 +1195,7 @@
     <value>9</value>
   </data>
   <data name="SizeXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 275</value>
+    <value>654, 258</value>
   </data>
   <data name="SizeXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -1219,7 +1219,7 @@
     <value>8</value>
   </data>
   <data name="SizeYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 301</value>
+    <value>654, 284</value>
   </data>
   <data name="SizeYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -1243,7 +1243,7 @@
     <value>7</value>
   </data>
   <data name="SizeZUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 327</value>
+    <value>654, 310</value>
   </data>
   <data name="SizeZUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -1267,7 +1267,7 @@
     <value>6</value>
   </data>
   <data name="TextureXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>682, 233</value>
+    <value>678, 216</value>
   </data>
   <data name="TextureXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 22</value>
@@ -1288,7 +1288,7 @@
     <value>5</value>
   </data>
   <data name="TextureYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>731, 234</value>
+    <value>727, 217</value>
   </data>
   <data name="TextureYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 22</value>
@@ -1309,7 +1309,7 @@
     <value>4</value>
   </data>
   <data name="PosZUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>657, 425</value>
+    <value>653, 408</value>
   </data>
   <data name="PosZUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 22</value>
@@ -1333,7 +1333,7 @@
     <value>1</value>
   </data>
   <data name="PosYUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 399</value>
+    <value>654, 382</value>
   </data>
   <data name="PosYUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -1357,7 +1357,7 @@
     <value>2</value>
   </data>
   <data name="PosXUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 373</value>
+    <value>654, 356</value>
   </data>
   <data name="PosXUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -1450,7 +1450,7 @@
     <value>25</value>
   </data>
   <data name="listViewBoxes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 59</value>
+    <value>19, 42</value>
   </data>
   <data name="listViewBoxes.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 378</value>
@@ -3210,6 +3210,9 @@
         AABJRU5ErkJggg==
 </value>
   </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>1114, 1000</value>
   </data>
@@ -3304,6 +3307,6 @@
     <value>generateModel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

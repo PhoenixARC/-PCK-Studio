@@ -42,12 +42,14 @@
             // flowLayoutPanel
             // 
             this.flowLayoutPanel.AutoScroll = true;
+            this.flowLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel.Location = new System.Drawing.Point(20, 60);
+            this.flowLayoutPanel.ForeColor = System.Drawing.Color.White;
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
             this.flowLayoutPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.flowLayoutPanel.Size = new System.Drawing.Size(487, 190);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(527, 270);
             this.flowLayoutPanel.TabIndex = 0;
             // 
             // AppSettingsForm
@@ -57,14 +59,12 @@
             this.ClientSize = new System.Drawing.Size(527, 270);
             this.Controls.Add(this.flowLayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AppSettingsForm";
-            this.Resizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Style = MetroFramework.MetroColorStyle.Black;
             this.Text = "Application Settings";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AppBehaviorSettingsForm_FormClosing);
             this.ResumeLayout(false);
 

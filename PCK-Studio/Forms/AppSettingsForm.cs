@@ -6,10 +6,11 @@ using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class AppSettingsForm : MetroForm
+    public partial class AppSettingsForm : ThemeForm
     {
         private ApplicationSettingsBase _applicationSettings;
 

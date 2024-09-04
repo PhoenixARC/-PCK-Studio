@@ -9,12 +9,13 @@ using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {
-    public partial class ContributorsForm : MetroForm
+    public partial class ContributorsForm : ThemeForm
     {
         public ContributorsForm()
         {
             InitializeComponent();
             string buildConfig = "";
+
 #if BETA
             buildConfig = "Beta";
 #elif DEBUG

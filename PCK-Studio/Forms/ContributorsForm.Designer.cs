@@ -91,7 +91,7 @@
             this.buildLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(34)))), ((int)(((byte)(56)))));
             this.buildLabel.Enabled = false;
             this.buildLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.buildLabel.Location = new System.Drawing.Point(473, 6);
+            this.buildLabel.Location = new System.Drawing.Point(495, 6);
             this.buildLabel.Name = "buildLabel";
             this.buildLabel.Size = new System.Drawing.Size(212, 54);
             this.buildLabel.TabIndex = 7;
@@ -103,7 +103,7 @@
             // contributorsLayoutPanel
             // 
             this.contributorsLayoutPanel.AutoScroll = true;
-            this.contributorsLayoutPanel.Location = new System.Drawing.Point(23, 63);
+            this.contributorsLayoutPanel.Location = new System.Drawing.Point(15, 63);
             this.contributorsLayoutPanel.Name = "contributorsLayoutPanel";
             this.contributorsLayoutPanel.Size = new System.Drawing.Size(684, 390);
             this.contributorsLayoutPanel.TabIndex = 8;
@@ -112,25 +112,23 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 500);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(714, 461);
             this.Controls.Add(this.contributorsLayoutPanel);
             this.Controls.Add(this.buildLabel);
             this.Controls.Add(metroLabel6);
             this.Controls.Add(metroLabel1);
             this.Controls.Add(metroLabel5);
             this.Controls.Add(metroLabel2);
-            this.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(730, 500);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(730, 500);
             this.Name = "ContributorsForm";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Contributors";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 

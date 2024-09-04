@@ -1,27 +1,25 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using OMI.Formats.Pck;
+using PckStudio.Extensions;
+using PckStudio.Internal;
+using PckStudio.ToolboxItems;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Windows.Forms;
-using System.Collections;
 using System.IO;
-using System.Text.RegularExpressions;
-
-using Newtonsoft.Json;
-using MetroFramework.Forms;
-using OMI.Formats.Pck;
-using PckStudio.Internal;
-using PckStudio.Extensions;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace PckStudio.Forms
 {
     [Obsolete]
-    public partial class generateModel : MetroForm
+    public partial class generateModel : ThemeForm
     {
         [Obsolete("We don't need a full control to get an image")]
         private PictureBox _skinPreview = new PictureBox();
@@ -51,7 +49,7 @@ namespace PckStudio.Forms
 
         private static readonly string[] ValidModelBoxTypes = new string[]
         {
-            // Base 64x32 Parts
+            //  Base 64x32 Parts
             "HEAD",
             "BODY",
             "ARM0",
@@ -59,7 +57,7 @@ namespace PckStudio.Forms
             "LEG0",
             "LEG1",
 
-            // 64x64 Overlay Parts
+            //  64x64 Overlay Parts
             "HEADWEAR",
             "JACKET",
             "SLEEVE0",
@@ -68,7 +66,7 @@ namespace PckStudio.Forms
             "PANTS0",
             "PANTS1",
 
-            // Armor Parts
+            //  Armor Parts
             "BODYARMOR",
             "ARMARMOR0",
             "ARMARMOR1",
@@ -83,7 +81,7 @@ namespace PckStudio.Forms
 
         private static readonly string[] ValidModelOffsetTypes = new string[]
         {
-            // Body Offsets
+            //  Body Offsets
             "HEAD",
             "BODY",
             "ARM0",
@@ -91,7 +89,7 @@ namespace PckStudio.Forms
             "LEG0",
             "LEG1",
 
-            // Armor Offsets
+            //  Armor Offsets
             "HELMET",
             "CHEST", "BODYARMOR",
             "SHOULDER0", "ARMARMOR0",
@@ -122,7 +120,7 @@ namespace PckStudio.Forms
             public (string, string) ToProperty()
             {
                 string value = $"{Name} Y {YOffset}";
-                return ("OFFSET", value.Replace(',','.'));
+                return ("OFFSET", value.Replace(',', '.'));
             }
         }
 
@@ -151,7 +149,8 @@ namespace PckStudio.Forms
 
         private void LoadData(PckAsset asset)
         {
-            comboParent.Enabled = asset.GetMultipleProperties("BOX").All(kv => {
+            comboParent.Enabled = asset.GetMultipleProperties("BOX").All(kv =>
+            {
                 var box = SkinBOX.FromString(kv.Value);
                 if (ValidModelBoxTypes.Contains(box.Type))
                 {
@@ -160,7 +159,8 @@ namespace PckStudio.Forms
                 }
                 return false;
             });
-            asset.GetMultipleProperties("OFFSET").All(kv => {
+            asset.GetMultipleProperties("OFFSET").All(kv =>
+            {
                 string[] offset = ReplaceWhitespace(kv.Value, ",").TrimEnd('\n', '\r', ' ').Split(',');
                 if (offset.Length < 3)
                     return false;
@@ -181,7 +181,7 @@ namespace PckStudio.Forms
             Rerender();
         }
 
-        //Rename model part/item
+        // Rename model part/item
         private void listView1_DoubleClick_1(object sender, EventArgs e)
         {
             listViewBoxes.SelectedItems[0].BeginEdit();
@@ -195,26 +195,26 @@ namespace PckStudio.Forms
                 GenerateUVTextureMap();
         }
 
-        // Graphic Rendering
-        // Builds an image based on the view
+        //  Graphic Rendering
+        //  Builds an image based on the view
         private void Render(object sender, EventArgs e)
         {
             buttonTemplate.Enabled = listViewBoxes.Items.Count == 0;
             OrganizesZLayer();
-            Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); // Creates Model Display layer
+            Bitmap bitmapModelPreview = new Bitmap(displayBox.Width, displayBox.Height); //  Creates Model Display layer
             using (Graphics graphics = Graphics.FromImage(bitmapModelPreview))
             {
                 graphics.ApplyConfig(_graphicsConfig);
                 graphics.Clear(_backgroundColor);
 
-                float headbodyY = (displayBox.Height / 2) + 25; //  25
-                float armY = (displayBox.Height / 2) + 35; // -60;
-                float legY = (displayBox.Height / 2) + 85; // -80;
+                float headbodyY = (displayBox.Height / 2) + 25; //   25
+                float armY = (displayBox.Height / 2) + 35; //  -60;
+                float legY = (displayBox.Height / 2) + 85; //  -80;
                 float groundLevel = (displayBox.Height / 2) + 145;
                 graphics.DrawLine(Pens.White, 0, groundLevel, displayBox.Width, groundLevel);
-                float renderScale = texturePreview.Image.Width / 64; // used for displaying larger graphics properly; 64 is the base skin width for all models
+                float renderScale = texturePreview.Image.Width / 64; //  used for displaying larger graphics properly; 64 is the base skin width for all models
 
-                // Chooses Render settings based on current direction
+                //  Chooses Render settings based on current direction
                 foreach (ListViewItem listViewItem in listViewBoxes.Items)
                 {
                     if (!(listViewItem.Tag is SkinBOX part))
@@ -226,16 +226,16 @@ namespace PckStudio.Forms
                     {
                         case ViewDirection.front:
                             {
-                                //Sets X & Y based on model part class
-                                // listViewItem.Text -> part.Type
-                                // listViewItem.SubItems[1] -> part.Pos.X
-                                // listViewItem.SubItems[2] -> part.Pos.Y
-                                // listViewItem.SubItems[3] -> part.Pos.Z
-                                // listViewItem.SubItems[4] -> part.Size.X
-                                // listViewItem.SubItems[5] -> part.Size.Y
-                                // listViewItem.SubItems[6] -> part.Size.Z
-                                // listViewItem.SubItems[7] -> part.U
-                                // listViewItem.SubItems[8] -> part.V
+                                // Sets X & Y based on model part class
+                                //  listViewItem.Text -> part.Type
+                                //  listViewItem.SubItems[1] -> part.Pos.X
+                                //  listViewItem.SubItems[2] -> part.Pos.Y
+                                //  listViewItem.SubItems[3] -> part.Pos.Z
+                                //  listViewItem.SubItems[4] -> part.Size.X
+                                //  listViewItem.SubItems[5] -> part.Size.Y
+                                //  listViewItem.SubItems[6] -> part.Size.Z
+                                //  listViewItem.SubItems[7] -> part.U
+                                //  listViewItem.SubItems[8] -> part.V
                                 switch (part.Type)
                                 {
                                     case "HEAD":
@@ -287,7 +287,7 @@ namespace PckStudio.Forms
                                         break;
                                 }
 
-                                // Maps imported Texture if texture generation is disabled
+                                //  Maps imported Texture if texture generation is disabled
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
@@ -312,7 +312,7 @@ namespace PckStudio.Forms
 
                         case ViewDirection.left:
                             {
-                                //Sets X & Y based on model part class
+                                // Sets X & Y based on model part class
                                 switch (part.Type)
                                 {
                                     case "HEAD":
@@ -360,7 +360,7 @@ namespace PckStudio.Forms
                                         break;
                                 }
 
-                                // Maps imported Texture if auto texture is disabled
+                                //  Maps imported Texture if auto texture is disabled
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
@@ -377,7 +377,7 @@ namespace PckStudio.Forms
                                 }
                                 else
                                 {
-                                    //Draws Part
+                                    // Draws Part
                                     graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
                                 }
                                 bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
@@ -386,7 +386,7 @@ namespace PckStudio.Forms
 
                         case ViewDirection.back:
                             {
-                                //Sets X & Y based on model part class
+                                // Sets X & Y based on model part class
                                 switch (part.Type)
                                 {
                                     case "HEAD":
@@ -438,7 +438,7 @@ namespace PckStudio.Forms
                                         break;
                                 }
 
-                                //Maps imported Texture if auto texture is disabled
+                                // Maps imported Texture if auto texture is disabled
                                 if (!checkTextureGenerate.Checked)
                                 {
                                     RectangleF destRect = new RectangleF(
@@ -455,7 +455,7 @@ namespace PckStudio.Forms
                                 }
                                 else
                                 {
-                                    //Draws Part
+                                    // Draws Part
                                     graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.X * 5, y + part.Pos.Y * 5, part.Size.X * 5, part.Size.Y * 5);
                                 }
                                 bitmapModelPreview.RotateFlip(RotateFlipType.RotateNoneFlipX);
@@ -463,7 +463,7 @@ namespace PckStudio.Forms
                             }
 
                         case ViewDirection.right:
-                            //Sets X & Y based on model part class
+                            // Sets X & Y based on model part class
                             switch (part.Type)
                             {
                                 case "HEAD":
@@ -510,7 +510,7 @@ namespace PckStudio.Forms
                                     y = legY + int.Parse(offsetLegs.Text) * 5;
                                     break;
                             }
-                            //Maps imported Texture if auto texture is disabled
+                            // Maps imported Texture if auto texture is disabled
                             if (!checkTextureGenerate.Checked)
                             {
                                 RectangleF destRect = new RectangleF(
@@ -527,7 +527,7 @@ namespace PckStudio.Forms
                             }
                             else
                             {
-                                //Draws Part
+                                // Draws Part
                                 graphics.FillRectangle(new SolidBrush(listViewItem.ForeColor), x + part.Pos.Z * 5, y + part.Pos.Y * 5, part.Size.Z * 5, part.Size.Y * 5);
                             }
                             break;
@@ -536,7 +536,7 @@ namespace PckStudio.Forms
 
                 if (checkBoxArmor.Checked)
                     DrawArmorOffsets(graphics);
-                // draw last to be on top
+                //  draw last to be on top
                 if (checkGuide.Checked)
                     DrawGuideLines(graphics);
             }
@@ -556,7 +556,7 @@ namespace PckStudio.Forms
                     float length = part.Size.Z * 2;
                     float u = part.UV.X * 2;
                     float v = part.UV.Y * 2;
-                    int argb = rng.Next(-16777216, -1); // 0xFF000000 - 0xFFFFFFFF
+                    int argb = rng.Next(-16777216, -1); //  0xFF000000 - 0xFFFFFFFF
                     var color = Color.FromArgb(argb);
                     Brush brush = new SolidBrush(color);
                     graphics.FillRectangle(brush, u + length, v, width, length);
@@ -570,7 +570,7 @@ namespace PckStudio.Forms
             texturePreview.Invalidate();
         }
 
-        // Checks and sets Z layering
+        //  Checks and sets Z layering
         private void OrganizesZLayer()
         {
             foreach (ListViewItem listViewItem in listViewBoxes.Items)
@@ -683,10 +683,10 @@ namespace PckStudio.Forms
                                         listViewBoxes.Items.Insert(index, listViewItem2);
                                         if (listViewBoxes.SelectedItems.Count != 0)
                                         {
-                                            //if (selected.Index == listViewItem1.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
+                                            // if (selected.Index == listViewItem1.Index)
+                                            // {
+                                            //     selected = listViewItem2;
+                                            // }
                                         }
                                         listViewItemCurrent.Remove();
                                     }
@@ -729,10 +729,10 @@ namespace PckStudio.Forms
                                         listViewBoxes.Items.Insert(index, listViewItem2);
                                         if (listViewBoxes.SelectedItems.Count != 0)
                                         {
-                                            //if (selected.Index == listViewItemCurrent.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
+                                            // if (selected.Index == listViewItemCurrent.Index)
+                                            // {
+                                            //     selected = listViewItem2;
+                                            // }
                                         }
                                         listViewItemCurrent.Remove();
                                     }
@@ -801,10 +801,10 @@ namespace PckStudio.Forms
                                         listViewBoxes.Items.Insert(index, listViewItem2);
                                         if (listViewBoxes.SelectedItems.Count != 0)
                                         {
-                                            //if (selected.Index == listViewItem1.Index)
-                                            //{
-                                            //    selected = listViewItem2;
-                                            //}
+                                            // if (selected.Index == listViewItem1.Index)
+                                            // {
+                                            //     selected = listViewItem2;
+                                            // }
                                         }
                                         listViewItemCurrent.Remove();
                                     }
@@ -825,8 +825,8 @@ namespace PckStudio.Forms
         private void DrawGuideLines(Graphics g)
         {
             Point center = new Point(displayBox.Height / 2, displayBox.Width / 2);
-            int headbodyY = center.Y + 25; //25
-            int legY = center.Y + 85; // - 80;
+            int headbodyY = center.Y + 25; // 25
+            int legY = center.Y + 85; //  - 80;
             bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
             if (!isSide)
             {
@@ -839,35 +839,35 @@ namespace PckStudio.Forms
             g.DrawLine(Pens.Blue, center.X + 30, 0, center.X + 30, displayBox.Height);
             g.DrawLine(Pens.Blue, center.X - 30, 0, center.X - 30, displayBox.Height);
             g.DrawLine(Pens.Purple, center.X - 10, 0, center.X - 10, displayBox.Height);
-            g.DrawLine(Pens.Purple, center.X + 10, 0, center .X + 10, displayBox.Height);
+            g.DrawLine(Pens.Purple, center.X + 10, 0, center.X + 10, displayBox.Height);
         }
 
         private void DrawArmorOffsets(Graphics g)
         {
             int centerPointHeight = displayBox.Height / 2;
             int centerPointWidth = displayBox.Width / 2;
-            int headbodyY = centerPointHeight + 25; //25
-            int armY = centerPointHeight + 35; // - 60;
-            int legY = centerPointHeight + 85; // - 80;
+            int headbodyY = centerPointHeight + 25; // 25
+            int armY = centerPointHeight + 35; //  - 60;
+            int legY = centerPointHeight + 85; //  - 80;
             SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(80, 50, 50, 75));
-            g.FillRectangle(semiTransBrush, centerPointWidth, (float)(headbodyY - 40 /*+ offsetHelmet.Value * 5*/), 40, 40); // Helmet
+            g.FillRectangle(semiTransBrush, centerPointWidth, (float)(headbodyY - 40 /*+ offsetHelmet.Value * 5*/), 40, 40); //  Helmet
             bool isSide = direction == ViewDirection.left || direction == ViewDirection.right;
             if (isSide)
             {
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, headbodyY, 20, 60); // Chest
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boots
-                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants
-                g.FillRectangle(semiTransBrush, centerPointWidth - 5, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tools
+                g.FillRectangle(semiTransBrush, centerPointWidth - 10, headbodyY, 20, 60); //  Chest
+                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); //  Boots
+                g.FillRectangle(semiTransBrush, centerPointWidth - 10, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); //  Pants
+                g.FillRectangle(semiTransBrush, centerPointWidth - 5, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); //  Tools
             }
             else
             {
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, headbodyY, 40, 60); // Chest
-                g.FillRectangle(semiTransBrush, centerPointWidth - 35, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool0
-                g.FillRectangle(semiTransBrush, centerPointWidth + 25, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); // Tool1
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants0
-                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); // Pants1
-                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot0
-                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); // Boot1
+                g.FillRectangle(semiTransBrush, centerPointWidth - 20, headbodyY, 40, 60); //  Chest
+                g.FillRectangle(semiTransBrush, centerPointWidth - 35, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); //  Tool0
+                g.FillRectangle(semiTransBrush, centerPointWidth + 25, (float)(armY + 45 /*+ offsetTool.Value * 5*/), 10, 10); //  Tool1
+                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); //  Pants0
+                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY /*+ offsetPants.Value * 5*/), 20, 40); //  Pants1
+                g.FillRectangle(semiTransBrush, centerPointWidth - 20, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); //  Boot0
+                g.FillRectangle(semiTransBrush, centerPointWidth, (float)(legY + 40 /*+ offsetBoots.Value * 5*/), 20, 20); //  Boot1
             }
 
         }
@@ -876,7 +876,7 @@ namespace PckStudio.Forms
         {
             if (Screen.PrimaryScreen.Bounds.Height >= 780 && Screen.PrimaryScreen.Bounds.Width >= 1080)
                 return;
-            
+
             Rerender();
         }
 
@@ -894,8 +894,8 @@ namespace PckStudio.Forms
             {
                 changeColorToolStripMenuItem.Visible = true;
                 var part = listViewBoxes.SelectedItems[0].Tag as SkinBOX;
-                //graphics.DrawRectangle(Pens.Yellow, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5 - 1, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5 - 1, (float)double.Parse(this.selected.SubItems[6].Text) * 5 + 2, (float)double.Parse(this.selected.SubItems[5].Text) * 5 + 2);
-                //graphics.DrawRectangle(Pens.Black, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5, (float)double.Parse(this.selected.SubItems[6].Text) * 5, (float)double.Parse(this.selected.SubItems[5].Text) * 5);
+                // graphics.DrawRectangle(Pens.Yellow, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5 - 1, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5 - 1, (float)double.Parse(this.selected.SubItems[6].Text) * 5 + 2, (float)double.Parse(this.selected.SubItems[5].Text) * 5 + 2);
+                // graphics.DrawRectangle(Pens.Black, x + (float)double.Parse(this.selected.SubItems[3].Text) * 5, y + (float)double.Parse(this.selected.SubItems[2].Text) * 5, (float)double.Parse(this.selected.SubItems[6].Text) * 5, (float)double.Parse(this.selected.SubItems[5].Text) * 5);
                 comboParent.Text = part.Type;
                 PosXUpDown.Value = (decimal)part.Pos.X;
                 PosYUpDown.Value = (decimal)part.Pos.Y;
@@ -910,7 +910,7 @@ namespace PckStudio.Forms
         }
 
 
-        //Changes Item Model Class
+        // Changes Item Model Class
         private void comboParent_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
@@ -1020,7 +1020,7 @@ namespace PckStudio.Forms
         }
 
 
-        //Sets Texture X-Offset
+        // Sets Texture X-Offset
         private void TextureXUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
@@ -1033,7 +1033,7 @@ namespace PckStudio.Forms
         }
 
 
-        //Sets texture Y-Offset
+        // Sets texture Y-Offset
         private void TextureYUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 &&
@@ -1046,7 +1046,7 @@ namespace PckStudio.Forms
         }
 
 
-        //Export Current Skin Texture
+        // Export Current Skin Texture
         private void buttonEXPORT_Click(object sender, EventArgs e)
         {
             Bitmap bitmap = new Bitmap(texturePreview.Image, 64, 64);
@@ -1059,17 +1059,17 @@ namespace PckStudio.Forms
         }
 
 
-        //Imports Skin Texture
+        // Imports Skin Texture
         private void buttonIMPORT_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "PNG Image Files | *.png";
             openFileDialog.Title = "Select Skin Texture";
 
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK) // skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK) //  skins can only be a 1:1 ratio (base 64x64) or a 2:1 ratio (base 64x32)
             {
                 using (var img = Image.FromFile(openFileDialog.FileName))
-				{
+                {
                     if ((img.Width == img.Height || img.Height == img.Width / 2))
                     {
                         checkTextureGenerate.Checked = false;
@@ -1082,14 +1082,14 @@ namespace PckStudio.Forms
                         Rerender();
                     }
                     else
-					{
+                    {
                         MessageBox.Show(this, "Not a valid skin file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
 
-        // Creates Model Data and Finalizes
+        //  Creates Model Data and Finalizes
         private void buttonDone_Click(object sender, EventArgs e)
         {
             foreach (SkinBOX part in modelBoxes)
@@ -1097,23 +1097,23 @@ namespace PckStudio.Forms
                 _asset.AddProperty("BOX", part);
             }
 
-            //Bitmap bitmap2 = new Bitmap(64, 64);
-            //using (Graphics graphics = Graphics.FromImage(bitmap2))
-            //{
-            //    graphics.ApplyConfig(_graphicsConfig);
-            //    graphics.DrawImage(texturePreview.Image, 0, 0, 64, 64);
-            //}
+            // Bitmap bitmap2 = new Bitmap(64, 64);
+            // using (Graphics graphics = Graphics.FromImage(bitmap2))
+            // {
+            //     graphics.ApplyConfig(_graphicsConfig);
+            //     graphics.DrawImage(texturePreview.Image, 0, 0, 64, 64);
+            // }
             _previewImage = new Bitmap(displayBox.Width, displayBox.Height);
             Close();
         }
 
-        // Renders model after texture change
+        //  Renders model after texture change
         private void texturePreview_BackgroundImageChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        // Trigger Dialog to select model part/item color
+        //  Trigger Dialog to select model part/item color
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -1123,21 +1123,21 @@ namespace PckStudio.Forms
         }
 
 
-        //Re-renders head with updated x-offset
+        // Re-renders head with updated x-offset
         private void offsetHead_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
 
-        //Re-renders body with updated x-offset
+        // Re-renders body with updated x-offset
         private void offsetBody_TextAlignChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
 
-        //Loads in model template(Steve)
+        // Loads in model template(Steve)
         private void buttonTemplate_Click(object sender, EventArgs e)
         {
             modelBoxes.Add(SkinBOX.FromString("HEAD -4 -8 -4 8 8 8 0 0 0 0 0"));
@@ -1170,7 +1170,7 @@ namespace PckStudio.Forms
             }
         }
 
-        // Exports model as csm file
+        //  Exports model as csm file
         private void buttonExportModel_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -1193,7 +1193,7 @@ namespace PckStudio.Forms
         }
 
 
-        // Imports model from csm file
+        //  Imports model from csm file
         private void buttonImportModel_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1266,37 +1266,37 @@ namespace PckStudio.Forms
             Rerender();
         }
 
-        //Re-renders tool with updated x-offset
+        // Re-renders tool with updated x-offset
         private void offsetTool_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        //Re-renders helmet with updated x-offset
+        // Re-renders helmet with updated x-offset
         private void offsetHelmet_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        //Re-renders pants with updated x-offset
+        // Re-renders pants with updated x-offset
         private void offsetPants_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        //Re-renders leggings with updated x-offset
+        // Re-renders leggings with updated x-offset
         private void offsetLeggings_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        //Re-renders boots with updated x-offset
+        // Re-renders boots with updated x-offset
         private void offsetBoots_TextChanged(object sender, EventArgs e)
         {
             Rerender();
         }
 
-        //Item Selection
+        // Item Selection
         private void listView1_Click(object sender, EventArgs e)
         {
             if (listViewBoxes.SelectedItems.Count != 0 && listViewBoxes.SelectedItems[0] != null &&
@@ -1334,7 +1334,7 @@ namespace PckStudio.Forms
             Rerender();
         }
 
-        //currently scrapped
+        // currently scrapped
         private void generateModel_FormClosing(object sender, FormClosingEventArgs e)
         {/*
             if (MessageBox.Show("You done here?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
@@ -1345,7 +1345,7 @@ namespace PckStudio.Forms
             e.Cancel = false;*/
         }
 
-        //Del stuff using key
+        // Del stuff using key
         private void delStuffUsingDelKey(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete && listViewBoxes.SelectedItems.Count != 0 &&
@@ -1362,7 +1362,7 @@ namespace PckStudio.Forms
             Rerender();
         }
 
-        // TODO
+        //  TODO
         private void OpenJSONButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -1390,33 +1390,33 @@ namespace PckStudio.Forms
                 {
                     ListViewItem listViewItem = new ListViewItem();
                     int num4 = 0;
-                        foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                    foreach (string text in str1.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        ++num4;
+                        if (num4 == 1 + 11 * current.Index)
+                            listViewItem.Text = text;
+                        else if (num4 == 2 + 11 * current.Index)
+                            listViewItem.Tag = text;
+                        else if (num4 == 4 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 5 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 6 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 7 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 8 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 9 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 10 + 11 * current.Index)
+                            listViewItem.SubItems.Add(text);
+                        else if (num4 == 11 + 11 * current.Index)
                         {
-                            ++num4;
-                            if (num4 == 1 + 11 * current.Index)
-                                listViewItem.Text = text;
-                            else if (num4 == 2 + 11 * current.Index)
-                                listViewItem.Tag = text;
-                            else if (num4 == 4 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 5 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 6 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 7 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 8 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 9 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 10 + 11 * current.Index)
-                                listViewItem.SubItems.Add(text);
-                            else if (num4 == 11 + 11 * current.Index)
-                            {
-                                listViewItem.SubItems.Add(text);
-                                listViewBoxes.Items.Add(listViewItem);
-                            }
+                            listViewItem.SubItems.Add(text);
+                            listViewBoxes.Items.Add(listViewItem);
                         }
+                    }
                 }
             }
             Rerender();
@@ -1463,7 +1463,7 @@ namespace PckStudio.Forms
         [JsonProperty("groups")]
         public CSMJObjectGroup[] Groups;
     }
-    
+
     class CSMJObjectElement
     {
         [JsonProperty("name")]

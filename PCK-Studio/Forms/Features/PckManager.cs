@@ -15,12 +15,13 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using PckStudio.ToolboxItems;
 using System;
 using System.Windows.Forms;
 
 namespace PckStudio.Forms.Features
 {
-    public partial class PckManager : MetroFramework.Forms.MetroForm
+    public partial class PckManager : ThemeForm
     {
         private Control _currentlyShowingControl;
         private string _currentlyShowingControlName;

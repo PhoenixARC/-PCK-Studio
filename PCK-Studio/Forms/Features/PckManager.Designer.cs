@@ -55,7 +55,7 @@
             metroLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
             metroLabel2.Location = new System.Drawing.Point(3, 0);
             metroLabel2.Name = "metroLabel2";
-            metroLabel2.Size = new System.Drawing.Size(183, 35);
+            metroLabel2.Size = new System.Drawing.Size(203, 35);
             metroLabel2.Style = MetroFramework.MetroColorStyle.Black;
             metroLabel2.TabIndex = 13;
             metroLabel2.Text = "Platform type:";
@@ -68,10 +68,10 @@
             this.supportedPlatformComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.supportedPlatformComboBox.FormattingEnabled = true;
             this.supportedPlatformComboBox.ItemHeight = 23;
-            this.supportedPlatformComboBox.Location = new System.Drawing.Point(192, 3);
+            this.supportedPlatformComboBox.Location = new System.Drawing.Point(212, 3);
             this.supportedPlatformComboBox.Name = "supportedPlatformComboBox";
             this.supportedPlatformComboBox.PromptText = "Select Platform";
-            this.supportedPlatformComboBox.Size = new System.Drawing.Size(184, 29);
+            this.supportedPlatformComboBox.Size = new System.Drawing.Size(204, 29);
             this.supportedPlatformComboBox.Style = MetroFramework.MetroColorStyle.Black;
             this.supportedPlatformComboBox.TabIndex = 0;
             this.supportedPlatformComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -87,31 +87,32 @@
             this.mainPanel.Controls.Add(this.supportedPlatformComboBox, 1, 0);
             this.mainPanel.Controls.Add(metroLabel2, 0, 0);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(20, 60);
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.RowCount = 2;
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.mainPanel.Size = new System.Drawing.Size(379, 560);
+            this.mainPanel.Size = new System.Drawing.Size(419, 640);
             this.mainPanel.TabIndex = 3;
             // 
             // PckManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(419, 640);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(metroLabel1);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(419, 640);
             this.Name = "PckManager";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Pck Manager";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.ResumeLayout(false);
