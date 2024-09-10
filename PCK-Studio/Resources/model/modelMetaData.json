@@ -271,7 +271,8 @@
   },
   "spider": {
     "textureLocations": [
-      "res/mob/spider"
+      "res/mob/spider",
+      "res/mob/cavespider"
     ]
   },
   "squid": {
