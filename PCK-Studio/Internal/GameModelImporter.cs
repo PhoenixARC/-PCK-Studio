@@ -39,7 +39,7 @@ namespace PckStudio.Internal
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
         
-        public class ModelExportSettings
+            public sealed class ModelExportSettings
         {
         public bool CreateModelOutline { get; set; } = true;
         }
