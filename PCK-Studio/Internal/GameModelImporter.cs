@@ -53,8 +53,9 @@ namespace PckStudio.Internal
             InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
         }
 
-        Vector3 bbModelTransformAxis = new Vector3(1, 1, 0);
-        Vector3 _heightOffset = Vector3.Zero;
+        private readonly Vector3 bbModelTransformAxis = new Vector3(1, 1, 0);
+        // maybe get this value from the json. -miku
+        private readonly Vector3 _heightOffset = Vector3.UnitY * 24f;
 
         private void ExportBlockBenchModel(string filepath, GameModelInfo modelInfo)
         {
@@ -70,10 +71,9 @@ namespace PckStudio.Internal
                 return;
             }
 
-            _heightOffset = Vector3.UnitY * 24f;
-
             foreach (ModelPart part in modelInfo.Model.GetParts())
             {
+                Debug.Assert(!outliners.ContainsKey(part.Name), $"'{part.Name}' is already present.");
                 var outline = new Outline(part.Name);
 
                 Vector3 partTranslation = part.Translation;
@@ -83,14 +83,9 @@ namespace PckStudio.Internal
                 Vector3 rotation = part.Rotation;
                 outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
 
-                foreach (ModelBox box in part.GetBoxes())
-                {
-                    Element element = CreateElement(part.Name, box, partTranslation);
-                    element.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
-                    element.Origin = outline.Origin;
-                    elements.Add(element);
-                    outline.Children.Add(element.Uuid);
-                }
+                Element[] elements1 = part.GetBoxes().Select(box => ToElement(part.Name, box, partTranslation)).ToArray();
+                elements.AddRange(elements1);
+                outline.Children.Add(elements1.Select(element => element.Uuid));
                 outliners.Add(part.Name, outline);
             }
             
@@ -110,6 +105,15 @@ namespace PckStudio.Internal
             File.WriteAllText(filepath, content);
         }
 
+        private Element ToElement(string partName, ModelBox modelBox, Vector3 partTranslation)
+        {
+            Element element = CreateElement(partName, modelBox, partTranslation, bbModelTransformAxis, _heightOffset);
+            //element.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
+            //element.Origin = outline.Origin;
+            return element;
+        }
+
+        // TODO: return a new object instead of modifying a reference. (make immutable) -miku
         private static void TraverseChildren(IReadOnlyDictionary<string, JArray> keyValues, ref Dictionary<string, Outline> outliners)
         {
             foreach (KeyValuePair<string, JArray> item in keyValues)
@@ -147,11 +151,11 @@ namespace PckStudio.Internal
             }
         }
 
-        private Element CreateElement(string name, ModelBox box, Vector3 origin)
+        private static Element CreateElement(string name, ModelBox box, Vector3 origin, Vector3 translationUnit, Vector3 offset)
         {
             Vector3 pos = box.Position;
             Vector3 size = box.Size;
-            Vector3 transformPos = TransformSpace(pos + origin, size, bbModelTransformAxis) + _heightOffset;
+            Vector3 transformPos = TransformSpace(pos + origin, size, translationUnit) + offset;
             return Element.CreateCube(name, box.Uv, transformPos, size, box.Inflate, box.Mirror);
         }
     }
