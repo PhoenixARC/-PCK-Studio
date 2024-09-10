@@ -603,8 +603,7 @@ namespace PckStudio
 				return;
 			}
 
-			ModelEditor.TryGetTextureDelegate tryGetTexture =
-				(string path, out Image img) =>
+			ModelEditor.TryGetTextureDelegate tryGetTexture = (string path, out Image img) =>
 			{
 					bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset asset) ||
 								 currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out asset);
@@ -612,7 +611,16 @@ namespace PckStudio
 					return found;
 				};
 			
-			var editor = new ModelEditor(modelContainer, tryGetTexture);
+			ModelEditor.TrySetTextureDelegate trySetTexture = (string path, Image img) =>
+			{
+                bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset foundAsset) ||
+                                currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out foundAsset);
+                PckAsset asset = foundAsset ?? currentPCK.CreateNewAsset(path + ".png", PckAssetType.TextureFile);
+                asset.SetTexture(img);
+				return true;
+            };
+
+			var editor = new ModelEditor(modelContainer, tryGetTexture, trySetTexture);
 			if (editor.ShowDialog() == DialogResult.OK)
 				{
 				return;
@@ -1967,10 +1975,9 @@ namespace PckStudio
 					node.SelectedImageIndex = 6;
 					break;
 				case PckAssetType.ModelsFile:
-                    goto default;
-					//node.ImageIndex = 8;
-					//node.SelectedImageIndex = 8;
-					//break;
+					node.ImageIndex = 8;
+					node.SelectedImageIndex = 8;
+					break;
 				case PckAssetType.SkinDataFile:
 					goto default;
 					//node.ImageIndex = 7;

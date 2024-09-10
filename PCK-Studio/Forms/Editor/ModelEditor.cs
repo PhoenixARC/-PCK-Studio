@@ -18,15 +18,18 @@ namespace PckStudio.Forms.Editor
     {
         private readonly ModelContainer _models;
         private readonly TryGetTextureDelegate _tryGetTexture;
+        private readonly TrySetTextureDelegate _trySetTexture;
 
 
         public delegate bool TryGetTextureDelegate(string path, out Image img);
+        public delegate bool TrySetTextureDelegate(string path, Image img);
 
-        public ModelEditor(ModelContainer models, TryGetTextureDelegate tryGetTexture)
+        public ModelEditor(ModelContainer models, TryGetTextureDelegate tryGetTexture, TrySetTextureDelegate trySetTexture)
         {
             InitializeComponent();
             _models = models;
             _tryGetTexture = tryGetTexture;
+            _trySetTexture = trySetTexture;
         }
 
         private class ModelNode : TreeNode
@@ -123,6 +126,11 @@ namespace PckStudio.Forms.Editor
             exportToolStripMenuItem.Visible = e.Node is ModelNode;
             editToolStripMenuItem.Visible = e.Node is ModelBoxNode;
             removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }
