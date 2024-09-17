@@ -32,10 +32,12 @@ namespace PckStudio.Forms.Editor
             _tryGetTexture = tryGetTexture;
             _trySetTexture = trySetTexture;
 
-            modelTreeView.ImageList = new ImageList();
-            modelTreeView.ImageList.ColorDepth = ColorDepth.Depth32Bit;
-            modelTreeView.ImageList.ImageSize = new Size(32, 32);
-            ApplicationScope.EntityImages.ToList().ForEach(modelTreeView.ImageList.Images.Add);
+            modelTreeView.ImageList = new ImageList
+            {
+                ColorDepth = ColorDepth.Depth32Bit,
+                ImageSize = new Size(32, 32)
+            };
+            modelTreeView.ImageList.Images.AddRange(ApplicationScope.EntityImages);
         }
 
         // TODO: move to json file. -miku
@@ -135,9 +137,9 @@ namespace PckStudio.Forms.Editor
                 _model = model;
                 ImageIndex = GetModelImageIndex(model.Name);
                 SelectedImageIndex = GetModelImageIndex(model.Name);
-                Nodes.AddRange(GetModelNodes(_model.GetParts()).ToArray());
+                Nodes.AddRange(GetModelPartNodes(_model.GetParts()).ToArray());
             }
-            private static IEnumerable<TreeNode> GetModelNodes(IEnumerable<ModelPart> parts)
+            private static IEnumerable<TreeNode> GetModelPartNodes(IEnumerable<ModelPart> parts)
             {
                 return parts.Select(part => new ModelPartNode(part));
             }
@@ -155,9 +157,9 @@ namespace PckStudio.Forms.Editor
                 _part = part;
                 ImageIndex = 126;
                 SelectedImageIndex = 126;
-                Nodes.AddRange(GetModelPartNodeChildren(part.GetBoxes()).ToArray());
+                Nodes.AddRange(GetModelBoxNodes(part.GetBoxes()).ToArray());
             }
-            private static IEnumerable<TreeNode> GetModelPartNodeChildren(IEnumerable<ModelBox> boxes)
+            private static IEnumerable<TreeNode> GetModelBoxNodes(IEnumerable<ModelBox> boxes)
                 => boxes.Select(box => new ModelBoxNode(box));
             }
 
