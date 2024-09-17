@@ -18,30 +18,32 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
-    internal class GenericMesh<T> where T : struct
+    internal abstract class GenericMesh<T> where T : struct
     {
         internal string Name { get; }
 
         protected List<T> vertices { get; }
         protected List<int> indices { get; }
-        protected int indicesOffset;
+        protected Matrix4 transform { get; set; }
+        public Matrix4 Transform => transform;
 
-        private VertexArray vertexArray;
-        private IndexBuffer indexBuffer;
-        private readonly PrimitiveType drawType;
-        private DrawContext drawContext;
+        /* + ---------------------------------------------- + */
+        /* | */ private VertexArray vertexArray;         /* | */
+        /* | */ private IndexBuffer indexBuffer;         /* | */
+        /* | */ private readonly PrimitiveType drawType; /* | */
+        /* | */ private DrawContext drawContext;         /* | */
+        /* + ---------------------------------------------- + */
 
         protected GenericMesh(string name, PrimitiveType type)
         {
             Name = name;
             drawType = type;
-            indicesOffset = 0;
             vertices = new List<T>(10);
             indices = new List<int>(10);
         }
@@ -54,12 +56,9 @@ namespace PckStudio.Rendering
             drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
         }
 
-        protected void ResetBuffers()
-        {
-            indicesOffset = 0;
-            vertices.Clear();
-            indices.Clear();
-        }
+        internal abstract void SetData();
+
+        internal IEnumerable<T> GetVertices() => vertices;
 
         protected void Submit()
         {

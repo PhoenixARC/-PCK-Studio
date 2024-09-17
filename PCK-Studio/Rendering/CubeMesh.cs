@@ -22,16 +22,17 @@ using System.Drawing;
 using System.Linq;
 using OpenTK;
 using PckStudio.Extensions;
-using PckStudio.Internal;
-using PckStudio.Internal.Skin;
-
 namespace PckStudio.Rendering
 {
-    internal class CubeMesh : Cube
+    internal class CubeMesh : GenericMesh<TextureVertex>
     {
-        internal bool ShouldRender { get; set; } = true;
+        internal bool ShouldRender { get; } = true;
 
-        private static int[] indicesData = [
+        private Cube _cube;
+
+        public Vector3 Center => _cube.Center;
+
+        internal static int[] IndicesData { get; } = [
                     // Face 1 (Back)
                      0,  1,  2,
                      2,  3,  0,
@@ -48,93 +49,94 @@ namespace PckStudio.Rendering
                     16, 17, 18,
                     18, 19, 16,
                     // Face 6 (Right)
-                    20, 21, 22, 
+                    20, 21, 22,
                     22, 23, 20
             ];
 
-        private TextureVertex[] vertices;
-
-        /// <param name="position"></param>
-        /// <param name="size"></param>
-        /// <param name="uv"></param>
-        /// <param name="inflate"></param>
-        /// <param name="mirrorTexture"></param>
-        /// <param name="flipZMapping">Flips the bottom face mapping of the uv mapping</param>
-        public CubeMesh(bool enabled, Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
-            : base(position, size, uv, inflate, mirrorTexture, flipZMapping)
-        {
-            ShouldRender = enabled;
-            Update();
-        }
-
-        public CubeMesh(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
-            : this(true, position, size, uv, inflate, mirrorTexture, flipZMapping)
+        public CubeMesh(Cube cube) : this(cube, true)
         {
         }
 
-        public CubeMesh(Cube cube)
-            : this(cube.Position, cube.Size, cube.Uv, cube.Inflate, cube.MirrorTexture, cube.FlipZMapping)
+        private CubeMesh(Cube cube, bool visible)
+            : base(nameof(CubeMesh), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles)
         {
+            ShouldRender = visible;
+            _cube = cube;
+            indices.AddRange(IndicesData);
+            transform = Matrix4.Identity;
+            SetData();
         }
+
+        public CubeMesh SetCube(Cube cube)
+        {
+            _ = cube ?? throw new ArgumentNullException(nameof(cube));
+            return new CubeMesh(cube, ShouldRender);
+        }
+
+        public CubeMesh SetVisible(bool visible) => new CubeMesh(_cube, visible);
+
+        public Cube GetCube() => _cube;
 
         private TextureVertex[] GetCubeVertexData()
         {
-            int mirror = MirrorTexture ? 1 : 0;
+            int mirror = Convert.ToInt32(_cube.MirrorTexture);
             List<TextureVertex> vertices = new List<TextureVertex>();
 
-            Vector2 uv = Uv;
+            Vector2 uv = _cube.Uv;
 
-            BoundingBox boundingBox = GetBoundingBox();
+            BoundingBox boundingBox = _cube.GetBoundingBox();
             Vector3 from = boundingBox.Start.ToOpenTKVector();
             Vector3 to   = boundingBox.End.ToOpenTKVector();
 
-            var back = new TextureVertex[]
+            Vector3 size = _cube.Size;
+
+            var back = new TextureVertex[4]
             {
                 // Back
-                new TextureVertex(new Vector3(from.X,   to.Y, to.Z), new Vector2(uv.X + Size.Z * 2 + Size.X + Size.X * (1 - mirror), uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(  to.X,   to.Y, to.Z), new Vector2(uv.X + Size.Z * 2 + Size.X + Size.X * mirror, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(  to.X, from.Y, to.Z), new Vector2(uv.X + Size.Z * 2 + Size.X + Size.X * mirror, uv.Y + Size.Z)),
-                new TextureVertex(new Vector3(from.X, from.Y, to.Z), new Vector2(uv.X + Size.Z * 2 + Size.X + Size.X * (1 - mirror), uv.Y + Size.Z))
+                new TextureVertex(new Vector3(from.X,   to.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(  to.X,   to.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(  to.X, from.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z)),
+                new TextureVertex(new Vector3(from.X, from.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z))
             };
-            var front = new TextureVertex[]
+            var front = new TextureVertex[4]
             {
                 // Front
-                new TextureVertex(new Vector3(from.X,   to.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * mirror, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(  to.X,   to.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * (1 - mirror), uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * (1 - mirror), uv.Y + Size.Z)),
-                new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * mirror, uv.Y + Size.Z)),
+                new TextureVertex(new Vector3(from.X,   to.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(  to.X,   to.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z)),
+                new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z)),
             };
-            var top = new TextureVertex[]
+            var top = new TextureVertex[4]
             {
                 // Top
-                new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * mirror, uv.Y + Size.Z)),
-                new TextureVertex(new Vector3(from.X, from.Y,   to.Z), new Vector2(uv.X + Size.Z + Size.X * mirror, uv.Y)),
-                new TextureVertex(new Vector3(  to.X, from.Y,   to.Z), new Vector2(uv.X + Size.Z + Size.X * (1 - mirror), uv.Y)),
-                new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X * (1 - mirror), uv.Y + Size.Z)),
+                new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z)),
+                new TextureVertex(new Vector3(from.X, from.Y,   to.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y)),
+                new TextureVertex(new Vector3(  to.X, from.Y,   to.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y)),
+                new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z)),
             };
-            var bottom = new TextureVertex[]
+            var bottom = new TextureVertex[4]
             {
                 // Bottom
-                new TextureVertex(new Vector3(  to.X, to.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X + Size.X * (1 - mirror), uv.Y + (FlipZMapping ? Size.Z : 0))),
-                new TextureVertex(new Vector3(  to.X, to.Y,   to.Z), new Vector2(uv.X + Size.Z + Size.X + Size.X * (1 - mirror), uv.Y + (!FlipZMapping ? Size.Z : 0))),
-                new TextureVertex(new Vector3(from.X, to.Y,   to.Z), new Vector2(uv.X + Size.Z + Size.X + Size.X * mirror, uv.Y + (!FlipZMapping ? Size.Z : 0))),
-                new TextureVertex(new Vector3(from.X, to.Y, from.Z), new Vector2(uv.X + Size.Z + Size.X + Size.X * mirror, uv.Y + (FlipZMapping ? Size.Z : 0))),
+                new TextureVertex(new Vector3(  to.X, to.Y, from.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (_cube.FlipZMapping ? size.Z : 0))),
+                new TextureVertex(new Vector3(  to.X, to.Y,   to.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (!_cube.FlipZMapping ? size.Z : 0))),
+                new TextureVertex(new Vector3(from.X, to.Y,   to.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (!_cube.FlipZMapping ? size.Z : 0))),
+                new TextureVertex(new Vector3(from.X, to.Y, from.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (_cube.FlipZMapping ? size.Z : 0))),
             };
-            var left = new TextureVertex[]
+            var left = new TextureVertex[4]
             {
                 // Left
-                new TextureVertex(new Vector3(MirrorTexture ? from.X : to.X, from.Y, from.Z), new Vector2(uv.X + Size.X + Size.Z, uv.Y + Size.Z)),
-                new TextureVertex(new Vector3(MirrorTexture ? from.X : to.X, to.Y  , from.Z), new Vector2(uv.X + Size.X + Size.Z, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(MirrorTexture ? from.X : to.X, to.Y  , to.Z), new Vector2(uv.X + Size.X + Size.Z * 2, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(MirrorTexture ? from.X : to.X, from.Y, to.Z), new Vector2(uv.X + Size.X + Size.Z * 2, uv.Y + Size.Z)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, from.Y, from.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, to.Y  , from.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, to.Y  , to.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, from.Y, to.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z)),
             };
-            var right = new TextureVertex[]
+            var right = new TextureVertex[4]
             {
                 // Right
-                new TextureVertex(new Vector3(MirrorTexture ? to.X : from.X, from.Y, from.Z), new Vector2(uv.X + Size.Z, uv.Y + Size.Z)),
-                new TextureVertex(new Vector3(MirrorTexture ? to.X : from.X,   to.Y, from.Z), new Vector2(uv.X + Size.Z, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(MirrorTexture ? to.X : from.X,   to.Y, to.Z), new Vector2(uv.X, uv.Y + Size.Z + Size.Y)),
-                new TextureVertex(new Vector3(MirrorTexture ? to.X : from.X, from.Y, to.Z), new Vector2(uv.X, uv.Y + Size.Z)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, from.Y, from.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, to.Y  , from.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, to.Y  , to.Z), new Vector2(uv.X, uv.Y + size.Z + size.Y)),
+                new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, from.Y, to.Z), new Vector2(uv.X, uv.Y + size.Z)),
             };
             
             vertices.AddRange(back);
@@ -147,24 +149,10 @@ namespace PckStudio.Rendering
             return vertices.ToArray();
         }
 
-        internal void Update()
+        internal override void SetData()
         {
-            vertices = GetCubeVertexData();
-        }
-
-        internal TextureVertex[] GetVertices()
-        {
-            return vertices;
-        }
-
-        internal int[] GetIndices()
-        {
-            return indicesData;
-        }
-
-        internal static CubeMesh Create(SkinBOX skinBox)
-        {
-            return new CubeMesh(FromSkinBox(skinBox));
+            vertices.Clear();
+            vertices.AddRange(GetCubeVertexData());
         }
     }
 }

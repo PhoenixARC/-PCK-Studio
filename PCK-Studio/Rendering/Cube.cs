@@ -18,26 +18,25 @@
 using System;
 using OpenTK;
 using PckStudio.Extensions;
-using PckStudio.Internal;
 using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {
-    internal class Cube
+    internal sealed class Cube
     {
-        internal Vector3 Position { get; set; }
+        internal Vector3 Position { get; }
 
-        internal Vector3 Size { get; set; }
+        internal Vector3 Size { get; }
         
-        internal Vector3 Rotation { get; set; }
+        internal Vector3 Rotation { get; }
 
-        internal Vector2 Uv { get; set; }
+        internal Vector2 Uv { get; }
 
-        internal float Inflate { get; set; }
+        internal float Inflate { get; }
 
-        internal bool MirrorTexture { get; set; }
+        internal bool MirrorTexture { get; }
 
-        internal bool FlipZMapping { get; set; }
+        internal bool FlipZMapping { get; }
         
         internal Vector3 Center => Position + Size / 2f;
         
@@ -51,12 +50,10 @@ namespace PckStudio.Rendering
             Right
         }
 
-        internal static Cube FromSkinBox(SkinBOX skinBOX)
-        {
-            return new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale, skinBOX.Mirror, false);
-        }
+        internal static Cube FromSkinBox(SkinBOX skinBOX) => FromSkinBox(skinBOX, 0f);
 
-        public Cube() { }
+        internal static Cube FromSkinBox(SkinBOX skinBOX, float inflate, bool flipZMapping = false)
+            => new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale + inflate, skinBOX.Mirror, flipZMapping);
 
         public Cube(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
         {

@@ -40,6 +40,7 @@ namespace PckStudio.Rendering
             if (_size < size)
             {
                 GL.BufferData(BufferTarget.ElementArrayBuffer, size, indicies, BufferUsageHint.StaticDraw);
+                _size = size;
                 return;
             }
             GL.BufferSubData(BufferTarget.ElementArrayBuffer, IntPtr.Zero, size, indicies);

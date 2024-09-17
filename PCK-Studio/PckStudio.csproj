@@ -212,7 +212,7 @@
     <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
     <Compile Include="Rendering\Cube.cs" />
     <Compile Include="Rendering\CubeMesh.cs" />
-    <Compile Include="Rendering\CubeGroupMesh.cs" />
+    <Compile Include="Rendering\CubeMeshCollection.cs" />
     <Compile Include="Rendering\FrameBuffer.cs" />
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\DrawContext.cs" />

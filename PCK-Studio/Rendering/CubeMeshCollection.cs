@@ -26,7 +26,7 @@ using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {
-    internal class CubeGroupMesh : GenericMesh<TextureVertex>
+    internal class CubeMeshCollection : GenericMesh<TextureVertex>
     {
         private List<CubeMesh> cubes;
         
@@ -36,26 +36,43 @@ namespace PckStudio.Rendering
             set
             {
                 _flipZMapping = value;
-                UpdateCollection();
+                //foreach (Cube cube in cubes)
+                //{
+                //    cube.FlipZMapping = FlipZMapping;
+                //}
             }
         }
 
         public Vector3 Translation { get; } 
         public Vector3 Pivot { get; } 
-        public Vector3 Offset { get; set; } = Vector3.Zero;
+        private Vector3 _offset { get; set; } = Vector3.Zero;
+        public Vector3 Offset
+        {
+            get => _offset;
+            set
+            {
+                if (value != _offset)
+                {
+                    _offset = value;
+                    transform = Matrix4.CreateTranslation(Translation + _offset) * Matrix4.CreateScale(1f, -1f, -1f);
+                }
+            }
+        }
 
         private bool _flipZMapping = false;
 
-        internal CubeGroupMesh(string name) : base(name, PrimitiveType.Triangles)
+        internal CubeMeshCollection(string name) : base(name, PrimitiveType.Triangles)
         {
             cubes = new List<CubeMesh>(5);
+            transform = Matrix4.CreateTranslation(Vector3.Zero) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
-        internal CubeGroupMesh(string name, Vector3 translation, Vector3 pivot)
+        internal CubeMeshCollection(string name, Vector3 translation, Vector3 pivot)
             : this(name)
         {
             Translation = translation;
             Pivot = pivot;
+            transform = Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
         public static VertexBufferLayout GetLayout()
@@ -68,10 +85,14 @@ namespace PckStudio.Rendering
 
         internal void AddSkinBox(SkinBOX skinBox, float inflate = 0f)
         {
-            var cube = CubeMesh.Create(skinBox);
-            cube.FlipZMapping = FlipZMapping;
-            cube.Inflate += inflate;
-            cubes.Add(cube);
+            var cube = Cube.FromSkinBox(skinBox, inflate, FlipZMapping);
+            cubes.Add(new CubeMesh(cube));
+        }
+
+        private void ResetBuffers()
+        {
+            vertices.Clear();
+            indices.Clear();
         }
 
         internal void ClearData()
@@ -83,18 +104,17 @@ namespace PckStudio.Rendering
         /// <summary>
         /// Uploads vertex data
         /// </summary>
-        // TODO: rename function
-        internal void UploadData()
+        internal override void SetData()
         {
             ResetBuffers();
+            int indicesOffset = 0;
+            IEnumerable<int> indexStorage = CubeMesh.IndicesData;
             foreach (CubeMesh cube in cubes)
             {
                 if (!cube.ShouldRender)
                     continue;
-                cube.Update();
-                TextureVertex[] cubeVertices = cube.GetVertices();
+                TextureVertex[] cubeVertices = cube.GetVertices().ToArray();
                 vertices.AddRange(cubeVertices);
-                var indexStorage = cube.GetIndices();
                 indices.AddRange(indexStorage.Select(n => n + indicesOffset));
                 indicesOffset += cubeVertices.Length;
             }
@@ -103,8 +123,8 @@ namespace PckStudio.Rendering
 
         internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
         {
-            var cube = new CubeMesh(position, size, uv, inflate, mirrorTexture, FlipZMapping);
-            cubes.Add(cube);
+            var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping);
+            cubes.Add(new CubeMesh(cube));
         }
 
         internal void RemoveCube(int index)
@@ -113,7 +133,7 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
             
             cubes.RemoveAt(index);
-            UploadData();
+            SetData();
         }
 
         internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
@@ -121,26 +141,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            CubeMesh cube = cubes[index];
-            cube.Position = position;
-            cube.Size = size;
-            cube.Uv = uv;
-            cube.Inflate = inflate;
-            cube.MirrorTexture = mirrorTexture;
-            cube.Update();
-        }
-
-        private void UpdateCollection()
-        {
-            foreach (CubeMesh cube in cubes)
-            {
-                cube.FlipZMapping = FlipZMapping;
-            }
-        }
-
-        internal Matrix4 Transform
-        {
-            get => Matrix4.CreateTranslation(Translation + Offset) * Matrix4.CreateScale(1f, -1f, -1f);
+            cubes[index] = cubes[index].SetCube(new Cube(position, size, uv, inflate, mirrorTexture, false));
         }
 
         internal Vector3 GetCenter(int index)
@@ -148,7 +149,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return (Transform * Matrix4.CreateTranslation(cubes[index].Center)).ExtractTranslation();
+            return Vector3.TransformPosition(cubes[index].Center, Transform);
         }
 
         internal BoundingBox GetCubeBoundingBox(int index)
@@ -156,7 +157,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            CubeMesh cube = cubes[index];
+            Cube cube = cubes[index].GetCube();
             return cube.GetBoundingBox(Transform);
         }
 
@@ -164,15 +165,16 @@ namespace PckStudio.Rendering
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-            return Vector3.TransformPosition(cubes[index].GetFaceCenter(face), Transform);
+            Cube cube = cubes[index].GetCube();
+            return Vector3.TransformPosition(cube.GetFaceCenter(face), Transform);
         }
 
-        internal void SetEnabled(int index, bool enable)
+        internal void SetVisible(int index, bool visible)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            cubes[index].ShouldRender = enable;
+            cubes[index] = cubes[index].SetVisible(visible);
         }
     }
 }
