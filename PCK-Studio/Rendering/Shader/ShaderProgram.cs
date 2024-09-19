@@ -27,7 +27,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering.Shader
 {
-    internal class ShaderProgram : IDisposable
+    internal sealed class ShaderProgram : IDisposable
     {
         private int _programId;
         private Dictionary<string, int> locationCache = new Dictionary<string, int>();
@@ -99,24 +99,6 @@ namespace PckStudio.Rendering.Shader
             return location;
         }
 
-        private static int CompileShader(ShaderType type, string shaderSource)
-        {
-            int shaderId = GL.CreateShader(type);
-            GL.ShaderSource(shaderId, shaderSource);
-            GL.CompileShader(shaderId);
-
-            GL.GetShader(shaderId, ShaderParameter.CompileStatus, out int status);
-
-            if (status == 0)
-            {
-                string infoLog = GL.GetShaderInfoLog(shaderId);
-                GL.DeleteShader(shaderId);
-                Trace.Fail(infoLog);
-                return 0;
-            }
-            return shaderId;
-        }
-
         private bool Link()
         {
             GL.LinkProgram(_programId);
@@ -155,9 +137,9 @@ namespace PckStudio.Rendering.Shader
 
             var shaderObjects = new List<ShaderObject>(shaderSources.Length);
 
-            foreach (var shaderSource in shaderSources)
+            foreach (ShaderSource shaderSource in shaderSources)
             {
-                ShaderObject shaderObject = ShaderObject.CreateNew(shaderSource);
+                ShaderObject shaderObject = ShaderObject.Create(shaderSource);
                 shaderObject.AttachToProgram(programId);
                 shaderObjects.Add(shaderObject);
             }
@@ -166,7 +148,7 @@ namespace PckStudio.Rendering.Shader
             bool success = shader.Link();
             Debug.Assert(success, "Shader Program linking failed.");
             
-            foreach (var shaderObject in shaderObjects)
+            foreach (ShaderObject shaderObject in shaderObjects)
             {
                 shaderObject.Delete();
             }

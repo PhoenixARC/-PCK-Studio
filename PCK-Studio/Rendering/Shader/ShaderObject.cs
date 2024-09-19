@@ -40,16 +40,22 @@ namespace PckStudio.Rendering.Shader
             _compileStatus = 0;
         }
 
-        internal static ShaderObject CreateNew(ShaderSource shaderSource)
+        internal static ShaderObject Create(ShaderSource shaderSource)
         {
             var shaderObject = new ShaderObject(shaderSource);
-            shaderObject.Compile();
-            if (!shaderObject.CompileStatusOK)
+            if (!shaderObject.Compile())
             {
+                string infoLog = shaderObject.GetShaderInfoLog();
+                Debug.Fail(infoLog);
                 shaderObject.Delete();
                 return null;
             }
             return shaderObject;
+        }
+
+        private string GetShaderInfoLog()
+        {
+            return GL.GetShaderInfoLog(_shaderId);
         }
 
         internal void Delete()
@@ -57,18 +63,14 @@ namespace PckStudio.Rendering.Shader
             GL.DeleteShader(_shaderId);
         }
 
-        private void Compile()
+        private bool Compile()
         {
             GL.ShaderSource(_shaderId, _source.Source);
             GL.CompileShader(_shaderId);
 
             GL.GetShader(_shaderId, ShaderParameter.CompileStatus, out _compileStatus);
 
-            if (!CompileStatusOK)
-            {
-                string infoLog = GL.GetShaderInfoLog(_shaderId);
-                Debug.Fail(infoLog);
-            }
+            return CompileStatusOK;
         }
 
         internal void AttachToProgram(int programId)

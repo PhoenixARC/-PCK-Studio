@@ -124,11 +124,12 @@ namespace PckStudio.Rendering
             return elements.AsReadOnly();
         }
 
-        public void Add(ShaderDataType type)
+        public VertexBufferLayout Add(ShaderDataType type)
         {
             var element = new LayoutElement(type);
             elements.Add(element);
             stride += element.Size;
+            return this;
         }
 
         internal readonly int GetStride()

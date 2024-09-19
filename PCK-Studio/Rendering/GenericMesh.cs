@@ -27,58 +27,25 @@ namespace PckStudio.Rendering
     internal abstract class GenericMesh<T> where T : struct
     {
         internal string Name { get; }
+        internal PrimitiveType DrawType { get; }
+        internal VertexBufferLayout VertexLayout { get; }
 
-        protected List<T> vertices { get; }
-        protected List<int> indices { get; }
         protected Matrix4 transform { get; set; }
         public Matrix4 Transform => transform;
 
-        /* + ---------------------------------------------- + */
-        /* | */ private VertexArray vertexArray;         /* | */
-        /* | */ private IndexBuffer indexBuffer;         /* | */
-        /* | */ private readonly PrimitiveType drawType; /* | */
-        /* | */ private DrawContext drawContext;         /* | */
-        /* + ---------------------------------------------- + */
-
-        protected GenericMesh(string name, PrimitiveType type)
+        protected GenericMesh(string name, PrimitiveType type, VertexBufferLayout vertexLayout)
         {
             Name = name;
-            drawType = type;
-            vertices = new List<T>(10);
-            indices = new List<int>(10);
+            DrawType = type;
+            VertexLayout = vertexLayout;
         }
 
-        internal void Initialize(VertexBufferLayout layout)
+        internal abstract IEnumerable<T> GetVertices();
+        internal abstract IEnumerable<int> GetIndices();
+
+        public override string ToString()
         {
-            vertexArray = new VertexArray();
-            indexBuffer = new IndexBuffer();
-            vertexArray.AddNewBuffer(layout);
-            drawContext = new DrawContext(vertexArray, indexBuffer, drawType);
-        }
-
-        internal abstract void SetData();
-
-        internal IEnumerable<T> GetVertices() => vertices;
-
-        protected void Submit()
-        {
-            vertexArray.GetBuffer(0).SetData(vertices.ToArray());
-            indexBuffer.SetIndicies(indices.ToArray());
-        }
-
-        public void Draw(ShaderProgram shader)
-        {
-            if (drawContext == null)
-            {
-                Trace.TraceError($"[{nameof(GenericMesh<T>)}] Field: 'drawContext' is null.");
-                return;
-            }
-            if (shader == null)
-            {
-                Trace.TraceError($"[{nameof(GenericMesh<T>)}] Parameter: 'shader' is null.");
-                return;
-            }
-            Renderer.Draw(shader, drawContext);
+            return $"Name: {Name} T={typeof(T)}";
         }
     }
 }

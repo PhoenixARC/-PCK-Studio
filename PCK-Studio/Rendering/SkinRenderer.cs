@@ -142,11 +142,6 @@ namespace PckStudio.Rendering
             {
                 _anim = value;
                 OnANIMUpdate();
-                if (initialized)
-                {
-                    MakeCurrent();
-                    UploadMeshData();
-                }
             }
         }
 
@@ -225,7 +220,7 @@ namespace PckStudio.Rendering
         private Dictionary<string, CubeMeshCollection> meshStorage;
         private Dictionary<string, CubeMeshCollection> offsetSpecificMeshStorage;
         
-        private CubeMeshCollection cape;
+        private CubeMesh cape;
         
         private CubeMeshCollection head;
         private CubeMeshCollection body;
@@ -301,19 +296,6 @@ namespace PckStudio.Rendering
             MakeCurrent();
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
-            VertexBufferLayout layout = CubeMeshCollection.GetLayout();
-            foreach (CubeMeshCollection cubeMesh in meshStorage?.Values)
-            {
-                cubeMesh.Initialize(layout);
-            }
-            UploadMeshData();
-            foreach (CubeMeshCollection cubeMesh in offsetSpecificMeshStorage?.Values)
-            {
-                cubeMesh.Initialize(layout);
-                cubeMesh.SetData();
-            }
-            cape.Initialize(layout);
-            cape.SetData();
             GLErrorCheck();
             base.Initialize();
             GLErrorCheck();
@@ -330,38 +312,37 @@ namespace PckStudio.Rendering
         private void InitializeSkinData()
         {
             head ??= new CubeMeshCollection("Head") { FlipZMapping = true };
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0));
-            head.AddCube(new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
+            head.AddNamed("DefaultHead", new(-4, -8, -4), new(8, 8, 8), new(0, 0));
+            head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
             
             body ??= new CubeMeshCollection("Body");
-            body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16));
-            body.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
+            body.AddNamed("DefaultBody",new(-4, 0, -2), new(8, 12, 4), new(16, 16));
+            body.AddNamed("DefaultBodyOverlay", new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
 
             ModelPartSpecifics.PositioningInfo rightArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM0");
             rightArm ??= new CubeMeshCollection("Right Arm", rightArmInfo.Translation.ToOpenTKVector(), rightArmInfo.Pivot.ToOpenTKVector());
-            rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            rightArm.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
+            rightArm.AddNamed("DefaultRightArm",new(-3, -2, -2), new(4, 12, 4), new(40, 16));
+            rightArm.AddNamed("DefaultRightArmOverlay", new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
 
             ModelPartSpecifics.PositioningInfo leftArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM1");
             leftArm ??= new CubeMeshCollection("Left Arm", leftArmInfo.Translation.ToOpenTKVector(), leftArmInfo.Pivot.ToOpenTKVector());
-            leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(32, 48));
-            leftArm.AddCube(new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
+            leftArm.AddNamed("DefaultLeftArm",new(-1, -2, -2), new(4, 12, 4), new(32, 48));
+            leftArm.AddNamed("DefaultLeftArmOverlay", new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
             ModelPartSpecifics.PositioningInfo rightLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG0");
             rightLeg ??= new CubeMeshCollection("Right Leg", rightLegInfo.Translation.ToOpenTKVector(), rightLegInfo.Pivot.ToOpenTKVector());
-            rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            rightLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
+            rightLeg.AddNamed("DefaultRightLeg",new(-2, 0, -2), new(4, 12, 4), new(0, 16));
+            rightLeg.AddNamed("DefaultRightLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
             ModelPartSpecifics.PositioningInfo leftLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG1");
             leftLeg ??= new CubeMeshCollection("Left Leg", leftLegInfo.Translation.ToOpenTKVector(), leftLegInfo.Pivot.ToOpenTKVector());
-            leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(16, 48));
-            leftLeg.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
+            leftLeg.AddNamed("DefaultLeftLeg",new(-2, 0, -2), new(4, 12, 4), new(16, 48));
+            leftLeg.AddNamed("DefaultLeftLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
         }
 
         private void InitializeCapeData()
         {
-            cape ??= new CubeMeshCollection("Cape");
-            cape.AddCube(new(-5, 0, -3), new(10, 16, 1), new(0, 0));
+            cape ??= new CubeMesh(new Cube(new(-5, 0, -3), new(10, 16, 1), new(0, 0), 0f, false, false));
         }
 
         private void InitializeArmorData()
@@ -369,31 +350,31 @@ namespace PckStudio.Rendering
             const float armorInflation = 0.75f;
 
             var helmet = new CubeMeshCollection("HELMET");
-            helmet.AddCube(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation);
+            helmet.Add(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation);
 
             var chest = new CubeMeshCollection("CHEST");
-            chest.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + 0.01f);
+            chest.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + 0.01f);
 
             var shoulder0 = new CubeMeshCollection("SHOULDER0", rightArm.Translation, rightArm.Pivot);
-            shoulder0.AddCube(new(-3, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation);
+            shoulder0.Add(new(-3, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation);
 
             var shoulder1 = new CubeMeshCollection("SHOULDER1", leftArm.Translation, leftArm.Pivot);
-            shoulder1.AddCube(new(-1, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation, mirrorTexture: true);
+            shoulder1.Add(new(-1, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation, mirrorTexture: true);
             
             var waist = new CubeMeshCollection("WAIST");
-            waist.AddCube(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation);
+            waist.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation);
 
             var pants0 = new CubeMeshCollection("PANTS0", rightLeg.Translation, rightLeg.Pivot);
-            pants0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation);
+            pants0.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation);
             
             var pants1 = new CubeMeshCollection("PANTS1", leftLeg.Translation, leftLeg.Pivot);
-            pants1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation, mirrorTexture: true);
+            pants1.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation, mirrorTexture: true);
 
             var boot0     = new CubeMeshCollection("BOOT0", rightLeg.Translation, rightLeg.Pivot);
-            boot0.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f);
+            boot0.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f);
             
             var boot1     = new CubeMeshCollection("BOOT1", leftLeg.Translation, leftLeg.Pivot);
-            boot1.AddCube(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f, mirrorTexture: true);
+            boot1.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f, mirrorTexture: true);
 
             offsetSpecificMeshStorage = new Dictionary<string, CubeMeshCollection>
             {
@@ -645,31 +626,6 @@ namespace PckStudio.Rendering
             GLErrorCheck();
         }
 
-        private void UpdateMesh(string name)
-        {
-            if (!meshStorage.ContainsKey(name))
-                return;
-            meshStorage[name]?.SetData();
-        }
-
-        private void UploadMeshData()
-        {
-            foreach (var cubeMeshName in meshStorage?.Keys)
-            {
-                UpdateMesh(cubeMeshName);
-            }
-        }
-
-        public Vector3 GetTranslation(string name)
-        {
-            return meshStorage.ContainsKey(name) ? meshStorage[name].Translation : Vector3.Zero;
-        }
-
-        public Vector3 GetPivot(string name)
-        {
-            return meshStorage.ContainsKey(name) ? meshStorage[name].Pivot : Vector3.Zero;
-        }
-
         public void SetPartOffset(SkinPartOffset offset)
         {
             SetPartOffset(offset.Type, offset.Value);
@@ -732,7 +688,6 @@ namespace PckStudio.Rendering
                     if (e.NewItems[0] is SkinBOX addedBox)
                     {
                         AddCustomModelPart(addedBox);
-                        UpdateMesh(addedBox.Type);
                     }
                     break;
                 case NotifyCollectionChangedAction.Reset:
@@ -743,8 +698,6 @@ namespace PckStudio.Rendering
                 case NotifyCollectionChangedAction.Move:
                     break;
                 default:
-                    MakeCurrent();
-                    UploadMeshData();
                     break;
             }
         }
@@ -853,7 +806,7 @@ namespace PckStudio.Rendering
 
                 CubeMeshCollection cubeMesh = meshStorage[skinBox.Type];
                 Vector3 center = Cube.FromSkinBox(skinBox).Center;
-                Matrix4 camMat = (Matrix4.CreateTranslation(cubeMesh.Translation) * Matrix4.CreateTranslation(center) * Matrix4.CreateScale(-1, 1, 1));
+                Matrix4 camMat = (Matrix4.CreateTranslation(cubeMesh.Translation) * Matrix4.CreateTranslation(center + cubeMesh.Offset) * Matrix4.CreateScale(-1, 1, 1));
                 Vector3 camPos = camMat.ExtractTranslation();
                 Camera.FocalPoint = camPos;
                 Camera.Distance = skinBox.Size.Length() * 2;
@@ -1172,13 +1125,11 @@ namespace PckStudio.Rendering
             }
         }
 
-        private void RenderPart(ShaderProgram shader, CubeMeshCollection cubeMesh, Matrix4 partMatrix, Matrix4 globalMatrix)
+        private void RenderPart<T>(ShaderProgram shader, GenericMesh<T> mesh, Matrix4 partMatrix, Matrix4 globalMatrix) where T : struct
         {
-            Matrix4 transform = partMatrix;
-            transform *= cubeMesh.Transform;
-            transform *= globalMatrix;
+            Matrix4 transform = partMatrix * mesh.Transform * globalMatrix;
             shader.SetUniformMat4("u_Transform", ref transform);
-            cubeMesh.Draw(shader);
+            DrawMesh(mesh, shader);
         }
 
         protected override void OnUpdate(object sender, TimeSpan timestep)
@@ -1198,13 +1149,12 @@ namespace PckStudio.Rendering
         {
             foreach (CubeMeshCollection mesh in meshStorage.Values)
             {
-                mesh.ClearData();
+                mesh.Clear();
             }
 
             InitializeSkinData();
             UpdateModelData();
             OnANIMUpdate();
-            UploadMeshData();
         }
 
         private void UpdateModelData()
@@ -1380,7 +1330,6 @@ namespace PckStudio.Rendering
         {
             ReInitialzeSkinData();
             MakeCurrent();
-            UploadMeshData();
         }
 
         private void guidelineModeToolStripMenuItem_Click(object sender, EventArgs e)

@@ -16,17 +16,19 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using PckStudio.Extensions;
+using PckStudio.External.Format;
 using PckStudio.Internal;
 using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {
-    internal class CubeMeshCollection : GenericMesh<TextureVertex>
+    internal class CubeMeshCollection : GenericMesh<TextureVertex>, ICollection<CubeMesh>
     {
         private List<CubeMesh> cubes;
         
@@ -59,9 +61,13 @@ namespace PckStudio.Rendering
             }
         }
 
+        public int Count => cubes.Count;
+
+        public bool IsReadOnly => false;
+
         private bool _flipZMapping = false;
 
-        internal CubeMeshCollection(string name) : base(name, PrimitiveType.Triangles)
+        internal CubeMeshCollection(string name) : base(name, PrimitiveType.Triangles, CubeMesh.VertexBufferLayout)
         {
             cubes = new List<CubeMesh>(5);
             transform = Matrix4.CreateTranslation(Vector3.Zero) * Matrix4.CreateScale(1f, -1f, -1f);
@@ -75,65 +81,46 @@ namespace PckStudio.Rendering
             transform = Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
-        public static VertexBufferLayout GetLayout()
-        {
-            var layout = new VertexBufferLayout();
-            layout.Add(ShaderDataType.Float3);
-            layout.Add(ShaderDataType.Float2);
-            return layout;
-        }
-
         internal void AddSkinBox(SkinBOX skinBox, float inflate = 0f)
         {
             var cube = Cube.FromSkinBox(skinBox, inflate, FlipZMapping);
-            cubes.Add(new CubeMesh(cube));
+            cubes.Add(new CubeMesh(cube).SetName(skinBox.Type));
         }
 
-        private void ResetBuffers()
-        {
-            vertices.Clear();
-            indices.Clear();
-        }
+        internal override IEnumerable<TextureVertex> GetVertices()
+            => cubes.Where(c => c.ShouldRender).SelectMany(c => c.GetVertices());
 
-        internal void ClearData()
+        internal override IEnumerable<int> GetIndices()
         {
-            cubes.Clear();
-            ResetBuffers();
-        }
-
-        /// <summary>
-        /// Uploads vertex data
-        /// </summary>
-        internal override void SetData()
-        {
-            ResetBuffers();
-            int indicesOffset = 0;
-            IEnumerable<int> indexStorage = CubeMesh.IndicesData;
-            foreach (CubeMesh cube in cubes)
+            int offset = 0;
+            IEnumerable<int> selector(CubeMesh c)
             {
-                if (!cube.ShouldRender)
-                    continue;
-                TextureVertex[] cubeVertices = cube.GetVertices().ToArray();
-                vertices.AddRange(cubeVertices);
-                indices.AddRange(indexStorage.Select(n => n + indicesOffset));
-                indicesOffset += cubeVertices.Length;
+                IEnumerable<int> result = c.GetIndices().Select(i => i + offset).ToArray();
+                int vertexCount = c.GetVertices().Count();
+                offset += vertexCount;
+                return result;
             }
-            Submit();
+            return cubes.Where(c => c.ShouldRender).SelectMany(selector);
         }
 
-        internal void AddCube(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
+        internal void Add(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
         {
             var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping);
-            cubes.Add(new CubeMesh(cube));
+            Add(new CubeMesh(cube));
         }
 
-        internal void RemoveCube(int index)
+        internal void AddNamed(string name, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
+        {
+            var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping);
+            Add(new CubeMesh(cube).SetName(name));
+        }
+
+        internal void Remove(int index)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
             
             cubes.RemoveAt(index);
-            SetData();
         }
 
         internal void ReplaceCube(int index, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
@@ -141,7 +128,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            cubes[index] = cubes[index].SetCube(new Cube(position, size, uv, inflate, mirrorTexture, false));
+            cubes[index] = cubes[index].SetCube(new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping));
         }
 
         internal Vector3 GetCenter(int index)
@@ -149,9 +136,9 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return Vector3.TransformPosition(cubes[index].Center, Transform);
+            return cubes[index].Center + Offset;
         }
-
+         
         internal BoundingBox GetCubeBoundingBox(int index)
         {
             if (!cubes.IndexInRange(index))
@@ -173,8 +160,29 @@ namespace PckStudio.Rendering
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-
+            if (cubes[index].ShouldRender == visible)
+                return;
             cubes[index] = cubes[index].SetVisible(visible);
         }
+
+        public void Add(CubeMesh item) => cubes.Add(item);
+
+        public void Clear() => cubes.Clear();
+
+        public bool Contains(CubeMesh item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(CubeMesh[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(CubeMesh item) => cubes.Remove(item);
+
+        public IEnumerator<CubeMesh> GetEnumerator() => cubes.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

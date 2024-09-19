@@ -26,8 +26,10 @@ https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner
  */
 #define USE_FRAMEBUFFER
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -106,6 +108,9 @@ namespace PckStudio.Rendering
             var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
             boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
 
+            _meshTypeVertexArray = new Dictionary<Type, VertexArray>();
+            _meshIndexBuffer = new IndexBuffer();
+
 #if USE_FRAMEBUFFER
             InitializeFramebuffer();
             // Framebuffer shader
@@ -148,12 +153,36 @@ namespace PckStudio.Rendering
                 timer.Dispose();
             }
             MakeCurrent();
-            boundingBoxDrawContext.Dispose();
+            foreach (VertexArray va in _meshTypeVertexArray.Values)
+            {
+                va.Dispose();
+            }
+            _meshIndexBuffer.Dispose();
+            boundingBoxDrawContext.IndexBuffer.Dispose();
+            boundingBoxDrawContext.VertexArray.Dispose();
             colorShader.Dispose();
             isInitialized = false;
             base.Dispose(disposing);
         }
 
+        private IndexBuffer _meshIndexBuffer;
+        private Dictionary<Type, VertexArray> _meshTypeVertexArray;
+
+        protected void DrawMesh<T>(GenericMesh<T> mesh, ShaderProgram shader) where T : struct
+        {
+            if (!_meshTypeVertexArray.ContainsKey(typeof(T)))
+            {
+                VertexArray vertexArray = new VertexArray();
+                vertexArray.AddNewBuffer(mesh.VertexLayout);
+                _meshTypeVertexArray.Add(typeof(T), vertexArray);
+            }
+            T[] vertices = mesh.GetVertices().ToArray();
+            _meshTypeVertexArray[typeof(T)].GetBuffer(0).SetData(vertices);
+            int[] indices = mesh.GetIndices().ToArray();
+            _meshIndexBuffer.SetIndicies(indices);
+            var drawContext = new DrawContext(_meshTypeVertexArray[typeof(T)], _meshIndexBuffer, mesh.DrawType);
+            Renderer.Draw(shader, drawContext);
+        }
 
         protected void DrawBoundingBox(Matrix4 transform, BoundingBox boundingBox, Color color)
         {
