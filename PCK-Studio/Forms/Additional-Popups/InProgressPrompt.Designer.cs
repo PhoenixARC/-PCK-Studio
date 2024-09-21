@@ -36,8 +36,8 @@
             // 
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.ForeColor = System.Drawing.Color.White;
-            this.metroLabel1.Location = new System.Drawing.Point(37, 27);
-            this.metroLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.metroLabel1.Location = new System.Drawing.Point(51, 42);
+            this.metroLabel1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(307, 19);
             this.metroLabel1.TabIndex = 0;
@@ -48,16 +48,17 @@
             // 
             // InProgressPrompt
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(380, 73);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(522, 115);
             this.Controls.Add(this.metroLabel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "InProgressPrompt";
             this.Text = "Please Wait...";
             this.ResumeLayout(false);

@@ -40,7 +40,8 @@
             // metroLabel2
             // 
             metroLabel2.AutoSize = true;
-            metroLabel2.Location = new System.Drawing.Point(133, 19);
+            metroLabel2.Location = new System.Drawing.Point(244, 36);
+            metroLabel2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             metroLabel2.Name = "metroLabel2";
             metroLabel2.Size = new System.Drawing.Size(46, 19);
             metroLabel2.TabIndex = 16;
@@ -53,9 +54,10 @@
             this.acceptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.acceptButton.ForeColor = System.Drawing.Color.White;
             this.acceptButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.acceptButton.Location = new System.Drawing.Point(92, 196);
+            this.acceptButton.Location = new System.Drawing.Point(169, 377);
+            this.acceptButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(75, 23);
+            this.acceptButton.Size = new System.Drawing.Size(138, 44);
             this.acceptButton.TabIndex = 7;
             this.acceptButton.Text = "Save";
             this.acceptButton.UseVisualStyleBackColor = true;
@@ -67,9 +69,10 @@
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.ForeColor = System.Drawing.Color.White;
             this.cancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cancelButton.Location = new System.Drawing.Point(172, 196);
+            this.cancelButton.Location = new System.Drawing.Point(315, 377);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.Size = new System.Drawing.Size(138, 44);
             this.cancelButton.TabIndex = 13;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -81,16 +84,18 @@
             // 
             // 
             this.filterTextBox.CustomButton.Image = null;
-            this.filterTextBox.CustomButton.Location = new System.Drawing.Point(134, 1);
+            this.filterTextBox.CustomButton.Location = new System.Drawing.Point(244, 2);
+            this.filterTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.filterTextBox.CustomButton.Name = "";
-            this.filterTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.filterTextBox.CustomButton.Size = new System.Drawing.Size(39, 41);
             this.filterTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.filterTextBox.CustomButton.TabIndex = 1;
             this.filterTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.filterTextBox.CustomButton.UseSelectable = true;
             this.filterTextBox.CustomButton.Visible = false;
             this.filterTextBox.Lines = new string[0];
-            this.filterTextBox.Location = new System.Drawing.Point(173, 18);
+            this.filterTextBox.Location = new System.Drawing.Point(317, 34);
+            this.filterTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.filterTextBox.MaxLength = 32767;
             this.filterTextBox.Name = "filterTextBox";
             this.filterTextBox.PasswordChar = '\0';
@@ -99,7 +104,7 @@
             this.filterTextBox.SelectionLength = 0;
             this.filterTextBox.SelectionStart = 0;
             this.filterTextBox.ShortcutsEnabled = true;
-            this.filterTextBox.Size = new System.Drawing.Size(156, 23);
+            this.filterTextBox.Size = new System.Drawing.Size(286, 44);
             this.filterTextBox.TabIndex = 17;
             this.filterTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.filterTextBox.UseSelectable = true;
@@ -109,35 +114,34 @@
             // 
             // tabController
             // 
-            this.tabController.Location = new System.Drawing.Point(6, 8);
+            this.tabController.Location = new System.Drawing.Point(11, 16);
+            this.tabController.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabController.Name = "tabController";
-            this.tabController.Size = new System.Drawing.Size(326, 184);
+            this.tabController.Size = new System.Drawing.Size(598, 354);
             this.tabController.Style = MetroFramework.MetroColorStyle.White;
             this.tabController.TabIndex = 18;
             this.tabController.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.tabController.UseSelectable = true;
             // 
-            // FilterPromtp
+            // FilterPrompt
             // 
             this.AcceptButton = this.acceptButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(338, 228);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(620, 439);
             this.Controls.Add(this.filterTextBox);
             this.Controls.Add(metroLabel2);
             this.Controls.Add(this.tabController);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FilterPromtp";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Name = "FilterPrompt";
             this.ResumeLayout(false);
             this.PerformLayout();
 

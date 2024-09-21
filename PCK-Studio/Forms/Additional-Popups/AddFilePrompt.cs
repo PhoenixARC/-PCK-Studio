@@ -1,29 +1,28 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using OMI.Formats.Pck;
 using PckStudio.ToolboxItems;
-using MetroFramework.Forms;
-using OMI.Formats.Pck;
+using System;
+using System.Windows.Forms;
 
 namespace PckStudio.Popups
 {
     public partial class AddFilePrompt : ThemeForm
-	{
+    {
         /// <summary>
         /// Text entered only valid when <see cref="DialogResult"/> == <see cref="DialogResult.OK"/>,
         /// otherwise <see cref="string.Empty"/>
         /// </summary>
         public string Filepath => DialogResult == DialogResult.OK ? InputTextBox.Text : string.Empty;
-		public PckAssetType Filetype => (PckAssetType)(FileTypeComboBox.SelectedIndex + (FileTypeComboBox.SelectedIndex >= 3 ? 1 : 0));
+        public PckAssetType Filetype => (PckAssetType)(FileTypeComboBox.SelectedIndex + (FileTypeComboBox.SelectedIndex >= 3 ? 1 : 0));
 
-		public AddFilePrompt(string initialText) : this(initialText, -1)
-		{ }
+        public AddFilePrompt(string initialText) : this(initialText, -1)
+        { }
 
-		public AddFilePrompt(string initialText, int maxPathLength)
-		{
-			InitializeComponent();
-			InputTextBox.Text = initialText;
-			InputTextBox.MaxLength = maxPathLength < 0 ? short.MaxValue : maxPathLength;
-		}
+        public AddFilePrompt(string initialText, int maxPathLength)
+        {
+            InitializeComponent();
+            InputTextBox.Text = initialText;
+            InputTextBox.MaxLength = maxPathLength < 0 ? short.MaxValue : maxPathLength;
+        }
 
         private void OKBtn_Click(object sender, EventArgs e)
         {
@@ -32,8 +31,8 @@ namespace PckStudio.Popups
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-			if (e.KeyCode == Keys.Enter)
-				OKBtn_Click(sender, e);
+            if (e.KeyCode == Keys.Enter)
+                OKBtn_Click(sender, e);
         }
 
         private void AddBtn_Click(object sender, EventArgs e)

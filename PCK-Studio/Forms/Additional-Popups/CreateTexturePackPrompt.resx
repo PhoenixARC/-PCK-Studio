@@ -136,7 +136,7 @@
     <value>NoControl</value>
   </data>
   <data name="OkButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>81, 100</value>
+    <value>256, 155</value>
   </data>
   <data name="OkButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 40</value>
@@ -173,7 +173,7 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 52</value>
+    <value>101, 81</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -230,7 +230,7 @@
     <value>x128</value>
   </data>
   <data name="metroComboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>84, 36</value>
+    <value>104, 97</value>
   </data>
   <data name="metroComboBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 29</value>
@@ -257,7 +257,7 @@
     <value>NoControl</value>
   </data>
   <data name="TextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>42, 19</value>
+    <value>101, 19</value>
   </data>
   <data name="TextLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 13</value>
@@ -302,7 +302,7 @@
     <value>False</value>
   </data>
   <data name="InputTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>84, 9</value>
+    <value>104, 35</value>
   </data>
   <data name="InputTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 23</value>
@@ -326,7 +326,7 @@
     <value>True</value>
   </data>
   <data name="createSkinsPckCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>84, 71</value>
+    <value>12, 178</value>
   </data>
   <data name="createSkinsPckCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 17</value>
@@ -356,7 +356,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>264, 152</value>
+    <value>370, 207</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 8.25pt</value>
@@ -3188,9 +3188,9 @@
     <value>Create Texture Pack Prompt</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>CreateTexturePack</value>
+    <value>CreateTexturePackPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

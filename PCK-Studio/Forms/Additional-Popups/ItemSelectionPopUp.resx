@@ -123,14 +123,14 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 55</value>
+    <value>66, 34</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
+    <value>61, 25</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -154,13 +154,13 @@
     <value>23</value>
   </data>
   <data name="ComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 42</value>
+    <value>70, 66</value>
   </data>
   <data name="ComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="ComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 29</value>
+    <value>349, 29</value>
   </data>
   <data name="ComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -199,10 +199,13 @@
     <value>NoControl</value>
   </data>
   <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>179, 90</value>
+    <value>246, 141</value>
+  </data>
+  <data name="cancelBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+    <value>165, 62</value>
   </data>
   <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -241,10 +244,13 @@
     <value>NoControl</value>
   </data>
   <data name="addBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>53, 90</value>
+    <value>73, 141</value>
+  </data>
+  <data name="addBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="addBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+    <value>165, 62</value>
   </data>
   <data name="addBtn.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
@@ -274,10 +280,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 16</value>
+    <value>11, 25</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>352, 142</value>
+    <value>484, 222</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14.25pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3100,7 +3109,7 @@
     <value>0, 0</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -3112,6 +3121,6 @@
     <value>ItemSelectionPopUp</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

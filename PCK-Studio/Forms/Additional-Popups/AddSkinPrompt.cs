@@ -1,21 +1,20 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using OMI.Formats.Languages;
+﻿using OMI.Formats.Languages;
 using OMI.Formats.Pck;
-using PckStudio.Internal;
+using PckStudio.Extensions;
 using PckStudio.Forms.Editor;
+using PckStudio.Internal;
 using PckStudio.Internal.IO._3DST;
 using PckStudio.Properties;
-using PckStudio.Forms;
-using PckStudio.Extensions;
+using PckStudio.ToolboxItems;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class AddSkinPrompt : MetroFramework.Forms.MetroForm
+    public partial class AddSkinPrompt : ThemeForm
     {
         public PckAsset SkinAsset => _skin;
         public PckAsset CapeAsset => _cape;
@@ -75,7 +74,7 @@ namespace PckStudio.Forms.Additional_Popups
                         skinType = eSkinType._64x32HD;
                         break;
                     }
-                    
+
                     MessageBox.Show(this, "Not a Valid Skin File");
                     skinType = eSkinType.Invalid;
                     return;
@@ -91,15 +90,15 @@ namespace PckStudio.Forms.Additional_Popups
         }
 
         private void DrawModel()
-		{
+        {
             bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
             Pen outlineColor = Pens.LightGray;
             Brush fillColor = Brushes.Gray;
             Image previewTexture = new Bitmap(displayBox.Width, displayBox.Height);
             using (Graphics g = Graphics.FromImage(previewTexture))
             {
-                if(!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
-				{
+                if (!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
+                {
                     //Head
                     g.DrawRectangle(outlineColor, 70, 15, 40, 40);
                     g.FillRectangle(fillColor, 71, 16, 39, 39);
@@ -114,7 +113,7 @@ namespace PckStudio.Forms.Additional_Popups
                 {
                     //Arm0
                     g.DrawRectangle(outlineColor, isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
-                    g.FillRectangle(fillColor   , isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
+                    g.FillRectangle(fillColor, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
                 if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
@@ -320,8 +319,8 @@ namespace PckStudio.Forms.Additional_Popups
             textSkinID.Enabled = radioButtonManual.Checked;
         }
 
-		private void buttonAnimGen_Click(object sender, EventArgs e)
-		{
+        private void buttonAnimGen_Click(object sender, EventArgs e)
+        {
             using ANIMEditor diag = new ANIMEditor(anim.ToString());
             if (diag.ShowDialog(this) == DialogResult.OK)
             {

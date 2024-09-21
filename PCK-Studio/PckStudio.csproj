@@ -450,6 +450,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Forms\Additional-Popups\ChangeLogForm.resx">
+      <DependentUpon>ChangeLogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\FilterPrompt.resx">
       <DependentUpon>FilterPrompt.cs</DependentUpon>
     </EmbeddedResource>

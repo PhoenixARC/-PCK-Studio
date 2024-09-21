@@ -134,11 +134,11 @@
             this.createSkinsPckCheckBox.Name = "createSkinsPckCheckBox";
             this.createSkinsPckCheckBox.UseVisualStyleBackColor = true;
             // 
-            // CreateTexturePack
+            // CreateTexturePackPrompt
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.Controls.Add(this.createSkinsPckCheckBox);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.label1);
@@ -149,7 +149,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CreateTexturePack";
+            this.Name = "CreateTexturePackPrompt";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeLogForm));
             this.ChangelogRichTextBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -49,7 +48,7 @@
             // 
             // ChangeLogForm
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(444, 461);
             this.Controls.Add(this.ChangelogRichTextBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);

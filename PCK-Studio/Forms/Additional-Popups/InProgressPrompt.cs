@@ -2,11 +2,11 @@
 
 namespace PckStudio.Forms.Additional_Popups
 {
-	public partial class InProgressPrompt : ThemeForm
-	{
-		public InProgressPrompt()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class InProgressPrompt : ThemeForm
+    {
+        public InProgressPrompt()
+        {
+            InitializeComponent();
+        }
+    }
 }

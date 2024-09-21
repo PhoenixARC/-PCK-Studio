@@ -1,6 +1,5 @@
-﻿using System;
+﻿using PckStudio.Properties;
 using PckStudio.ToolboxItems;
-using PckStudio.Properties;
 
 namespace PckStudio.Forms.Additional_Popups
 {
