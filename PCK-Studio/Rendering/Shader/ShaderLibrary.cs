@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PckStudio.Rendering.Shader
 {
-    internal sealed class ShaderLibrary
+    internal sealed class ShaderLibrary : IDisposable
     {
-        private Dictionary<string, ShaderProgram> _shaderStorage = new Dictionary<string, ShaderProgram>();
+        private readonly Dictionary<string, ShaderProgram> _shaderStorage = new Dictionary<string, ShaderProgram>();
 
         public void AddShader(string name, ShaderProgram shader) => _shaderStorage.Add(name, shader);
 
@@ -19,5 +19,13 @@ namespace PckStudio.Rendering.Shader
         public ShaderProgram GetShader(string name) => _shaderStorage[name];
 
         public void RemoveShader(string name) => _shaderStorage.Remove(name);
+
+        public void Dispose()
+        {
+            foreach (ShaderProgram shader in _shaderStorage.Values)
+            {
+                shader.Dispose();
+            }
+        }
     }
 }

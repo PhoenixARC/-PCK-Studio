@@ -202,7 +202,6 @@ namespace PckStudio.Rendering
 
         private VertexBufferLayout plainColorVertexBufferLayout;
 
-        private ShaderLibrary _shaders;
         private SkinANIM _anim;
         private Image _skinImage;
         private Image _capeImage;
@@ -282,7 +281,6 @@ namespace PckStudio.Rendering
             InitializeComponent();
             InitializeDebug();
 
-            _shaders = new ShaderLibrary();
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             ModelData = new ObservableCollection<SkinBOX>();
             ModelData.CollectionChanged += ModelData_CollectionChanged;
@@ -415,7 +413,7 @@ namespace PckStudio.Rendering
                 skinShader.Bind();
                 skinShader.SetUniform1("u_Texture", 0);
                 skinShader.Validate();
-                _shaders.AddShader("SkinShader", skinShader);
+                AddShader("SkinShader", skinShader);
                 GLErrorCheck();
 
                 armorTexture = new Texture2D(0);
@@ -483,7 +481,7 @@ namespace PckStudio.Rendering
                 skyboxShader.SetUniform1("skybox", 1);
                 skyboxShader.SetUniform1("brightness", 0.8f);
                 skyboxShader.Validate();
-                _shaders.AddShader("SkyboxShader", skyboxShader);
+                AddShader("SkyboxShader", skyboxShader);
 
                 _skyboxTexture = new CubeTexture(1);
                 _skyboxTexture.InternalPixelFormat = PixelInternalFormat.Rgb8;
@@ -510,7 +508,7 @@ namespace PckStudio.Rendering
                 lineShader.SetUniform4("baseColor", Color.WhiteSmoke);
                 lineShader.SetUniform1("intensity", 0.5f);
                 lineShader.Validate();
-                _shaders.AddShader("PlainColorShader", lineShader);
+                AddShader("PlainColorShader", lineShader);
 
                 // Cubical draw context
                 {
@@ -835,7 +833,7 @@ namespace PckStudio.Rendering
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.DepthMask(false);
-                ShaderProgram skyboxShader = _shaders.GetShader("SkyboxShader");
+                ShaderProgram skyboxShader = GetShader("SkyboxShader");
                 skyboxShader.Bind();
                 _skyboxTexture.Bind();
 
@@ -849,7 +847,7 @@ namespace PckStudio.Rendering
                 GL.DepthFunc(DepthFunction.Less);
             }
             
-            ShaderProgram lineShader = _shaders.GetShader("PlainColorShader");
+            ShaderProgram lineShader = GetShader("PlainColorShader");
 
             // Render (custom) skin
             {
@@ -867,7 +865,7 @@ namespace PckStudio.Rendering
 
                 Matrix4 transform = Matrix4.Identity;
 
-                ShaderProgram skinShader = _shaders.GetShader("SkinShader");
+                ShaderProgram skinShader = GetShader("SkinShader");
                 skinShader.Bind();
                 skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
                 skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
@@ -1200,7 +1198,7 @@ namespace PckStudio.Rendering
         private void RenderDebug()
         {
 #if DEBUG
-            ShaderProgram colorShader = _shaders.GetShader("PlainColorShader");
+            ShaderProgram colorShader = GetShader("PlainColorShader");
             Matrix4 viewProjection = Camera.GetViewProjection();
             colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
             if (d_showFocalPoint)

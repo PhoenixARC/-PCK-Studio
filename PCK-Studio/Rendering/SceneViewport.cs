@@ -47,11 +47,11 @@ namespace PckStudio.Rendering
         /// </summary>
         public int RefreshRate
         {
-            get => refreshRate;
+            get => _refreshRate;
             set
             {
-                refreshRate = Math.Max(value, 1);
-                timer.Interval = TimeSpan.FromSeconds(1d / refreshRate).Milliseconds;
+                _refreshRate = Math.Max(value, 1);
+                _timer.Interval = TimeSpan.FromSeconds(1d / _refreshRate).Milliseconds;
             }
         }
 
@@ -62,25 +62,27 @@ namespace PckStudio.Rendering
             SwapBuffers();
         }
 
-        private int refreshRate = 120;
-        private Timer timer;
-        private Stopwatch stopwatch;
-        private bool isInitialized;
+        private int _refreshRate = 120;
+        private Timer _timer;
+        private Stopwatch _stopwatch;
+        private bool _initialized;
+        private ShaderLibrary _shaderLibrary;
 
-        private ShaderProgram colorShader;
-        private DrawContext boundingBoxDrawContext;
+        private DrawContext _boundingBoxDrawContext;
 
         private long _lastTick = 0L;
 
-#if USE_FRAMEBUFFER
-        private FrameBuffer framebuffer;
-        private Texture2D framebufferTexture;
-        private ShaderProgram framebufferShader;
-        private VertexArray framebufferVAO;
-        private int framebufferRenderBuffer;
-        private bool _started = false;
+        private IndexBuffer _meshIndexBuffer;
+        private Dictionary<Type, VertexArray> _meshTypeVertexArray;
 
-        private static Vector4[] rectVertices = new Vector4[]
+#if USE_FRAMEBUFFER
+        private FrameBuffer _framebuffer;
+        private Texture2D _framebufferTexture;
+        private VertexArray _framebufferVAO;
+        private int _framebufferRenderBuffer;
+        private bool _framebufferStarted = false;
+
+        private static Vector4[] _rectVertices = new Vector4[]
         {
             new Vector4( 1.0f, -1.0f, 1.0f, 0.0f),
             new Vector4(-1.0f, -1.0f, 0.0f, 0.0f),
@@ -91,22 +93,40 @@ namespace PckStudio.Rendering
         };
 #endif
 
+        public SceneViewport() : base()
+        {
+            VSync = true;
+            RefreshRate = _refreshRate;
+            _stopwatch = new Stopwatch();
+            _timer = new Timer();
+            _timer.Tick += TimerTick;
+            if (!DesignMode)
+            {
+                _timer.Start();
+                _stopwatch.Start();
+            }
+
+            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
+            _shaderLibrary = new ShaderLibrary();
+            _initialized = false;
+        }
+
         protected void Initialize()
         {
-            if (isInitialized)
+            if (_initialized)
             {
                 Debug.Fail("Already Initialized.");
                 return;
             }
             MakeCurrent();
-            colorShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
+            AddShader("Internal_colorShader", ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader));
             var vao = new VertexArray();
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
             vao.AddNewBuffer(layout);
             var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
-            boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
+            _boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
 
             _meshTypeVertexArray = new Dictionary<Type, VertexArray>();
             _meshIndexBuffer = new IndexBuffer();
@@ -115,42 +135,26 @@ namespace PckStudio.Rendering
             InitializeFramebuffer();
             // Framebuffer shader
             {
-                framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
+                var framebufferShader = ShaderProgram.Create(Resources.framebufferVertexShader, Resources.framebufferFragmentShader);
                 framebufferShader.Bind();
                 framebufferShader.SetUniform1("screenTexture", 0);
                 framebufferShader.Validate();
+                AddShader("Internal_framebufferShader", framebufferShader);
             
                 GLErrorCheck();
             }
 #endif
 
-            isInitialized = true;
-        }
-
-        public SceneViewport() : base()
-        {
-            timer = new Timer();
-            stopwatch = new Stopwatch();
-            RefreshRate = refreshRate;
-            timer.Tick += TimerTick;
-            if (!DesignMode)
-            {
-                timer.Start();
-                stopwatch.Start();
-            }
-
-            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
-            VSync = true;
-            isInitialized = false;
+            _initialized = true;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                timer.Stop();
-                stopwatch.Stop();
-                timer.Dispose();
+                _timer.Stop();
+                _stopwatch.Stop();
+                _timer.Dispose();
             }
             MakeCurrent();
             foreach (VertexArray va in _meshTypeVertexArray.Values)
@@ -158,15 +162,18 @@ namespace PckStudio.Rendering
                 va.Dispose();
             }
             _meshIndexBuffer.Dispose();
-            boundingBoxDrawContext.IndexBuffer.Dispose();
-            boundingBoxDrawContext.VertexArray.Dispose();
-            colorShader.Dispose();
-            isInitialized = false;
+            _boundingBoxDrawContext.IndexBuffer.Dispose();
+            _boundingBoxDrawContext.VertexArray.Dispose();
+            _shaderLibrary.Dispose();
+            _initialized = false;
             base.Dispose(disposing);
         }
 
-        private IndexBuffer _meshIndexBuffer;
-        private Dictionary<Type, VertexArray> _meshTypeVertexArray;
+        protected void AddShader(string shaderName, ShaderProgram shader) => _shaderLibrary.AddShader(shaderName, shader);
+
+        protected void AddShader(string shaderName, string vertexSource, string fragmentSource) => AddShader(shaderName, ShaderProgram.Create(vertexSource, fragmentSource));
+
+        protected ShaderProgram GetShader(string shaderName) => _shaderLibrary.GetShader(shaderName);
 
         protected void DrawMesh<T>(GenericMesh<T> mesh, ShaderProgram shader) where T : struct
         {
@@ -186,6 +193,7 @@ namespace PckStudio.Rendering
 
         protected void DrawBoundingBox(Matrix4 transform, BoundingBox boundingBox, Color color)
         {
+            ShaderProgram colorShader = _shaderLibrary.GetShader("Internal_colorShader");
             colorShader.Bind();
             Matrix4 viewProjection = Camera.GetViewProjection();
             colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
@@ -198,8 +206,8 @@ namespace PckStudio.Rendering
             GL.DepthFunc(DepthFunction.Always);
 
             Renderer.SetLineWidth(2f);
-            boundingBoxDrawContext.VertexArray.GetBuffer(0).SetData(boundingBox.GetVertices());
-            Renderer.Draw(colorShader, boundingBoxDrawContext);
+            _boundingBoxDrawContext.VertexArray.GetBuffer(0).SetData(boundingBox.GetVertices());
+            Renderer.Draw(colorShader, _boundingBoxDrawContext);
 
             GL.DepthFunc(DepthFunction.Less);
             Renderer.SetLineWidth(1f);
@@ -217,38 +225,38 @@ namespace PckStudio.Rendering
         private void InitializeFramebuffer()
         {
 #if USE_FRAMEBUFFER
-            framebuffer = new FrameBuffer();
-            framebuffer.Bind();
-            framebufferTexture = new Texture2D(0);
-            framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
-            framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
-            framebufferTexture.SetSize(Size);
-            framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
-            framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
-            framebufferTexture.MinFilter = TextureMinFilter.Nearest;
-            framebufferTexture.MagFilter = TextureMagFilter.Nearest;
+            _framebuffer = new FrameBuffer();
+            _framebuffer.Bind();
+            _framebufferTexture = new Texture2D(0);
+            _framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
+            _framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
+            _framebufferTexture.SetSize(Size);
+            _framebufferTexture.WrapS = TextureWrapMode.ClampToEdge;
+            _framebufferTexture.WrapT = TextureWrapMode.ClampToEdge;
+            _framebufferTexture.MinFilter = TextureMinFilter.Nearest;
+            _framebufferTexture.MagFilter = TextureMagFilter.Nearest;
 
-            framebufferTexture.AttachToFramebuffer(framebuffer, FramebufferAttachment.ColorAttachment0);
+            _framebufferTexture.AttachToFramebuffer(_framebuffer, FramebufferAttachment.ColorAttachment0);
 
-            framebufferRenderBuffer = GL.GenRenderbuffer();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+            _framebufferRenderBuffer = GL.GenRenderbuffer();
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, _framebufferRenderBuffer);
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, Size.Width, Size.Height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, _framebufferRenderBuffer);
 
-            framebufferVAO = new VertexArray();
+            _framebufferVAO = new VertexArray();
             VertexBuffer vertexBuffer = new VertexBuffer();
-            vertexBuffer.SetData(rectVertices);
+            vertexBuffer.SetData(_rectVertices);
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float4);
-            framebufferVAO.AddBuffer(vertexBuffer, layout);
-            framebuffer.CheckStatus();
+            _framebufferVAO.AddBuffer(vertexBuffer, layout);
+            _framebuffer.CheckStatus();
 
-            if (framebuffer.Status != FramebufferErrorCode.FramebufferComplete)
+            if (_framebuffer.Status != FramebufferErrorCode.FramebufferComplete)
             {
-                Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
+                Debug.Fail($"Framebuffer status: '{_framebuffer.Status}'");
             }
 
-            framebuffer.Unbind();
+            _framebuffer.Unbind();
 #endif
         }
 
@@ -256,10 +264,10 @@ namespace PckStudio.Rendering
         protected void FramebufferBegin()
         {
 #if USE_FRAMEBUFFER
-            if (_started)
+            if (_framebufferStarted)
                 Debug.Fail("FramebufferBegin: already begun.");
-            _started = true;
-            framebuffer.Bind();
+            _framebufferStarted = true;
+            _framebuffer.Bind();
 #endif
         }
 
@@ -267,18 +275,19 @@ namespace PckStudio.Rendering
         protected void FramebufferEnd()
         {
 #if USE_FRAMEBUFFER
-            if (!_started)
+            if (!_framebufferStarted)
                 Debug.Fail("FramebufferEnd: framebuffer didn't start yet.");
-            framebuffer.Unbind();
+            _framebuffer.Unbind();
             GL.Disable(EnableCap.DepthTest);
+            ShaderProgram framebufferShader = GetShader("Internal_framebufferShader");
             framebufferShader.Bind();
-            framebufferVAO.Bind();
-            framebufferTexture.Bind();
+            _framebufferVAO.Bind();
+            _framebufferTexture.Bind();
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-            framebufferTexture.Unbind();
-            _started = false;
+            _framebufferTexture.Unbind();
+            _framebufferStarted = false;
 #endif
         }
 
@@ -287,23 +296,23 @@ namespace PckStudio.Rendering
         private void SetFramebufferSize(Size size)
         {
             MakeCurrent();
-            if (framebuffer is not null)
+            if (_framebuffer is not null)
             {
-                framebuffer.Bind();
+                _framebuffer.Bind();
 
-                framebufferTexture.Bind();
-                framebufferTexture.SetSize(size);
+                _framebufferTexture.Bind();
+                _framebufferTexture.SetSize(size);
 
-                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+                GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, _framebufferRenderBuffer);
                 GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, size.Width, size.Height);
-                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, framebufferRenderBuffer);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, RenderbufferTarget.Renderbuffer, _framebufferRenderBuffer);
 
                 FramebufferErrorCode status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
                 if (status != FramebufferErrorCode.FramebufferComplete)
                 {
-                    Debug.Fail($"Framebuffer status: '{framebuffer.Status}'");
+                    Debug.Fail($"Framebuffer status: '{_framebuffer.Status}'");
                 }
-                framebuffer.Unbind();
+                _framebuffer.Unbind();
             }
         }
 
