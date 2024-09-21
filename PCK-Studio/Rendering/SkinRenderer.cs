@@ -309,11 +309,16 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            head ??= new CubeMeshCollection("Head") { FlipZMapping = true };
+            ModelPartSpecifics.PositioningInfo headInfo = ModelPartSpecifics.GetPositioningInfo("HEAD");
+            head ??= new CubeMeshCollection("Head", headInfo.Translation.ToOpenTKVector(), headInfo.Pivot.ToOpenTKVector())
+            {
+                FlipZMapping = true
+            };
             head.AddNamed("DefaultHead", new(-4, -8, -4), new(8, 8, 8), new(0, 0));
             head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
             
-            body ??= new CubeMeshCollection("Body");
+            ModelPartSpecifics.PositioningInfo bodyInfo = ModelPartSpecifics.GetPositioningInfo("BODY");
+            body ??= new CubeMeshCollection("Body", bodyInfo.Translation.ToOpenTKVector(), bodyInfo.Pivot.ToOpenTKVector());
             body.AddNamed("DefaultBody",new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddNamed("DefaultBodyOverlay", new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
 
@@ -405,15 +410,15 @@ namespace PckStudio.Rendering
             
             // Skin shader
             {
-                var skinShader = ShaderProgram.Create(
-                    new ShaderSource(ShaderType.VertexShader, Resources.skinVertexShader),
-                    new ShaderSource(ShaderType.FragmentShader, Resources.skinFragmentShader),
-                    new ShaderSource(ShaderType.GeometryShader, Resources.skinGeometryShader)
+                var cubeShader = ShaderProgram.Create(
+                    new ShaderSource(ShaderType.VertexShader, Resources.texturedCubeVertexShader),
+                    new ShaderSource(ShaderType.FragmentShader, Resources.texturedCubeFragmentShader),
+                    new ShaderSource(ShaderType.GeometryShader, Resources.texturedCubeGeometryShader)
                     );
-                skinShader.Bind();
-                skinShader.SetUniform1("u_Texture", 0);
-                skinShader.Validate();
-                AddShader("SkinShader", skinShader);
+                cubeShader.Bind();
+                cubeShader.SetUniform1("u_Texture", 0);
+                cubeShader.Validate();
+                AddShader("CubeShader", cubeShader);
                 GLErrorCheck();
 
                 armorTexture = new Texture2D(0);
@@ -865,10 +870,10 @@ namespace PckStudio.Rendering
 
                 Matrix4 transform = Matrix4.Identity;
 
-                ShaderProgram skinShader = GetShader("SkinShader");
-                skinShader.Bind();
-                skinShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-                skinShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
+                ShaderProgram cubeShader = GetShader("CubeShader");
+                cubeShader.Bind();
+                cubeShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
+                cubeShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
 
                 skinTexture.Bind();
 
@@ -910,16 +915,16 @@ namespace PckStudio.Rendering
                     armLeftMatrix = LeftArmMatrix * armLeftMatrix;
                 }
 
-                RenderBodyPart(skinShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
-                RenderBodyPart(skinShader, Matrix4.Identity, transform, "BODY", "JACKET");
-                RenderBodyPart(skinShader, armRightMatrix, transform, "ARM0", "SLEEVE0");
-                RenderBodyPart(skinShader, armLeftMatrix, transform, "ARM1", "SLEEVE1");
-                RenderBodyPart(skinShader, legRightMatrix, transform, "LEG0", "PANTS0");
-                RenderBodyPart(skinShader, legLeftMatrix, transform, "LEG1", "PANTS1");
+                RenderBodyPart(cubeShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
+                RenderBodyPart(cubeShader, Matrix4.Identity, transform, "BODY", "JACKET");
+                RenderBodyPart(cubeShader, armRightMatrix, transform, "ARM0", "SLEEVE0");
+                RenderBodyPart(cubeShader, armLeftMatrix, transform, "ARM1", "SLEEVE1");
+                RenderBodyPart(cubeShader, legRightMatrix, transform, "LEG0", "PANTS0");
+                RenderBodyPart(cubeShader, legLeftMatrix, transform, "LEG1", "PANTS1");
 
                 if (_capeImage is not null)
                 {
-                    skinShader.SetUniform2("u_TexSize", new Vector2(64, 32));
+                    cubeShader.SetUniform2("u_TexSize", new Vector2(64, 32));
                     capeTexture.Bind();
                     // Defines minimum Angle(in Degrees) of the cape
                     float capeMinimumRotationAngle = 7.5f;
@@ -931,43 +936,42 @@ namespace PckStudio.Rendering
                     Matrix4 partMatrix = 
                         Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) *
                         Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
-                    RenderPart(skinShader, cape, partMatrix, transform);
+                    RenderPart(cubeShader, cape, partMatrix, transform);
                 }
 
                 // Armor rendering
                 if (ShowArmor && !ANIM.GetFlag(SkinAnimFlag.ALL_ARMOR_DISABLED))
                 {
                     armorTexture.Bind();
-                    //skinShader.SetUniform4("u_Color", Color.FromArgb(0xff << 24 | Color.White.ToArgb() - _outlineColor.ToArgb()));
-                    skinShader.SetUniform2("u_TexSize", new Vector2(64, 64));
+                    cubeShader.SetUniform2("u_TexSize", new Vector2(64, 64));
                     if (!ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_HEAD_ARMOR))
-                        RenderPart(skinShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, transform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_BODY_ARMOR))
-                        RenderPart(skinShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, transform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR))
-                        RenderPart(skinShader, offsetSpecificMeshStorage["SHOULDER0"], RightArmMatrix * armRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER0"], RightArmMatrix * armRightMatrix, transform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_ARM_ARMOR))
-                        RenderPart(skinShader, offsetSpecificMeshStorage["SHOULDER1"], LeftArmMatrix * armLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER1"], LeftArmMatrix * armLeftMatrix, transform);
 
                     bool showRightLegArmor = !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_LEG_ARMOR);
                     if (showRightLegArmor)
                     {
-                        RenderPart(skinShader, offsetSpecificMeshStorage["PANTS0"], legRightMatrix, transform);
-                        RenderPart(skinShader, offsetSpecificMeshStorage["BOOT0"], legRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS0"], legRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT0"], legRightMatrix, transform);
                     }
 
                     bool showLeftLegArmor = !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_LEG_ARMOR);
                     if (showLeftLegArmor)
                     {
-                        RenderPart(skinShader, offsetSpecificMeshStorage["PANTS1"], legLeftMatrix, transform);
-                        RenderPart(skinShader, offsetSpecificMeshStorage["BOOT1"], legLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS1"], legLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT1"], legLeftMatrix, transform);
                     }
                     
                     if (showRightLegArmor && showLeftLegArmor)
-                        RenderPart(skinShader, offsetSpecificMeshStorage["WAIST"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["WAIST"], Matrix4.Identity, transform);
                 }
 
                 if (showWireFrame)

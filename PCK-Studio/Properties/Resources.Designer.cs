@@ -815,16 +815,26 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // TODO: Add parent detection
-        ///
-        ///{
+        ///   Looks up a localized string similar to {
         ///  &quot;bat&quot;: {
         ///    &quot;textureLocations&quot;: [
         ///      &quot;res/mob/bat&quot;
         ///    ],
-        ///    &quot;parents&quot;: {
-        ///      &quot;rightEar&quot;: &quot;head&quot;,
-        ///      &quot;leftEar&quot;: &quot;head&quot;
+        ///    &quot;root&quot;: {
+        ///      &quot;head&quot;: [
+        ///        &quot;rightEar&quot;,
+        ///        &quot;leftEar&quot;
+        ///      ],
+        ///      &quot;body&quot;: [
+        ///        {
+        ///          &quot;rightWing&quot;: [
+        ///            &quot;rightWingTip&quot;
+        ///          ],
+        ///          &quot;leftWing&quot;: [
+        ///            &quot;leftWingTip&quot;
+        ///          ]
+        ///        }
+        ///      ]
         ///    }
         ///  },
         ///  &quot;bed&quot;: {
@@ -836,14 +846,9 @@ namespace PckStudio.Properties {
         ///    &quot;textureLocations&quot;: [
         ///      &quot;res/mob/fire&quot;
         ///    ]
-        ///
         ///  },
         ///  &quot;boat&quot;: {
-        ///    &quot;textureLocations&quot;: [
-        ///      &quot;res/item/boat/boat_acacia&quot;,
-        ///      &quot;res/item/boat/boat_birch&quot;,
-        ///      &quot;res/item/boat/boat_darkoak&quot;,
-        ///      &quot;res/item/boat/boat [rest of string was truncated]&quot;;.
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         public static string modelMetaData {
             get {
@@ -1162,93 +1167,12 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #version 330 core
-        ///
-        ///layout(location = 0) out vec4 color;
-        ///
-        ///uniform sampler2D u_Texture;
-        ///
-        ///in vec2 o_TillingFactor;
-        ///in vec2 o_TexCoord;
-        ///
-        ///void main()
-        ///{
-        ///	color = texture(u_Texture, o_TexCoord * o_TillingFactor);
-        ///};.
-        /// </summary>
-        public static string skinFragmentShader {
-            get {
-                return ResourceManager.GetString("skinFragmentShader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #version 330 core
-        ///
-        ///layout (triangles) in;
-        ///layout (triangle_strip, max_vertices=3) out;
-        ///
-        ///uniform vec2 u_TexSize;
-        ///
-        ///out vec2 o_TexCoord;
-        ///out vec2 o_TillingFactor;
-        ///
-        ///in geometryData
-        ///{
-        ///	vec2 TexCoord;
-        ///} dataIn[];
-        ///
-        ///void FixUV()
-        ///{
-        ///	bool isXBad =
-        ///		dataIn[0].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
-        ///		dataIn[1].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
-        ///		dataIn[2].TexCoord.x &gt;= u_TexSize.x;
-        ///
-        ///	gl_Position = gl_in[0].gl_Position;
-        ///	o_TexCoord = dataIn[0].TexCoord;
-        ///	if (isXBad)
-        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSiz [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string skinGeometryShader {
-            get {
-                return ResourceManager.GetString("skinGeometryShader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap SKINS_ICON {
             get {
                 object obj = ResourceManager.GetObject("SKINS_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #version 330 core
-        ///
-        ///layout(location = 0) in vec3 vertexPosition;
-        ///layout(location = 1) in vec2 texCoord;
-        ///
-        ///uniform mat4 u_ViewProjection;
-        ///uniform mat4 u_Transform;
-        ///
-        ///out geometryData
-        ///{
-        ///	vec2 TexCoord;
-        ///} dataOut;
-        ///
-        ///void main()
-        ///{
-        ///	dataOut.TexCoord = texCoord;
-        ///	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
-        ///};.
-        /// </summary>
-        public static string skinVertexShader {
-            get {
-                return ResourceManager.GetString("skinVertexShader", resourceCulture);
             }
         }
         
@@ -1322,6 +1246,87 @@ namespace PckStudio.Properties {
             get {
                 object obj = ResourceManager.GetObject("TEXTURE_ICON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) out vec4 color;
+        ///
+        ///uniform sampler2D u_Texture;
+        ///
+        ///in vec2 o_TillingFactor;
+        ///in vec2 o_TexCoord;
+        ///
+        ///void main()
+        ///{
+        ///	color = texture(u_Texture, o_TexCoord * o_TillingFactor);
+        ///};.
+        /// </summary>
+        public static string texturedCubeFragmentShader {
+            get {
+                return ResourceManager.GetString("texturedCubeFragmentShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout (triangles) in;
+        ///layout (triangle_strip, max_vertices=3) out;
+        ///
+        ///uniform vec2 u_TexSize;
+        ///
+        ///out vec2 o_TexCoord;
+        ///out vec2 o_TillingFactor;
+        ///
+        ///in geometryData
+        ///{
+        ///	vec2 TexCoord;
+        ///} dataIn[];
+        ///
+        ///void FixUV()
+        ///{
+        ///	bool isXBad =
+        ///		dataIn[0].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
+        ///		dataIn[1].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
+        ///		dataIn[2].TexCoord.x &gt;= u_TexSize.x;
+        ///
+        ///	gl_Position = gl_in[0].gl_Position;
+        ///	o_TexCoord = dataIn[0].TexCoord;
+        ///	if (isXBad)
+        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSiz [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string texturedCubeGeometryShader {
+            get {
+                return ResourceManager.GetString("texturedCubeGeometryShader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #version 330 core
+        ///
+        ///layout(location = 0) in vec3 vertexPosition;
+        ///layout(location = 1) in vec2 texCoord;
+        ///
+        ///uniform mat4 u_ViewProjection;
+        ///uniform mat4 u_Transform;
+        ///
+        ///out geometryData
+        ///{
+        ///	vec2 TexCoord;
+        ///} dataOut;
+        ///
+        ///void main()
+        ///{
+        ///	dataOut.TexCoord = texCoord;
+        ///	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
+        ///};.
+        /// </summary>
+        public static string texturedCubeVertexShader {
+            get {
+                return ResourceManager.GetString("texturedCubeVertexShader", resourceCulture);
             }
         }
         

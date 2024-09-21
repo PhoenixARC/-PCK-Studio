@@ -379,11 +379,11 @@
   <data name="Replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\Replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="skinVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shader\skinVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="texturedCubeVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="skinFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shader\skinFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="texturedCubeFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="DefaultSkyTexture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\skybox_texture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -394,8 +394,8 @@
   <data name="skyboxVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shader\skyboxVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="skinGeometryShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shader\skinGeometryShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="texturedCubeGeometryShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeGeometryShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="framebufferFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shader\framebufferFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

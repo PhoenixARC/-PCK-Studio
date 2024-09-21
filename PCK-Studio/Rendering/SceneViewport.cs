@@ -96,7 +96,6 @@ namespace PckStudio.Rendering
         public SceneViewport() : base()
         {
             VSync = true;
-            RefreshRate = _refreshRate;
             _stopwatch = new Stopwatch();
             _timer = new Timer();
             _timer.Tick += TimerTick;
@@ -106,6 +105,7 @@ namespace PckStudio.Rendering
                 _stopwatch.Start();
             }
 
+            RefreshRate = _refreshRate;
             Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
             _shaderLibrary = new ShaderLibrary();
             _initialized = false;

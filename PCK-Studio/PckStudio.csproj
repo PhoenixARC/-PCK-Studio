@@ -651,11 +651,11 @@
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
     <None Include="Resources\shader\plainColorFragmentShader.glsl" />
     <None Include="Resources\shader\plainColorVertexShader.glsl" />
-    <None Include="Resources\shader\skinGeometryShader.glsl" />
+    <None Include="Resources\shader\texturedCubeGeometryShader.glsl" />
     <None Include="Resources\shader\skyboxFragmentShader.glsl" />
     <None Include="Resources\shader\skyboxVertexShader.glsl" />
     <None Include="Resources\skybox_texture.png" />
-    <None Include="Resources\shader\skinVertexShader.glsl" />
+    <None Include="Resources\shader\texturedCubeVertexShader.glsl" />
     <None Include="Resources\TexturePackIcon.png" />
     <None Include="Resources\binka\binkawin.asi" />
     <None Include="Resources\fileTemplates\1.91_colours.col" />
@@ -712,7 +712,7 @@
     <None Include="Resources\atlases\particles.png" />
     <None Include="Resources\atlases\paintings.png" />
     <Content Include="Resources\atlases\terrain.png" />
-    <None Include="Resources\shader\skinFragmentShader.glsl" />
+    <None Include="Resources\shader\texturedCubeFragmentShader.glsl" />
     <None Include="Resources\armor.png" />
     <None Include="Resources\external\trello.png" />
     <None Include="Resources\icons\file_copy.png" />
