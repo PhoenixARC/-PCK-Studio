@@ -53,6 +53,8 @@ namespace PckStudio.Rendering
                     22, 23, 20
             ];
 
+        public override Matrix4 Transform => Matrix4.CreateScale(1f, -1f, -1f);
+
         internal static VertexBufferLayout VertexBufferLayout { get; } = new VertexBufferLayout().Add(ShaderDataType.Float3).Add(ShaderDataType.Float2);
 
         public CubeMesh(Cube cube) : this(nameof(CubeMesh), cube, true)
@@ -64,7 +66,6 @@ namespace PckStudio.Rendering
         {
             ShouldRender = visible;
             _cube = cube;
-            transform = Matrix4.CreateScale(1f, -1f, -1f);
         }
 
         public CubeMesh SetName(string name)

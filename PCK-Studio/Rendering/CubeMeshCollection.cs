@@ -65,10 +65,11 @@ namespace PckStudio.Rendering
                 if (value != _offset)
                 {
                     _offset = value;
-                    transform = Matrix4.CreateTranslation(Translation + _offset) * Matrix4.CreateScale(1f, -1f, -1f);
                 }
             }
         }
+
+        public override Matrix4 Transform => Matrix4.CreateTranslation(Translation + _offset) * Matrix4.CreateScale(1f, -1f, -1f);
 
         public int Count => cubes.Count;
 
@@ -79,7 +80,6 @@ namespace PckStudio.Rendering
         internal CubeMeshCollection(string name) : base(name, PrimitiveType.Triangles, CubeMesh.VertexBufferLayout)
         {
             cubes = new List<CubeMesh>(5);
-            transform = Matrix4.CreateTranslation(Vector3.Zero) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
         internal CubeMeshCollection(string name, Vector3 translation, Vector3 pivot)
@@ -87,7 +87,6 @@ namespace PckStudio.Rendering
         {
             Translation = translation;
             Pivot = pivot;
-            transform = Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()

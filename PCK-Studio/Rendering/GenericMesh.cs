@@ -17,10 +17,8 @@
 **/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using PckStudio.Rendering.Shader;
 
 namespace PckStudio.Rendering
 {
@@ -30,8 +28,7 @@ namespace PckStudio.Rendering
         internal PrimitiveType DrawType { get; }
         internal VertexBufferLayout VertexLayout { get; }
 
-        protected Matrix4 transform { get; set; }
-        public Matrix4 Transform => transform;
+        public abstract Matrix4 Transform { get; }
 
         protected GenericMesh(string name, PrimitiveType type, VertexBufferLayout vertexLayout)
         {
