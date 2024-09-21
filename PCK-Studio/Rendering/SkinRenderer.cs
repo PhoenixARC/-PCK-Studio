@@ -805,7 +805,7 @@ namespace PckStudio.Rendering
                 }
 
                 CubeMeshCollection cubeMesh = meshStorage[skinBox.Type];
-                Vector3 center = Cube.FromSkinBox(skinBox).Center;
+                Vector3 center = skinBox.ToCube().Center;
                 Matrix4 camMat = (Matrix4.CreateTranslation(cubeMesh.Translation) * Matrix4.CreateTranslation(center + cubeMesh.Offset) * Matrix4.CreateScale(-1, 1, 1));
                 Vector3 camPos = camMat.ExtractTranslation();
                 Camera.FocalPoint = camPos;
@@ -995,7 +995,7 @@ namespace PckStudio.Rendering
                     SkinBOX box = ModelData[SelectedIndex];
 
                     float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
-                    Cube cube = Cube.FromSkinBox(box, inflate);
+                    Cube cube = box.ToCube(inflate);
 
                     BoundingBox cubeBoundingBox = cube.GetBoundingBox();
 

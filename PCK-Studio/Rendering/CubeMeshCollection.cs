@@ -28,6 +28,15 @@ using PckStudio.Internal.Skin;
 
 namespace PckStudio.Rendering
 {
+    static class CubeMeshCollectionExtensions
+    {
+        internal static void AddSkinBox(this CubeMeshCollection cubeMeshes, SkinBOX skinBox, float inflate = 0f)
+        {
+            var cube = skinBox.ToCube(inflate, cubeMeshes.FlipZMapping);
+            cubeMeshes.Add(new CubeMesh(cube).SetName(skinBox.Type));
+        }
+    }
+
     internal class CubeMeshCollection : GenericMesh<TextureVertex>, ICollection<CubeMesh>
     {
         private List<CubeMesh> cubes;
@@ -79,12 +88,6 @@ namespace PckStudio.Rendering
             Translation = translation;
             Pivot = pivot;
             transform = Matrix4.CreateTranslation(Translation) * Matrix4.CreateScale(1f, -1f, -1f);
-        }
-
-        internal void AddSkinBox(SkinBOX skinBox, float inflate = 0f)
-        {
-            var cube = Cube.FromSkinBox(skinBox, inflate, FlipZMapping);
-            cubes.Add(new CubeMesh(cube).SetName(skinBox.Type));
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()

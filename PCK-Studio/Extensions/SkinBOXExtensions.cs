@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Internal;
 using PckStudio.Internal.Skin;
+using PckStudio.Rendering;
 
 namespace PckStudio.Extensions
 {
@@ -62,5 +63,10 @@ namespace PckStudio.Extensions
             int index = Array.IndexOf(SkinBOX.OverlayTypes, type);
             return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }
+
+        internal static Cube ToCube(this SkinBOX skinBOX) => skinBOX.ToCube(0f);
+
+        internal static Cube ToCube(this SkinBOX skinBOX, float inflate, bool flipZMapping = false)
+            => new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale + inflate, skinBOX.Mirror, flipZMapping);
     }
 }

@@ -50,11 +50,6 @@ namespace PckStudio.Rendering
             Right
         }
 
-        internal static Cube FromSkinBox(SkinBOX skinBOX) => FromSkinBox(skinBOX, 0f);
-
-        internal static Cube FromSkinBox(SkinBOX skinBOX, float inflate, bool flipZMapping = false)
-            => new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale + inflate, skinBOX.Mirror, flipZMapping);
-
         public Cube(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirrorTexture, bool flipZMapping)
         {
             Position = position;
