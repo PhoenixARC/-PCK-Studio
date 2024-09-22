@@ -65,6 +65,8 @@ namespace PckStudio.Rendering.Shader
             GL.Uniform1(location, value);
         }
 
+        public void SetUniform2(string name, Size value) => SetUniform2(name, new Vector2(value.Width, value.Height));
+
         public void SetUniform2(string name, Vector2 value)
         {
             int location = GetUniformLocation(name);

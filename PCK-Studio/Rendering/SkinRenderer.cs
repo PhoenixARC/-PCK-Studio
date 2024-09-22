@@ -26,7 +26,6 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
 using PckStudio.Properties;
-using PckStudio.Forms.Editor;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
@@ -873,7 +872,7 @@ namespace PckStudio.Rendering
                 ShaderProgram cubeShader = GetShader("CubeShader");
                 cubeShader.Bind();
                 cubeShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-                cubeShader.SetUniform2("u_TexSize", new Vector2(TextureSize.Width, TextureSize.Height));
+                cubeShader.SetUniform2("u_TexSize", TextureSize);
 
                 skinTexture.Bind();
 
