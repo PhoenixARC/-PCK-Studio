@@ -62,7 +62,6 @@ namespace PckStudio.Internal
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, modelInfo.Model.Name, modelInfo.Model.TextureSize, modelInfo.Textures.Select(nt => (Texture)nt));
             blockBenchModel.ModelIdentifier = modelInfo.Model.Name;
 
-            Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
             List<Element> elements = new List<Element>(modelInfo.Model.PartCount);
 
             if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
@@ -71,28 +70,9 @@ namespace PckStudio.Internal
                 return;
             }
 
-            foreach (ModelPart part in modelInfo.Model.GetParts())
-            {
-                Debug.Assert(!outliners.ContainsKey(part.Name), $"'{part.Name}' is already present.");
-                var outline = new Outline(part.Name);
-
-                Vector3 partTranslation = part.Translation;
-                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, bbModelTransformAxis);
-                outline.Origin += _heightOffset;
-
-                Vector3 rotation = part.Rotation;
-                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
-
-                Element[] elements1 = part.GetBoxes().Select(box => ToElement(part.Name, box, partTranslation)).ToArray();
-                elements.AddRange(elements1);
-                outline.Children.Add(elements1.Select(element => element.Uuid));
-                outliners.Add(part.Name, outline);
-            }
-            
-            TraverseChildren(modelMetaData.RootParts, ref outliners);
+            IEnumerable<Outline> outlines = ConvertToOutlines(modelInfo.Model, Vector3.Zero, modelMetaData.RootParts, elements.AddRange);
 
             blockBenchModel.Elements = elements.ToArray();
-            IEnumerable<Outline> outlines = outliners.Values.Where(value => modelMetaData.RootParts.Count == 0 || modelMetaData.RootParts.ContainsKey(value.Name));
             if (ExportSettings.CreateModelOutline)
                 outlines = new Outline[1]
                 {
@@ -113,43 +93,48 @@ namespace PckStudio.Internal
             return element;
         }
 
-        // TODO: return a new object instead of modifying a reference. (make immutable) -miku
-        private static void TraverseChildren(IReadOnlyDictionary<string, JArray> keyValues, ref Dictionary<string, Outline> outliners)
+        private Outline[] ConvertToOutlines(Model model, Vector3 parentRotation, IReadOnlyCollection<ModelMetaDataPart> keyValues, Action<Element[]> addElements, int depth = 0)
         {
-            foreach (KeyValuePair<string, JArray> item in keyValues)
+            Outline CreateOutline(ModelPart modelPart)
             {
-                if (!outliners.ContainsKey(item.Key))
+                Outline outline = new Outline(modelPart.Name);
+
+                Vector3 partTranslation = modelPart.Translation;
+                outline.Origin = TransformSpace(partTranslation, Vector3.Zero, bbModelTransformAxis);
+                outline.Origin += _heightOffset;
+
+                Vector3 rotation = modelPart.Rotation;
+                outline.Rotation = rotation * TransformSpace(Vector3.One, Vector3.Zero, bbModelTransformAxis);
+                outline.Rotation += parentRotation;
+
+                Element[] elements1 = modelPart.GetBoxes().Select(box => ToElement(modelPart.Name, box, partTranslation)).ToArray();
+                addElements(elements1);
+
+                outline.Children.Add(elements1.Select(element => element.Uuid).ToArray());
+                return outline;
+            }
+
+            if (depth == 0 && keyValues.Count == 0)
                 {
-                    Debug.WriteLine($"{nameof(item.Key)}: '{item.Key}' not in {nameof(outliners)}.");
+                return model.GetParts().Select(CreateOutline).ToArray();
+            }
+
+            List<Outline> outlines = new List<Outline>();
+            foreach (ModelMetaDataPart item in keyValues)
+            {
+                if (!model.TryGetPart(item.Name, out ModelPart modelPart))
+                {
+                    Debug.WriteLine($"{nameof(item.Name)}: '{item.Name}' not in {nameof(model)}.");
                     continue;
                 }
-                Outline partentOutline = outliners[item.Key];
-                foreach (JToken child in item.Value)
-                {
-                    if (child.Type == JTokenType.String && outliners.TryGetValue(child.ToString(), out Outline childOutline))
-                    {
-                        childOutline.Rotation -= partentOutline.Rotation;
-                        partentOutline.Children.Add(JToken.FromObject(childOutline));
-                    }
-                    if (child.Type == JTokenType.Object)
-                    {
-                        IReadOnlyDictionary<string, JArray> childKeyValues = child.ToObject<ReadOnlyDictionary<string, JArray>>();
-                        TraverseChildren(childKeyValues, ref outliners);
-                        foreach (var key in childKeyValues.Keys)
-                        {
-                            if (!outliners.ContainsKey(key))
-                            {
-                                Debug.WriteLine($"{nameof(key)}: '{key}' not in {nameof(outliners)}.");
-                                continue;
-                            }
-                            childOutline = outliners[key];
-                            childOutline.Rotation -= partentOutline.Rotation;
-                            partentOutline.Children.Add(JToken.FromObject(childOutline));
-                        }
-                    }
-                }
+                Outline partentOutline = CreateOutline(modelPart);
+                JToken[] s = ConvertToOutlines(model, modelPart.Rotation, item.Children, addElements, depth + 1).Select(JToken.FromObject).ToArray();
+                partentOutline.Children.Add(s);
+                outlines.Add(partentOutline);
             }
+            return outlines.ToArray();
         }
+
 
         private static Element CreateElement(string name, ModelBox box, Vector3 origin, Vector3 translationUnit, Vector3 offset)
         {

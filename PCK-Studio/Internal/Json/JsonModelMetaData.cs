@@ -10,12 +10,21 @@ using Newtonsoft.Json.Linq;
 
 namespace PckStudio.Internal.Json
 {
+    internal class ModelMetaDataPart
+    {
+        [JsonProperty("name", Required = Required.Always)]
+        public string Name { get; set; }
+
+        [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public ModelMetaDataPart[] Children { get; set; } = Array.Empty<ModelMetaDataPart>();
+    }
+
     internal class JsonModelMetaData
     {
         [JsonProperty("textureLocations", Required = Required.Always)]
         public string[] TextureLocations { get; set; }
 
-        [JsonProperty("root", NullValueHandling = NullValueHandling.Ignore)]
-        public ReadOnlyDictionary<string, JArray> RootParts { get; set; } = new ReadOnlyDictionary<string, JArray>(new Dictionary<string, JArray>());
+        [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
+        public ModelMetaDataPart[] RootParts { get; set; }
     }
 }

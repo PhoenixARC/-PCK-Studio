@@ -3,22 +3,32 @@
     "textureLocations": [
       "res/mob/bat"
     ],
-    "root": {
-      "head": [
-        "rightEar",
-        "leftEar"
-      ],
-      "body": [
-        {
-          "rightWing": [
-            "rightWingTip"
-          ],
-          "leftWing": [
-            "leftWingTip"
-          ]
-        }
-      ]
-    }
+    "parts": [
+      {
+        "name": "head",
+        "children": [
+          { "name": "rightEar" },
+          { "name": "leftEar" }
+        ]
+      },
+      {
+        "name": "body",
+        "children": [
+          {
+            "name": "rightWing",
+            "children": [
+              { "name": "rightWingTip" }
+            ]
+          },
+          {
+            "name": "leftWing",
+            "children": [
+              { "name": "leftWingTip" }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "bed": {
     "textureLocations": [
@@ -64,40 +74,90 @@
     "textureLocations": [
       "res/mob/dolphin"
     ],
-    "root": {
-      "body": [
-        {
-          "head": [ "nose" ],
-          "tail": [ "tail_fin" ]
-        },
-        "left_fin",
-        "right_fin",
-        "back_fin"
-      ]
-    }
+    "parts": [
+      {
+        "name": "body",
+        "children": [
+          {
+            "name": "head",
+            "children": [
+              { "name": "nose" },
+              { "name": "tail_fin" }
+            ]
+          },
+          { "name": "right_fin" },
+          { "name": "left_fin" },
+          { "name": "back_fin" }
+        ]
+      }
+    ]
   },
   "dragon": {
     "textureLocations": [
       "res/mob/enderdragon/ender"
     ],
-    "root": {
-      "head": [ "jaw" ],
-      "body": [],
-      "wing": [ "wingtip" ],
-      "wing1": [ "wingtip1" ],
-      "rearleg": [ { "rearlegtip": [ "rearfoot" ] } ],
-      "rearleg1": [ { "rearlegtip1": [ "rearfoot1" ] } ],
-      "frontleg": [ { "frontlegtip": [ "frontfoot" ] } ],
-      "frontleg1": [ { "frontlegtip1": [ "frontfoot1" ] } ]
-    }
+    "parts": [
+      {
+        "name": "head",
+        "children": [ { "name": "jaw" } ]
+      },
+      { "name": "body" },
+      {
+        "name": "wing",
+        "children": [ { "name": "wingtip" } ]
+      },
+      {
+        "name": "wing1",
+        "children": [ { "name": "wingtip1" } ]
+      },
+      {
+        "name": "rearleg",
+        "children": [
+          {
+            "name": "rearlegtip",
+            "children": [ { "name": "rearfoot" } ]
+          }
+        ]
+      },
+      {
+        "name": "rearleg1",
+        "children": [
+          {
+            "name": "rearlegtip1",
+            "children": [ { "name": "rearfoot1" } ]
+          }
+        ]
+      },
+      {
+        "name": "frontleg",
+        "children": [
+          {
+            "name": "frontlegtip",
+            "children": [ { "name": "frontfoot" } ]
+          }
+        ]
+      },
+      {
+        "name": "frontleg1",
+        "children": [
+          {
+            "name": "frontlegtip1",
+            "children": [ { "name": "frontfoot1" } ]
+          }
+        ]
+      }
+    ]
   },
   "dragon_head": {
     "textureLocations": [
       "res/mob/enderdragon/ender"
     ],
-    "root": {
-      "head": [ "jaw" ]
-    }
+    "parts": [
+      {
+        "name": "head",
+        "children": [ { "name": "jaw" } ]
+      }
+    ]
   },
   "enderman": {
     "textureLocations": [
@@ -115,14 +175,23 @@
       "res/mob/guardian",
       "res/mob/guardian_elder"
     ],
-    "root": {
-      "head": [
-        "eye",
-        {
-          "tailpart0": [ { "tailpart1": [ "tailpart2" ] } ]
-        }
-      ]
-    }
+    "parts": [
+      {
+        "name": "head",
+        "children": [
+          { "name": "eye" },
+          {
+            "name": "tailpart0",
+            "children": [
+              {
+                "name": "tailpart1",
+                "children": [ { "name": "tailpart2" } ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "irongolem": {
     "textureLocations": [
@@ -167,28 +236,48 @@
       "res/mob/parrot/parrot_red_blue",
       "res/mob/parrot/parrot_yellow_blue"
     ],
-    "root": {
-      "head": [ "head2", "beak1", "beak2", "feather" ],
-      "body": [],
-      "tail": [],
-      "wing0": [],
-      "wing1": [],
-      "leg0": [],
-      "leg1": []
-    }
+    "parts": [
+      {
+        "name": "head",
+        "children": [
+          { "name": "head2" },
+          { "name": "beak1" },
+          { "name": "beak2" },
+          { "name": "feather" }
+        ]
+      },
+      { "name": "body" },
+      { "name": "tail" },
+      { "name": "wing0" },
+      { "name": "wing1" },
+      { "name": "leg0" },
+      { "name": "leg1" }
+    ]
   },
   "phantom": {
     "textureLocations": [
       "res/mob/phantom"
     ],
-    "root": {
-      "body": [
-        "head",
-        { "wing0": [ "wingtip0" ] },
-        { "wing1": [ "wingtip1" ] },
-        { "tail": [ "tailtip" ] }
-      ]
-    }
+    "parts": [
+      {
+        "name": "body",
+        "children": [
+          { "name": "head" },
+          {
+            "name": "wing0",
+            "children": [ { "name": "wingtip0" } ]
+          },
+          {
+            "name": "wing1",
+            "children": [ { "name": "wingtip1" } ]
+          },
+          {
+            "name": "tail",
+            "children": [ { "name": "tailtip" } ]
+          }
+        ]
+      }
+    ]
   },
   "pig": {
     "textureLocations": [
@@ -369,19 +458,42 @@
       "res/mob/horse/horse_zombie",
       "res/mob/horse/mule"
     ],
-    "root": {
-      "Neck": [ { "Head": [ "UMouth", "Ear1", "Ear2", "MuleEarL", "MuleEarR", "SaddleMouthL", "SaddleMouthR", "HeadSaddle" ] } ],
-      "Body": [ "TailA", "Saddle" ],
-      "Mane": [],
-      "Leg1A": [],
-      "Leg2A": [],
-      "Leg3A": [],
-      "Leg4A": [],
-      "Bag1": [],
-      "Bag2": [],
-      "SaddleMouthLine": [],
-      "SaddleMouthLineR": []
-    }
+    "parts": [
+      {
+        "name": "Neck",
+        "children": [
+          {
+            "name": "Head",
+            "children": [
+              { "name": "HeadSaddle" },
+              { "name": "UMouth" },
+              { "name": "Ear1" },
+              { "name": "Ear2" },
+              { "name": "MuleEarL" },
+              { "name": "MuleEarR" },
+              { "name": "SaddleMouthL" },
+              { "name": "SaddleMouthR" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Body",
+        "children": [
+          { "name": "TailA" },
+          { "name": "Saddle" }
+        ]
+      },
+      { "name": "Mane" },
+      { "name": "Leg1A" },
+      { "name": "Leg2A" },
+      { "name": "Leg3A" },
+      { "name": "Leg4A" },
+      { "name": "Bag1" },
+      { "name": "Bag2" },
+      { "name": "SaddleMouthLine" },
+      { "name": "SaddleMouthLineR" }
+    ]
   },
   "cat": {
     "textureLocations": [
