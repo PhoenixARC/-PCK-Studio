@@ -350,7 +350,7 @@
   },
   "slime.armor": {
     "textureLocations": [
-      ""
+      "res/mob/slime"
     ]
   },
   "snowgolem": {
@@ -558,15 +558,25 @@
     ]
   },
   "tropicalfish_a": {
-    // not including patterns 1-6
     "textureLocations": [
-      "res/mob/fish/tropical_a"
+      "res/mob/fish/tropical_a",
+      "res/mob/fish/tropical_a_pattern_1",
+      "res/mob/fish/tropical_a_pattern_2",
+      "res/mob/fish/tropical_a_pattern_3",
+      "res/mob/fish/tropical_a_pattern_4",
+      "res/mob/fish/tropical_a_pattern_5",
+      "res/mob/fish/tropical_a_pattern_6"
     ]
   },
   "tropicalfish_b": {
-    // not including patterns 1-6
     "textureLocations": [
-      "res/mob/fish/tropical_b"
+      "res/mob/fish/tropical_b",
+      "res/mob/fish/tropical_b_pattern_1",
+      "res/mob/fish/tropical_b_pattern_2",
+      "res/mob/fish/tropical_b_pattern_3",
+      "res/mob/fish/tropical_b_pattern_4",
+      "res/mob/fish/tropical_b_pattern_5",
+      "res/mob/fish/tropical_b_pattern_6"
     ]
   },
   "zombie_head": {
