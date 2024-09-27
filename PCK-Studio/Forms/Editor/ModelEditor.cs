@@ -131,7 +131,7 @@ namespace PckStudio.Forms.Editor
             private Model _model;
             public Model Model => _model;
 
-            public ModelNode(Model model)
+            private ModelNode(Model model)
                 : base(model.Name)
             {
                 _model = model;
@@ -139,11 +139,10 @@ namespace PckStudio.Forms.Editor
                 SelectedImageIndex = GetModelImageIndex(model.Name);
                 Nodes.AddRange(GetModelPartNodes(_model.GetParts()).ToArray());
             }
-            private static IEnumerable<TreeNode> GetModelPartNodes(IEnumerable<ModelPart> parts)
-            {
-                return parts.Select(part => new ModelPartNode(part));
+            private static IEnumerable<TreeNode> GetModelPartNodes(IEnumerable<ModelPart> parts) => parts.Select(ModelPartNode.Create);
+
+            internal static ModelNode Create(Model model) => new ModelNode(model);
             }
-        }
 
         private class ModelPartNode : TreeNode
         {
@@ -151,7 +150,7 @@ namespace PckStudio.Forms.Editor
 
             public ModelPart Part => _part;
 
-            public ModelPartNode(ModelPart part)
+            private ModelPartNode(ModelPart part)
                 : base(part.Name)
             {
                 _part = part;
@@ -159,26 +158,29 @@ namespace PckStudio.Forms.Editor
                 SelectedImageIndex = 126;
                 Nodes.AddRange(GetModelBoxNodes(part.GetBoxes()).ToArray());
             }
-            private static IEnumerable<TreeNode> GetModelBoxNodes(IEnumerable<ModelBox> boxes)
-                => boxes.Select(box => new ModelBoxNode(box));
+            private static IEnumerable<TreeNode> GetModelBoxNodes(IEnumerable<ModelBox> boxes) => boxes.Select(ModelBoxNode.Create);
+
+            internal static ModelPartNode Create(ModelPart part) => new ModelPartNode(part);
             }
 
         private class ModelBoxNode : TreeNode
         {
             private ModelBox _modelBox;
-            public ModelBoxNode(ModelBox modelBox)
+            private ModelBoxNode(ModelBox modelBox)
                 : base($"Box: pos:{modelBox.Position} size:{modelBox.Size}")
             {
                 ImageIndex = 126;
                 SelectedImageIndex = 126;
                 _modelBox = modelBox;
             }
+
+            internal static ModelBoxNode Create(ModelBox modelBox) => new ModelBoxNode(modelBox);
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            modelTreeView.Nodes.AddRange(_models.Select(model => new ModelNode(model)).ToArray());
+            modelTreeView.Nodes.AddRange(_models.Select(ModelNode.Create).ToArray());
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
