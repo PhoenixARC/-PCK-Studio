@@ -97,7 +97,7 @@ namespace PckStudio.Rendering
             Vector3 transformedCenter = Vector3.TransformPosition(Center, transform);
             Vector3 start = transformedCenter - halfSizeInflated;
             Vector3 end   = transformedCenter + halfSizeInflated;
-            return new BoundingBox(start.ToNumericsVector(), end.ToNumericsVector());
+            return new BoundingBox(start, end);
         }
     }
 }

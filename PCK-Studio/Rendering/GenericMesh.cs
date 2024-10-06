@@ -27,22 +27,27 @@ namespace PckStudio.Rendering
         internal string Name { get; }
         internal PrimitiveType DrawType { get; }
         internal VertexBufferLayout VertexLayout { get; }
+        internal bool Visible { get; }
 
         public abstract Matrix4 Transform { get; }
 
-        protected GenericMesh(string name, PrimitiveType type, VertexBufferLayout vertexLayout)
+        protected GenericMesh(string name, bool visible, PrimitiveType type, VertexBufferLayout vertexLayout)
         {
             Name = name;
             DrawType = type;
+            Visible = visible;
             VertexLayout = vertexLayout;
         }
+
+        public abstract GenericMesh<T> SetVisible(bool visible);
+        public abstract BoundingBox GetBounds(Matrix4 transform);
 
         internal abstract IEnumerable<T> GetVertices();
         internal abstract IEnumerable<int> GetIndices();
 
         public override string ToString()
         {
-            return $"Name: {Name} T={typeof(T)}";
+            return $"Name: {Name} T={typeof(T)} Visible={Visible}";
         }
     }
 }

@@ -81,15 +81,20 @@ namespace PckStudio.Rendering
 
         public Cube GetCube() => _cube;
 
+        public override BoundingBox GetBounds(Matrix4 transform)
+        {
+            return _cube.GetBoundingBox(transform);
+        }
+
         internal override IEnumerable<TextureVertex> GetVertices()
         {
             int mirror = Convert.ToInt32(_cube.MirrorTexture);
 
             Vector2 uv = _cube.Uv;
 
-            BoundingBox boundingBox = _cube.GetBoundingBox();
-            Vector3 from = boundingBox.Start.ToOpenTKVector();
-            Vector3 to   = boundingBox.End.ToOpenTKVector();
+            BoundingBox boundingBox = GetBounds(Transform);
+            Vector3 from = boundingBox.Start;
+            Vector3 to   = boundingBox.End;
 
             Vector3 size = _cube.Size;
 

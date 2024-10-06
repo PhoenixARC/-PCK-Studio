@@ -287,9 +287,9 @@ namespace PckStudio.Forms.Editor
         private void skinPartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int scale = 1;
+            renderer3D1.SelectedIndices = skinPartListBox.SelectedIndices.Cast<int>().ToArray();
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
                 uvLabel.Text = $"UV: {box.UV}";
                 sizeLabel.Text = $"Size: {box.Size}";
                 positionLabel.Text = $"Position: {box.Pos}";
@@ -408,7 +408,6 @@ namespace PckStudio.Forms.Editor
         private void ClearSelection()
         {
             skinPartListBox.ClearSelected();
-            renderer3D1.SelectedIndex = skinPartListBox.SelectedIndex;
             uvPictureBox.Image = _skin.Model.Texture;
         }
 

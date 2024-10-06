@@ -225,6 +225,7 @@
             resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
+            this.skinPartListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.skinPartListBox.Tag = "";
             this.skinPartListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.skinPartListBox_MouseClick);
             this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);

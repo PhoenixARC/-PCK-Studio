@@ -165,57 +165,6 @@
   <data name="groupBox1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;importTextureButton.Name" xml:space="preserve">
-    <value>importTextureButton</value>
-  </data>
-  <data name="&gt;&gt;importTextureButton.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;importTextureButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;importTextureButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;exportTextureButton.Name" xml:space="preserve">
-    <value>exportTextureButton</value>
-  </data>
-  <data name="&gt;&gt;exportTextureButton.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;exportTextureButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;exportTextureButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>803, 329</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 0</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 83</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>170</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Texture</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
   <data name="importTextureButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 19</value>
   </data>
@@ -263,6 +212,33 @@
   </data>
   <data name="&gt;&gt;exportTextureButton.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>803, 329</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 0</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 83</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>170</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Texture</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="positionLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -366,15 +342,6 @@
   <metadata name="skinPartTabContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="skinPartTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 108</value>
-  </data>
-  <data name="&gt;&gt;skinPartTabContextMenu.Name" xml:space="preserve">
-    <value>skinPartTabContextMenu</value>
-  </data>
-  <data name="&gt;&gt;skinPartTabContextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="createToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -443,6 +410,15 @@
   </data>
   <data name="generateUvTextureToolStripMenuItem.Text" xml:space="preserve">
     <value>Re-generate UV Texture</value>
+  </data>
+  <data name="skinPartTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 108</value>
+  </data>
+  <data name="&gt;&gt;skinPartTabContextMenu.Name" xml:space="preserve">
+    <value>skinPartTabContextMenu</value>
+  </data>
+  <data name="&gt;&gt;skinPartTabContextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonDone.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -726,51 +702,6 @@
   <data name="&gt;&gt;skinNameLabel.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="&gt;&gt;skinPartsTabPage.Name" xml:space="preserve">
-    <value>skinPartsTabPage</value>
-  </data>
-  <data name="&gt;&gt;skinPartsTabPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;skinPartsTabPage.Parent" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;skinPartsTabPage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;skinOffsetsTabPage.Name" xml:space="preserve">
-    <value>skinOffsetsTabPage</value>
-  </data>
-  <data name="&gt;&gt;skinOffsetsTabPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;skinOffsetsTabPage.Parent" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 59</value>
-  </data>
-  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 488</value>
-  </data>
-  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
-    <value>metroTabControl1</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
   <data name="skinPartsTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
@@ -793,6 +724,42 @@
     <value>metroTabControl1</value>
   </data>
   <data name="&gt;&gt;skinPartsTabPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="offsetTabContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>204, 17</value>
+  </metadata>
+  <data name="addOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="addOffsetToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Offset</value>
+  </data>
+  <data name="removeOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="removeOffsetToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remove Offset</value>
+  </data>
+  <data name="offsetTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 48</value>
+  </data>
+  <data name="&gt;&gt;offsetTabContextMenu.Name" xml:space="preserve">
+    <value>offsetTabContextMenu</value>
+  </data>
+  <data name="&gt;&gt;offsetTabContextMenu.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
+  <data name="offsetListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="offsetListBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 446</value>
+  </data>
+  <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;offsetListBox.Name" xml:space="preserve">
@@ -831,53 +798,26 @@
   <data name="&gt;&gt;skinOffsetsTabPage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="offsetTabContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>204, 17</value>
-  </metadata>
-  <data name="offsetTabContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 48</value>
+  <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 59</value>
   </data>
-  <data name="&gt;&gt;offsetTabContextMenu.Name" xml:space="preserve">
-    <value>offsetTabContextMenu</value>
+  <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 488</value>
   </data>
-  <data name="&gt;&gt;offsetTabContextMenu.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="offsetListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;metroTabControl1.Name" xml:space="preserve">
+    <value>metroTabControl1</value>
   </data>
-  <data name="offsetListBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;metroTabControl1.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroTabControl, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
-  <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
+  <data name="&gt;&gt;metroTabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;offsetListBox.Name" xml:space="preserve">
-    <value>offsetListBox</value>
-  </data>
-  <data name="&gt;&gt;offsetListBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;offsetListBox.Parent" xml:space="preserve">
-    <value>skinOffsetsTabPage</value>
-  </data>
-  <data name="&gt;&gt;offsetListBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="addOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="addOffsetToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Offset</value>
-  </data>
-  <data name="removeOffsetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="removeOffsetToolStripMenuItem.Text" xml:space="preserve">
-    <value>Remove Offset</value>
+  <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1138,7 +1078,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;animEditorButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

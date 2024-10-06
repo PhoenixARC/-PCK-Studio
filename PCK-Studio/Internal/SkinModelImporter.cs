@@ -159,8 +159,8 @@ namespace PckStudio.Internal
         private static SkinBOX LoadElement(Element element, string outlineName)
         {
             var boundingBox = new Rendering.BoundingBox(element.From, element.To);
-            Vector3 pos = boundingBox.Start;
-            Vector3 size = boundingBox.Volume;
+            Vector3 pos = boundingBox.Start.ToNumericsVector();
+            Vector3 size = boundingBox.Volume.ToNumericsVector();
             Vector2 uv = element.UvOffset;
 
             pos = TranslateToInternalPosition(outlineName, pos, size, new Vector3(1, 1, 0));

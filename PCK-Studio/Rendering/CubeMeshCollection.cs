@@ -41,22 +41,22 @@ namespace PckStudio.Rendering
     {
         private List<GenericMesh<TextureVertex>> cubes;
         private Dictionary<string, CubeMeshCollection> subCollection;
-        
+
         public bool FlipZMapping
         {
             get => _flipZMapping;
             set => _flipZMapping = value;
-            }
+        }
 
         public Vector3 Translation { get; set; }
         public Vector3 Rotation { get; }
-        public Vector3 Pivot { get; } 
+        public Vector3 Pivot { get; }
         private Vector3 _offset { get; set; } = Vector3.Zero;
         public Vector3 Offset
         {
             get => _offset;
             set => _offset = value;
-                }
+        }
 
         public override Matrix4 Transform => (Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Rotation.X)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Rotation.Y)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z))).Pivoted(Translation + _offset, Pivot);
 
@@ -156,7 +156,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index] is CubeMesh c ? c.Center + Offset : Vector3.Zero;
+            return cubes[index].GetBounds(Transform).Center;
         }
          
         internal BoundingBox GetCubeBoundingBox(int index)
@@ -164,44 +164,60 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            Cube cube = cubes[index].GetCube();
-            return cube.GetBoundingBox(Transform);
+            return cubes[index].GetBounds(Transform);
+        }
+
+        public override BoundingBox GetBounds(Matrix4 transform)
+        {
+            throw new NotImplementedException();
         }
 
         internal Vector3 GetFaceCenter(int index, Cube.Face face)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-            Cube cube = cubes[index].GetCube();
-            return Vector3.TransformPosition(cube.GetFaceCenter(face), Transform);
+
+            Vector3 faceCenter = cubes[index] is CubeMesh c ? c.GetCube().GetFaceCenter(face) : Vector3.Zero;
+            return Vector3.TransformPosition(faceCenter, Transform);
         }
 
         internal void SetVisible(int index, bool visible)
         {
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
-            if (cubes[index].ShouldRender == visible)
+            if (cubes[index].Visible == visible)
                 return;
-            cubes[index] = cubes[index].SetVisible(visible);
+            cubes[index] = cubes[index].SetVisible(visible) as CubeMesh;
         }
 
-        public void Add(CubeMesh item) => cubes.Add(item);
+        public void Add(GenericMesh<TextureVertex> item) => cubes.Add(item);
 
-        public void Clear() => cubes.Clear();
+        public void Clear()
+        {
+            subCollection.Clear();
+            cubes.Clear();
+        }
 
-        public bool Contains(CubeMesh item)
+        public bool Contains(GenericMesh<TextureVertex> item)
+        {
+            return cubes.Any(c => c.Name == item.Name);
+        }
+
+        public bool ContainsCollection(string collectionName) => subCollection.ContainsKey(key: collectionName);
+
+        public bool Contains(GenericMesh<TextureVertex> item, bool searchSubCollections)
+        {
+            return cubes.Any(c => c.Name == item.Name) || (searchSubCollections && subCollection.Values.Any(collection => collection.Contains(item, searchSubCollections)));
+        }
+
+        public void CopyTo(GenericMesh<TextureVertex>[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(CubeMesh[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Remove(GenericMesh<TextureVertex> item) => cubes.Remove(item);
 
-        public bool Remove(CubeMesh item) => cubes.Remove(item);
-
-        public IEnumerator<CubeMesh> GetEnumerator() => cubes.GetEnumerator();
+        public IEnumerator<GenericMesh<TextureVertex>> GetEnumerator() => cubes.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Extensions;
 
@@ -10,31 +8,45 @@ namespace PckStudio.Rendering
 {
     internal struct BoundingBox
     {
-        public readonly Vector3 Start;
-        public readonly Vector3 End;
-        public readonly Vector3 Volume;
+        public static BoundingBox Empty = new BoundingBox(OpenTK.Vector3.Zero, OpenTK.Vector3.Zero);
 
-        public BoundingBox(Vector3 start, Vector3 end)
+        public readonly OpenTK.Vector3 Start;
+        public readonly OpenTK.Vector3 End;
+        public readonly OpenTK.Vector3 Center;
+        public readonly OpenTK.Vector3 Volume;
+
+        public BoundingBox(OpenTK.Vector3 start, OpenTK.Vector3 end)
         {
             Start = start;
             End = end;
-            Vector3 size = End - Start;
-            Volume = Vector3.Abs(size);
+            OpenTK.Vector3 size = End - Start;
+            Volume = Abs(size);
+            Center = start + Volume / 2;
+        }
+
+        public BoundingBox(System.Numerics.Vector3 start, System.Numerics.Vector3 end)
+            : this(start.ToOpenTKVector(), end.ToOpenTKVector())
+        {
+        }
+
+        private static OpenTK.Vector3 Abs(OpenTK.Vector3 value)
+        {
+            return new OpenTK.Vector3(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z));
         }
 
         public ColorVertex[] GetVertices()
         {
-            Vector3 s = Start;
-            Vector3 e = End;
+            OpenTK.Vector3 s = Start;
+            OpenTK.Vector3 e = End;
             return [
-                new ColorVertex(new Vector3(s.X, e.Y, e.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(e.X, e.Y, e.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(e.X, s.Y, e.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(s.X, s.Y, e.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(s.X, e.Y, s.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(e.X, e.Y, s.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(e.X, s.Y, s.Z).ToOpenTKVector()),
-                new ColorVertex(new Vector3(s.X, s.Y, s.Z).ToOpenTKVector()),
+                new ColorVertex(new OpenTK.Vector3(s.X, e.Y, e.Z)),
+                new ColorVertex(new OpenTK.Vector3(e.X, e.Y, e.Z)),
+                new ColorVertex(new OpenTK.Vector3(e.X, s.Y, e.Z)),
+                new ColorVertex(new OpenTK.Vector3(s.X, s.Y, e.Z)),
+                new ColorVertex(new OpenTK.Vector3(s.X, e.Y, s.Z)),
+                new ColorVertex(new OpenTK.Vector3(e.X, e.Y, s.Z)),
+                new ColorVertex(new OpenTK.Vector3(e.X, s.Y, s.Z)),
+                new ColorVertex(new OpenTK.Vector3(s.X, s.Y, s.Z)),
             ];
         }
 
