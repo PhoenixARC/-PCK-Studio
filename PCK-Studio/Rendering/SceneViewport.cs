@@ -24,19 +24,22 @@ SOFTWARE.
 https://github.com/KareemMAX/Minecraft-Skiner
 https://github.com/KareemMAX/Minecraft-Skiner/blob/master/src/Minecraft%20skiner/UserControls/Renderer3D.vb
  */
-#define USE_FRAMEBUFFER
+//#define USE_FRAMEBUFFER
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using PckStudio.Extensions;
 using PckStudio.Properties;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Shader;
-using PckStudio.Rendering.Texture;
 
 namespace PckStudio.Rendering
 {
@@ -55,16 +58,39 @@ namespace PckStudio.Rendering
             }
         }
 
+        public new Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                base.BackColor = value;
+                if (!DesignMode)
+                {
+                    Renderer.SetClearColor(value);
+                }
+            }
+        }
+
+        protected new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
         protected PerspectiveCamera Camera { get; }
 
         protected virtual void OnUpdate(object sender, TimeSpan timestep)
         {
-            SwapBuffers();
+            if (IsHandleCreated && !IsDisposed)
+                SwapBuffers();
         }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool LockMousePosition { get; set; } = false;
+
+        public float MouseSensetivity { get; set; } = 0.01f;
+        private Point PreviousMouseLocation;
+        private Point CurrentMouseLocation;
 
         private int _refreshRate = 120;
         private Timer _timer;
-        private Stopwatch _stopwatch;
         private bool _initialized;
         private ShaderLibrary _shaderLibrary;
 
@@ -74,6 +100,20 @@ namespace PckStudio.Rendering
 
         private IndexBuffer _meshIndexBuffer;
         private Dictionary<Type, VertexArray> _meshTypeVertexArray;
+
+        private bool IsMouseHidden
+        {
+            get => !Cursor.IsVisible();
+            set
+            {
+                if (value)
+                {
+                    Cursor.Hide();
+                    return;
+                }
+                Cursor.Show();
+            }
+        }
 
 #if USE_FRAMEBUFFER
         private FrameBuffer _framebuffer;
@@ -93,25 +133,30 @@ namespace PckStudio.Rendering
         };
 #endif
 
-        public SceneViewport() : base()
+        public SceneViewport(float fov, Vector3 camareaPosition = default)
+#if DEBUG
+            : base(GraphicsMode.Default, 4, 6, GraphicsContextFlags.Debug)
+#else
+            : base()
+#endif
         {
             VSync = true;
-            _stopwatch = new Stopwatch();
             _timer = new Timer();
             _timer.Tick += TimerTick;
+
+            RefreshRate = _refreshRate;
+            Camera = new PerspectiveCamera(fov, camareaPosition);
+            _shaderLibrary = new ShaderLibrary();
+
             if (!DesignMode)
             {
                 _timer.Start();
-                _stopwatch.Start();
+                InitializeInternal();
             }
-
-            RefreshRate = _refreshRate;
-            Camera = new PerspectiveCamera(60f, new Vector3(0f, 0f, 0f));
-            _shaderLibrary = new ShaderLibrary();
             _initialized = false;
         }
 
-        protected void Initialize()
+        private void InitializeInternal()
         {
             if (_initialized)
             {
@@ -119,6 +164,8 @@ namespace PckStudio.Rendering
                 return;
             }
             MakeCurrent();
+            Trace.TraceInformation(GL.GetString(StringName.Version));
+            GL.DebugMessageCallback(DebugProc, IntPtr.Zero);
             AddShader("Internal_colorShader", ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader));
             var vao = new VertexArray();
             VertexBufferLayout layout = new VertexBufferLayout();
@@ -144,27 +191,43 @@ namespace PckStudio.Rendering
                 GLErrorCheck();
             }
 #endif
-
+            InitializeDebugComponents();
+            InitializeDebugShaders();
             _initialized = true;
+        }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+#if DEBUG
+                case Keys.Escape:
+                    ReleaseMouse();
+                    debugContextMenuStrip1.Show(this, Point.Empty);
+                    return true;
+#endif
+            }
+            return base.ProcessDialogKey(keyData);
         }
 
         protected override void Dispose(bool disposing)
         {
+            if (DesignMode)
+                return;
             if (disposing)
             {
                 _timer.Stop();
-                _stopwatch.Stop();
                 _timer.Dispose();
+                MakeCurrent();
+                foreach (VertexArray va in _meshTypeVertexArray.Values)
+                {
+                    va.Dispose();
+                }
+                _meshIndexBuffer.Dispose();
+                _boundingBoxDrawContext.IndexBuffer.Dispose();
+                _boundingBoxDrawContext.VertexArray.Dispose();
+                _shaderLibrary.Dispose();
             }
-            MakeCurrent();
-            foreach (VertexArray va in _meshTypeVertexArray.Values)
-            {
-                va.Dispose();
-            }
-            _meshIndexBuffer.Dispose();
-            _boundingBoxDrawContext.IndexBuffer.Dispose();
-            _boundingBoxDrawContext.VertexArray.Dispose();
-            _shaderLibrary.Dispose();
             _initialized = false;
             base.Dispose(disposing);
         }
@@ -175,8 +238,12 @@ namespace PckStudio.Rendering
 
         protected ShaderProgram GetShader(string shaderName) => _shaderLibrary.GetShader(shaderName);
 
-        protected void DrawMesh<T>(GenericMesh<T> mesh, ShaderProgram shader) where T : struct
+        protected void DrawMesh<T>(GenericMesh<T> mesh, ShaderProgram shader, Matrix4 transform) where T : struct
         {
+            Matrix4 viewProjection = Camera.GetViewProjection();
+            shader.Bind();
+            shader.SetUniformMat4("ViewProjection", ref viewProjection);
+            shader.SetUniformMat4("Transform", ref transform);
             if (!_meshTypeVertexArray.ContainsKey(typeof(T)))
             {
                 VertexArray vertexArray = new VertexArray();
@@ -213,6 +280,17 @@ namespace PckStudio.Rendering
             Renderer.SetLineWidth(1f);
         }
 
+        protected BoundingBox GetBounds(IEnumerable<BoundingBox> boundingBoxes)
+        {
+            return boundingBoxes.Aggregate((a, b) => new BoundingBox(Vector3.ComponentMin(a.Start, b.Start), Vector3.ComponentMax(a.End, b.End)));
+        }
+
+        void DebugProc(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
+        {
+            string dbgMessage = Marshal.PtrToStringAnsi(message, length);
+
+            Debug.WriteLine($"{source} {type} {severity}: {dbgMessage}");
+        }
 
         [Conditional("DEBUG")]
         protected void GLErrorCheck()
@@ -330,6 +408,9 @@ namespace PckStudio.Rendering
             long tick = DateTime.UtcNow.Ticks - _lastTick;
             Refresh();
             _lastTick = DateTime.UtcNow.Ticks;
+            if (!HasValidContext)
+                MakeCurrent();
+            RenderDebug();
             OnUpdate(sender, TimeSpan.FromTicks(tick));
         }
 
@@ -345,5 +426,212 @@ namespace PckStudio.Rendering
             }
             Renderer.SetViewportSize(Camera.ViewportSize);
         }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            float mouseSensetivity = LockMousePosition ? MouseSensetivity : 64f * 3 * (1f / 56f) * MouseSensetivity;
+
+            float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * mouseSensetivity;
+            float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * mouseSensetivity;
+
+            switch (e.Button)
+            {
+                case MouseButtons.None:
+                case MouseButtons.Middle:
+                case MouseButtons.XButton1:
+                case MouseButtons.XButton2:
+                    break;
+                case MouseButtons.Left:
+                    Camera.Rotate(deltaX, deltaY);
+                    goto default;
+                case MouseButtons.Right:
+                    Camera.Pan(deltaX, deltaY);
+                    goto default;
+                default:
+                    if (LockMousePosition)
+                        Cursor.Position = PointToScreen(new Point((int)Math.Round(Bounds.Width / 2d), (int)Math.Round(Bounds.Height / 2d)));
+                    CurrentMouseLocation = Cursor.Position;
+                    break;
+            }
+        }
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            Camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            ReleaseMouse();
+            base.OnMouseUp(e);
+        }
+
+        protected void ReleaseMouse()
+        {
+            if (LockMousePosition)
+            {
+                Cursor.Position = PreviousMouseLocation;
+                if (IsMouseHidden)
+                    IsMouseHidden = false;
+            }
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
+            {
+                CurrentMouseLocation = PreviousMouseLocation = Cursor.Position;
+                IsMouseHidden = LockMousePosition;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private void InitializeDebugShaders()
+        {
+#if DEBUG
+            var plainColorVertexBufferLayout = new VertexBufferLayout();
+            plainColorVertexBufferLayout.Add(ShaderDataType.Float3);
+            plainColorVertexBufferLayout.Add(ShaderDataType.Float4);
+            // Debug point render
+            {
+                ColorVertex[] vertices = [
+                    new ColorVertex(Vector3.Zero, Color.White),
+                ];
+                VertexArray vao = new VertexArray();
+                var debugVBO = new VertexBuffer();
+                debugVBO.SetData(vertices);
+                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
+                d_debugPointDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
+            }
+            // Debug line render
+            {
+                ColorVertex[] vertices = [
+                    new ColorVertex(Vector3.Zero, Color.Red)  , new ColorVertex(Vector3.UnitX, Color.Red),
+                    new ColorVertex(Vector3.Zero, Color.Green), new ColorVertex(Vector3.UnitY, Color.Green),
+                    new ColorVertex(Vector3.Zero, Color.Blue) , new ColorVertex(Vector3.UnitZ, Color.Blue),
+                ];
+                VertexArray vao = new VertexArray();
+                var debugVBO = new VertexBuffer();
+                debugVBO.SetData(vertices);
+                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
+                d_debugLineDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Lines);
+            }
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        private void RenderDebug()
+        {
+#if DEBUG
+            ShaderProgram colorShader = GetShader("Internal_colorShader");
+            Matrix4 viewProjection = Camera.GetViewProjection();
+            colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
+            if (d_showFocalPoint)
+            {
+                GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
+                GL.DepthFunc(DepthFunction.Always);
+                GL.DepthMask(false);
+                GL.Enable(EnableCap.PointSmooth);
+                colorShader.Bind();
+                Matrix4 transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
+                colorShader.SetUniformMat4("Transform", ref transform);
+                colorShader.SetUniform1("intensity", 0.75f);
+                colorShader.SetUniform4("baseColor", Color.DeepPink);
+                GL.PointSize(5f);
+                Renderer.Draw(colorShader, d_debugPointDrawContext);
+                GL.PointSize(1f);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            }
+            if (d_showDirectionArrows)
+            {
+                GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
+                GL.DepthFunc(DepthFunction.Always);
+                GL.DepthMask(false);
+                GL.Enable(EnableCap.LineSmooth);
+                colorShader.Bind();
+
+                Matrix4 transform = Matrix4.CreateScale(1, -1, -1);
+                transform *= Matrix4.CreateTranslation(Vector3.Zero);
+                transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
+                transform.Invert();
+                colorShader.SetUniformMat4("Transform", ref transform);
+                colorShader.SetUniform1("intensity", 0.75f);
+                colorShader.SetUniform4("baseColor", Color.White);
+
+                Renderer.SetLineWidth(2f);
+
+                Renderer.Draw(colorShader, d_debugLineDrawContext);
+
+                Renderer.SetLineWidth(1f);
+
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            }
+            d_debugLabel.Text = Camera.ToString();
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        private void InitializeDebugComponents()
+        {
+#if DEBUG
+            debugContextMenuStrip1 = new ContextMenuStrip();
+            debugContextMenuStrip1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // contextMenuStrip1
+            // 
+            debugContextMenuStrip1.Items.AddRange(new ToolStripItem[] {});
+            debugContextMenuStrip1.Name = "contextMenuStrip1";
+            debugContextMenuStrip1.Size = new Size(159, 48);
+            // 
+            // debugLabel
+            // 
+            d_debugLabel = new Label();
+            d_debugLabel.AutoSize = true;
+            d_debugLabel.Visible = false;
+            d_debugLabel.BackColor = Color.Transparent;
+            d_debugLabel.ForeColor = SystemColors.ControlLight;
+            d_debugLabel.Location = new Point(3, 4);
+            d_debugLabel.Name = "debugLabel";
+            d_debugLabel.Size = new Size(37, 13);
+            d_debugLabel.TabIndex = 2;
+            d_debugLabel.Text = "debug";
+            var debugCameraToolStripMenuItem = new ToolStripMenuItem("Show Camera debug information");
+            debugCameraToolStripMenuItem.CheckOnClick = true;
+            debugCameraToolStripMenuItem.Click += (s, e) => d_debugLabel.Visible = debugCameraToolStripMenuItem.Checked;
+            debugContextMenuStrip1.Items.Add(debugCameraToolStripMenuItem);
+
+            var debugShowFocalPointToolStripMenuItem = new ToolStripMenuItem("Show Camera Focal point");
+            debugShowFocalPointToolStripMenuItem.CheckOnClick = true;
+            debugShowFocalPointToolStripMenuItem.Click += (s, e) => d_showFocalPoint = debugShowFocalPointToolStripMenuItem.Checked;
+            debugContextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
+
+            var debugShowDirectionArrows = new ToolStripMenuItem("Show Direction Arrows");
+            debugShowDirectionArrows.CheckOnClick = true;
+            debugShowDirectionArrows.Click += (s, e) => d_showDirectionArrows = debugShowDirectionArrows.Checked;
+            debugContextMenuStrip1.Items.Add(debugShowDirectionArrows);
+
+            Controls.Add(d_debugLabel);
+
+            this.debugContextMenuStrip1.ResumeLayout(false);
+#endif
+        }
+
+#if DEBUG
+        private bool d_showFocalPoint;
+        private bool d_showDirectionArrows;
+        private DrawContext d_debugPointDrawContext;
+        private DrawContext d_debugLineDrawContext;
+        private Label d_debugLabel;
+        private ContextMenuStrip debugContextMenuStrip1;
+#endif
+
     }
 }  

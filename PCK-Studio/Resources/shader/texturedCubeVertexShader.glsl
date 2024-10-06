@@ -3,8 +3,8 @@
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 texCoord;
 
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
+uniform mat4 ViewProjection;
+uniform mat4 Transform;
 
 out geometryData
 {
@@ -14,5 +14,5 @@ out geometryData
 void main()
 {
 	dataOut.TexCoord = texCoord;
-	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
+	gl_Position = ViewProjection * Transform * vec4(vertexPosition, 1.0);
 };

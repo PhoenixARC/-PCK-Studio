@@ -26,8 +26,6 @@ namespace PckStudio.Rendering
 {
     internal class CubeMesh : GenericMesh<TextureVertex>
     {
-        internal bool ShouldRender { get; } = true;
-
         private Cube _cube;
 
         public Vector3 Center => _cube.Center;
@@ -53,7 +51,7 @@ namespace PckStudio.Rendering
                     22, 23, 20
             ];
 
-        public override Matrix4 Transform => Matrix4.CreateScale(1f, -1f, -1f);
+        public override Matrix4 Transform => Matrix4.Identity;
 
         internal static VertexBufferLayout VertexBufferLayout { get; } = new VertexBufferLayout().Add(ShaderDataType.Float3).Add(ShaderDataType.Float2);
 
@@ -62,25 +60,24 @@ namespace PckStudio.Rendering
         }
         
         private CubeMesh(string name, Cube cube, bool visible)
-            : base(name, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, VertexBufferLayout)
+            : base(name, visible, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, VertexBufferLayout)
         {
-            ShouldRender = visible;
             _cube = cube;
         }
 
         public CubeMesh SetName(string name)
         {
             _ = name ?? throw new ArgumentNullException(nameof(name));
-            return new CubeMesh(name, _cube, ShouldRender);
+            return new CubeMesh(name, _cube, Visible);
         }
 
         public CubeMesh SetCube(Cube cube)
         {
             _ = cube ?? throw new ArgumentNullException(nameof(cube));
-            return new CubeMesh(Name, cube, ShouldRender);
+            return new CubeMesh(Name, cube, Visible);
         }
-
-        public CubeMesh SetVisible(bool visible) => new CubeMesh(Name, _cube, visible);
+        
+        public override GenericMesh<TextureVertex> SetVisible(bool visible) => new CubeMesh(Name, _cube, visible);
 
         public Cube GetCube() => _cube;
 
@@ -135,10 +132,5 @@ namespace PckStudio.Rendering
         }
 
         internal override IEnumerable<int> GetIndices() => IndicesData;
-
-        public override string ToString()
-        {
-            return base.ToString() + $" Render={ShouldRender}";
-        }
     }
 }

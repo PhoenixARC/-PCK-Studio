@@ -37,39 +37,28 @@ namespace PckStudio.Rendering
         }
     }
 
-    internal class CubeMeshCollection : GenericMesh<TextureVertex>, ICollection<CubeMesh>
+    internal class CubeMeshCollection : GenericMesh<TextureVertex>, ICollection<GenericMesh<TextureVertex>>
     {
-        private List<CubeMesh> cubes;
+        private List<GenericMesh<TextureVertex>> cubes;
+        private Dictionary<string, CubeMeshCollection> subCollection;
         
         public bool FlipZMapping
         {
             get => _flipZMapping;
-            set
-            {
-                _flipZMapping = value;
-                //foreach (Cube cube in cubes)
-                //{
-                //    cube.FlipZMapping = FlipZMapping;
-                //}
+            set => _flipZMapping = value;
             }
-        }
 
-        public Vector3 Translation { get; } 
+        public Vector3 Translation { get; set; }
+        public Vector3 Rotation { get; }
         public Vector3 Pivot { get; } 
         private Vector3 _offset { get; set; } = Vector3.Zero;
         public Vector3 Offset
         {
             get => _offset;
-            set
-            {
-                if (value != _offset)
-                {
-                    _offset = value;
+            set => _offset = value;
                 }
-            }
-        }
 
-        public override Matrix4 Transform => Matrix4.CreateTranslation(Translation + _offset) * Matrix4.CreateScale(1f, -1f, -1f);
+        public override Matrix4 Transform => (Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Rotation.X)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Rotation.Y)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z))).Pivoted(Translation + _offset, Pivot);
 
         public int Count => cubes.Count;
 
@@ -77,32 +66,46 @@ namespace PckStudio.Rendering
 
         private bool _flipZMapping = false;
 
-        internal CubeMeshCollection(string name) : base(name, PrimitiveType.Triangles, CubeMesh.VertexBufferLayout)
+        internal CubeMeshCollection(string name, bool visible = true) : base(name, visible, PrimitiveType.Triangles, CubeMesh.VertexBufferLayout)
         {
-            cubes = new List<CubeMesh>(5);
+            cubes = new List<GenericMesh<TextureVertex>>(5);
+            subCollection = new Dictionary<string, CubeMeshCollection>();
         }
 
-        internal CubeMeshCollection(string name, Vector3 translation, Vector3 pivot)
+        internal CubeMeshCollection(string name, Vector3 translation, Vector3 pivot, Vector3 rotation = default)
             : this(name)
         {
             Translation = translation;
             Pivot = pivot;
+            Rotation = rotation;
+        }
+
+        public override GenericMesh<TextureVertex> SetVisible(bool visible)
+        {
+            if (Visible == visible)
+                return this;
+
+            var mesh = new CubeMeshCollection(Name, visible);
+            mesh.cubes = this.cubes;
+            return mesh;
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()
-            => cubes.Where(c => c.ShouldRender).SelectMany(c => c.GetVertices());
+            => cubes.Where(c => c.Visible).SelectMany(c =>
+                c.GetVertices().Select(vertex => new TextureVertex(Vector3.TransformPosition(vertex.Position, c.Transform), vertex.TexPosition))
+            );
 
         internal override IEnumerable<int> GetIndices()
         {
             int offset = 0;
-            IEnumerable<int> selector(CubeMesh c)
+            IEnumerable<int> selector(GenericMesh<TextureVertex> c)
             {
                 IEnumerable<int> result = c.GetIndices().Select(i => i + offset).ToArray();
                 int vertexCount = c.GetVertices().Count();
                 offset += vertexCount;
                 return result;
             }
-            return cubes.Where(c => c.ShouldRender).SelectMany(selector);
+            return cubes.Where(c => c.Visible).SelectMany(selector);
         }
 
         internal void Add(Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
@@ -115,6 +118,19 @@ namespace PckStudio.Rendering
         {
             var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping);
             Add(new CubeMesh(cube).SetName(name));
+        }
+
+        internal void AddSubCollection(string name, Vector3 translation, Vector3 pivot, Vector3 rotation = default)
+        {
+            var item = new CubeMeshCollection(name, translation, pivot, rotation);
+            Add(item);
+            subCollection.Add(name, item);
+        }
+
+        internal CubeMeshCollection GetCollection(string collectionName)
+        {
+            _ = collectionName ?? throw new ArgumentNullException(nameof(collectionName));
+            return ContainsCollection(collectionName) ? subCollection[collectionName] : null; 
         }
 
         internal void Remove(int index)
@@ -130,7 +146,9 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            cubes[index] = cubes[index].SetCube(new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping));
+
+            if (cubes[index] is CubeMesh cubeMesh)
+            cubes[index] = cubeMesh.SetCube(new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping));
         }
 
         internal Vector3 GetCenter(int index)
@@ -138,7 +156,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].Center + Offset;
+            return cubes[index] is CubeMesh c ? c.Center + Offset : Vector3.Zero;
         }
          
         internal BoundingBox GetCubeBoundingBox(int index)

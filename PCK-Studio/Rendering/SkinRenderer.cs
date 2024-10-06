@@ -85,13 +85,25 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public Color HighlightlingColor { get; set; } = Color.Aqua;
 
-        public float MouseSensetivity { get; set; } = 0.01f;
         public int SelectedIndex
         {
-            get => selectedIndex;
+            get => selectedIndices.Length > 0 ? selectedIndices[0] : -1;
             set
             {
-                selectedIndex = value;
+                if (selectedIndices.Length <= 0)
+                    selectedIndices = new int[1];
+                selectedIndices[0] = value;
+                if (CenterOnSelect)
+                    CenterSelectedObject();
+            }
+        }
+
+        public int[] SelectedIndices
+        {
+            get => selectedIndices;
+            set
+            {
+                selectedIndices = value;
                 if (CenterOnSelect)
                     CenterSelectedObject();
             }
@@ -172,32 +184,11 @@ namespace PckStudio.Rendering
         };
 
         private GuidelineMode guidelineMode { get; set; } = GuidelineMode.None;
-        private int selectedIndex = -1;
+        private int[] selectedIndices = Array.Empty<int>();
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
         private const float OverlayScale = 0.25f;
-
-        private bool IsMouseHidden
-        {
-            get => !Cursor.IsVisible();
-            set
-            {
-                if (value)
-                {
-                    Cursor.Hide();
-                    return;
-                }
-                Cursor.Show();
-            }
-        }
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool LockMousePosition { get; set; } = false;
-
-        private Point PreviousMouseLocation;
-        private Point CurrentMouseLocation;
 
         private VertexBufferLayout plainColorVertexBufferLayout;
 
@@ -255,7 +246,7 @@ namespace PckStudio.Rendering
 
         private bool initialized = false;
 
-        public SkinRenderer() : base()
+        public SkinRenderer() : base(fov: 60f)
         {
             InitializeSkinData();
             InitializeCapeData();
@@ -278,7 +269,6 @@ namespace PckStudio.Rendering
             InitializeArmorData();
             InitializeCamera();
             InitializeComponent();
-            InitializeDebug();
 
             ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
             ModelData = new ObservableCollection<SkinBOX>();
@@ -293,8 +283,6 @@ namespace PckStudio.Rendering
             MakeCurrent();
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
-            GLErrorCheck();
-            base.Initialize();
             GLErrorCheck();
             initialized = true;
         }
@@ -399,10 +387,6 @@ namespace PckStudio.Rendering
         private void InitializeShaders()
         {
             MakeCurrent();
-
-            Trace.TraceInformation(GL.GetString(StringName.Version));
-
-            
             plainColorVertexBufferLayout = new VertexBufferLayout();
             plainColorVertexBufferLayout.Add(ShaderDataType.Float3);
             plainColorVertexBufferLayout.Add(ShaderDataType.Float4);
@@ -415,7 +399,7 @@ namespace PckStudio.Rendering
                     new ShaderSource(ShaderType.GeometryShader, Resources.texturedCubeGeometryShader)
                     );
                 cubeShader.Bind();
-                cubeShader.SetUniform1("u_Texture", 0);
+                cubeShader.SetUniform1("Texture", 0);
                 cubeShader.Validate();
                 AddShader("CubeShader", cubeShader);
                 GLErrorCheck();
@@ -597,8 +581,6 @@ namespace PckStudio.Rendering
 
                 GLErrorCheck();
             }
-
-            InitializeDebugShaders();
         }
 
         private DrawContext GetGuidelineDrawContext()
@@ -772,13 +754,6 @@ namespace PckStudio.Rendering
         {
             switch (keyData)
             {
-#if DEBUG
-                case Keys.Escape:
-                    ReleaseMouse();
-                    var point = new Point(Parent.Location.X + Location.X, Parent.Location.Y + Location.Y);
-                    debugContextMenuStrip1.Show(point);
-                    return true;
-#endif
                 case Keys.F3:
                     showWireFrame = !showWireFrame;
                     return true;
@@ -867,12 +842,12 @@ namespace PckStudio.Rendering
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
-                Matrix4 transform = Matrix4.Identity;
+                Matrix4 transform = Matrix4.CreateScale(1f, -1f, -1f);
 
                 ShaderProgram cubeShader = GetShader("CubeShader");
                 cubeShader.Bind();
-                cubeShader.SetUniformMat4("u_ViewProjection", ref viewProjection);
-                cubeShader.SetUniform2("u_TexSize", TextureSize);
+                cubeShader.SetUniformMat4("ViewProjection", ref viewProjection);
+                cubeShader.SetUniform2("TexSize", TextureSize);
 
                 skinTexture.Bind();
 
@@ -923,7 +898,7 @@ namespace PckStudio.Rendering
 
                 if (_capeImage is not null)
                 {
-                    cubeShader.SetUniform2("u_TexSize", new Vector2(64, 32));
+                    cubeShader.SetUniform2("TexSize", new Vector2(64, 32));
                     capeTexture.Bind();
                     // Defines minimum Angle(in Degrees) of the cape
                     float capeMinimumRotationAngle = 7.5f;
@@ -942,7 +917,7 @@ namespace PckStudio.Rendering
                 if (ShowArmor && !ANIM.GetFlag(SkinAnimFlag.ALL_ARMOR_DISABLED))
                 {
                     armorTexture.Bind();
-                    cubeShader.SetUniform2("u_TexSize", new Vector2(64, 64));
+                    cubeShader.SetUniform2("TexSize", new Vector2(64, 64));
                     if (!ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_HEAD_ARMOR))
                         RenderPart(cubeShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, transform);
                     
@@ -991,14 +966,13 @@ namespace PckStudio.Rendering
                     GL.DepthFunc(DepthFunction.Less);
                 }
 
-                if (ModelData.IndexInRange(SelectedIndex))
+                BoundingBox boundingBox = GetSelectedBoundingArea();
+
+                Matrix4 boundingBoxTransform = transform;
+
+                if (SelectedIndices.Length == 1 && ModelData.IndexInRange(SelectedIndices[0]))
                 {
-                    SkinBOX box = ModelData[SelectedIndex];
-
-                    float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
-                    Cube cube = box.ToCube(inflate);
-
-                    BoundingBox cubeBoundingBox = cube.GetBoundingBox();
+                    SkinBOX box = ModelData[SelectedIndices[0]];
 
                     if (meshStorage.ContainsKey(box.Type))
                     {
@@ -1024,17 +998,14 @@ namespace PckStudio.Rendering
                                     return Matrix4.Identity;
                             }
                         }
-
-                        Matrix4 bbTransform = GetGroupTransform(box.Type);
-                        bbTransform *= cubeMesh.Transform;
-                        bbTransform *= transform;
-                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
-                        DrawBoundingBox(bbTransform, cubeBoundingBox, HighlightlingColor);
-                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                        boundingBoxTransform = GetGroupTransform(box.Type) * boundingBoxTransform;
                     }
                 }
-            }
 
+                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
+                DrawBoundingBox(boundingBoxTransform, boundingBox, HighlightlingColor);
+                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                    }
 
             // Ground plane
             {
@@ -1052,70 +1023,31 @@ namespace PckStudio.Rendering
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             }
 
-            // Debug
-            RenderDebug();
             FramebufferEnd();
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        private BoundingBox GetSelectedBoundingArea()
         {
-            base.OnMouseMove(e);
-
-            float mouseSensetivity = LockMousePosition ? MouseSensetivity : 64f * 3 * (1f/56f) * MouseSensetivity;
-
-            float deltaX = (Cursor.Position.X - CurrentMouseLocation.X) * mouseSensetivity;
-            float deltaY = (Cursor.Position.Y - CurrentMouseLocation.Y) * mouseSensetivity;
-
-            switch (e.Button)
+            IEnumerable<BoundingBox> GetBoundingBoxesFromSelectedIndices(IEnumerable<int> selectedIndices)
             {
-                case MouseButtons.None:
-                case MouseButtons.Middle:
-                case MouseButtons.XButton1:
-                case MouseButtons.XButton2:
-                    break;
-                case MouseButtons.Left:
-                    Camera.Rotate(deltaX, deltaY);
-                    goto default;
-                case MouseButtons.Right:
-                    Camera.Pan(deltaX, deltaY);
-                    goto default;
-                default:
-                    if (LockMousePosition)
-                        Cursor.Position = PointToScreen(new Point((int)Math.Round(Bounds.Width / 2d), (int)Math.Round(Bounds.Height / 2d)));
-                    CurrentMouseLocation = Cursor.Position;
-                    break;
+                foreach (var selectedIndex in selectedIndices)
+                {
+                    if (!ModelData.IndexInRange(selectedIndex))
+                        continue;
+
+                    SkinBOX box = ModelData[selectedIndex];
+
+                    if (!meshStorage.ContainsKey(box.Type))
+                        continue;
+
+                    float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
+                    Cube cube = box.ToCube(inflate);
+                    CubeMeshCollection cubeMesh = meshStorage[box.Type];
+                    yield return cube.GetBoundingBox(cubeMesh.Transform);
+        }
+                yield break;
             }
-        }
-
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            Camera.Distance -= e.Delta / System.Windows.Input.Mouse.MouseWheelDeltaForOneLine;
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            ReleaseMouse();
-            base.OnMouseUp(e);
-        }
-
-        private void ReleaseMouse()
-        {
-            if (LockMousePosition)
-            {
-                Cursor.Position = PreviousMouseLocation;
-                if (IsMouseHidden)
-                    IsMouseHidden = false;
-            }
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
-            {
-                CurrentMouseLocation = PreviousMouseLocation = Cursor.Position;
-                IsMouseHidden = LockMousePosition;
-            }
+            return SelectedIndices.Length >= 1 ? GetBounds(GetBoundingBoxesFromSelectedIndices(SelectedIndices)) : BoundingBox.Empty;
         }
 
         private void RenderBodyPart(ShaderProgram shader, Matrix4 partsMatrix, Matrix4 globalMatrix, params string[] partNames)
@@ -1129,8 +1061,7 @@ namespace PckStudio.Rendering
         private void RenderPart<T>(ShaderProgram shader, GenericMesh<T> mesh, Matrix4 partMatrix, Matrix4 globalMatrix) where T : struct
         {
             Matrix4 transform = partMatrix * mesh.Transform * globalMatrix;
-            shader.SetUniformMat4("u_Transform", ref transform);
-            DrawMesh(mesh, shader);
+            DrawMesh(mesh, shader, transform);
         }
 
         protected override void OnUpdate(object sender, TimeSpan timestep)
@@ -1165,182 +1096,5 @@ namespace PckStudio.Rendering
                 AddCustomModelPart(item);
             }
         }
-
-        [Conditional("DEBUG")]
-        private void InitializeDebugShaders()
-        {
-#if DEBUG
-            // Debug point render
-            {
-                ColorVertex[] vertices = [
-                    new ColorVertex(Vector3.Zero, Color.White),
-                ];
-                VertexArray vao = new VertexArray();
-                var debugVBO = new VertexBuffer();
-                debugVBO.SetData(vertices);
-                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
-                d_debugPointDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Points);
-            }
-            // Debug line render
-            {
-                ColorVertex[] vertices = [
-                    new ColorVertex(Vector3.Zero, Color.Red)  , new ColorVertex(Vector3.UnitX, Color.Red),
-                    new ColorVertex(Vector3.Zero, Color.Green), new ColorVertex(Vector3.UnitY, Color.Green),
-                    new ColorVertex(Vector3.Zero, Color.Blue) , new ColorVertex(Vector3.UnitZ, Color.Blue),
-                ];
-                VertexArray vao = new VertexArray();
-                var debugVBO = new VertexBuffer();
-                debugVBO.SetData(vertices);
-                vao.AddBuffer(debugVBO, plainColorVertexBufferLayout);
-                d_debugLineDrawContext = new DrawContext(vao, debugVBO.GenIndexBuffer(), PrimitiveType.Lines);
-            }
-#endif
-        }
-
-        [Conditional("DEBUG")]
-        private void RenderDebug()
-        {
-#if DEBUG
-            ShaderProgram colorShader = GetShader("PlainColorShader");
-            Matrix4 viewProjection = Camera.GetViewProjection();
-            colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
-            if (d_showFocalPoint)
-            {
-                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                GL.DepthFunc(DepthFunction.Always);
-                GL.DepthMask(false);
-                GL.Enable(EnableCap.PointSmooth);
-                colorShader.Bind();
-                Matrix4 transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
-                colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniform1("intensity", 0.75f);
-                colorShader.SetUniform4("baseColor", Color.DeepPink);
-                GL.PointSize(5f);
-                Renderer.Draw(colorShader, d_debugPointDrawContext);
-                GL.PointSize(1f);
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            }
-            if (d_showDirectionArrows)
-            {
-                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
-                GL.DepthFunc(DepthFunction.Always);
-                GL.DepthMask(false);
-                GL.Enable(EnableCap.LineSmooth);
-                colorShader.Bind();
-
-                Matrix4 transform = Matrix4.CreateScale(1, -1, -1);
-                transform *= Matrix4.CreateTranslation(Vector3.Zero);
-                transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
-                transform.Invert();
-                colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniform1("intensity", 0.75f);
-                colorShader.SetUniform4("baseColor", Color.White);
-
-                Renderer.SetLineWidth(2f);
-
-                Renderer.Draw(colorShader, d_debugLineDrawContext);
-
-                Renderer.SetLineWidth(1f);
-
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            }
-            d_debugLabel.Text = Camera.ToString();
-#endif
-        }
-
-        [Conditional("DEBUG")]
-        private void InitializeDebug()
-        {
-#if DEBUG
-            reToolStripMenuItem = new ToolStripMenuItem();
-            debugContextMenuStrip1 = new ContextMenuStrip(this.components);
-            guidelineModeToolStripMenuItem = new ToolStripMenuItem();
-            debugContextMenuStrip1.SuspendLayout();
-            SuspendLayout();
-            // 
-            // contextMenuStrip1
-            // 
-            debugContextMenuStrip1.Items.AddRange(new ToolStripItem[] {
-            reToolStripMenuItem,
-            guidelineModeToolStripMenuItem});
-            debugContextMenuStrip1.Name = "contextMenuStrip1";
-            debugContextMenuStrip1.Size = new Size(159, 48);
-            // 
-            // reToolStripMenuItem
-            // 
-            reToolStripMenuItem.Name = "reToolStripMenuItem";
-            reToolStripMenuItem.Size = new Size(158, 22);
-            reToolStripMenuItem.Text = "Re-Init";
-            reToolStripMenuItem.Click += new EventHandler(this.reInitToolStripMenuItem_Click);
-            // 
-            // guidelineModeToolStripMenuItem
-            // 
-            guidelineModeToolStripMenuItem.Name = "guidelineModeToolStripMenuItem";
-            guidelineModeToolStripMenuItem.Size = new Size(158, 22);
-            guidelineModeToolStripMenuItem.Text = "Guideline Mode";
-            guidelineModeToolStripMenuItem.Click += new EventHandler(this.guidelineModeToolStripMenuItem_Click);
-            // 
-            // debugLabel
-            // 
-            d_debugLabel = new Label();
-            d_debugLabel.AutoSize = true;
-            d_debugLabel.Visible = false;
-            d_debugLabel.BackColor = Color.Transparent;
-            d_debugLabel.ForeColor = SystemColors.ControlLight;
-            d_debugLabel.Location = new Point(3, 4);
-            d_debugLabel.Name = "debugLabel";
-            d_debugLabel.Size = new Size(37, 13);
-            d_debugLabel.TabIndex = 2;
-            d_debugLabel.Text = "debug";
-            var debugCameraToolStripMenuItem = new ToolStripMenuItem("Show Camera debug information");
-            debugCameraToolStripMenuItem.CheckOnClick = true;
-            debugCameraToolStripMenuItem.Click += (s, e) => d_debugLabel.Visible = debugCameraToolStripMenuItem.Checked;
-            debugContextMenuStrip1.Items.Add(debugCameraToolStripMenuItem);
-
-            var debugShowFocalPointToolStripMenuItem = new ToolStripMenuItem("Show Camera Focal point");
-            debugShowFocalPointToolStripMenuItem.CheckOnClick = true;
-            debugShowFocalPointToolStripMenuItem.Click += (s, e) => d_showFocalPoint = debugShowFocalPointToolStripMenuItem.Checked;
-            debugContextMenuStrip1.Items.Add(debugShowFocalPointToolStripMenuItem);
-
-            var debugShowDirectionArrows = new ToolStripMenuItem("Show Direction Arrows");
-            debugShowDirectionArrows.CheckOnClick = true;
-            debugShowDirectionArrows.Click += (s, e) => d_showDirectionArrows = debugShowDirectionArrows.Checked;
-            debugContextMenuStrip1.Items.Add(debugShowDirectionArrows);
-
-            Controls.Add(d_debugLabel);
-
-            this.debugContextMenuStrip1.ResumeLayout(false);
-#endif
-        }
-
-#if DEBUG
-        private bool d_showFocalPoint;
-        private bool d_showDirectionArrows;
-        private DrawContext d_debugPointDrawContext;
-        private DrawContext d_debugLineDrawContext;
-        private Label d_debugLabel;
-        private ToolStripMenuItem reToolStripMenuItem;
-        private ContextMenuStrip debugContextMenuStrip1;
-        private ToolStripMenuItem guidelineModeToolStripMenuItem;
-
-        private void reInitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ReInitialzeSkinData();
-            MakeCurrent();
-        }
-
-        private void guidelineModeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!Enum.IsDefined(typeof(GuidelineMode), ++guidelineMode))
-            {
-                guidelineMode = GuidelineMode.None;
-            }
-            guidelineModeToolStripMenuItem.Text = $"Guideline Mode: {guidelineMode}";
-        }
-#endif
     }
 }
