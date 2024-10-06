@@ -36,9 +36,15 @@
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.modelViewport = new PckStudio.Rendering.ModelRenderer();
+            this.namedTexturesTreeView = new System.Windows.Forms.TreeView();
+            this.textureImageList = new System.Windows.Forms.ImageList(this.components);
             this.modelContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // modelTreeView
@@ -50,10 +56,12 @@
             this.modelTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.modelTreeView.ContextMenuStrip = this.modelContextMenu;
             this.modelTreeView.ForeColor = System.Drawing.SystemColors.Window;
-            this.modelTreeView.Location = new System.Drawing.Point(20, 87);
+            this.modelTreeView.HideSelection = false;
+            this.modelTreeView.Location = new System.Drawing.Point(3, 3);
             this.modelTreeView.Name = "modelTreeView";
             this.modelTreeView.PathSeparator = ".";
-            this.modelTreeView.Size = new System.Drawing.Size(335, 368);
+            this.tableLayoutPanel1.SetRowSpan(this.modelTreeView, 2);
+            this.modelTreeView.Size = new System.Drawing.Size(239, 340);
             this.modelTreeView.TabIndex = 0;
             this.modelTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.modelTreeView_BeforeSelect);
             // 
@@ -95,7 +103,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(20, 60);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(335, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(510, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -103,30 +111,93 @@
             // 
             this.fileToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem1,
             this.saveToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // importToolStripMenuItem1
+            // 
+            this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Text = "Import";
+            this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.modelTreeView, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.modelViewport, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.namedTexturesTreeView, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 84);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(510, 346);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // modelViewport
+            // 
+            this.modelViewport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.modelViewport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.modelViewport.Location = new System.Drawing.Point(248, 3);
+            this.modelViewport.MouseSensetivity = 0.01F;
+            this.modelViewport.Name = "modelViewport";
+            this.modelViewport.RefreshRate = 120;
+            this.modelViewport.Size = new System.Drawing.Size(259, 201);
+            this.modelViewport.TabIndex = 1;
+            this.modelViewport.VSync = true;
+            // 
+            // namedTexturesTreeView
+            // 
+            this.namedTexturesTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.namedTexturesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.namedTexturesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.namedTexturesTreeView.ForeColor = System.Drawing.SystemColors.Window;
+            this.namedTexturesTreeView.FullRowSelect = true;
+            this.namedTexturesTreeView.HideSelection = false;
+            this.namedTexturesTreeView.ImageIndex = 0;
+            this.namedTexturesTreeView.ImageList = this.textureImageList;
+            this.namedTexturesTreeView.Location = new System.Drawing.Point(248, 210);
+            this.namedTexturesTreeView.Name = "namedTexturesTreeView";
+            this.namedTexturesTreeView.SelectedImageIndex = 0;
+            this.namedTexturesTreeView.ShowLines = false;
+            this.namedTexturesTreeView.ShowPlusMinus = false;
+            this.namedTexturesTreeView.ShowRootLines = false;
+            this.namedTexturesTreeView.Size = new System.Drawing.Size(259, 133);
+            this.namedTexturesTreeView.TabIndex = 2;
+            this.namedTexturesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.namedTexturesTreeView_AfterSelect);
+            // 
+            // textureImageList
+            // 
+            this.textureImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.textureImageList.ImageSize = new System.Drawing.Size(36, 36);
+            this.textureImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // ModelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 475);
+            this.ClientSize = new System.Drawing.Size(550, 450);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.modelTreeView);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(375, 475);
+            this.MinimumSize = new System.Drawing.Size(550, 450);
             this.Name = "ModelEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "ModelEditor";
@@ -134,6 +205,7 @@
             this.modelContextMenu.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,6 +220,11 @@
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private Rendering.ModelRenderer modelViewport;
+        private System.Windows.Forms.TreeView namedTexturesTreeView;
+        private System.Windows.Forms.ImageList textureImageList;
     }
 }

@@ -11,7 +11,9 @@ using OMI.Formats.Model;
 using MetroFramework.Forms;
 
 using PckStudio.Internal;
+using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
+using PckStudio.Extensions;
 
 namespace PckStudio.Forms.Editor
 {
@@ -142,7 +144,7 @@ namespace PckStudio.Forms.Editor
             private static IEnumerable<TreeNode> GetModelPartNodes(IEnumerable<ModelPart> parts) => parts.Select(ModelPartNode.Create);
 
             internal static ModelNode Create(Model model) => new ModelNode(model);
-            }
+        }
 
         private class ModelPartNode : TreeNode
         {
@@ -161,7 +163,7 @@ namespace PckStudio.Forms.Editor
             private static IEnumerable<TreeNode> GetModelBoxNodes(IEnumerable<ModelBox> boxes) => boxes.Select(ModelBoxNode.Create);
 
             internal static ModelPartNode Create(ModelPart part) => new ModelPartNode(part);
-            }
+        }
 
         private class ModelBoxNode : TreeNode
         {
@@ -175,6 +177,20 @@ namespace PckStudio.Forms.Editor
             }
 
             internal static ModelBoxNode Create(ModelBox modelBox) => new ModelBoxNode(modelBox);
+        }
+
+        private class NamedTextureTreeNode : TreeNode
+        {
+            private readonly NamedTexture _namedTexture;
+
+            public NamedTextureTreeNode(NamedTexture namedTexture)
+                : base(namedTexture.Name)
+            {
+                Tag = namedTexture;
+                _namedTexture = namedTexture;
+            }
+
+            public Image GetTexture() => _namedTexture.Texture;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -200,18 +216,6 @@ namespace PckStudio.Forms.Editor
                 openFileDialog.FileName = model.Name;
                 openFileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;
 
-                IEnumerable<NamedTexture> GetModelTextures(string modelName)
-                {
-                    if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
-                        yield break;
-                    foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
-                    {
-                        if (_tryGetTexture(textureLocation, out Image img))
-                            yield return new NamedTexture(Path.GetFileName(textureLocation), img);
-                    }
-                    yield break;
-                }
-
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
                     IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
@@ -226,11 +230,81 @@ namespace PckStudio.Forms.Editor
             exportToolStripMenuItem.Visible = e.Node is ModelNode;
             editToolStripMenuItem.Visible = e.Node is ModelBoxNode;
             removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
+            if (e.Node is ModelNode modelNode)
+            {
+                NamedTexture[] textures = GetModelTextures(modelNode.Model.Name).ToArray();
+                
+                textureImageList.Images.Clear();
+                namedTexturesTreeView.Nodes.Clear();
+
+                foreach ((int i, NamedTexture item) in textures.enumerate())
+                {
+                    textureImageList.Images.Add(item.Texture);
+                    namedTexturesTreeView.Nodes.Add(new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i });
+                }
+                if (textures.Length != 0)
+                    modelViewport.Texture = textures[0].Texture;
+
+                modelViewport.Model = modelNode.Model;
+            }
+        }
+
+        private IEnumerable<NamedTexture> GetModelTextures(string modelName)
+        {
+            if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
+                yield break;
+            foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
+            {
+                if (_tryGetTexture(textureLocation, out Image img))
+                    yield return new NamedTexture(Path.GetFileName(textureLocation), img);
+            }
+            yield break;
+        }
+
+        private void importToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;
+            fileDialog.Title = "Select model";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                GameModelInfo modelInfo = GameModelImporter.Default.Import(fileDialog.FileName);
+                if (modelInfo is null)
+                {
+                    MessageBox.Show("Import failed.", ProductName);
+                    return;
+                }
+
+                if (!GameModelImporter.ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
+                {
+                    MessageBox.Show($"Couldn't get model meta data for: '{modelInfo.Model.Name}'.", ProductName);
+                    return;
+                }
+
+                //if (models.Version < modelInfo.ModelVersion)
+                //{
+                //	MessageBox.Show("Model container version does not match with the model version.", ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //	return;
+                //}
+
+                _models.Add(modelInfo.Model);
+
+                foreach (NamedTexture texture in modelInfo.Textures)
+                {
+                    _trySetTexture(texture.Name, texture.Texture);
+                }
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+        }
+
+        private void namedTexturesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (namedTexturesTreeView.SelectedNode is NamedTextureTreeNode namedTextureNode)
+                modelViewport.Texture = namedTextureNode.GetTexture();
         }
     }
 }

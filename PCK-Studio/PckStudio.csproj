@@ -217,6 +217,12 @@
     <Compile Include="Rendering\IndexBuffer.cs" />
     <Compile Include="Rendering\DrawContext.cs" />
     <Compile Include="Rendering\ColorVertex.cs" />
+    <Compile Include="Rendering\ModelRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Rendering\ModelRenderer.Designer.cs">
+      <DependentUpon>ModelRenderer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\GenericMesh.cs" />
     <Compile Include="Rendering\Shader\ShaderLibrary.cs" />
@@ -611,6 +617,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rendering\ModelRenderer.resx">
+      <DependentUpon>ModelRenderer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Rendering\SkinRenderer.resx">
       <DependentUpon>SkinRenderer.cs</DependentUpon>
