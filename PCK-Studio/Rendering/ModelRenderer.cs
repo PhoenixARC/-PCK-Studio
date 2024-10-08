@@ -206,10 +206,7 @@ namespace PckStudio.Rendering
             if (DesignMode)
                 return;
             if (!Context.IsCurrent)
-                MakeCurrent();
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
+                return;
 
             GL.Enable(EnableCap.Texture2D); // Enable textures
 
@@ -226,7 +223,7 @@ namespace PckStudio.Rendering
 
             if (RenderModelBounds)
             {
-            DrawBoundingBox(Matrix4.CreateScale(1f, -1f, -1f), _maxBounds, Color.Red);
+                DrawBoundingBox(Matrix4.CreateScale(1f, -1f, -1f), _maxBounds, Color.Red);
             }
 
             foreach (CubeMeshCollection item in _rootCollection)

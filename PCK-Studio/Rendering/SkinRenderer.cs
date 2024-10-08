@@ -168,7 +168,6 @@ namespace PckStudio.Rendering
             Bitmap bmp = new Bitmap(Width, Height);
             BitmapData data = bmp.LockBits(ClientRectangle, ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            MakeCurrent();
             GL.Finish();
             GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             bmp.UnlockBits(data);
@@ -280,7 +279,6 @@ namespace PckStudio.Rendering
             if (initialized)
                 Debug.Fail("Already Initialized!");
             autoInflateOverlayParts = inflateOverlayParts;
-            MakeCurrent();
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
             GLErrorCheck();
@@ -386,7 +384,6 @@ namespace PckStudio.Rendering
 
         private void InitializeShaders()
         {
-            MakeCurrent();
             plainColorVertexBufferLayout = new VertexBufferLayout();
             plainColorVertexBufferLayout.Add(ShaderDataType.Float3);
             plainColorVertexBufferLayout.Add(ShaderDataType.Float4);
@@ -798,13 +795,8 @@ namespace PckStudio.Rendering
                 return;
             }
 
-            MakeCurrent();
-
             FramebufferBegin();
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
-            GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
             GL.Enable(EnableCap.LineSmooth);
             Matrix4 viewProjection = Camera.GetViewProjection();
 

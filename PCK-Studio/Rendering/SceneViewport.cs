@@ -75,11 +75,7 @@ namespace PckStudio.Rendering
 
         protected PerspectiveCamera Camera { get; }
 
-        protected virtual void OnUpdate(object sender, TimeSpan timestep)
-        {
-            if (IsHandleCreated && !IsDisposed)
-                SwapBuffers();
-        }
+        protected virtual void OnUpdate(object sender, TimeSpan timestep) { }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -165,8 +161,8 @@ namespace PckStudio.Rendering
             }
             MakeCurrent();
             Trace.TraceInformation(GL.GetString(StringName.Version));
-            GL.DebugMessageCallback(DebugProc, IntPtr.Zero);
-            AddShader("Internal_colorShader", ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader));
+            GL.DebugMessageCallback(DebugProc, this.Handle);
+            AddShader("Internal_colorShader", Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
             var vao = new VertexArray();
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float3);
@@ -285,11 +281,10 @@ namespace PckStudio.Rendering
             return boundingBoxes.Aggregate((a, b) => new BoundingBox(Vector3.ComponentMin(a.Start, b.Start), Vector3.ComponentMax(a.End, b.End)));
         }
 
-        void DebugProc(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
+        static void DebugProc(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr instanceHandle)
         {
             string dbgMessage = Marshal.PtrToStringAnsi(message, length);
-
-            Debug.WriteLine($"{source} {type} {severity}: {dbgMessage}");
+            Debug.WriteLine($"{source}:{id} {type} {severity}: {dbgMessage}");
         }
 
         [Conditional("DEBUG")]
@@ -373,7 +368,6 @@ namespace PckStudio.Rendering
         [Conditional("USE_FRAMEBUFFER")]
         private void SetFramebufferSize(Size size)
         {
-            MakeCurrent();
             if (_framebuffer is not null)
             {
                 _framebuffer.Bind();
@@ -406,12 +400,19 @@ namespace PckStudio.Rendering
         private void TimerTick(object sender, EventArgs e)
         {
             long tick = DateTime.UtcNow.Ticks - _lastTick;
-            Refresh();
             _lastTick = DateTime.UtcNow.Ticks;
-            if (!HasValidContext)
-                MakeCurrent();
-            RenderDebug();
             OnUpdate(sender, TimeSpan.FromTicks(tick));
+            Refresh();
+            RenderDebug();
+            if (IsHandleCreated && !IsDisposed)
+                SwapBuffers();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -419,7 +420,6 @@ namespace PckStudio.Rendering
             base.OnSizeChanged(e);
             if (DesignMode)
                 return;
-            MakeCurrent();
             if (Camera is not null)
             {
                 Camera.ViewportSize = ClientSize;
@@ -526,16 +526,18 @@ namespace PckStudio.Rendering
         private void RenderDebug()
         {
 #if DEBUG
+            d_debugLabel.Text = Camera.ToString();
+            GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
+            GL.DepthMask(false);
+            GL.DepthFunc(DepthFunction.Always);
+            GL.Enable(EnableCap.PointSmooth);
+            GL.Enable(EnableCap.LineSmooth);
             ShaderProgram colorShader = GetShader("Internal_colorShader");
+            colorShader.Bind();
             Matrix4 viewProjection = Camera.GetViewProjection();
             colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
             if (d_showFocalPoint)
             {
-                GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
-                GL.DepthFunc(DepthFunction.Always);
-                GL.DepthMask(false);
-                GL.Enable(EnableCap.PointSmooth);
-                colorShader.Bind();
                 Matrix4 transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
                 colorShader.SetUniformMat4("Transform", ref transform);
                 colorShader.SetUniform1("intensity", 0.75f);
@@ -543,18 +545,9 @@ namespace PckStudio.Rendering
                 GL.PointSize(5f);
                 Renderer.Draw(colorShader, d_debugPointDrawContext);
                 GL.PointSize(1f);
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             }
             if (d_showDirectionArrows)
             {
-                GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
-                GL.DepthFunc(DepthFunction.Always);
-                GL.DepthMask(false);
-                GL.Enable(EnableCap.LineSmooth);
-                colorShader.Bind();
-
                 Matrix4 transform = Matrix4.CreateScale(1, -1, -1);
                 transform *= Matrix4.CreateTranslation(Vector3.Zero);
                 transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
@@ -569,11 +562,10 @@ namespace PckStudio.Rendering
 
                 Renderer.SetLineWidth(1f);
 
+            }
                 GL.DepthMask(true);
                 GL.DepthFunc(DepthFunction.Less);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            }
-            d_debugLabel.Text = Camera.ToString();
 #endif
         }
 
