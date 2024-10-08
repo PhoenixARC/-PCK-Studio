@@ -42,6 +42,8 @@
             this.modelViewport = new PckStudio.Rendering.ModelRenderer();
             this.namedTexturesTreeView = new System.Windows.Forms.TreeView();
             this.textureImageList = new System.Windows.Forms.ImageList(this.components);
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showModelBoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modelContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -61,7 +63,7 @@
             this.modelTreeView.Name = "modelTreeView";
             this.modelTreeView.PathSeparator = ".";
             this.tableLayoutPanel1.SetRowSpan(this.modelTreeView, 2);
-            this.modelTreeView.Size = new System.Drawing.Size(239, 340);
+            this.modelTreeView.Size = new System.Drawing.Size(239, 440);
             this.modelTreeView.TabIndex = 0;
             this.modelTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.modelTreeView_BeforeSelect);
             // 
@@ -100,10 +102,11 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(20, 60);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(510, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(635, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -146,7 +149,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(510, 346);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(635, 446);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // modelViewport
@@ -157,7 +160,7 @@
             this.modelViewport.MouseSensetivity = 0.01F;
             this.modelViewport.Name = "modelViewport";
             this.modelViewport.RefreshRate = 120;
-            this.modelViewport.Size = new System.Drawing.Size(259, 201);
+            this.modelViewport.Size = new System.Drawing.Size(384, 261);
             this.modelViewport.TabIndex = 1;
             this.modelViewport.VSync = true;
             // 
@@ -171,13 +174,13 @@
             this.namedTexturesTreeView.HideSelection = false;
             this.namedTexturesTreeView.ImageIndex = 0;
             this.namedTexturesTreeView.ImageList = this.textureImageList;
-            this.namedTexturesTreeView.Location = new System.Drawing.Point(248, 210);
+            this.namedTexturesTreeView.Location = new System.Drawing.Point(248, 270);
             this.namedTexturesTreeView.Name = "namedTexturesTreeView";
             this.namedTexturesTreeView.SelectedImageIndex = 0;
             this.namedTexturesTreeView.ShowLines = false;
             this.namedTexturesTreeView.ShowPlusMinus = false;
             this.namedTexturesTreeView.ShowRootLines = false;
-            this.namedTexturesTreeView.Size = new System.Drawing.Size(259, 133);
+            this.namedTexturesTreeView.Size = new System.Drawing.Size(384, 173);
             this.namedTexturesTreeView.TabIndex = 2;
             this.namedTexturesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.namedTexturesTreeView_AfterSelect);
             // 
@@ -187,11 +190,28 @@
             this.textureImageList.ImageSize = new System.Drawing.Size(36, 36);
             this.textureImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showModelBoundsToolStripMenuItem});
+            this.viewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // showModelBoundsToolStripMenuItem
+            // 
+            this.showModelBoundsToolStripMenuItem.CheckOnClick = true;
+            this.showModelBoundsToolStripMenuItem.Name = "showModelBoundsToolStripMenuItem";
+            this.showModelBoundsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showModelBoundsToolStripMenuItem.Text = "Show Model Bounds";
+            this.showModelBoundsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.showModelBoundsToolStripMenuItem_CheckedChanged);
+            // 
             // ModelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 450);
+            this.ClientSize = new System.Drawing.Size(675, 550);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -226,5 +246,7 @@
         private Rendering.ModelRenderer modelViewport;
         private System.Windows.Forms.TreeView namedTexturesTreeView;
         private System.Windows.Forms.ImageList textureImageList;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showModelBoundsToolStripMenuItem;
     }
 }

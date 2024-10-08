@@ -306,5 +306,10 @@ namespace PckStudio.Forms.Editor
             if (namedTexturesTreeView.SelectedNode is NamedTextureTreeNode namedTextureNode)
                 modelViewport.Texture = namedTextureNode.GetTexture();
         }
+
+        private void showModelBoundsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            modelViewport.RenderModelBounds = showModelBoundsToolStripMenuItem.Checked;
+        }
     }
 }

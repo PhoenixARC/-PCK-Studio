@@ -51,6 +51,8 @@ namespace PckStudio.Rendering
             }
         }
 
+        public bool RenderModelBounds { get; set; }
+
         [Description("Event that gets fired when the skin texture is changing")]
         [Category("Property Chnaged")]
         [Browsable(true)]
@@ -222,7 +224,10 @@ namespace PckStudio.Rendering
 
             _modelRenderTexture.Bind();
 
+            if (RenderModelBounds)
+            {
             DrawBoundingBox(Matrix4.CreateScale(1f, -1f, -1f), _maxBounds, Color.Red);
+            }
 
             foreach (CubeMeshCollection item in _rootCollection)
             {
