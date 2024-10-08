@@ -95,10 +95,8 @@ namespace PckStudio.Rendering.Shader
         {
             if (locationCache.ContainsKey(name))
                 return locationCache[name];
-            int location = GL.GetUniformLocation(_programId, name);
-            Debug.Assert(location != -1);
-            locationCache.Add(name, location);
-            return location;
+            Debug.Assert(false, $"Uniform location '{name}' not found");
+            return -1;
         }
 
         private bool Link()
@@ -108,8 +106,25 @@ namespace PckStudio.Rendering.Shader
             bool success = status != 0;
             if (!success)
                 Debug.WriteLine(GL.GetProgramInfoLog(_programId), category: nameof(ShaderProgram));
+            GetActiveUniformLocations();
             return success;
         }
+
+        private void GetActiveUniformLocations()
+        {
+            GL.GetProgram(_programId, GetProgramParameterName.ActiveUniforms, out int count);
+            Debug.WriteLine("Active Uniforms: {0}", count);
+            for (int i = 0; i < count; i++)
+            {
+                GL.GetActiveUniform(_programId, i, 256, out int length, out int size, out ActiveUniformType type, out string name);
+                int id = GL.GetUniformLocation(_programId, name);
+                Debug.Assert(id != -1);
+                RegisterUniform(name, id, type);
+                Debug.WriteLine("Uniform {0}(id:{1}) Type: {2} Name: {3}", i, id, type, name);
+            }
+        }
+
+        private void RegisterUniform(string name, int id, ActiveUniformType type) => locationCache.Add(name, id);
 
         public bool Validate()
         {
