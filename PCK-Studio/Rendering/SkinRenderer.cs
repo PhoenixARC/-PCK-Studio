@@ -1042,7 +1042,7 @@ namespace PckStudio.Rendering
         }
                 yield break;
             }
-            return SelectedIndices.Length >= 1 ? GetBounds(GetBoundingBoxesFromSelectedIndices(SelectedIndices)) : BoundingBox.Empty;
+            return SelectedIndices.Length >= 1 ? BoundingBox.GetEnclosingBoundingBox(GetBoundingBoxesFromSelectedIndices(SelectedIndices)) : BoundingBox.Empty;
         }
 
         private void RenderBodyPart(ShaderProgram shader, Matrix4 partsMatrix, Matrix4 globalMatrix, params string[] partNames)

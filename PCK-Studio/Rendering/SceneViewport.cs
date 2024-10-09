@@ -283,11 +283,6 @@ namespace PckStudio.Rendering
             Renderer.SetLineWidth(1f);
         }
 
-        protected BoundingBox GetBounds(IEnumerable<BoundingBox> boundingBoxes)
-        {
-            return boundingBoxes.Aggregate((a, b) => new BoundingBox(Vector3.ComponentMin(a.Start, b.Start), Vector3.ComponentMax(a.End, b.End)));
-        }
-
         static void DebugProc(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr instanceHandle)
         {
             string dbgMessage = Marshal.PtrToStringAnsi(message, length);

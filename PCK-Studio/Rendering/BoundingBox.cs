@@ -68,5 +68,10 @@ namespace PckStudio.Rendering
                     3, 7
             ];
         }
+    
+        public static BoundingBox GetEnclosingBoundingBox(IEnumerable<BoundingBox> boundingBoxes)
+        {
+            return boundingBoxes.Aggregate((a, b) => new BoundingBox(OpenTK.Vector3.ComponentMin(a.Start, b.Start), OpenTK.Vector3.ComponentMax(a.End, b.End)));
+        }
     }
 }

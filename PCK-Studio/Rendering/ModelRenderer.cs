@@ -115,7 +115,7 @@ namespace PckStudio.Rendering
                     .Select(b => new ModelBox(b.Position + p.Translation, b.Size, System.Numerics.Vector2.Zero, 0f, false)))
                 .Select(b => new BoundingBox(b.Position, b.Position + b.Size));
             
-            _maxBounds = GetBounds(allBoxes);
+            _maxBounds = BoundingBox.GetEnclosingBoundingBox(allBoxes);
 
             if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
             {
