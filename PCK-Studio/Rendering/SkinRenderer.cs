@@ -490,8 +490,8 @@ namespace PckStudio.Rendering
             {
                 var lineShader = ShaderProgram.Create(Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
                 lineShader.Bind();
-                lineShader.SetUniform4("baseColor", Color.WhiteSmoke);
-                lineShader.SetUniform1("intensity", 0.5f);
+                lineShader.SetUniform4("BlendColor", Color.WhiteSmoke);
+                lineShader.SetUniform1("Intensity", 0.5f);
                 lineShader.Validate();
                 AddShader("PlainColorShader", lineShader);
 
@@ -950,8 +950,8 @@ namespace PckStudio.Rendering
                     lineShader.Bind();
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                     lineShader.SetUniformMat4("Transform", ref transform);
-                    lineShader.SetUniform1("intensity", 1f);
-                    lineShader.SetUniform4("baseColor", GuideLineColor);
+                    lineShader.SetUniform1("Intensity", 1f);
+                    lineShader.SetUniform4("BlendColor", GuideLineColor);
                     Renderer.SetLineWidth(2.5f);
                     Renderer.Draw(lineShader, GetGuidelineDrawContext());
                     Renderer.SetLineWidth(1f);
@@ -1007,8 +1007,8 @@ namespace PckStudio.Rendering
                 GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
                 lineShader.Bind();
                 lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
-                lineShader.SetUniform1("intensity", 0.5f);
-                lineShader.SetUniform4("baseColor", Color.AntiqueWhite);
+                lineShader.SetUniform1("Intensity", 0.5f);
+                lineShader.SetUniform4("BlendColor", Color.AntiqueWhite);
                 Matrix4 transform = Matrix4.CreateScale(25f) * Matrix4.CreateTranslation(new Vector3(0f, -24.1f, 0f));
                 lineShader.SetUniformMat4("Transform", ref transform);
                 Renderer.Draw(lineShader, _groundDrawContext);

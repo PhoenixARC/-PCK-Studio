@@ -261,8 +261,8 @@ namespace PckStudio.Rendering
             Matrix4 viewProjection = Camera.GetViewProjection();
             colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
             colorShader.SetUniformMat4("Transform", ref transform);
-            colorShader.SetUniform4("baseColor", color);
-            colorShader.SetUniform1("intensity", 0.6f);
+            colorShader.SetUniform4("BlendColor", color);
+            colorShader.SetUniform1("Intensity", 0.6f);
 
             GL.Enable(EnableCap.LineSmooth);
 
@@ -540,8 +540,8 @@ namespace PckStudio.Rendering
             {
                 Matrix4 transform = Matrix4.CreateTranslation(Camera.FocalPoint).Inverted();
                 colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniform1("intensity", 0.75f);
-                colorShader.SetUniform4("baseColor", Color.DeepPink);
+                colorShader.SetUniform1("Intensity", 0.75f);
+                colorShader.SetUniform4("BlendColor", Color.DeepPink);
                 GL.PointSize(5f);
                 Renderer.Draw(colorShader, d_debugPointDrawContext);
                 GL.PointSize(1f);
@@ -553,8 +553,8 @@ namespace PckStudio.Rendering
                 transform *= Matrix4.CreateScale(Camera.Distance / 4f).Inverted();
                 transform.Invert();
                 colorShader.SetUniformMat4("Transform", ref transform);
-                colorShader.SetUniform1("intensity", 0.75f);
-                colorShader.SetUniform4("baseColor", Color.White);
+                colorShader.SetUniform1("Intensity", 0.75f);
+                colorShader.SetUniform4("BlendColor", Color.White);
 
                 Renderer.SetLineWidth(2f);
 
