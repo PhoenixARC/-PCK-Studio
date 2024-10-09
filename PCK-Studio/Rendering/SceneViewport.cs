@@ -529,7 +529,7 @@ namespace PckStudio.Rendering
         {
 #if DEBUG
             d_debugLabel.Text = Camera.ToString();
-            GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcColor);
+            GL.Disable(EnableCap.Blend);
             GL.DepthMask(false);
             GL.DepthFunc(DepthFunction.Always);
             GL.Enable(EnableCap.PointSmooth);
@@ -567,7 +567,7 @@ namespace PckStudio.Rendering
             }
             GL.DepthMask(true);
             GL.DepthFunc(DepthFunction.Less);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Blend);
 #endif
         }
 
