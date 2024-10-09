@@ -44,9 +44,10 @@ namespace PckStudio.Forms.Editor
             skinPartListBox.DataSource = skinPartListBindingSource;
             skinPartListBox.DisplayMember = "Type";
             _settingsManager = SettingsManager.CreateSettings();
-            _settingsManager.AddSetting("shouldAnimate" , true , "Animate skin"                   , state => renderer3D1.Animate = state);
-            _settingsManager.AddSetting("lockMouse"     , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
-            _settingsManager.AddSetting("showGuidelines", false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
+            _settingsManager.AddSetting("shouldAnimate"  , true , "Animate skin"                   , state => renderer3D1.Animate = state);
+            _settingsManager.AddSetting("lockMouse"      , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
+            _settingsManager.AddSetting("showGuidelines" , false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
+            _settingsManager.AddSetting("showArmor"      , false, "Show Armor"                     , state => renderer3D1.ShowArmor = state);
         }
 
         public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()
