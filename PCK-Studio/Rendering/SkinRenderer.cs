@@ -755,16 +755,19 @@ namespace PckStudio.Rendering
                     showWireFrame = !showWireFrame;
                     return true;
                 case Keys.R:
-                    Camera.Distance = DefaultCameraDistance;
-                    Camera.FocalPoint = head.GetCenter(0);
-                    Camera.Yaw = 0f;
-                    Camera.Pitch = 0f;
+                    ResetCamera(head.GetCenter(0));
                     return true;
                 case Keys.C:
                     CenterSelectedObject();
                     break;
             }
             return base.ProcessDialogKey(keyData);
+        }
+
+        public override void ResetCamera(Vector3 defaultPosition)
+        {
+            base.ResetCamera(defaultPosition);
+            Camera.Distance = DefaultCameraDistance;
         }
 
         internal void CenterSelectedObject()

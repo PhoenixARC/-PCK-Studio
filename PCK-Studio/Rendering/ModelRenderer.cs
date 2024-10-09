@@ -79,8 +79,7 @@ namespace PckStudio.Rendering
 
         private void InitializeShaders()
         {
-            if (!Context.IsCurrent)
-                MakeCurrent();
+            Debug.Assert(Context.IsCurrent);
 
             // render texture
             {
@@ -120,10 +119,7 @@ namespace PckStudio.Rendering
 
             Vector3 center = (_maxBounds.Start + _maxBounds.End) / 2f;
 
-            Camera.FocalPoint = center;
-            Camera.Distance = _maxBounds.Volume.Length * 1.3f;
-            Camera.Yaw   = 45f;
-            Camera.Pitch = 25f;
+            ResetCamera(center);
 
             if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
             {
@@ -167,6 +163,14 @@ namespace PckStudio.Rendering
             shader.SetUniform2("TexSize", model.TextureSize);
         }
 
+        public override void ResetCamera(Vector3 defaultPosition)
+        {
+            Camera.FocalPoint = defaultPosition;
+            Camera.Distance = _maxBounds.Volume.Length * 1.3f;
+            Camera.Yaw = 45f;
+            Camera.Pitch = 25f;
+        }
+
         private static CubeMesh ToCubeMesh(ModelBox box) => ToCubeMesh(box, Vector3.Zero);
         private static CubeMesh ToCubeMesh(ModelBox box, Vector3 translation)
             => new CubeMesh(new Cube(translation + box.Position.ToOpenTKVector(), box.Size.ToOpenTKVector(), box.Uv.ToOpenTKVector(), box.Inflate, box.Mirror, true));
@@ -194,10 +198,12 @@ namespace PckStudio.Rendering
 
             if (e.Cancel)
                 return;
-            if (!Context.IsCurrent)
-                MakeCurrent();
-            _modelRenderTexture.SetTexture(e.NewTexture);
-            GLErrorCheck();
+
+            if (Context.IsCurrent)
+            {
+                _modelRenderTexture.SetTexture(e.NewTexture);
+                GLErrorCheck();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)

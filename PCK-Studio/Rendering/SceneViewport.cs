@@ -192,6 +192,14 @@ namespace PckStudio.Rendering
             _initialized = true;
         }
 
+        public void ResetCamera() => ResetCamera(Vector3.Zero);
+        public virtual void ResetCamera(Vector3 defaultPosition)
+        {
+            Camera.FocalPoint = defaultPosition;
+            Camera.Yaw = 0f;
+            Camera.Pitch = 0f;
+        }
+
         protected override bool ProcessDialogKey(Keys keyData)
         {
             switch (keyData)
@@ -214,7 +222,6 @@ namespace PckStudio.Rendering
             {
                 _timer.Stop();
                 _timer.Dispose();
-                MakeCurrent();
                 foreach (VertexArray va in _meshTypeVertexArray.Values)
                 {
                     va.Dispose();
@@ -563,9 +570,9 @@ namespace PckStudio.Rendering
                 Renderer.SetLineWidth(1f);
 
             }
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.DepthMask(true);
+            GL.DepthFunc(DepthFunction.Less);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 #endif
         }
 
