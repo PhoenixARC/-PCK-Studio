@@ -84,7 +84,7 @@ namespace PckStudio.Rendering
 
             // render texture
             {
-                _modelRenderTexture = new Texture2D(0);
+                _modelRenderTexture = new Texture2D();
                 _modelRenderTexture.PixelFormat = PixelFormat.Bgra;
                 _modelRenderTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
                 _modelRenderTexture.MinFilter = TextureMinFilter.Nearest;
@@ -219,7 +219,7 @@ namespace PckStudio.Rendering
 
             ShaderProgram shader = GetShader("CubeShader");
 
-            _modelRenderTexture.Bind();
+            _modelRenderTexture.Bind(slot: 0);
 
             if (RenderModelBounds)
             {
@@ -230,6 +230,7 @@ namespace PckStudio.Rendering
             {
                 DrawMesh(item, shader, item.Transform * Matrix4.CreateScale(1f, -1f, -1f));
             }
+            _modelRenderTexture.Unbind();
         }
     }
 }

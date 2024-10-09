@@ -401,7 +401,7 @@ namespace PckStudio.Rendering
                 AddShader("CubeShader", cubeShader);
                 GLErrorCheck();
 
-                armorTexture = new Texture2D(0);
+                armorTexture = new Texture2D();
                 armorTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 armorTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
                 armorTexture.MinFilter = TextureMinFilter.Nearest;
@@ -411,7 +411,7 @@ namespace PckStudio.Rendering
                 armorTexture.SetTexture(Resources.armor);
                 GLErrorCheck();
 
-                capeTexture = new Texture2D(0);
+                capeTexture = new Texture2D();
                 capeTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 capeTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
                 capeTexture.MinFilter = TextureMinFilter.Nearest;
@@ -420,7 +420,7 @@ namespace PckStudio.Rendering
                 capeTexture.WrapT = TextureWrapMode.Repeat;
                 GLErrorCheck();
 
-                skinTexture = new Texture2D(0);
+                skinTexture = new Texture2D();
                 skinTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 skinTexture.InternalPixelFormat = PixelInternalFormat.Rgba8;
                 skinTexture.MinFilter = TextureMinFilter.Nearest;
@@ -463,12 +463,12 @@ namespace PckStudio.Rendering
 
                 var skyboxShader = ShaderProgram.Create(Resources.skyboxVertexShader, Resources.skyboxFragmentShader);
                 skyboxShader.Bind();
-                skyboxShader.SetUniform1("skybox", 1);
+                skyboxShader.SetUniform1("skybox", 0);
                 skyboxShader.SetUniform1("brightness", 0.8f);
                 skyboxShader.Validate();
                 AddShader("SkyboxShader", skyboxShader);
 
-                _skyboxTexture = new CubeTexture(1);
+                _skyboxTexture = new CubeTexture();
                 _skyboxTexture.InternalPixelFormat = PixelInternalFormat.Rgb8;
                 _skyboxTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 _skyboxTexture.MinFilter = TextureMinFilter.Linear;

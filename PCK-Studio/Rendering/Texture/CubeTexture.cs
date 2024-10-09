@@ -12,9 +12,8 @@ namespace PckStudio.Rendering.Texture
 {
     internal class CubeTexture : Texture
     {
-        public CubeTexture(int slot) : base(TextureTarget.TextureCubeMap)
+        public CubeTexture() : base(TextureTarget.TextureCubeMap)
         {
-            Slot = slot;
         }
 
         public override void SetTexture(Image image)

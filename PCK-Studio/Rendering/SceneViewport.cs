@@ -300,7 +300,7 @@ namespace PckStudio.Rendering
 #if USE_FRAMEBUFFER
             _framebuffer = new FrameBuffer();
             _framebuffer.Bind();
-            _framebufferTexture = new Texture2D(0);
+            _framebufferTexture = new Texture2D();
             _framebufferTexture.PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
             _framebufferTexture.InternalPixelFormat = PixelInternalFormat.Rgb;
             _framebufferTexture.SetSize(Size);
@@ -355,7 +355,7 @@ namespace PckStudio.Rendering
             ShaderProgram framebufferShader = GetShader("Internal_framebufferShader");
             framebufferShader.Bind();
             _framebufferVAO.Bind();
-            _framebufferTexture.Bind();
+            _framebufferTexture.Bind(slot: 0);
 
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 

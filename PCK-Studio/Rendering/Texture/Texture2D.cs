@@ -9,9 +9,8 @@ namespace PckStudio.Rendering.Texture
 {
     internal class Texture2D : Texture
     {
-        public Texture2D(int slot) : base(TextureTarget.Texture2D)
+        public Texture2D() : base(TextureTarget.Texture2D)
         {
-            Slot = slot;
         }
 
         public void SetSize(Size size)

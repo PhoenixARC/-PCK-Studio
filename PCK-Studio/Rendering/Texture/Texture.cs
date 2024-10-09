@@ -65,17 +65,6 @@ namespace PckStudio.Rendering.Texture
             }
         }
 
-        public int Slot
-        {
-            get => _slot;
-            set
-            {
-                Debug.Assert(value >= 0 || value < 32, "Slot is out of range");
-                _slot = MathHelper.Clamp(value, 0, 31);
-            }
-        }
-
-        private int _slot = 0;  
         private TextureMinFilter minFilter;
         private TextureMagFilter magFilter;
         private TextureWrapMode wrapS;
@@ -93,9 +82,9 @@ namespace PckStudio.Rendering.Texture
             throw new NotImplementedException();
         }
 
-        public void Bind()
+        public void Bind(int slot = 0)
         {
-            GL.ActiveTexture(TextureUnit.Texture0 + Slot);
+            GL.ActiveTexture(TextureUnit.Texture0 + slot);
             GL.BindTexture(Target, _id);
         }
 
