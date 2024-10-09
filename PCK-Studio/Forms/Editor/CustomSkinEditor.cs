@@ -48,6 +48,7 @@ namespace PckStudio.Forms.Editor
             _settingsManager.AddSetting("lockMouse"      , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
             _settingsManager.AddSetting("showGuidelines" , false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
             _settingsManager.AddSetting("showArmor"      , false, "Show Armor"                     , state => renderer3D1.ShowArmor = state);
+            _settingsManager.AddSetting("showBoundingBox", false, "Show Bounding Box"              , state => renderer3D1.ShowBoundingBox = state);
         }
 
         public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()

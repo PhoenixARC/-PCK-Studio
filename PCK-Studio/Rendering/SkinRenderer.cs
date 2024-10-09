@@ -110,6 +110,7 @@ namespace PckStudio.Rendering
         }
 
         public bool CenterOnSelect { get; set; } = false;
+        public bool ShowBoundingBox { get; set; }
         public bool ShowArmor { get; set; } = false;
         public bool Animate { get; set; } = true;
         public bool ShowGuideLines
@@ -184,6 +185,7 @@ namespace PckStudio.Rendering
 
         private GuidelineMode guidelineMode { get; set; } = GuidelineMode.None;
         private int[] selectedIndices = Array.Empty<int>();
+        private BoundingBox _skinBounds;
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
@@ -265,6 +267,7 @@ namespace PckStudio.Rendering
                 { "PANTS0"  , rightLeg },
                 { "PANTS1"  , leftLeg },
             };
+            CalculateSkinBounds();
             InitializeArmorData();
             InitializeCamera();
             InitializeComponent();
@@ -681,6 +684,12 @@ namespace PckStudio.Rendering
                 default:
                     break;
             }
+            CalculateSkinBounds();
+        }
+
+        private void CalculateSkinBounds()
+        {
+            _skinBounds = BoundingBox.GetEnclosingBoundingBox(meshStorage.Values.Select(item => item.GetBounds(Matrix4.Identity)));
         }
 
         private void AddCustomModelPart(SkinBOX skinBox)
@@ -920,10 +929,10 @@ namespace PckStudio.Rendering
                         RenderPart(cubeShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, transform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER0"], RightArmMatrix * armRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER0"], armRightMatrix, transform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_ARM_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER1"], LeftArmMatrix * armLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER1"], armLeftMatrix, transform);
 
                     bool showRightLegArmor = !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_LEG_ARMOR);
                     if (showRightLegArmor)
@@ -997,10 +1006,18 @@ namespace PckStudio.Rendering
                     }
                 }
 
-                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
                 DrawBoundingBox(boundingBoxTransform, boundingBox, HighlightlingColor);
-                        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-                    }
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                
+                // Show skin bounds
+                if (ShowBoundingBox)
+                {
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
+                    DrawBoundingBox(transform, _skinBounds, Color.BurlyWood);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                }
+            }
 
             // Ground plane
             {
