@@ -117,10 +117,6 @@ namespace PckStudio.Rendering
             
             _maxBounds = GetBounds(allBoxes);
 
-            Vector3 center = (_maxBounds.Start + _maxBounds.End) / 2f;
-
-            ResetCamera(center);
-
             if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(InitModelRender)}] : Couldn't get meta data for model: '{model.Name}'");
@@ -159,14 +155,15 @@ namespace PckStudio.Rendering
 
             MakeCurrent();
             ShaderProgram shader = GetShader("CubeShader");
-
+            shader.Bind();
             shader.SetUniform2("TexSize", model.TextureSize);
         }
 
-        public override void ResetCamera(Vector3 defaultPosition)
+        public override void ResetCamera(Vector3 offset)
         {
-            Camera.FocalPoint = defaultPosition;
-            Camera.Distance = _maxBounds.Volume.Length * 1.3f;
+            Vector3 center = (_maxBounds.Start + _maxBounds.End) / 2f;
+            Camera.FocalPoint = Vector3.TransformPosition(center + offset, Matrix4.CreateScale(-1f, 1f, 1f));
+            Camera.Distance = _maxBounds.Volume.Length;
             Camera.Yaw = 45f;
             Camera.Pitch = 25f;
         }

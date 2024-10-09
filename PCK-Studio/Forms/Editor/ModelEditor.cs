@@ -246,6 +246,7 @@ namespace PckStudio.Forms.Editor
                     modelViewport.Texture = textures[0].Texture;
 
                 modelViewport.Model = modelNode.Model;
+                modelViewport.ResetCamera();
             }
         }
 
