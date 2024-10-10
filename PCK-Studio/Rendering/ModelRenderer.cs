@@ -21,19 +21,6 @@ namespace PckStudio.Rendering
 {
     internal partial class ModelRenderer : SceneViewport
     {
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Model Model
-        {
-            get => _model;
-            set
-            {
-                _model = value;
-                InitModelRender(_model);
-            }
-        }
-        
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Image Texture
@@ -63,7 +50,6 @@ namespace PckStudio.Rendering
         }
 
         private BoundingBox _maxBounds;
-        private Model _model;
         private Image _modelTexture;
         private Texture2D _modelRenderTexture;
         private List<CubeMeshCollection> _rootCollection;
@@ -106,20 +92,18 @@ namespace PckStudio.Rendering
             }
         }
 
-        private void InitModelRender(Model model)
+        public void LoadModel(Model model)
         {
             _rootCollection?.Clear();
 
             IEnumerable<BoundingBox> allBoxes = model.GetParts()
-                .SelectMany(p => p.GetBoxes()
-                    .Select(b => new ModelBox(b.Position + p.Translation, b.Size, System.Numerics.Vector2.Zero, 0f, false)))
-                .Select(b => new BoundingBox(b.Position, b.Position + b.Size));
+                .SelectMany(p => p.GetBoxes().Select(b => new BoundingBox(b.Position + p.Translation, b.Position + p.Translation + b.Size)));
             
             _maxBounds = BoundingBox.GetEnclosingBoundingBox(allBoxes);
 
             if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
             {
-                Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(InitModelRender)}] : Couldn't get meta data for model: '{model.Name}'");
+                Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] : Couldn't get meta data for model: '{model.Name}'");
                 return;
             }
 
@@ -136,27 +120,29 @@ namespace PckStudio.Rendering
             {
                 if (!model.TryGetPart(metaDataPart.Name, out ModelPart modelPart))
                 {
-                    Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(InitModelRender)}] : Failed to find part: '{metaDataPart.Name}'");
+                    Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] : Failed to find part: '{metaDataPart.Name}'");
                 }
 
                 Vector3 translation = modelPart.Translation.ToOpenTKVector();
 
-                var cubeMeshCollection = new CubeMeshCollection(modelPart.Name, translation, translation, modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
+                var cubeMeshCollection = new CubeMeshCollection(modelPart.Name, Vector3.Zero, translation, modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
                 cubeMeshCollection.FlipZMapping = true;
                 foreach (ModelBox boxes in modelPart.GetBoxes())
                 {
-                    cubeMeshCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector() /*+ modelPart.Translation.ToOpenTKVector()*/, boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
+                    cubeMeshCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector() + translation, boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
                 }
 
-                RetriveChildMeshes(metaDataParts: metaDataPart.Children).ForEach(cubeMeshCollection.Add);
+                RetriveChildMeshes(metaDataParts: metaDataPart.Children, ref model).ForEach(cubeMeshCollection.Add);
 
                 _rootCollection.Add(cubeMeshCollection);
             }
 
-            MakeCurrent();
+            if (Context.IsCurrent)
+            {
             ShaderProgram shader = GetShader("CubeShader");
             shader.Bind();
             shader.SetUniform2("TexSize", model.TextureSize);
+        }
         }
 
         public override void ResetCamera(Vector3 offset)
@@ -170,20 +156,20 @@ namespace PckStudio.Rendering
 
         private static CubeMesh ToCubeMesh(ModelBox box) => ToCubeMesh(box, Vector3.Zero);
         private static CubeMesh ToCubeMesh(ModelBox box, Vector3 translation)
-            => new CubeMesh(new Cube(translation + box.Position.ToOpenTKVector(), box.Size.ToOpenTKVector(), box.Uv.ToOpenTKVector(), box.Inflate, box.Mirror, true));
+            => new CubeMesh(new Cube(box.Position.ToOpenTKVector() + translation, box.Size.ToOpenTKVector(), box.Uv.ToOpenTKVector(), box.Inflate, box.Mirror, true));
 
-        private List<GenericMesh<TextureVertex>> RetriveChildMeshes(ModelMetaDataPart[] metaDataParts)
+        private List<GenericMesh<TextureVertex>> RetriveChildMeshes(ModelMetaDataPart[] metaDataParts, ref Model model)
         {
             List<GenericMesh<TextureVertex>> meshes = new List<GenericMesh<TextureVertex>>();
             foreach (ModelMetaDataPart metaDataPart in metaDataParts)
             {
-                if (!Model.TryGetPart(metaDataPart.Name, out ModelPart modelPart))
+                if (!model.TryGetPart(metaDataPart.Name, out ModelPart modelPart))
                 {
                     Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(RetriveChildMeshes)}] : Failed to find part: '{metaDataPart.Name}'");
                 }
                 Vector3 translation = modelPart.Translation.ToOpenTKVector();
                 meshes.AddRange(modelPart.GetBoxes().Select(b => ToCubeMesh(b, translation)));
-                meshes.AddRange(RetriveChildMeshes(metaDataPart.Children));
+                meshes.AddRange(RetriveChildMeshes(metaDataPart.Children, ref model));
             }
             return meshes;
         }
