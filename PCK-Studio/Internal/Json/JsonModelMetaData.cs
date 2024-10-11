@@ -25,6 +25,6 @@ namespace PckStudio.Internal.Json
         public string[] TextureLocations { get; set; }
 
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
-        public ModelMetaDataPart[] RootParts { get; set; }
+        public ModelMetaDataPart[] RootParts { get; set; } = Array.Empty<ModelMetaDataPart>();
     }
 }
