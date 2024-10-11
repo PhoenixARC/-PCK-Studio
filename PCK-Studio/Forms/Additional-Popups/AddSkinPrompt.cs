@@ -14,6 +14,10 @@ using System.Windows.Forms;
 
 namespace PckStudio.Forms.Additional_Popups
 {
+    // ATTENTION
+    // 4 lines of code below have been commented out due to errors. 
+    // - EternalModz
+
     public partial class AddSkinPrompt : ThemeForm
     {
         public PckAsset SkinAsset => _skin;
@@ -23,7 +27,7 @@ namespace PckStudio.Forms.Additional_Popups
         private LOCFile currentLoc;
         private PckAsset _skin = new PckAsset("dlcskinXYXYXYXY", PckAssetType.SkinFile);
         private PckAsset _cape;
-        private SkinANIM anim = new SkinANIM();
+        private SkinANIM _anim = SkinANIM.Empty;
         private Random rng = new Random();
 
         private eSkinType skinType;
@@ -49,19 +53,19 @@ namespace PckStudio.Forms.Additional_Popups
             switch (img.Height)
             {
                 case 64:
-                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                    //_anim = _anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                     MessageBox.Show(this, "64x64 Skin Detected");
                     skinType = eSkinType._64x64;
                     break;
                 case 32:
-                    anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
+                    //_anim = _anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
                     MessageBox.Show(this, "64x32 Skin Detected");
                     skinType = eSkinType._64x32;
                     break;
                 default:
                     if (img.Width == img.Height)
                     {
-                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
+                        //_anim = _anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
                         MessageBox.Show(this, "64x64 HD Skin Detected");
                         skinType = eSkinType._64x64HD;
                         break;
@@ -69,7 +73,7 @@ namespace PckStudio.Forms.Additional_Popups
 
                     if (img.Height == img.Width / 2)
                     {
-                        anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
+                        //_anim = _anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64 | SkinAnimFlag.SLIM_MODEL, false);
                         MessageBox.Show(this, "64x32 HD Skin Detected");
                         skinType = eSkinType._64x32HD;
                         break;
@@ -91,43 +95,43 @@ namespace PckStudio.Forms.Additional_Popups
 
         private void DrawModel()
         {
-            bool isSlim = anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool isSlim = _anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
             Pen outlineColor = Pens.LightGray;
             Brush fillColor = Brushes.Gray;
             Image previewTexture = new Bitmap(displayBox.Width, displayBox.Height);
             using (Graphics g = Graphics.FromImage(previewTexture))
             {
-                if (!anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
                 {
                     //Head
                     g.DrawRectangle(outlineColor, 70, 15, 40, 40);
                     g.FillRectangle(fillColor, 71, 16, 39, 39);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
                 {
                     //Body
                     g.DrawRectangle(outlineColor, 70, 55, 40, 60);
                     g.FillRectangle(fillColor, 71, 56, 39, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
                     g.DrawRectangle(outlineColor, isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor, isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
                     //Arm1
                     g.DrawRectangle(outlineColor, 110, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor, 111, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
                     g.DrawRectangle(outlineColor, 70, 115, 20, 60);
                     g.FillRectangle(fillColor, 71, 116, 19, 59);
                 }
-                if (!anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
+                if (!_anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                 {
                     //Leg1
                     g.DrawRectangle(outlineColor, 90, 115, 20, 60);
@@ -236,18 +240,18 @@ namespace PckStudio.Forms.Additional_Popups
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(textSkinID.Text, out int _skinId))
+            if (!int.TryParse(textSkinID.Text, out int skinId))
             {
                 MessageBox.Show(this, "The Skin ID Must be a Unique 8 Digit Number Thats Not Already in Use", "Invalid Skin ID", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string skinId = _skinId.ToString("d08");
-            _skin.Filename = $"dlcskin{skinId}.png";
+            string skinIdStr = skinId.ToString("d08");
+            _skin.Filename = $"dlcskin{skinIdStr}.png";
             _skin.AddProperty("DISPLAYNAME", textSkinName.Text);
 
             if (currentLoc is not null)
             {
-                string skinDisplayNameLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
+                string skinDisplayNameLocKey = $"IDS_dlcskin{skinIdStr}_DISPLAYNAME";
                 _skin.AddProperty("DISPLAYNAMEID", skinDisplayNameLocKey);
                 currentLoc.AddLocKey(skinDisplayNameLocKey, textSkinName.Text);
             }
@@ -257,17 +261,17 @@ namespace PckStudio.Forms.Additional_Popups
                 _skin.AddProperty("THEMENAME", textThemeName.Text);
                 if (currentLoc is not null)
                 {
-                    _skin.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                    currentLoc.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", textThemeName.Text);
+                    _skin.AddProperty("THEMENAMEID", $"IDS_dlcskin{skinIdStr}_THEMENAME");
+                    currentLoc.AddLocKey($"IDS_dlcskin{skinIdStr}_THEMENAME", textThemeName.Text);
                 }
             }
-            _skin.AddProperty("ANIM", anim);
+            _skin.AddProperty("ANIM", _anim);
             _skin.AddProperty("GAME_FLAGS", "0x18");
             _skin.AddProperty("FREE", "1");
 
             if (HasCape)
             {
-                _cape.Filename = $"dlccape{skinId}.png";
+                _cape.Filename = $"dlccape{skinIdStr}.png";
                 _skin.AddProperty("CAPEPATH", _cape.Filename);
             }
             _skin.SetTexture(skinPictureBox.Image);
@@ -321,10 +325,10 @@ namespace PckStudio.Forms.Additional_Popups
 
         private void buttonAnimGen_Click(object sender, EventArgs e)
         {
-            using ANIMEditor diag = new ANIMEditor(anim.ToString());
+            using ANIMEditor diag = new ANIMEditor(_anim);
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                anim = diag.ResultAnim;
+                _anim = diag.ResultAnim;
                 DrawModel();
             }
         }
