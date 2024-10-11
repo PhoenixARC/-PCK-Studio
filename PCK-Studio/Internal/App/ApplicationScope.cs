@@ -56,7 +56,7 @@ namespace PckStudio.Internal.App
             var ghClient = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Application.ProductName + "Credits"));
             Task<IReadOnlyList<Octokit.RepositoryContributor>> allContributorsAct = ghClient.Repository.GetAllContributors("PhoenixARC", "-PCK-Studio");
             allContributorsAct.Wait();
-            Contributors = allContributorsAct.Result.ToArray();
+            Contributors = allContributorsAct.Result.ToArray() ?? Array.Empty<Octokit.RepositoryContributor>();
         }
     }
 }
