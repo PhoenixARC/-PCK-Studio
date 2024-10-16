@@ -44,7 +44,19 @@ namespace PckStudio.Extensions
         {
             if (!skinBox.IsValidType())
                 return "";
+            if (skinBox.IsOverlayPart())
+                return skinBox.Type;
             int index = Array.IndexOf(SkinBOX.BaseTypes, skinBox.Type);
+            return SkinBOX.OverlayTypes.IndexInRange(index) ? SkinBOX.OverlayTypes[index] : "";
+        }
+
+        public static string GetOverlayType(string type)
+        {
+            if (!SkinBOX.IsValidType(type))
+                return "";
+            if (SkinBOX.IsOverlayPart(type))
+                return type;
+            int index = Array.IndexOf(SkinBOX.BaseTypes, type);
             return SkinBOX.OverlayTypes.IndexInRange(index) ? SkinBOX.OverlayTypes[index] : "";
         }
 
@@ -52,6 +64,8 @@ namespace PckStudio.Extensions
         {
             if (!skinBox.IsValidType())
                 return "";
+            if (skinBox.IsBasePart())
+                return skinBox.Type;
             int index = Array.IndexOf(SkinBOX.OverlayTypes, skinBox.Type);
             return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }
@@ -60,6 +74,8 @@ namespace PckStudio.Extensions
         {
             if (!SkinBOX.IsValidType(type))
                 return "";
+            if (SkinBOX.IsBasePart(type))
+                return type;
             int index = Array.IndexOf(SkinBOX.OverlayTypes, type);
             return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }

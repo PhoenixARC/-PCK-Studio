@@ -166,8 +166,8 @@ namespace PckStudio.Internal
             pos = TranslateToInternalPosition(outlineName, pos, size, new Vector3(1, 1, 0));
 
             var box = new SkinBOX(outlineName, pos, size, uv, mirror: element.MirrorUv);
-            if (box.IsBasePart() && ((outlineName == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
-                box.Type = box.GetOverlayType();
+            if (SkinBOX.IsBasePart(outlineName) && ((outlineName == "HEAD" && element.Inflate == 0.5f) || (element.Inflate >= 0.25f && element.Inflate <= 0.5f)))
+                box = new SkinBOX(SkinBOXExtensions.GetOverlayType(outlineName), pos, size, uv, mirror: element.MirrorUv);
             return box;
         }
 
@@ -307,8 +307,8 @@ namespace PckStudio.Internal
                 {
                     Vector3 pos = TranslateToInternalPosition(boxType, cube.Origin, cube.Size, Vector3.UnitY);
                     var skinBox = new SkinBOX(boxType, pos, cube.Size, cube.Uv, hideWithArmor: bone.Name == "helmet", mirror: cube.Mirror);
-                    if (skinBox.IsBasePart() && ((boxType == "HEAD" && cube.Inflate == 0.5f) || (cube.Inflate >= 0.25f && cube.Inflate <= 0.5f)))
-                        skinBox.Type = skinBox.GetOverlayType();
+                    if (SkinBOX.IsBasePart(boxType) && ((boxType == "HEAD" && cube.Inflate == 0.5f) || (cube.Inflate >= 0.25f && cube.Inflate <= 0.5f)))
+                        skinBox = new SkinBOX(SkinBOXExtensions.GetOverlayType(boxType), pos, cube.Size, cube.Uv, hideWithArmor: bone.Name == "helmet", mirror: cube.Mirror);
                     boxes.Add(skinBox);
                 }
             }

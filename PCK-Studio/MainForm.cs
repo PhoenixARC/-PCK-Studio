@@ -2329,7 +2329,7 @@ namespace PckStudio
 		{
 			if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckAsset asset)
 			{
-				using BoxEditor diag = new BoxEditor(SkinBOX.Empty, false);
+				using BoxEditor diag = new BoxEditor(SkinBOX.DefaultHead, false);
 				if (diag.ShowDialog(this) == DialogResult.OK)
 				{
 					asset.AddProperty("BOX", diag.Result);

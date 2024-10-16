@@ -20,12 +20,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using PckStudio.Extensions;
 
 namespace PckStudio.Internal.Skin
 {
-    public class SkinBOX : ICloneable, IEquatable<SkinBOX>
+    public record SkinBOX : IEquatable<SkinBOX>
     {
-        public static readonly SkinBOX Empty = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
+        public static readonly SkinBOX DefaultHead = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
 
         public static readonly string[] BaseTypes = new string[]
         {
@@ -85,13 +86,13 @@ namespace PckStudio.Internal.Skin
 
         public static readonly string[] ValidBoxTypes = BaseTypes.Concat(OverlayTypes).ToArray();
 
-        public string Type { get; set; }
-        public Vector3 Pos;
-        public Vector3 Size;
-        public Vector2 UV;
-        public bool HideWithArmor;
-        public bool Mirror;
-        public float Scale;
+        public string Type { get; }
+        public Vector3 Pos { get; }
+        public Vector3 Size { get; }
+        public Vector2 UV { get; }
+        public bool HideWithArmor { get; }
+        public bool Mirror { get; }
+        public float Scale { get; }
 
         public SkinBOX(string type, Vector3 pos, Vector3 size, Vector2 uv,
             bool hideWithArmor = false, bool mirror = false, float scale = 0.0f)
@@ -116,14 +117,13 @@ namespace PckStudio.Internal.Skin
             Vector3 pos = TryGetVector3(arguments, 1);
             Vector3 size = TryGetVector3(arguments, 4);
             Vector2 uv = TryGetVector2(arguments, 7);
-            var skinBox = new SkinBOX(type, pos, size, uv);
-            if (arguments.Length >= 10)
-                skinBox.HideWithArmor = arguments[9] == "1";
-            if (arguments.Length >= 11)
-                skinBox.Mirror = arguments[10] == "1";
-            if (arguments.Length >= 12)
-                float.TryParse(arguments[11], out skinBox.Scale);
-            return skinBox;
+            
+            bool hideWithArmor = arguments.IndexInRange(9) && arguments[9] == "1";    
+            bool mirror = arguments.IndexInRange(10) && arguments[10] == "1";
+            float scale = default;
+            if (arguments.IndexInRange(11))
+                float.TryParse(arguments[11], out scale);
+            return new SkinBOX(type, pos, size, uv, hideWithArmor, mirror, scale);
         }
 
         public bool IsValidType() => IsValidType(Type);
@@ -175,24 +175,6 @@ namespace PckStudio.Internal.Skin
             hashCode = hashCode * -1521134295 + Mirror.GetHashCode();
             hashCode = hashCode * -1521134295 + Scale.GetHashCode();
             return hashCode;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is SkinBOX box && Equals(box);
-        }
-
-        public bool Equals(SkinBOX other)
-        {
-            return Type.Equals(other.Type) &&
-                Pos.Equals(other.Pos) &&
-                Size.Equals(other.Size) &&
-                UV.Equals(other.UV);
-        }
-
-        public object Clone()
-        {
-            return new SkinBOX((string)Type.Clone(), Pos, Size, UV, HideWithArmor, Mirror, Scale);
         }
     }
 }

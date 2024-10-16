@@ -144,7 +144,7 @@ namespace PckStudio.Forms.Editor
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var boxEditor = new BoxEditor(SkinBOX.Empty, _allowInflate);
+            var boxEditor = new BoxEditor(SkinBOX.DefaultHead, _allowInflate);
             if (boxEditor.ShowDialog() == DialogResult.OK)
             {
                 SkinBOX newBox = boxEditor.Result;
@@ -225,7 +225,7 @@ namespace PckStudio.Forms.Editor
         {
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                var clone = (SkinBOX)box.Clone();
+                SkinBOX clone = box;
                 renderer3D1.ModelData.Add(clone);
                 _skin.Model.AdditionalBoxes.Add(clone);
                 skinPartListBindingSource.ResetBindings(false);
