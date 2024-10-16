@@ -55,7 +55,11 @@ namespace PckStudio.Rendering
 
         internal static VertexBufferLayout VertexBufferLayout { get; } = new VertexBufferLayout().Add(ShaderDataType.Float3).Add(ShaderDataType.Float2);
 
-        public CubeMesh(Cube cube) : this(nameof(CubeMesh), cube, true)
+        public CubeMesh(Cube cube) : this(nameof(CubeMesh), cube)
+        {
+        }
+
+        public CubeMesh(string name, Cube cube) : this(name, cube, true)
         {
         }
         
@@ -63,12 +67,6 @@ namespace PckStudio.Rendering
             : base(name, visible, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, VertexBufferLayout)
         {
             _cube = cube;
-        }
-
-        public CubeMesh SetName(string name)
-        {
-            _ = name ?? throw new ArgumentNullException(nameof(name));
-            return new CubeMesh(name, _cube, Visible);
         }
 
         public CubeMesh SetCube(Cube cube)
@@ -83,7 +81,7 @@ namespace PckStudio.Rendering
 
         public override BoundingBox GetBounds(Matrix4 transform)
         {
-            return _cube.GetBoundingBox(transform);
+            return _cube.GetBoundingBox(Transform * transform);
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()

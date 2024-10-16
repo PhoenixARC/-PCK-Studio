@@ -33,7 +33,7 @@ namespace PckStudio.Rendering
         internal static void AddSkinBox(this CubeMeshCollection cubeMeshes, SkinBOX skinBox, float inflate = 0f)
         {
             var cube = skinBox.ToCube(inflate, cubeMeshes.FlipZMapping);
-            cubeMeshes.Add(new CubeMesh(cube).SetName(skinBox.Type));
+            cubeMeshes.Add(new CubeMesh(skinBox.Type, cube));
         }
     }
 
@@ -117,7 +117,7 @@ namespace PckStudio.Rendering
         internal void AddNamed(string name, Vector3 position, Vector3 size, Vector2 uv, float inflate = 0f, bool mirrorTexture = false)
         {
             var cube = new Cube(position, size, uv, inflate, mirrorTexture, FlipZMapping);
-            Add(new CubeMesh(cube).SetName(name));
+            Add(new CubeMesh(name, cube));
         }
 
         internal void AddSubCollection(string name, Vector3 translation, Vector3 pivot, Vector3 rotation = default)
