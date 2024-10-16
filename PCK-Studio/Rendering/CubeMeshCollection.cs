@@ -171,8 +171,7 @@ namespace PckStudio.Rendering
         {
             IEnumerable<BoundingBox> boundingBoxes = cubes
                 .Where(c => c.Visible)
-                .Select(c => c.GetBounds(Transform * transform))
-                .DefaultIfEmpty();
+                .Select(c => c.GetBounds(Transform * transform));
             return BoundingBox.GetEnclosingBoundingBox(boundingBoxes);
         }
 
