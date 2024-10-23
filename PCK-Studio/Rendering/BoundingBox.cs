@@ -29,45 +29,56 @@ namespace PckStudio.Rendering
         {
         }
 
-
-        public ColorVertex[] GetVertices()
+        public OpenTK.Matrix4 GetTransform()
         {
-            OpenTK.Vector3 s = Start;
-            OpenTK.Vector3 e = End;
-            return [
-                new ColorVertex(new OpenTK.Vector3(s.X, e.Y, e.Z)),
-                new ColorVertex(new OpenTK.Vector3(e.X, e.Y, e.Z)),
-                new ColorVertex(new OpenTK.Vector3(e.X, s.Y, e.Z)),
-                new ColorVertex(new OpenTK.Vector3(s.X, s.Y, e.Z)),
-                new ColorVertex(new OpenTK.Vector3(s.X, e.Y, s.Z)),
-                new ColorVertex(new OpenTK.Vector3(e.X, e.Y, s.Z)),
-                new ColorVertex(new OpenTK.Vector3(e.X, s.Y, s.Z)),
-                new ColorVertex(new OpenTK.Vector3(s.X, s.Y, s.Z)),
+            return OpenTK.Matrix4.CreateScale(Volume) * OpenTK.Matrix4.CreateTranslation(Start);
+        }
+
+        private static readonly ColorVertex[] _vertices = [
+                new ColorVertex(new OpenTK.Vector3(0f, 1f, 1f)),
+                new ColorVertex(new OpenTK.Vector3(1f, 1f, 1f)),
+                new ColorVertex(new OpenTK.Vector3(1f, 0f, 1f)),
+                new ColorVertex(new OpenTK.Vector3(0f, 0f, 1f)),
+                new ColorVertex(new OpenTK.Vector3(0f, 1f, 0f)),
+                new ColorVertex(new OpenTK.Vector3(1f, 1f, 0f)),
+                new ColorVertex(new OpenTK.Vector3(1f, 0f, 0f)),
+                new ColorVertex(new OpenTK.Vector3(0f, 0f, 0f)),
             ];
-        }
 
-        public static int[] GetIndecies()
-        {
-            return [0, 1,
-                    1, 2,
-                    2, 3,
-                    3, 0,
+        private static readonly int[] _indecies = [
+            0, 1,
+            1, 2,
+            2, 3,
+            3, 0,
 
-                    4, 5,
-                    5, 6,
-                    6, 7,
-                    7, 4,
+            4, 5,
+            5, 6,
+            6, 7,
+            7, 4,
 
-                    0, 4,
-                    1, 5,
-                    2, 6,
-                    3, 7
+            0, 4,
+            1, 5,
+            2, 6,
+            3, 7
             ];
-        }
-    
-        public static BoundingBox GetEnclosingBoundingBox(IEnumerable<BoundingBox> boundingBoxes)
+
+        public static ColorVertex[] GetVertices()
         {
-            return boundingBoxes.DefaultIfEmpty().Aggregate((a, b) => new BoundingBox(OpenTK.Vector3.ComponentMin(a.Start, b.Start), OpenTK.Vector3.ComponentMax(a.End, b.End)));
+            return _vertices;
+            //OpenTK.Vector3 s = Start; // 0, 0, 0
+            //OpenTK.Vector3 e = End;   // 1, 1, 1
+            //return [
+            //    new ColorVertex(new OpenTK.Vector3(s.X, e.Y, e.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(e.X, e.Y, e.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(e.X, s.Y, e.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(s.X, s.Y, e.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(s.X, e.Y, s.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(e.X, e.Y, s.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(e.X, s.Y, s.Z)),
+            //    new ColorVertex(new OpenTK.Vector3(s.X, s.Y, s.Z)),
+            //];
         }
+
+        public static int[] GetIndecies() => _indecies;
     }
 }

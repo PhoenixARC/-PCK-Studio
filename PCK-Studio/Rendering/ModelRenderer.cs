@@ -96,11 +96,10 @@ namespace PckStudio.Rendering
         {
             _rootCollection?.Clear();
 
-            IEnumerable<BoundingBox> allBoxes = model.GetParts()
-                .SelectMany(p => p.GetBoxes().Select(b => new BoundingBox(b.Position + p.Translation, b.Position + p.Translation + b.Size)));
+            _maxBounds = model.GetParts()
+                .SelectMany(p => p.GetBoxes().Select(b => new BoundingBox(b.Position + p.Translation, b.Position + p.Translation + b.Size)))
+                .GetEnclosingBoundingBox();
             
-            _maxBounds = BoundingBox.GetEnclosingBoundingBox(allBoxes);
-
             if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] : Couldn't get meta data for model: '{model.Name}'");
@@ -139,10 +138,10 @@ namespace PckStudio.Rendering
 
             if (Context.IsCurrent)
             {
-            ShaderProgram shader = GetShader("CubeShader");
-            shader.Bind();
-            shader.SetUniform2("TexSize", model.TextureSize);
-        }
+                ShaderProgram shader = GetShader("CubeShader");
+                shader.Bind();
+                shader.SetUniform2("TexSize", model.TextureSize);
+            }
         }
 
         public override void ResetCamera(Vector3 offset)

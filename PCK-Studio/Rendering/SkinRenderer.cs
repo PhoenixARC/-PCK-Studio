@@ -505,7 +505,7 @@ namespace PckStudio.Rendering
                     void AddOutline(BoundingBox boundingBox, ref List<ColorVertex> vertices, ref List<int> indices)
                     {
                         int offset = vertices.Count;
-                        vertices.AddRange(boundingBox.GetVertices());
+                        vertices.AddRange(BoundingBox.GetVertices().Select(vert => new ColorVertex(Vector3.TransformPosition(vert.Position, boundingBox.GetTransform()), vert.Color)));
                         indices.AddRange(BoundingBox.GetIndecies().Select(i => i + offset));
                     }
 
@@ -689,7 +689,7 @@ namespace PckStudio.Rendering
 
         private void CalculateSkinBounds()
         {
-            _skinBounds = BoundingBox.GetEnclosingBoundingBox(meshStorage.Values.Select(item => item.GetBounds(Matrix4.Identity)));
+            _skinBounds = meshStorage.Values.Select(item => item.GetBounds(Matrix4.Identity)).GetEnclosingBoundingBox();
         }
 
         private void AddCustomModelPart(SkinBOX skinBox)
@@ -829,7 +829,7 @@ namespace PckStudio.Rendering
                 GL.DepthMask(true);
                 GL.DepthFunc(DepthFunction.Less);
             }
-            
+
             ShaderProgram lineShader = GetShader("PlainColorShader");
 
             // Render (custom) skin
@@ -846,7 +846,7 @@ namespace PckStudio.Rendering
                 if (showWireFrame)
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
-                Matrix4 transform = Matrix4.CreateScale(1f, -1f, -1f);
+                Matrix4 renderTransform = Matrix4.CreateScale(1f, -1f, -1f);
 
                 ShaderProgram cubeShader = GetShader("CubeShader");
                 cubeShader.Bind();
@@ -863,8 +863,8 @@ namespace PckStudio.Rendering
                 {
                     if (ANIM.GetFlag(SkinAnimFlag.DINNERBONE))
                     {
-                        transform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
-                        transform = transform.Pivoted(head.GetFaceCenter(0, Cube.Face.Top), Vector3.UnitY * 12f);
+                        renderTransform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-180f));
+                        renderTransform = Matrix4.CreateTranslation(head.GetFaceCenter(0, Cube.Face.Top)) * renderTransform.Pivoted(Vector3.UnitY * 12f);
                     }
 
                     if (!ANIM.GetFlag(SkinAnimFlag.STATIC_ARMS))
@@ -893,12 +893,11 @@ namespace PckStudio.Rendering
                     armLeftMatrix = LeftArmMatrix * armLeftMatrix;
                 }
 
-                RenderBodyPart(cubeShader, Matrix4.Identity, transform, "HEAD", "HEADWEAR");
-                RenderBodyPart(cubeShader, Matrix4.Identity, transform, "BODY", "JACKET");
-                RenderBodyPart(cubeShader, armRightMatrix, transform, "ARM0", "SLEEVE0");
-                RenderBodyPart(cubeShader, armLeftMatrix, transform, "ARM1", "SLEEVE1");
-                RenderBodyPart(cubeShader, legRightMatrix, transform, "LEG0", "PANTS0");
-                RenderBodyPart(cubeShader, legLeftMatrix, transform, "LEG1", "PANTS1");
+                RenderBodyPart(cubeShader, Matrix4.Identity, renderTransform, "HEAD", "HEADWEAR", "BODY", "JACKET");
+                RenderBodyPart(cubeShader, armRightMatrix, renderTransform, "ARM0", "SLEEVE0");
+                RenderBodyPart(cubeShader, armLeftMatrix, renderTransform, "ARM1", "SLEEVE1");
+                RenderBodyPart(cubeShader, legRightMatrix, renderTransform, "LEG0", "PANTS0");
+                RenderBodyPart(cubeShader, legLeftMatrix, renderTransform, "LEG1", "PANTS1");
 
                 if (_capeImage is not null)
                 {
@@ -914,7 +913,7 @@ namespace PckStudio.Rendering
                     Matrix4 partMatrix = 
                         Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) *
                         Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
-                    RenderPart(cubeShader, cape, partMatrix, transform);
+                    RenderPart(cubeShader, cape, partMatrix, renderTransform);
                 }
 
                 // Armor rendering
@@ -923,33 +922,33 @@ namespace PckStudio.Rendering
                     armorTexture.Bind();
                     cubeShader.SetUniform2("TexSize", new Vector2(64, 64));
                     if (!ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_HEAD_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["HELMET"], Matrix4.Identity, renderTransform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_BODY_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["CHEST"], Matrix4.Identity, renderTransform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER0"], armRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER0"], armRightMatrix, renderTransform);
                     
                     if (!ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_ARM_ARMOR))
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER1"], armLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["SHOULDER1"], armLeftMatrix, renderTransform);
 
                     bool showRightLegArmor = !ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_RIGHT_LEG_ARMOR);
                     if (showRightLegArmor)
                     {
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS0"], legRightMatrix, transform);
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT0"], legRightMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS0"], legRightMatrix, renderTransform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT0"], legRightMatrix, renderTransform);
                     }
 
                     bool showLeftLegArmor = !ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED) || ANIM.GetFlag(SkinAnimFlag.FORCE_LEFT_LEG_ARMOR);
                     if (showLeftLegArmor)
                     {
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS1"], legLeftMatrix, transform);
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT1"], legLeftMatrix, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["PANTS1"], legLeftMatrix, renderTransform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["BOOT1"], legLeftMatrix, renderTransform);
                     }
                     
                     if (showRightLegArmor && showLeftLegArmor)
-                        RenderPart(cubeShader, offsetSpecificMeshStorage["WAIST"], Matrix4.Identity, transform);
+                        RenderPart(cubeShader, offsetSpecificMeshStorage["WAIST"], Matrix4.Identity, renderTransform);
                 }
 
                 if (showWireFrame)
@@ -961,7 +960,7 @@ namespace PckStudio.Rendering
                     GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     lineShader.Bind();
                     lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
-                    lineShader.SetUniformMat4("Transform", ref transform);
+                    lineShader.SetUniformMat4("Transform", ref renderTransform);
                     lineShader.SetUniform1("Intensity", 1f);
                     lineShader.SetUniform4("BlendColor", GuideLineColor);
                     Renderer.SetLineWidth(2.5f);
@@ -972,7 +971,7 @@ namespace PckStudio.Rendering
 
                 BoundingBox boundingBox = GetSelectedBoundingArea();
 
-                Matrix4 boundingBoxTransform = transform;
+                Matrix4 boundingBoxRenderTransform = renderTransform;
 
                 if (SelectedIndices.Length == 1 && ModelData.IndexInRange(SelectedIndices[0]))
                 {
@@ -1002,19 +1001,19 @@ namespace PckStudio.Rendering
                                     return Matrix4.Identity;
                             }
                         }
-                        boundingBoxTransform = GetGroupTransform(box.Type) * boundingBoxTransform;
+                        boundingBoxRenderTransform = GetGroupTransform(box.Type) * cubeMesh.GetTransform() * renderTransform;
                     }
                 }
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
-                DrawBoundingBox(boundingBoxTransform, boundingBox, HighlightlingColor);
+                DrawBoundingBox(boundingBoxRenderTransform, boundingBox, HighlightlingColor);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 
                 // Show skin bounds
                 if (ShowBoundingBox)
                 {
-                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcColor);
-                    DrawBoundingBox(transform, _skinBounds, Color.BurlyWood);
+                    GL.BlendFunc(BlendingFactor.SrcColor, BlendingFactor.SrcAlpha);
+                    DrawBoundingBox(renderTransform, _skinBounds, Color.BurlyWood);
                     GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 }
             }
@@ -1056,10 +1055,10 @@ namespace PckStudio.Rendering
                     Cube cube = box.ToCube(inflate);
                     CubeMeshCollection cubeMesh = meshStorage[box.Type];
                     yield return cube.GetBoundingBox(cubeMesh.GetTransform());
-        }
+                }
                 yield break;
             }
-            return BoundingBox.GetEnclosingBoundingBox(GetBoundingBoxesFromSelectedIndices(SelectedIndices));
+            return GetBoundingBoxesFromSelectedIndices(SelectedIndices).GetEnclosingBoundingBox();
         }
 
         private void RenderBodyPart(ShaderProgram shader, Matrix4 partsMatrix, Matrix4 globalMatrix, params string[] partNames)

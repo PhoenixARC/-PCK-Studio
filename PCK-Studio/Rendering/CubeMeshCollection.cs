@@ -178,10 +178,10 @@ namespace PckStudio.Rendering
 
         public override BoundingBox GetBounds(Matrix4 transform)
         {
-            IEnumerable<BoundingBox> boundingBoxes = cubes
+            return cubes
                 .Where(c => c.Visible)
                 .Select(c => c.GetBounds(GetTransform() * transform))
-            return BoundingBox.GetEnclosingBoundingBox(boundingBoxes);
+                .GetEnclosingBoundingBox();
         }
 
         internal Vector3 GetFaceCenter(int index, Cube.Face face)

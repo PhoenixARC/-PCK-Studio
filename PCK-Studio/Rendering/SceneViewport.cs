@@ -167,7 +167,8 @@ namespace PckStudio.Rendering
             VertexBufferLayout layout = new VertexBufferLayout();
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
-            vao.AddNewBuffer(layout);
+            int id = vao.AddNewBuffer(layout);
+            vao.GetBuffer(id).SetData(BoundingBox.GetVertices());
             var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
             _boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
 
@@ -267,6 +268,7 @@ namespace PckStudio.Rendering
             colorShader.Bind();
             Matrix4 viewProjection = Camera.GetViewProjection();
             colorShader.SetUniformMat4("ViewProjection", ref viewProjection);
+            transform = boundingBox.GetTransform() * transform;
             colorShader.SetUniformMat4("Transform", ref transform);
             colorShader.SetUniform4("BlendColor", color);
             colorShader.SetUniform1("Intensity", 0.6f);
@@ -276,7 +278,6 @@ namespace PckStudio.Rendering
             GL.DepthFunc(DepthFunction.Always);
 
             Renderer.SetLineWidth(2f);
-            _boundingBoxDrawContext.VertexArray.GetBuffer(0).SetData(boundingBox.GetVertices());
             Renderer.Draw(colorShader, _boundingBoxDrawContext);
 
             GL.DepthFunc(DepthFunction.Less);
