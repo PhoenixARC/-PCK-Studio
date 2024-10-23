@@ -79,12 +79,12 @@ namespace PckStudio.Rendering
 
         public override Matrix4 GetTransform()
         {
-            return Matrix4.Identity;
+            return Matrix4.CreateScale(_cube.Size) * Matrix4.CreateTranslation(_cube.Position);
         }
 
         public override BoundingBox GetBounds(Matrix4 transform)
         {
-            return _cube.GetBoundingBox(GetTransform() * transform);
+            return _cube.GetBoundingBox(transform);
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()
@@ -93,47 +93,43 @@ namespace PckStudio.Rendering
 
             Vector2 uv = _cube.Uv;
 
-            BoundingBox boundingBox = GetBounds(GetTransform());
-            Vector3 from = boundingBox.Start;
-            Vector3 to   = boundingBox.End;
-
             Vector3 size = _cube.Size;
 
             // Back
-            yield return new TextureVertex(new Vector3(from.X,   to.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(  to.X,   to.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(  to.X, from.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z));
-            yield return new TextureVertex(new Vector3(from.X, from.Y, to.Z), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 1f, 1f), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(1f, 1f, 1f), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(1f, 0f, 1f), new Vector2(uv.X + size.Z * 2 + size.X + size.X * mirror, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 0f, 1f), new Vector2(uv.X + size.Z * 2 + size.X + size.X * (1 - mirror), uv.Y + size.Z));
             
             // Front
-            yield return new TextureVertex(new Vector3(from.X,   to.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(  to.X,   to.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z));
-            yield return new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 1f, 0f), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(1f, 1f, 0f), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(1f, 0f, 0f), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 0f, 0f), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z));
             
             // Top
-            yield return new TextureVertex(new Vector3(from.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z));
-            yield return new TextureVertex(new Vector3(from.X, from.Y,   to.Z), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y));
-            yield return new TextureVertex(new Vector3(  to.X, from.Y,   to.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y));
-            yield return new TextureVertex(new Vector3(  to.X, from.Y, from.Z), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 0f, 0f), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(0f, 0f, 1f), new Vector2(uv.X + size.Z + size.X * mirror, uv.Y));
+            yield return new TextureVertex(new Vector3(1f, 0f, 1f), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y));
+            yield return new TextureVertex(new Vector3(1f, 0f, 0f), new Vector2(uv.X + size.Z + size.X * (1 - mirror), uv.Y + size.Z));
             
             // Bottom
-            yield return new TextureVertex(new Vector3(  to.X, to.Y, from.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (_cube.FlipZMapping ? size.Z : 0)));
-            yield return new TextureVertex(new Vector3(  to.X, to.Y,   to.Z), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (!_cube.FlipZMapping ? size.Z : 0)));
-            yield return new TextureVertex(new Vector3(from.X, to.Y,   to.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (!_cube.FlipZMapping ? size.Z : 0)));
-            yield return new TextureVertex(new Vector3(from.X, to.Y, from.Z), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (_cube.FlipZMapping ? size.Z : 0)));
+            yield return new TextureVertex(new Vector3(1f, 1f, 0f), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (_cube.FlipZMapping ? size.Z : 0)));
+            yield return new TextureVertex(new Vector3(1f, 1f, 1f), new Vector2(uv.X + size.Z + size.X + size.X * (1 - mirror), uv.Y + (!_cube.FlipZMapping ? size.Z : 0)));
+            yield return new TextureVertex(new Vector3(0f, 1f, 1f), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (!_cube.FlipZMapping ? size.Z : 0)));
+            yield return new TextureVertex(new Vector3(0f, 1f, 0f), new Vector2(uv.X + size.Z + size.X + size.X * mirror, uv.Y + (_cube.FlipZMapping ? size.Z : 0)));
             
             // Left
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, from.Y, from.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, to.Y  , from.Z), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, to.Y  , to.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? from.X : to.X, from.Y, to.Z), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 0f : 1f, 0f, 0f), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 0f : 1f, 1f, 0f), new Vector2(uv.X + size.X + size.Z, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 0f : 1f, 1f, 1f), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 0f : 1f, 0f, 1f), new Vector2(uv.X + size.X + size.Z * 2, uv.Y + size.Z));
             
             // Right
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, from.Y, from.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, to.Y  , from.Z), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, to.Y  , to.Z), new Vector2(uv.X, uv.Y + size.Z + size.Y));
-            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? to.X : from.X, from.Y, to.Z), new Vector2(uv.X, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 1f : 0f, 0f, 0f), new Vector2(uv.X + size.Z, uv.Y + size.Z));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 1f : 0f, 1f, 0f), new Vector2(uv.X + size.Z, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 1f : 0f, 1f, 1f), new Vector2(uv.X, uv.Y + size.Z + size.Y));
+            yield return new TextureVertex(new Vector3(_cube.MirrorTexture ? 1f : 0f, 0f, 1f), new Vector2(uv.X, uv.Y + size.Z));
             yield break;
         }
 
