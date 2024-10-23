@@ -29,7 +29,6 @@ namespace PckStudio.Rendering
         internal VertexBufferLayout VertexLayout { get; }
         internal bool Visible { get; }
 
-        public abstract Matrix4 Transform { get; }
 
         protected GenericMesh(string name, bool visible, PrimitiveType type, VertexBufferLayout vertexLayout)
         {
@@ -41,6 +40,7 @@ namespace PckStudio.Rendering
 
         public abstract GenericMesh<T> SetVisible(bool visible);
         public abstract BoundingBox GetBounds(Matrix4 transform);
+        public abstract Matrix4 GetTransform();
 
         internal abstract IEnumerable<T> GetVertices();
         internal abstract IEnumerable<int> GetIndices();

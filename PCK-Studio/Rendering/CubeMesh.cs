@@ -51,8 +51,6 @@ namespace PckStudio.Rendering
                     22, 23, 20
             ];
 
-        public override Matrix4 Transform => Matrix4.Identity;
-
         internal static VertexBufferLayout VertexBufferLayout { get; } = new VertexBufferLayout().Add(ShaderDataType.Float3).Add(ShaderDataType.Float2);
 
         public CubeMesh(Cube cube) : this(nameof(CubeMesh), cube)
@@ -79,9 +77,14 @@ namespace PckStudio.Rendering
 
         public Cube GetCube() => _cube;
 
+        public override Matrix4 GetTransform()
+        {
+            return Matrix4.Identity;
+        }
+
         public override BoundingBox GetBounds(Matrix4 transform)
         {
-            return _cube.GetBoundingBox(Transform * transform);
+            return _cube.GetBoundingBox(GetTransform() * transform);
         }
 
         internal override IEnumerable<TextureVertex> GetVertices()
@@ -90,7 +93,7 @@ namespace PckStudio.Rendering
 
             Vector2 uv = _cube.Uv;
 
-            BoundingBox boundingBox = GetBounds(Transform);
+            BoundingBox boundingBox = GetBounds(GetTransform());
             Vector3 from = boundingBox.Start;
             Vector3 to   = boundingBox.End;
 

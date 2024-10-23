@@ -1055,7 +1055,7 @@ namespace PckStudio.Rendering
                     float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
                     Cube cube = box.ToCube(inflate);
                     CubeMeshCollection cubeMesh = meshStorage[box.Type];
-                    yield return cube.GetBoundingBox(cubeMesh.Transform);
+                    yield return cube.GetBoundingBox(cubeMesh.GetTransform());
         }
                 yield break;
             }
@@ -1072,7 +1072,7 @@ namespace PckStudio.Rendering
 
         private void RenderPart<T>(ShaderProgram shader, GenericMesh<T> mesh, Matrix4 partMatrix, Matrix4 globalMatrix) where T : struct
         {
-            Matrix4 transform = partMatrix * mesh.Transform * globalMatrix;
+            Matrix4 transform = partMatrix * mesh.GetTransform() * globalMatrix;
             DrawMesh(mesh, shader, transform);
         }
 

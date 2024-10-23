@@ -217,7 +217,7 @@ namespace PckStudio.Rendering
 
             foreach (CubeMeshCollection item in _rootCollection)
             {
-                DrawMesh(item, shader, item.Transform * Matrix4.CreateScale(1f, -1f, -1f));
+                DrawMesh(item, shader, item.GetTransform() * Matrix4.CreateScale(1f, -1f, -1f));
             }
             _modelRenderTexture.Unbind();
         }

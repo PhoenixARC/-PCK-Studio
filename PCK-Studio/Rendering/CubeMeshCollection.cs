@@ -58,7 +58,16 @@ namespace PckStudio.Rendering
             set => _offset = value;
         }
 
-        public override Matrix4 Transform => (Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Rotation.X)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Rotation.Y)) * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z))).Pivoted(Translation + _offset, Pivot);
+        public override Matrix4 GetTransform()
+        {
+            Matrix4 rotations = (
+                Matrix4.CreateRotationX(MathHelper.DegreesToRadians(Rotation.X)) *
+                Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Rotation.Y)) *
+                Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z))
+                );
+            Matrix4 translation = Matrix4.CreateTranslation(Translation + Offset);
+            return translation * (rotations).Pivoted(Pivot - Offset);
+        }
 
         public int Count => cubes.Count;
 
@@ -92,7 +101,7 @@ namespace PckStudio.Rendering
 
         internal override IEnumerable<TextureVertex> GetVertices()
             => cubes.Where(c => c.Visible).SelectMany(c =>
-                c.GetVertices().Select(vertex => new TextureVertex(Vector3.TransformPosition(vertex.Position, c.Transform), vertex.TexPosition))
+                c.GetVertices().Select(vertex => new TextureVertex(Vector3.TransformPosition(vertex.Position, c.GetTransform()), vertex.TexPosition))
             );
 
         internal override IEnumerable<int> GetIndices()
@@ -156,7 +165,7 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].GetBounds(Transform).Center;
+            return cubes[index].GetBounds(GetTransform()).Center;
         }
          
         internal BoundingBox GetCubeBoundingBox(int index)
@@ -164,14 +173,14 @@ namespace PckStudio.Rendering
             if (!cubes.IndexInRange(index))
                 throw new IndexOutOfRangeException();
 
-            return cubes[index].GetBounds(Transform);
+            return cubes[index].GetBounds(GetTransform());
         }
 
         public override BoundingBox GetBounds(Matrix4 transform)
         {
             IEnumerable<BoundingBox> boundingBoxes = cubes
                 .Where(c => c.Visible)
-                .Select(c => c.GetBounds(Transform * transform));
+                .Select(c => c.GetBounds(GetTransform() * transform))
             return BoundingBox.GetEnclosingBoundingBox(boundingBoxes);
         }
 
@@ -181,7 +190,7 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
 
             Vector3 faceCenter = cubes[index] is CubeMesh c ? c.GetCube().GetFaceCenter(face) : Vector3.Zero;
-            return Vector3.TransformPosition(faceCenter, Transform);
+            return Vector3.TransformPosition(faceCenter, GetTransform());
         }
 
         internal void SetVisible(int index, bool visible)
