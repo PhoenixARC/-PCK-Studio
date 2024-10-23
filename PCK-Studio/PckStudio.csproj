@@ -151,7 +151,7 @@
     <Compile Include="Forms\ContributorsForm.Designer.cs">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\OpenTkMatrixExtensions.cs" />
+    <Compile Include="Extensions\OpenTKExtensions.cs" />
     <Compile Include="Forms\Editor\ModelEditor.cs">
       <SubType>Form</SubType>
     </Compile>

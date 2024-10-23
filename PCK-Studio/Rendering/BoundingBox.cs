@@ -20,7 +20,7 @@ namespace PckStudio.Rendering
             Start = start;
             End = end;
             OpenTK.Vector3 size = End - Start;
-            Volume = Abs(size);
+            Volume = OpenTKExtensions.Abs(size);
             Center = start + Volume / 2;
         }
 
@@ -29,10 +29,6 @@ namespace PckStudio.Rendering
         {
         }
 
-        private static OpenTK.Vector3 Abs(OpenTK.Vector3 value)
-        {
-            return new OpenTK.Vector3(Math.Abs(value.X), Math.Abs(value.Y), Math.Abs(value.Z));
-        }
 
         public ColorVertex[] GetVertices()
         {
