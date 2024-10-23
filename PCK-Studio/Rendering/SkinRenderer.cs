@@ -634,6 +634,7 @@ namespace PckStudio.Rendering
                 return;
             }
             meshStorage[name].Offset = Vector3.UnitY * value;
+            CalculateSkinBounds();
         }
 
         internal void ResetOffsets()
@@ -646,6 +647,7 @@ namespace PckStudio.Rendering
             {
                 offsetSpecificMeshStorage[key].Offset = Vector3.Zero;
             }
+            CalculateSkinBounds();
         }
 
         internal IEnumerable<SkinPartOffset> GetOffsets()
@@ -1001,7 +1003,7 @@ namespace PckStudio.Rendering
                                     return Matrix4.Identity;
                             }
                         }
-                        boundingBoxRenderTransform = GetGroupTransform(box.Type) * cubeMesh.GetTransform() * renderTransform;
+                        boundingBoxRenderTransform = GetGroupTransform(box.Type) * renderTransform;
                     }
                 }
 
