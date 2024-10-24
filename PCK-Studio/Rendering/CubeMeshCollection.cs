@@ -199,7 +199,7 @@ namespace PckStudio.Rendering
                 throw new IndexOutOfRangeException();
             if (cubes[index].Visible == visible)
                 return;
-            cubes[index] = cubes[index].SetVisible(visible) as CubeMesh;
+            cubes[index] = cubes[index].SetVisible(visible);
         }
 
         public void Add(GenericMesh<TextureVertex> item) => cubes.Add(item);
@@ -219,7 +219,7 @@ namespace PckStudio.Rendering
 
         public bool Contains(GenericMesh<TextureVertex> item, bool searchSubCollections)
         {
-            return cubes.Any(c => c.Name == item.Name) || (searchSubCollections && subCollection.Values.Any(collection => collection.Contains(item, searchSubCollections)));
+            return Contains(item) || (searchSubCollections && subCollection.Values.Any(collection => collection.Contains(item, searchSubCollections)));
         }
 
         public void CopyTo(GenericMesh<TextureVertex>[] array, int arrayIndex)
