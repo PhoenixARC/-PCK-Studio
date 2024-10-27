@@ -48,10 +48,34 @@ namespace PckStudio.Rendering
         }
 
         public bool RenderModelBounds { get; set; }
+        public string CurrentModelName => _currentModelName;
+
         private BoundingBox _maxBounds;
+        private string _currentModelName;
         private Image _modelTexture;
         private Texture2D _modelRenderTexture;
         private List<CubeMeshCollection> _rootCollection;
+        private struct HighlightInfo
+        {
+            public static readonly HighlightInfo Empty = new HighlightInfo(Vector3.Zero, Vector3.Zero, BoundingBox.Empty);
+            public bool IsEmpty => BoundingBox.Volume.LengthSquared <= 0f;
+            public BoundingBox BoundingBox { get; }
+            public Vector3 Pivot { get; }
+            public Vector3 Rotation { get; }
+
+            public HighlightInfo(System.Numerics.Vector3 pivot, System.Numerics.Vector3 rotation, BoundingBox boundingBox)
+                : this(pivot.ToOpenTKVector(),rotation.ToOpenTKVector(), boundingBox)
+            {
+            }
+
+            public HighlightInfo(Vector3 pivot, Vector3 rotation, BoundingBox boundingBox)
+            {
+                Pivot = pivot;
+                Rotation = rotation;
+                BoundingBox = boundingBox;
+            }
+        }
+        private HighlightInfo _highlightingInfo;
 
         public ModelRenderer() : base(fov: 60f)
         {
@@ -93,6 +117,7 @@ namespace PckStudio.Rendering
 
         public void LoadModel(Model model)
         {
+            ResetHighlight();
             _rootCollection?.Clear();
 
             _maxBounds = model.GetParts()
@@ -141,6 +166,7 @@ namespace PckStudio.Rendering
                 shader.Bind();
                 shader.SetUniform2("TexSize", model.TextureSize);
             }
+            _currentModelName = model.Name;
         }
 
         public override void ResetCamera(Vector3 offset)
@@ -216,12 +242,31 @@ namespace PckStudio.Rendering
                 DrawMesh(item, shader, item.GetTransform() * renderTransform);
             }
             _modelRenderTexture.Unbind();
+
+            if (!_highlightingInfo.IsEmpty)
+            {
+                Matrix4 highlightMatrix = Matrix4.Identity;
+                highlightMatrix        *= Matrix4.CreateRotationX(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.X));
+                highlightMatrix        *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Y));
+                highlightMatrix        *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Z));
+                highlightMatrix         = Matrix4.CreateTranslation(_highlightingInfo.Pivot) * highlightMatrix.Pivoted(_highlightingInfo.Pivot * -1) * renderTransform;
+                DrawBoundingBox(highlightMatrix, _highlightingInfo.BoundingBox, Color.HotPink);
+            }
+
             if (RenderModelBounds)
             {
                 DrawBoundingBox(renderTransform, _maxBounds, Color.Red);
             }
-            }
+        }
+        internal void Highlight(ModelPart part)
+        {
+            BoundingBox bb = part.GetBoxes().Select(b => new BoundingBox(b.Position, b.Position + b.Size)).GetEnclosingBoundingBox();
+            _highlightingInfo = new HighlightInfo(part.Translation, part.Rotation + part.AdditionalRotation, bb);
+        }
 
-        
+        internal void ResetHighlight()
+        {
+            _highlightingInfo = HighlightInfo.Empty;
+        }
     }
 }

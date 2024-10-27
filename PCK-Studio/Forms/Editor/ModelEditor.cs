@@ -228,7 +228,7 @@ namespace PckStudio.Forms.Editor
             exportToolStripMenuItem.Visible = e.Node is ModelNode;
             editToolStripMenuItem.Visible = e.Node is ModelBoxNode;
             removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
-            if (e.Node is ModelNode modelNode)
+            if (e.Node is ModelNode modelNode && modelNode.Model.Name != modelViewport.CurrentModelName)
             {
                 NamedTexture[] textures = GetModelTextures(modelNode.Model.Name).ToArray();
                 
@@ -246,6 +246,14 @@ namespace PckStudio.Forms.Editor
                 modelViewport.LoadModel(modelNode.Model);
                 modelViewport.ResetCamera();
             }
+            if (e.Node is ModelPartNode modelPartNode && modelPartNode.Parent is ModelNode parentNode && modelViewport.CurrentModelName == parentNode.Model.Name)
+            {
+                modelViewport.Highlight(modelPartNode.Part);
+            }
+            //if (e.Node is ModelBoxNode modelBoxNode)
+            //{
+
+            //}
         }
 
         private IEnumerable<NamedTexture> GetModelTextures(string modelName)
