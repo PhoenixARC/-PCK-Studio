@@ -38,8 +38,6 @@ namespace PckStudio.Rendering
             }
         }
 
-        public bool RenderModelBounds { get; set; }
-
         [Description("Event that gets fired when the skin texture is changing")]
         [Category("Property Chnaged")]
         [Browsable(true)]
@@ -49,6 +47,7 @@ namespace PckStudio.Rendering
             remove => Events.RemoveHandler(nameof(ModelTextureChanging), value);
         }
 
+        public bool RenderModelBounds { get; set; }
         private BoundingBox _maxBounds;
         private Image _modelTexture;
         private Texture2D _modelRenderTexture;
@@ -124,11 +123,11 @@ namespace PckStudio.Rendering
 
                 Vector3 translation = modelPart.Translation.ToOpenTKVector();
 
-                var cubeMeshCollection = new CubeMeshCollection(modelPart.Name, Vector3.Zero, translation, modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
+                var cubeMeshCollection = new CubeMeshCollection(modelPart.Name, translation, translation * -1, modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
                 cubeMeshCollection.FlipZMapping = true;
                 foreach (ModelBox boxes in modelPart.GetBoxes())
                 {
-                    cubeMeshCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector() + translation, boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
+                    cubeMeshCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
                 }
 
                 RetriveChildMeshes(metaDataParts: metaDataPart.Children, ref model).ForEach(cubeMeshCollection.Add);
@@ -209,16 +208,20 @@ namespace PckStudio.Rendering
 
             _modelRenderTexture.Bind(slot: 0);
 
-            if (RenderModelBounds)
-            {
-                DrawBoundingBox(Matrix4.CreateScale(1f, -1f, -1f), _maxBounds, Color.Red);
-            }
+            Vector3 scaleVector = new Vector3(1f, -1f, -1f);
+            Matrix4 renderTransform = Matrix4.CreateScale(scaleVector);
 
             foreach (CubeMeshCollection item in _rootCollection)
             {
-                DrawMesh(item, shader, item.GetTransform() * Matrix4.CreateScale(1f, -1f, -1f));
+                DrawMesh(item, shader, item.GetTransform() * renderTransform);
             }
             _modelRenderTexture.Unbind();
-        }
+            if (RenderModelBounds)
+            {
+                DrawBoundingBox(renderTransform, _maxBounds, Color.Red);
+            }
+            }
+
+        
     }
 }
