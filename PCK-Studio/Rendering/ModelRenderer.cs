@@ -153,7 +153,7 @@ namespace PckStudio.Rendering
         public override void ResetCamera(Vector3 offset)
         {
             Vector3 center = (_maxBounds.Start + _maxBounds.End) / 2f;
-            Camera.FocalPoint = Vector3.TransformPosition(center + offset, Matrix4.CreateScale(-1f, 1f, 1f));
+            Camera.FocalPoint = Vector3.TransformPosition(center - Vector3.UnitY * 24f + offset, Matrix4.CreateScale(-1f, 1f, 1f));
             Camera.Distance = _maxBounds.Volume.Length;
             Camera.Yaw = 45f;
             Camera.Pitch = 25f;
@@ -220,7 +220,7 @@ namespace PckStudio.Rendering
             _modelRenderTexture.Bind(slot: 0);
 
             Vector3 scaleVector = new Vector3(1f, -1f, -1f);
-            Matrix4 renderTransform = Matrix4.CreateScale(scaleVector);
+            Matrix4 renderTransform = Matrix4.CreateScale(scaleVector) * Matrix4.CreateTranslation(Vector3.UnitY * 24f);
 
             foreach (GenericMesh<TextureVertex> item in _rootCollection)
             {
@@ -234,7 +234,9 @@ namespace PckStudio.Rendering
                 highlightMatrix        *= Matrix4.CreateRotationX(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.X));
                 highlightMatrix        *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Y));
                 highlightMatrix        *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Z));
-                highlightMatrix         = Matrix4.CreateTranslation(_highlightingInfo.Pivot) * highlightMatrix.Pivoted(_highlightingInfo.Pivot * -1) * renderTransform;
+                highlightMatrix         = Matrix4.CreateTranslation(_highlightingInfo.Pivot) * highlightMatrix.Pivoted(_highlightingInfo.Pivot * -1);
+
+                highlightMatrix *= renderTransform;
                 DrawBoundingBox(highlightMatrix, _highlightingInfo.BoundingBox, Color.HotPink);
             }
 
