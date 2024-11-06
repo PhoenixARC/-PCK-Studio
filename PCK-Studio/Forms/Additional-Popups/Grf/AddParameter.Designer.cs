@@ -153,6 +153,7 @@
             this.AcceptButton = this.ConfirmBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(264, 126);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.CancelBtn);
@@ -160,10 +161,13 @@
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(metroLabel2);
             this.Controls.Add(metroLabel1);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddParameter";
+            this.Text = "Add A Param.";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -46,7 +46,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(63, 204);
+            this.label1.Location = new System.Drawing.Point(64, 204);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 10;
@@ -68,7 +68,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.FrameTimeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.FrameTimeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FrameTimeUpDown.ForeColor = System.Drawing.SystemColors.Window;
-            this.FrameTimeUpDown.Location = new System.Drawing.Point(134, 202);
+            this.FrameTimeUpDown.Location = new System.Drawing.Point(135, 202);
             this.FrameTimeUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -173,7 +173,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(273, 292);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveButton);

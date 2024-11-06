@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	public partial class SetBulkSpeed : MetroForm
+	public partial class SetBulkSpeed : ThemeForm
 	{
 		public int Ticks => (int)TimeUpDown.Value;
 		
