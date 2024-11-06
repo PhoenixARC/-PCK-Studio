@@ -208,11 +208,18 @@ namespace PckStudio.Rendering
 
             GL.Enable(EnableCap.Texture2D); // Enable textures
 
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
             GL.Enable(EnableCap.AlphaTest); // Enable transparent
-            GL.AlphaFunc(AlphaFunction.Greater, 0.0f);
+            GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
+
+            GL.Enable(EnableCap.Blend);
+
+            // Emissive
+            //GL.BlendFuncSeparate(BlendingFactorSrc.One, BlendingFactorDest.SrcColor, BlendingFactorSrc.One, BlendingFactorDest.One);
+            GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
+
+            // Additive
+            // GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
+            
             GL.DepthFunc(DepthFunction.Lequal);
 
             ShaderProgram shader = GetShader("CubeShader");
@@ -227,6 +234,8 @@ namespace PckStudio.Rendering
                 DrawMesh(item, shader, item.GetTransform() * renderTransform);
             }
             _modelRenderTexture.Unbind();
+
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             if (!_highlightingInfo.IsEmpty)
             {
