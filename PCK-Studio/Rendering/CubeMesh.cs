@@ -77,10 +77,7 @@ namespace PckStudio.Rendering
 
         public Cube GetCube() => _cube;
 
-        public override Matrix4 GetTransform()
-        {
-            return Matrix4.CreateScale(_cube.Size) * Matrix4.CreateTranslation(_cube.Position);
-        }
+        public override Matrix4 GetTransform() => _cube.GetBoundingBox().GetTransform();
 
         public override BoundingBox GetBounds(Matrix4 transform)
         {
