@@ -80,10 +80,11 @@
         "children": [
           {
             "name": "head",
-            "children": [
-              { "name": "nose" },
-              { "name": "tail_fin" }
-            ]
+            "children": [ { "name": "nose" } ]
+          },
+          {
+            "name": "tail",
+            "children": [ { "name": "tail_fin" } ]
           },
           { "name": "right_fin" },
           { "name": "left_fin" },
