@@ -98,11 +98,30 @@
       "res/mob/enderdragon/ender"
     ],
     "parts": [
+      { "name": "body" },
+      { "name": "neck1" },
+      { "name": "neck2" },
+      { "name": "neck3" },
+      { "name": "neck4" },
+      { "name": "neck5" },
+
+      { "name": "tail1" },
+      { "name": "tail2" },
+      { "name": "tail3" },
+      { "name": "tail4" },
+      { "name": "tail5" },
+      { "name": "tail6" },
+      { "name": "tail7" },
+      { "name": "tail8" },
+      { "name": "tail9" },
+      { "name": "tail10" },
+      { "name": "tail11" },
+      { "name": "tail12" },
+
       {
         "name": "head",
         "children": [ { "name": "jaw" } ]
       },
-      { "name": "body" },
       {
         "name": "wing",
         "children": [ { "name": "wingtip" } ]
