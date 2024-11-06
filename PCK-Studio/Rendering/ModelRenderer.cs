@@ -54,7 +54,7 @@ namespace PckStudio.Rendering
         private string _currentModelName;
         private Image _modelTexture;
         private Texture2D _modelRenderTexture;
-        private List<CubeMeshCollection> _rootCollection;
+        private List<GenericMesh<TextureVertex>> _rootCollection;
         private struct HighlightInfo
         {
             public static readonly HighlightInfo Empty = new HighlightInfo(Vector3.Zero, Vector3.Zero, BoundingBox.Empty);
@@ -80,7 +80,7 @@ namespace PckStudio.Rendering
         public ModelRenderer() : base(fov: 60f)
         {
             InitializeComponent();
-            _rootCollection = new List<CubeMeshCollection>(5);
+            _rootCollection = new List<GenericMesh<TextureVertex>>(5);
             if (DesignMode)
                 return;
             InitializeShaders();
@@ -139,26 +139,7 @@ namespace PckStudio.Rendering
                 };
             }
 
-            foreach (ModelMetaDataPart metaDataPart in modelMetaData.RootParts)
-            {
-                if (!model.TryGetPart(metaDataPart.Name, out ModelPart modelPart))
-                {
-                    Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] : Failed to find part: '{metaDataPart.Name}'");
-                }
-
-                Vector3 translation = modelPart.Translation.ToOpenTKVector();
-
-                var cubeMeshCollection = new CubeMeshCollection(modelPart.Name, translation, translation * -1, modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
-                cubeMeshCollection.FlipZMapping = true;
-                foreach (ModelBox boxes in modelPart.GetBoxes())
-                {
-                    cubeMeshCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
-                }
-
-                RetriveChildMeshes(metaDataParts: metaDataPart.Children, ref model).ForEach(cubeMeshCollection.Add);
-
-                _rootCollection.Add(cubeMeshCollection);
-            }
+            _rootCollection.AddRange(RetriveChildMeshes(modelMetaData.RootParts, Vector3.Zero, Vector3.Zero, Vector3.Zero, ref model));
 
             if (Context.IsCurrent)
             {
@@ -178,11 +159,7 @@ namespace PckStudio.Rendering
             Camera.Pitch = 25f;
         }
 
-        private static CubeMesh ToCubeMesh(ModelBox box) => ToCubeMesh(box, Vector3.Zero);
-        private static CubeMesh ToCubeMesh(ModelBox box, Vector3 translation)
-            => new CubeMesh(new Cube(box.Position.ToOpenTKVector() + translation, box.Size.ToOpenTKVector(), box.Uv.ToOpenTKVector(), box.Inflate, box.Mirror, true));
-
-        private List<GenericMesh<TextureVertex>> RetriveChildMeshes(ModelMetaDataPart[] metaDataParts, ref Model model)
+        private List<GenericMesh<TextureVertex>> RetriveChildMeshes(ModelMetaDataPart[] metaDataParts, Vector3 parentTranslation, Vector3 parentRotation, Vector3 parentPivot, ref Model model)
         {
             List<GenericMesh<TextureVertex>> meshes = new List<GenericMesh<TextureVertex>>();
             foreach (ModelMetaDataPart metaDataPart in metaDataParts)
@@ -192,8 +169,16 @@ namespace PckStudio.Rendering
                     Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(RetriveChildMeshes)}] : Failed to find part: '{metaDataPart.Name}'");
                 }
                 Vector3 translation = modelPart.Translation.ToOpenTKVector();
-                meshes.AddRange(modelPart.GetBoxes().Select(b => ToCubeMesh(b, translation)));
-                meshes.AddRange(RetriveChildMeshes(metaDataPart.Children, ref model));
+                Vector3 pivot = parentPivot == Vector3.Zero ? translation * -1 : parentPivot;
+                Vector3 rotation = (modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
+                CubeMeshCollection cubeCollection = new CubeMeshCollection(modelPart.Name, translation - parentTranslation, pivot, rotation - parentRotation);
+                cubeCollection.FlipZMapping = true;
+                foreach (ModelBox boxes in modelPart.GetBoxes())
+                {
+                    cubeCollection.AddNamed(modelPart.Name, boxes.Position.ToOpenTKVector(), boxes.Size.ToOpenTKVector(), boxes.Uv.ToOpenTKVector(), boxes.Inflate, boxes.Mirror);
+                }
+                meshes.Add(cubeCollection);
+                RetriveChildMeshes(metaDataPart.Children, translation, rotation, pivot, ref model).ForEach(cubeCollection.Add);
             }
             return meshes;
         }
@@ -237,7 +222,7 @@ namespace PckStudio.Rendering
             Vector3 scaleVector = new Vector3(1f, -1f, -1f);
             Matrix4 renderTransform = Matrix4.CreateScale(scaleVector);
 
-            foreach (CubeMeshCollection item in _rootCollection)
+            foreach (GenericMesh<TextureVertex> item in _rootCollection)
             {
                 DrawMesh(item, shader, item.GetTransform() * renderTransform);
             }
