@@ -153,6 +153,7 @@
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\OpenTKExtensions.cs" />
+    <Compile Include="Interfaces\ITryGetSet.cs" />
     <Compile Include="Forms\Editor\ModelEditor.cs">
       <SubType>Form</SubType>
     </Compile>

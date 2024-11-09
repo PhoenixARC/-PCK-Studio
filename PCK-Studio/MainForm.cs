@@ -40,6 +40,7 @@ using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
 using PckStudio.Internal.App;
 using PckStudio.Internal.Skin;
+using PckStudio.Interfaces;
 
 namespace PckStudio
 {
@@ -603,18 +604,18 @@ namespace PckStudio
 				return;
 			}
 
-			ModelEditor.TryGetTextureDelegate tryGetTexture = (string path, out Image img) =>
+            TryGetDelegate<string, Image> tryGetTexture = (string path, out Image img) =>
 			{
-					bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset asset) ||
-								 currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out asset);
-					img = found ? asset.GetTexture() : default;
-					return found;
-				};
-			
-			ModelEditor.TrySetTextureDelegate trySetTexture = (string path, Image img) =>
+				bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset asset) ||
+							 currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out asset);
+				img = found ? asset.GetTexture() : default;
+				return found;
+			};
+
+            TrySetDelegate<string, Image> trySetTexture = (string path, Image img) =>
 			{
                 bool found = currentPCK.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset foundAsset) ||
-                                currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out foundAsset);
+                             currentPCK.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out foundAsset);
                 PckAsset asset = foundAsset ?? currentPCK.CreateNewAsset(path + ".png", PckAssetType.TextureFile);
                 asset.SetTexture(img);
 				return true;
@@ -622,10 +623,10 @@ namespace PckStudio
 
 			var editor = new ModelEditor(modelContainer, tryGetTexture, trySetTexture);
 			if (editor.ShowDialog() == DialogResult.OK)
-				{
+			{
 				return;
-                }
-				}
+			}
+		}
 
 		public void HandleBehavioursFile(PckAsset asset)
 		{

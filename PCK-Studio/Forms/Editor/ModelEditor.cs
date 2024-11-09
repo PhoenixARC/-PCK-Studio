@@ -11,6 +11,7 @@ using OMI.Formats.Model;
 using MetroFramework.Forms;
 
 using PckStudio.Internal;
+using PckStudio.Interfaces;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
 using PckStudio.Extensions;
@@ -20,19 +21,13 @@ namespace PckStudio.Forms.Editor
     public partial class ModelEditor : MetroForm
     {
         private readonly ModelContainer _models;
-        private readonly TryGetTextureDelegate _tryGetTexture;
-        private readonly TrySetTextureDelegate _trySetTexture;
+        private readonly ITryGetSet<string, Image> _textures;
 
-
-        public delegate bool TryGetTextureDelegate(string path, out Image img);
-        public delegate bool TrySetTextureDelegate(string path, Image img);
-
-        public ModelEditor(ModelContainer models, TryGetTextureDelegate tryGetTexture, TrySetTextureDelegate trySetTexture)
+        public ModelEditor(ModelContainer models, TryGetDelegate<string, Image> tryGetTexture, TrySetDelegate<string, Image> trySetTexture)
         {
             InitializeComponent();
             _models = models;
-            _tryGetTexture = tryGetTexture;
-            _trySetTexture = trySetTexture;
+            _textures = TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture);
 
             modelTreeView.ImageList = new ImageList
             {
@@ -117,6 +112,7 @@ namespace PckStudio.Forms.Editor
                 ["mooshroom"]        = 48,
                 ["witherBoss.armor"] = 90,
 
+                // 1.14 models
                 ["panda"]              = 52,
                 ["ravager"]            = 61,
                 ["pillager"]           = 56,
@@ -151,7 +147,7 @@ namespace PckStudio.Forms.Editor
             public ModelPart Part => _part;
 
             private ModelPartNode(ModelPart part)
-                : base(part.Name)
+                : base($"{part.Name} Pivot:{part.Translation * -1} Rot:{part.Rotation + part.AdditionalRotation} ")
             {
                 _part = part;
                 ImageIndex = 126;
@@ -262,7 +258,7 @@ namespace PckStudio.Forms.Editor
                 yield break;
             foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
             {
-                if (_tryGetTexture(textureLocation, out Image img))
+                if (_textures.TryGet(textureLocation, out Image img))
                     yield return new NamedTexture(Path.GetFileName(textureLocation), img);
             }
             yield break;
@@ -298,7 +294,7 @@ namespace PckStudio.Forms.Editor
 
                 foreach (NamedTexture texture in modelInfo.Textures)
                 {
-                    _trySetTexture(texture.Name, texture.Texture);
+                    _textures.TrySet(texture.Name, texture.Texture);
                 }
             }
         }
