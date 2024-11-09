@@ -61,17 +61,17 @@ namespace PckStudio.Rendering
             public static readonly HighlightInfo Empty = new HighlightInfo(Vector3.Zero, Vector3.Zero, BoundingBox.Empty);
             public bool IsEmpty => BoundingBox.Volume.LengthSquared <= 0f;
             public BoundingBox BoundingBox { get; }
-            public Vector3 Pivot { get; }
+            public Vector3 Translation { get; }
             public Vector3 Rotation { get; }
 
-            public HighlightInfo(System.Numerics.Vector3 pivot, System.Numerics.Vector3 rotation, BoundingBox boundingBox)
-                : this(pivot.ToOpenTKVector(),rotation.ToOpenTKVector(), boundingBox)
+            public HighlightInfo(System.Numerics.Vector3 translation, System.Numerics.Vector3 rotation, BoundingBox boundingBox)
+                : this(translation.ToOpenTKVector(), rotation.ToOpenTKVector(), boundingBox)
             {
             }
 
-            public HighlightInfo(Vector3 pivot, Vector3 rotation, BoundingBox boundingBox)
+            public HighlightInfo(Vector3 translation, Vector3 rotation, BoundingBox boundingBox)
             {
-                Pivot = pivot;
+                Translation = translation;
                 Rotation = rotation;
                 BoundingBox = boundingBox;
             }
@@ -245,7 +245,7 @@ namespace PckStudio.Rendering
                 highlightMatrix        *= Matrix4.CreateRotationX(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.X));
                 highlightMatrix        *= Matrix4.CreateRotationY(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Y));
                 highlightMatrix        *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(_highlightingInfo.Rotation.Z));
-                highlightMatrix         = Matrix4.CreateTranslation(_highlightingInfo.Pivot) * highlightMatrix.Pivoted(_highlightingInfo.Pivot * -1);
+                highlightMatrix         = Matrix4.CreateTranslation(_highlightingInfo.Translation) * highlightMatrix.Pivoted(_highlightingInfo.Translation * -1);
 
                 highlightMatrix *= renderTransform;
                 DrawBoundingBox(highlightMatrix, _highlightingInfo.BoundingBox, Color.HotPink);
