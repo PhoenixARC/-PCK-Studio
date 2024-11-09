@@ -99,6 +99,10 @@
     ],
     "parts": [
       { "name": "body" },
+      // only needs to be inside when neck 1-5 aren't present
+      { "name": "neck" },
+
+      // neck 1-5 & tail 1-12 are not required to be inside the model
       { "name": "neck1" },
       { "name": "neck2" },
       { "name": "neck3" },
