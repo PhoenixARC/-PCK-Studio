@@ -15,6 +15,7 @@ using PckStudio.Interfaces;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
 using PckStudio.Extensions;
+using OMI.Formats.Material;
 
 namespace PckStudio.Forms.Editor
 {
@@ -22,13 +23,14 @@ namespace PckStudio.Forms.Editor
     {
         private readonly ModelContainer _models;
         private readonly ITryGetSet<string, Image> _textures;
+        private readonly ITryGet<string, MaterialContainer.Material> _tryGetEntityMaterial;
 
-        public ModelEditor(ModelContainer models, TryGetDelegate<string, Image> tryGetTexture, TrySetDelegate<string, Image> trySetTexture)
+        public ModelEditor(ModelContainer models, ITryGetSet<string, Image> tryGetSetTextures, ITryGet<string, MaterialContainer.Material> tryGetEntityMaterial)
         {
             InitializeComponent();
             _models = models;
-            _textures = TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture);
-
+            _textures = tryGetSetTextures;
+            _tryGetEntityMaterial = tryGetEntityMaterial;
             modelTreeView.ImageList = new ImageList
             {
                 ColorDepth = ColorDepth.Depth32Bit,
@@ -240,6 +242,12 @@ namespace PckStudio.Forms.Editor
                     modelViewport.Texture = textures[0].Texture;
 
                 modelViewport.LoadModel(modelNode.Model);
+                if (GameModelImporter.ModelMetaData.TryGetValue(modelNode.Model.Name, out JsonModelMetaData modelMetaData) && !string.IsNullOrEmpty(modelMetaData.MaterialName) &&
+                    _tryGetEntityMaterial.TryGet(modelMetaData.MaterialName, out MaterialContainer.Material entityMaterial) ||
+                    _tryGetEntityMaterial.TryGet(modelNode.Model.Name, out entityMaterial))
+                {
+                    modelViewport.SetModelMaterial(entityMaterial);
+                }
                 modelViewport.ResetCamera();
             }
             if (e.Node is ModelPartNode modelPartNode && modelPartNode.Parent is ModelNode parentNode && modelViewport.CurrentModelName == parentNode.Model.Name)

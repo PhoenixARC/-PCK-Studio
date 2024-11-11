@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OMI.Formats.Material;
 using OMI.Formats.Model;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -147,6 +148,10 @@ namespace PckStudio.Rendering
                 ShaderProgram shader = GetShader("CubeShader");
                 shader.Bind();
                 shader.SetUniform2("TexSize", model.TextureSize);
+
+                // Reset "Material"
+                GL.Disable(EnableCap.AlphaTest);
+                GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
             }
             _currentModelName = model.Name;
         }
@@ -265,6 +270,35 @@ namespace PckStudio.Rendering
         internal void ResetHighlight()
         {
             _highlightingInfo = HighlightInfo.Empty;
+        }
+
+        internal void SetModelMaterial(MaterialContainer.Material entityMaterial)
+        {
+            if (entityMaterial is null)
+                return;
+            switch (entityMaterial.Type)
+            {
+                // todo
+                //case "entity":
+                //    break;
+                //case "entity_change_color":
+                //    break;
+                case "entity_alphatest":
+                    GL.Enable(EnableCap.AlphaTest);
+                    break;
+                case "entity_alphatest_change_color":
+                    GL.Enable(EnableCap.AlphaTest);
+                    goto default;
+                case "entity_emissive_alpha":
+                    GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
+                    break;
+                case "entity_emissive_alpha_only":
+                    GL.BlendFuncSeparate(BlendingFactorSrc.One, BlendingFactorDest.One, BlendingFactorSrc.One, BlendingFactorDest.Zero);
+                    break;
+                default:
+                    Debug.WriteLine($"[{nameof(ModelRenderer)}@{nameof(SetModelMaterial)}]: Unhandled entity material(type: {entityMaterial.Type})");
+                    break;
+            }
         }
     }
 }

@@ -41,6 +41,7 @@ using PckStudio.Internal.Serializer;
 using PckStudio.Internal.App;
 using PckStudio.Internal.Skin;
 using PckStudio.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace PckStudio
 {
@@ -621,7 +622,24 @@ namespace PckStudio
 				return true;
             };
 
-			var editor = new ModelEditor(modelContainer, tryGetTexture, trySetTexture);
+			bool hasMaterialAsset = currentPCK.TryGetAsset("entityMaterials.bin", PckAssetType.MaterialFile, out PckAsset entityMaterialAsset);
+			IReadOnlyDictionary<string, MaterialContainer.Material> entityMaterials =
+				hasMaterialAsset
+				? entityMaterialAsset?.GetData(new MaterialFileReader()).ToDictionary(mat => mat.Name)
+				: new Dictionary<string, MaterialContainer.Material>();
+
+            TryGetDelegate<string, MaterialContainer.Material> tryGetEntityMaterial = (string materialName, out MaterialContainer.Material materialInfo) =>
+			{
+                if (entityMaterials.TryGetValue(materialName, out MaterialContainer.Material material))
+				{
+					materialInfo = material;
+					return true;
+				}
+				materialInfo = default;
+                return false;
+			};
+
+            var editor = new ModelEditor(modelContainer, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(tryGetEntityMaterial));
 			if (editor.ShowDialog() == DialogResult.OK)
 			{
 				return;

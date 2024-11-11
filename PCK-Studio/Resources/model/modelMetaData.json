@@ -3,6 +3,7 @@
     "textureLocations": [
       "res/mob/bat"
     ],
+    "materialName": "bat",
     "parts": [
       {
         "name": "head",
@@ -38,7 +39,8 @@
   "blaze": {
     "textureLocations": [
       "res/mob/fire"
-    ]
+    ],
+    "materialName": "blaze_head"
   },
   "boat": {
     "textureLocations": [
@@ -97,6 +99,7 @@
     "textureLocations": [
       "res/mob/enderdragon/ender"
     ],
+    "materialName": "ender_dragon",
     "parts": [
       { "name": "body" },
       // only needs to be inside when neck 1-5 aren't present
@@ -186,19 +189,22 @@
   "enderman": {
     "textureLocations": [
       "res/mob/enderman"
-    ]
+    ],
+    "materialName": "enderman" // "enderman_invisible" also valid
   },
   "ghast": {
     "textureLocations": [
       "res/mob/ghast",
       "res/mob/ghast_fire"
-    ]
+    ],
+    "materialName": "ghast"
   },
   "guardian": {
     "textureLocations": [
       "res/mob/guardian",
       "res/mob/guardian_elder"
     ],
+    "materialName": "guardian",
     "parts": [
       {
         "name": "head",
@@ -220,12 +226,14 @@
   "irongolem": {
     "textureLocations": [
       "res/mob/villager_golem"
-    ]
+    ],
+    "materialName": "iron_golem"
   },
   "lavaslime": {
     "textureLocations": [
       "res/mob/lava"
-    ]
+    ],
+    "materialName": "magma_cube"
   },
   "llama": {
     "textureLocations": [
@@ -282,6 +290,7 @@
     "textureLocations": [
       "res/mob/phantom"
     ],
+    "materialName": "phantom", // phantom_invisible is also valid
     "parts": [
       {
         "name": "body",
@@ -312,7 +321,8 @@
   "pigzombie": {
     "textureLocations": [
       "res/mob/pigzombie"
-    ]
+    ],
+    "materialName": "zombie_pigman"
   },
   "polarbear": {
     "textureLocations": [
@@ -333,19 +343,23 @@
   },
   "sheep": {
     "textureLocations": [
+      "res/mob/sheep",
       "res/mob/sheep_fur"
-    ]
+    ],
+    "materialName": "sheep"
   },
   "sheep.sheared": {
     "textureLocations": [
       "res/mob/sheep"
-    ]
+    ],
+    "materialName": "sheep"
   },
   "shulker": {
     "textureLocations": [
       "res/mob/shulker/endergolem",
       "res/mob/shulker/spark"
-    ]
+    ],
+    "materialName": "shulker"
   },
   "silverfish": {
     "textureLocations": [
@@ -355,17 +369,20 @@
   "skeleton": {
     "textureLocations": [
       "res/mob/skeleton"
-    ]
+    ],
+    "materialName": "skeleton"
   },
   "skeleton.stray": {
     "textureLocations": [
       "res/mob/skeleton/stray"
-    ]
+    ],
+    "materialName": "stray"
   },
   "skeleton.wither": {
     "textureLocations": [
       "res/mob/skeleton_wither"
-    ]
+    ],
+    "materialName": "wither_skeleton"
   },
   "slime": {
     "textureLocations": [
@@ -386,7 +403,8 @@
     "textureLocations": [
       "res/mob/spider",
       "res/mob/cavespider"
-    ]
+    ],
+    "materialName": "spider" // "spider_invisible" also valid
   },
   "squid": {
     "textureLocations": [
@@ -438,14 +456,16 @@
     "textureLocations": [
       "res/mob/wither/wither",
       "res/mob/wither/wither_invulnerable"
-    ]
+    ],
+    "materialName": "wither_boss"
   },
   "wolf": {
     "textureLocations": [
       "res/mob/wolf",
       "res/mob/wolf_angry",
       "res/mob/wolf_tame"
-    ]
+    ],
+    "materialName": "wolf"
   },
   "zombie": {
     "textureLocations": [
@@ -529,7 +549,8 @@
   "zombie.drowned": {
     "textureLocations": [
       "res/mob/zombie/drowned"
-    ]
+    ],
+    "materialName": "drowned"
   },
   "endermite": {
     "textureLocations": [

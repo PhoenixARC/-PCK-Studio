@@ -66,7 +66,7 @@ namespace PckStudio.Rendering
                 Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z))
                 );
             Matrix4 translation = Matrix4.CreateTranslation(Translation + Offset);
-            return translation * (rotations).Pivoted(Pivot - Offset);
+            return translation * rotations.Pivoted(Pivot - Offset);
         }
 
         public int Count => cubes.Count;
