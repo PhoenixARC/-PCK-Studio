@@ -17,6 +17,22 @@ namespace PckStudio.Internal.Json
 
         [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ModelMetaDataPart[] Children { get; set; } = Array.Empty<ModelMetaDataPart>();
+
+        [JsonConstructor]
+        public ModelMetaDataPart()
+        {
+        }
+
+        public ModelMetaDataPart(string name)
+            : this(name, Array.Empty<ModelMetaDataPart>())
+        {
+        }
+
+        public ModelMetaDataPart(string name, params ModelMetaDataPart[] children)
+        {
+            Name = name;
+            Children = children;
+        }
     }
 
     internal class JsonModelMetaData

@@ -126,19 +126,10 @@ namespace PckStudio.Rendering
                 .SelectMany(p => p.GetBoxes().Select(b => new BoundingBox(b.Position + p.Translation, b.Position + p.Translation + b.Size)))
                 .GetEnclosingBoundingBox();
             
-            if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out JsonModelMetaData modelMetaData))
+            if (!TryGetModelMetaData(model, out JsonModelMetaData modelMetaData))
             {
-                Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] : Couldn't get meta data for model: '{model.Name}'");
+                Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] Failed to get meta data for model: '{model.Name}'");
                 return;
-            }
-
-            if (modelMetaData.RootParts.Length == 0)
-            {
-                modelMetaData = new JsonModelMetaData()
-                {
-                    TextureLocations = modelMetaData.TextureLocations,
-                    RootParts = model.GetParts().Select(p => new ModelMetaDataPart() { Name = p.Name }).ToArray()
-                };
             }
 
             _rootCollection.AddRange(BuildModelMesh(modelMetaData.RootParts, Vector3.Zero, Vector3.Zero, Vector3.Zero, TryGet<string, ModelPart>.FromDelegate(model.TryGetPart)));
@@ -154,6 +145,25 @@ namespace PckStudio.Rendering
                 GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
             }
             _currentModelName = model.Name;
+        }
+
+        private bool TryGetModelMetaData(Model model, out JsonModelMetaData modelMetaData)
+        {
+            if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out modelMetaData))
+            {
+                Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(TryGetModelMetaData)}] Couldn't get meta data for model: '{model.Name}'");
+                return false;
+            }
+
+            if (modelMetaData.RootParts.Length == 0)
+            {
+                modelMetaData = new JsonModelMetaData()
+                {
+                    TextureLocations = modelMetaData.TextureLocations,
+                    RootParts = model.GetParts().Select(p => new ModelMetaDataPart(p.Name)).ToArray()
+                };
+            }
+            return true;
         }
 
         public override void ResetCamera(Vector3 offset)
