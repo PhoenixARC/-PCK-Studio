@@ -9,5 +9,8 @@ in vec2 o_TexCoord;
 
 void main()
 {
-	color = texture(Texture, o_TexCoord * o_TillingFactor);
+	vec4 result = texture(Texture, o_TexCoord * o_TillingFactor);
+	if (result.a <= 0.0)
+		discard;
+	color = result;
 };
