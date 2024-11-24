@@ -34,7 +34,8 @@
   "bed": {
     "textureLocations": [
       "res/item/bed"
-    ]
+    ],
+    "uv_offsets": [ {"X": 0, "Y": 64} ],
   },
   "blaze": {
     "textureLocations": [

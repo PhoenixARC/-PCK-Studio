@@ -43,6 +43,9 @@ namespace PckStudio.Internal.Json
         [JsonProperty("materialName", NullValueHandling = NullValueHandling.Ignore)]
         public string MaterialName { get; set; } = string.Empty;
 
+        [JsonProperty("uv_offsets", NullValueHandling = NullValueHandling.Ignore)]
+        public Vector2[] UvOffsets { get; set; } = Array.Empty<Vector2>();
+
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
         public ModelMetaDataPart[] RootParts { get; set; } = Array.Empty<ModelMetaDataPart>();
     }

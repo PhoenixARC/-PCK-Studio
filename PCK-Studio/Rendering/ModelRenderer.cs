@@ -127,14 +127,37 @@ namespace PckStudio.Rendering
             _maxBounds = model.GetParts()
                 .SelectMany(p => p.GetBoxes().Select(b => new BoundingBox(b.Position + p.Translation, b.Position + p.Translation + b.Size)))
                 .GetEnclosingBoundingBox();
-            
+
             if (!TryGetModelMetaData(model, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(LoadModel)}] Failed to get meta data for model: '{model.Name}'");
                 return;
             }
 
-            _rootCollection.AddRange(BuildModelMesh(modelMetaData.RootParts, Vector3.Zero, Vector3.Zero, Vector3.Zero, TryGet<string, ModelPart>.FromDelegate(model.TryGetPart)));
+            for (int i = -1; i < modelMetaData.UvOffsets.Length; i++)
+            {
+                bool tryGetPart(string name, out ModelPart modelPart)
+                {
+                    if (!model.TryGetPart(name, out ModelPart originalModelPart))
+                    {
+                        modelPart = default;
+                        return false;
+                    }
+                    if (i == -1 || !modelMetaData.UvOffsets.IndexInRange(i))
+                    {
+                        modelPart = originalModelPart;
+                        return true;
+                    }
+                    System.Numerics.Vector2 uvoffset = modelMetaData.UvOffsets[i];
+                    modelPart = new ModelPart(originalModelPart.Name, originalModelPart.ParentName, originalModelPart.Translation, originalModelPart.Rotation, originalModelPart.AdditionalRotation);
+                    modelPart.AddBoxes(originalModelPart.GetBoxes().Select(box => new ModelBox(box.Position, box.Size, box.Uv + uvoffset, box.Inflate, box.Mirror)));
+                    return true;
+                }
+                _rootCollection.AddRange(BuildModelMesh(modelMetaData.RootParts,
+                    Vector3.Zero, Vector3.Zero, Vector3.Zero,
+                    TryGet<string, ModelPart>.FromDelegate(tryGetPart)));
+            }
+
 
             if (Context.IsCurrent)
             {
