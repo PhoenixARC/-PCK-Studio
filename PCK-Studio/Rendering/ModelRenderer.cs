@@ -144,6 +144,7 @@ namespace PckStudio.Rendering
 
                 // Reset "Material"
                 GL.Disable(EnableCap.AlphaTest);
+                GL.Disable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
             }
             _currentModelName = model.Name;
@@ -270,8 +271,7 @@ namespace PckStudio.Rendering
 
         internal void SetModelMaterial(MaterialContainer.Material entityMaterial)
         {
-            if (entityMaterial is null)
-                return;
+            _ = entityMaterial ?? throw new ArgumentNullException(nameof(entityMaterial));
             switch (entityMaterial.Type)
             {
                 // todo
@@ -286,9 +286,11 @@ namespace PckStudio.Rendering
                     GL.Enable(EnableCap.AlphaTest);
                     goto default;
                 case "entity_emissive_alpha":
+                    GL.Enable(EnableCap.Blend);
                     GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
                     break;
                 case "entity_emissive_alpha_only":
+                    GL.Enable(EnableCap.Blend);
                     GL.BlendFuncSeparate(BlendingFactorSrc.One, BlendingFactorDest.One, BlendingFactorSrc.One, BlendingFactorDest.Zero);
                     break;
                 default:
