@@ -157,11 +157,7 @@ namespace PckStudio.Rendering
 
             if (modelMetaData.RootParts.Length == 0)
             {
-                modelMetaData = new JsonModelMetaData()
-                {
-                    TextureLocations = modelMetaData.TextureLocations,
-                    RootParts = model.GetParts().Select(p => new ModelMetaDataPart(p.Name)).ToArray()
-                };
+                modelMetaData.RootParts = model.GetParts().Select(p => new ModelMetaDataPart(p.Name)).ToArray();
             }
             return true;
         }
