@@ -208,9 +208,9 @@ namespace PckStudio.Rendering
                     continue;
                 }
                 Vector3 translation = modelPart.Translation.ToOpenTKVector();
-                Vector3 pivot = translation * -1 - parentPivot;
+                Vector3 pivot = translation * -1;
                 Vector3 rotation = (modelPart.Rotation.ToOpenTKVector() + modelPart.AdditionalRotation.ToOpenTKVector());
-                CubeMeshCollection cubeCollection = new CubeMeshCollection(modelPart.Name, translation - parentTranslation, pivot, rotation - parentRotation);
+                CubeMeshCollection cubeCollection = new CubeMeshCollection(modelPart.Name, translation - parentTranslation, pivot - parentPivot, rotation - parentRotation);
                 cubeCollection.FlipZMapping = true;
                 foreach (ModelBox boxes in modelPart.GetBoxes())
                 {
