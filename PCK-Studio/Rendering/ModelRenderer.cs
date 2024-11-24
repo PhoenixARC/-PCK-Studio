@@ -79,6 +79,8 @@ namespace PckStudio.Rendering
         }
         private HighlightInfo _highlightingInfo;
 
+        private readonly Vector3 modelOffset = Vector3.UnitY * 24f;
+
         public ModelRenderer() : base(fov: 60f)
         {
             InitializeComponent();
@@ -165,7 +167,7 @@ namespace PckStudio.Rendering
         public override void ResetCamera(Vector3 offset)
         {
             Vector3 center = (_maxBounds.Start + _maxBounds.End) / 2f;
-            Camera.FocalPoint = Vector3.TransformPosition(center - Vector3.UnitY * 24f + offset, Matrix4.CreateScale(-1f, 1f, 1f));
+            Camera.FocalPoint = Vector3.TransformPosition(center - modelOffset + offset, Matrix4.CreateScale(-1f, 1f, 1f));
             Camera.Distance = _maxBounds.Volume.Length;
             Camera.Yaw = 45f;
             Camera.Pitch = 25f;
@@ -221,18 +223,6 @@ namespace PckStudio.Rendering
 
             GL.Enable(EnableCap.Texture2D); // Enable textures
 
-            GL.Enable(EnableCap.AlphaTest); // Enable transparent
-            GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
-
-            GL.Enable(EnableCap.Blend);
-
-            // Emissive
-            //GL.BlendFuncSeparate(BlendingFactorSrc.One, BlendingFactorDest.SrcColor, BlendingFactorSrc.One, BlendingFactorDest.One);
-            GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
-
-            // Additive
-            // GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
-            
             GL.DepthFunc(DepthFunction.Lequal);
 
             ShaderProgram shader = GetShader("CubeShader");
@@ -240,7 +230,7 @@ namespace PckStudio.Rendering
             _modelRenderTexture.Bind(slot: 0);
 
             Vector3 scaleVector = new Vector3(1f, -1f, -1f);
-            Matrix4 renderTransform = Matrix4.CreateScale(scaleVector) * Matrix4.CreateTranslation(Vector3.UnitY * 24f);
+            Matrix4 renderTransform = Matrix4.CreateScale(scaleVector) * Matrix4.CreateTranslation(modelOffset);
 
             foreach (GenericMesh<TextureVertex> item in _rootCollection)
             {
