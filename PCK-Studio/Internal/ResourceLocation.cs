@@ -18,11 +18,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace PckStudio.Internal
 {
     internal sealed class ResourceLocation
     {
+        private static List<ResourceLocation> ResourceGroups = new List<ResourceLocation>();
+        private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown, 1);
+
         private static readonly Dictionary<string, ResourceLocation> _categoryLookUp = new Dictionary<string, ResourceLocation>()
         {
             ["textures/items"]               = new ResourceLocation("textures/items", ResourceCategory.ItemAnimation, 16, isGroup: true),
@@ -43,37 +47,32 @@ namespace PckStudio.Internal
         {
             return category switch
             {
-                ResourceCategory.ItemAnimation              => "res/textures/items",
-                ResourceCategory.BlockAnimation             => "res/textures/blocks",
-                ResourceCategory.BlockAtlas                 => "res/terrain.png",
-                ResourceCategory.ItemAtlas                  => "res/items.png",
-                ResourceCategory.ParticleAtlas              => "res/particles.png",
-                ResourceCategory.BannerAtlas                => "res/item/banner/Banner_Atlas.png",
-                ResourceCategory.PaintingAtlas              => "res/art/kz.png",
-                ResourceCategory.ExplosionAtlas             => "res/misc/explosion.png",
-                ResourceCategory.ExperienceOrbAtlas         => "res/item/xporb.png",
-                ResourceCategory.MoonPhaseAtlas             => "res/terrain/moon_phases.png",
-                ResourceCategory.MapIconAtlas               => "res/misc/mapicons.png",
-                ResourceCategory.AdditionalMapIconsAtlas    => "res/misc/additionalmapicons.png",
+                ResourceCategory.ItemAnimation              => _categoryLookUp["textures/items"].ToString(),
+                ResourceCategory.BlockAnimation             => _categoryLookUp["textures/blocks"].ToString(),
+                ResourceCategory.BlockAtlas                 => _categoryLookUp["terrain.png"].ToString(),
+                ResourceCategory.ItemAtlas                  => _categoryLookUp["items.png"].ToString(),
+                ResourceCategory.ParticleAtlas              => _categoryLookUp["particles.png"].ToString(),
+                ResourceCategory.BannerAtlas                => _categoryLookUp["item/banner/Banner_Atlas.png"].ToString(),
+                ResourceCategory.PaintingAtlas              => _categoryLookUp["art/kz.png"].ToString(),
+                ResourceCategory.ExplosionAtlas             => _categoryLookUp["misc/explosion.png"].ToString(),
+                ResourceCategory.ExperienceOrbAtlas         => _categoryLookUp["item/xporb.png"].ToString(),
+                ResourceCategory.MoonPhaseAtlas             => _categoryLookUp["terrain/moon_phases.png"].ToString(),
+                ResourceCategory.MapIconAtlas               => _categoryLookUp["misc/mapicons.png"].ToString(),
+                ResourceCategory.AdditionalMapIconsAtlas    => _categoryLookUp["misc/additionalmapicons.png"].ToString(),
                 _ => string.Empty
             };
         }
 
-        public static ResourceCategory GetCategoryFromPath(string path)
-        {
-            return GetFromPath(path)?.Category ?? ResourceCategory.Unknown;
-        }
+        public static ResourceCategory GetCategoryFromPath(string path) => GetFromPath(path).Category;
 
         public static ResourceLocation GetFromPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("res/"))
-                return null;
+                return Unknown;
             string categoryPath = path.Substring("res/".Length);
-            if (categoryPath.StartsWith("textures/items")) 
-                categoryPath = "textures/items";
-            if (categoryPath.StartsWith("textures/blocks"))
-                categoryPath = "textures/blocks";
-            return _categoryLookUp.ContainsKey(categoryPath) ? _categoryLookUp[categoryPath] : null;
+            if (_categoryLookUp.ContainsKey(categoryPath))
+                return _categoryLookUp[categoryPath];
+            return ResourceGroups.Where(group => categoryPath.StartsWith(group.Path)).FirstOrDefault() ?? Unknown;
         }
 
         public enum TillingMode
@@ -114,6 +113,8 @@ namespace PckStudio.Internal
             TillingFactor = tillingFactor;
             Tilling = tilling;
             IsGroup = isGroup;
+            if (isGroup)
+                ResourceGroups.Add(this);
         }
 
         public override string ToString()
