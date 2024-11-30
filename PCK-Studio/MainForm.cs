@@ -460,50 +460,54 @@ namespace PckStudio
 			}
 
 			ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
-			Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
-			if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
-				return;
+            Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
 
-			if (resourceLocation.Category != ResourceCategory.BlockAnimation &&
-				resourceLocation.Category != ResourceCategory.ItemAnimation)
+			switch (resourceLocation.Category)
 			{
-                Image img = asset.GetTexture();
-				var viewer = new TextureAtlasEditor(currentPCK, resourceLocation, img);
-				if (viewer.ShowDialog(this) == DialogResult.OK)
-				{
-                    Image texture = viewer.FinalTexture;
-					asset.SetTexture(texture);
-					wasModified = true;
-					BuildMainTreeView();
-				}
-				return;
-			}
+				case ResourceCategory.Unknown:
+                    Debug.WriteLine($"Unknown Resource Category.");
+                    break;
+				case ResourceCategory.ItemAnimation:
+				case ResourceCategory.BlockAnimation:
+                    Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
+                    string internalName = Path.GetFileNameWithoutExtension(asset.Filename);
+					IList<JsonTileInfo> textureInfos = resourceLocation.Category == ResourceCategory.ItemAnimation ? Tiles.ItemTileInfos : Tiles.BlockTileInfos;
+                    string displayname = textureInfos.FirstOrDefault(p => p.InternalName == internalName)?.DisplayName ?? internalName;
 
-			if (resourceLocation.Category != ResourceCategory.ItemAnimation &&
-				resourceLocation.Category != ResourceCategory.BlockAnimation)
-				return;
-
-            Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
-			string internalName = Path.GetFileNameWithoutExtension(asset.Filename);
-
-            IList<JsonTileInfo> textureInfos = resourceLocation.Category switch
-			{
-				ResourceCategory.BlockAnimation => Tiles.BlockTileInfos,
-				ResourceCategory.ItemAnimation => Tiles.ItemTileInfos,
-				_ => Array.Empty<JsonTileInfo>().ToList()
-			};
-			string displayname = textureInfos.FirstOrDefault(p => p.InternalName == internalName)?.DisplayName ?? internalName;
-
-            string[] specialTileNames = { "clock", "compass" };
-
-            using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
-			{
-				if (animationEditor.ShowDialog(this) == DialogResult.OK)
-				{
-					wasModified = true;
-					asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
-					BuildMainTreeView();
-				}
+                    string[] specialTileNames = { "clock", "compass" };
+                    using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
+                    {
+                        if (animationEditor.ShowDialog(this) == DialogResult.OK)
+                        {
+                            wasModified = true;
+                            asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+                            BuildMainTreeView();
+                        }
+                    }
+                    break;
+				case ResourceCategory.ItemAtlas:
+				case ResourceCategory.BlockAtlas:
+				case ResourceCategory.ParticleAtlas:
+				case ResourceCategory.BannerAtlas:
+				case ResourceCategory.PaintingAtlas:
+				case ResourceCategory.ExplosionAtlas:
+				case ResourceCategory.ExperienceOrbAtlas:
+				case ResourceCategory.MoonPhaseAtlas:
+				case ResourceCategory.MapIconAtlas:
+				case ResourceCategory.AdditionalMapIconsAtlas:
+                    Image img = asset.GetTexture();
+                    var viewer = new TextureAtlasEditor(currentPCK, resourceLocation, img);
+                    if (viewer.ShowDialog(this) == DialogResult.OK)
+                    {
+                        Image texture = viewer.FinalTexture;
+                        asset.SetTexture(texture);
+                        wasModified = true;
+                        BuildMainTreeView();
+                    }
+                    break;
+				default:
+					Debug.WriteLine($"Unhandled Resource Category: {resourceLocation.Category}");
+					break;
 			}
 		}
 

@@ -21,6 +21,22 @@ namespace PckStudio.Extensions
     {
         private const string MipMap = "MipMapLevel";
 
+        internal static PckAsset CreateNewAssetIf(this PckFile pck, bool condition, string filename, PckAssetType filetype, IDataFormatWriter writer)
+        {
+            if (condition)
+            {
+                return pck.CreateNewAsset(filename, filetype, writer);
+            }
+            return default;
+        }
+
+        internal static PckAsset CreateNewAsset(this PckFile pck, string filename, PckAssetType filetype, IDataFormatWriter writer)
+        {
+            PckAsset asset = pck.CreateNewAsset(filename, filetype);
+            asset.SetData(writer);
+            return asset;
+        }
+
         internal static Image GetTexture(this PckAsset asset)
         {
             if (asset.Type != PckAssetType.SkinFile &&

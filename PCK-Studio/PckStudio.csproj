@@ -270,7 +270,6 @@
     <Compile Include="Extensions\ImageSection.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
-    <Compile Include="Extensions\PckFileExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
