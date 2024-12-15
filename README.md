@@ -1,4 +1,4 @@
-﻿# PCK Studio
+﻿# PCK Studio ![GitHub All Releases](https://img.shields.io/github/downloads/PhoenixARC/-PCK-Studio/total?label=Total%20Downloads&logo=github)
 Modify .PCK archives as you please.<br>
 
 > **If you have any issues or would like to suggested a feature, we encourage you to [open a new issue on Github](https://github.com/PhoenixARC/-PCK-Studio/issues).**
