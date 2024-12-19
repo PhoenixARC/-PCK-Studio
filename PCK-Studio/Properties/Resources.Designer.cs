@@ -317,6 +317,29 @@ namespace PckStudio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;dolphin&quot;: {
+        ///      &quot;textureSize&quot;: { &quot;X&quot;: 64, &quot;Y&quot;: 64 },
+        ///      &quot;parts&quot;: [
+        ///        {
+        ///          &quot;name&quot;: &quot;head&quot;,
+        ///          &quot;boxes&quot;: [
+        ///            { &quot;pos&quot;: { &quot;X&quot;: -4, &quot;Y&quot;: -7, &quot;Z&quot;: -6 }, &quot;size&quot;: { &quot;X&quot;: 8, &quot;Y&quot;: 7, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0 } }
+        ///          ]
+        ///        },
+        ///        {
+        ///          &quot;name&quot;: &quot;nose&quot;,
+        ///          &quot;translation&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0, &quot;Z&quot;: -10 },
+        ///          &quot;boxes&quot;: [
+        ///            { &quot;pos&quot;: { &quot;X&quot;: -1, &quot;Y&quot;: -2, &quot;Z&quot;: 0 }, &quot;size&quot;: { &quot;X&quot;: 2, &quot;Y&quot;: 2, &quot;Z&quot;: 4 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 13 } } [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string defaultModels {
+            get {
+                return ResourceManager.GetString("defaultModels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap DefaultSkyTexture {
@@ -820,35 +843,27 @@ namespace PckStudio.Properties {
         ///    &quot;textureLocations&quot;: [
         ///      &quot;res/mob/bat&quot;
         ///    ],
-        ///    &quot;root&quot;: {
-        ///      &quot;head&quot;: [
-        ///        &quot;rightEar&quot;,
-        ///        &quot;leftEar&quot;
-        ///      ],
-        ///      &quot;body&quot;: [
-        ///        {
-        ///          &quot;rightWing&quot;: [
-        ///            &quot;rightWingTip&quot;
-        ///          ],
-        ///          &quot;leftWing&quot;: [
-        ///            &quot;leftWingTip&quot;
-        ///          ]
-        ///        }
-        ///      ]
-        ///    }
-        ///  },
-        ///  &quot;bed&quot;: {
-        ///    &quot;textureLocations&quot;: [
-        ///      &quot;res/item/bed&quot;
-        ///    ]
-        ///  },
-        ///  &quot;blaze&quot;: {
-        ///    &quot;textureLocations&quot;: [
-        ///      &quot;res/mob/fire&quot;
-        ///    ]
-        ///  },
-        ///  &quot;boat&quot;: {
-        ///   [rest of string was truncated]&quot;;.
+        ///    &quot;materialName&quot;: &quot;bat&quot;,
+        ///    &quot;parts&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;head&quot;,
+        ///        &quot;children&quot;: [
+        ///          { &quot;name&quot;: &quot;rightEar&quot; },
+        ///          { &quot;name&quot;: &quot;leftEar&quot; }
+        ///        ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;body&quot;,
+        ///        &quot;children&quot;: [
+        ///          {
+        ///            &quot;name&quot;: &quot;rightWing&quot;,
+        ///            &quot;children&quot;: [
+        ///              { &quot;name&quot;: &quot;rightWingTip&quot; }
+        ///            ]
+        ///          },
+        ///          {
+        ///            &quot;name&quot;: &quot;leftWing&quot;,
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         public static string modelMetaData {
             get {
@@ -1077,14 +1092,14 @@ namespace PckStudio.Properties {
         ///
         ///layout(location = 0) out vec4 FragColor;
         ///
-        ///uniform vec4 baseColor;
-        ///uniform float intensity;
+        ///uniform vec4 BlendColor;
+        ///uniform float Intensity;
         ///
         ///in vec4 color;
         ///
         ///void main()
         ///{
-        ///	FragColor = vec4((color * baseColor).rgb, intensity);
+        ///	FragColor = vec4((color * BlendColor).rgb, Intensity);
         ///}.
         /// </summary>
         public static string plainColorFragmentShader {
@@ -1254,14 +1269,17 @@ namespace PckStudio.Properties {
         ///
         ///layout(location = 0) out vec4 color;
         ///
-        ///uniform sampler2D u_Texture;
+        ///uniform sampler2D Texture;
         ///
         ///in vec2 o_TillingFactor;
         ///in vec2 o_TexCoord;
         ///
         ///void main()
         ///{
-        ///	color = texture(u_Texture, o_TexCoord * o_TillingFactor);
+        ///	vec4 result = texture(Texture, o_TexCoord * o_TillingFactor);
+        ///	if (result.a &lt;= 0.0)
+        ///		discard;
+        ///	color = result;
         ///};.
         /// </summary>
         public static string texturedCubeFragmentShader {
@@ -1276,7 +1294,7 @@ namespace PckStudio.Properties {
         ///layout (triangles) in;
         ///layout (triangle_strip, max_vertices=3) out;
         ///
-        ///uniform vec2 u_TexSize;
+        ///uniform vec2 TexSize;
         ///
         ///out vec2 o_TexCoord;
         ///out vec2 o_TillingFactor;
@@ -1289,14 +1307,15 @@ namespace PckStudio.Properties {
         ///void FixUV()
         ///{
         ///	bool isXBad =
-        ///		dataIn[0].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
-        ///		dataIn[1].TexCoord.x &gt;= u_TexSize.x &amp;&amp;
-        ///		dataIn[2].TexCoord.x &gt;= u_TexSize.x;
+        ///		dataIn[0].TexCoord.x &gt;= TexSize.x &amp;&amp;
+        ///		dataIn[1].TexCoord.x &gt;= TexSize.x &amp;&amp;
+        ///		dataIn[2].TexCoord.x &gt;= TexSize.x;
         ///
         ///	gl_Position = gl_in[0].gl_Position;
         ///	o_TexCoord = dataIn[0].TexCoord;
         ///	if (isXBad)
-        ///		o_TexCoord.x = mod(o_TexCoord.x, u_TexSiz [rest of string was truncated]&quot;;.
+        ///		o_TexCoord.x = mod(o_TexCoord.x, TexSize.x);
+        ///	Em [rest of string was truncated]&quot;;.
         /// </summary>
         public static string texturedCubeGeometryShader {
             get {
@@ -1310,8 +1329,8 @@ namespace PckStudio.Properties {
         ///layout(location = 0) in vec3 vertexPosition;
         ///layout(location = 1) in vec2 texCoord;
         ///
-        ///uniform mat4 u_ViewProjection;
-        ///uniform mat4 u_Transform;
+        ///uniform mat4 ViewProjection;
+        ///uniform mat4 Transform;
         ///
         ///out geometryData
         ///{
@@ -1321,7 +1340,7 @@ namespace PckStudio.Properties {
         ///void main()
         ///{
         ///	dataOut.TexCoord = texCoord;
-        ///	gl_Position = u_ViewProjection * u_Transform * vec4(vertexPosition, 1.0);
+        ///	gl_Position = ViewProjection * Transform * vec4(vertexPosition, 1.0);
         ///};.
         /// </summary>
         public static string texturedCubeVertexShader {

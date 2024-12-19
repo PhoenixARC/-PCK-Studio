@@ -41,7 +41,8 @@ using PckStudio.Internal.Serializer;
 using PckStudio.Internal.App;
 using PckStudio.Internal.Skin;
 using PckStudio.Interfaces;
-using System.Collections.ObjectModel;
+using PckStudio.Rendering;
+using MetroFramework.Forms;
 
 namespace PckStudio
 {
@@ -449,7 +450,52 @@ namespace PckStudio
 			}
 		}
 
-		private void HandleTextureFile(PckAsset asset)
+		private static Model HandleDefaultEntityModel(string modelName)
+        {
+			if (!GameModelImporter.DefaultModels.TryGetValue(modelName, out DefaultModel defaultModel) || defaultModel is null)
+            {
+                MessageBox.Show("No Default Model found.");
+				return null;
+            }
+            Model model = new Model(modelName, new Size((int)defaultModel.TextureSize.X, (int)defaultModel.TextureSize.Y));
+
+            foreach (DefaultPart defaultPart in defaultModel.Parts)
+            {
+                ModelPart modelPart = new ModelPart(defaultPart.Name, "", defaultPart.Translation, defaultPart.Rotation, System.Numerics.Vector3.Zero);
+                modelPart.AddBoxes(defaultPart.Boxes.Select(defaultBox => new ModelBox(defaultBox.Position, defaultBox.Size, defaultBox.Uv, defaultBox.Inflate, defaultBox.Mirror)));
+                model.AddPart(modelPart);
+            }
+
+			return model;
+        }
+
+        private void ShowSimpleModelRender(Model model, NamedTexture modelTexture)
+        {
+            MetroForm form = new MetroForm();
+            form.Icon = Resources.ProjectLogo;
+            form.Theme = MetroFramework.MetroThemeStyle.Dark;
+            form.Style = MetroFramework.MetroColorStyle.Silver;
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.Text = $"{model.Name} - {modelTexture.Name}";
+            form.Size = new Size(600, 500);
+
+            ModelRenderer renderer = new ModelRenderer();
+            form.Controls.Add(renderer);
+
+            renderer.VSync = true;
+            renderer.BackColor = Color.FromArgb(30, 30, 30);
+            renderer.Dock = DockStyle.Fill;
+            renderer.Texture = modelTexture.Texture;
+            renderer.LoadModel(model);
+            renderer.ResetCamera();
+			
+			form.ShowDialog(this);
+
+            renderer.Dispose();
+            form.Dispose();
+        }
+
+        private void HandleTextureFile(PckAsset asset)
 		{
 			_ = asset.IsMipmappedFile() && currentPCK.TryGetValue(asset.GetNormalPath(), PckAssetType.TextureFile, out asset);
 
@@ -465,8 +511,52 @@ namespace PckStudio
 			switch (resourceLocation.Category)
 			{
 				case ResourceCategory.Unknown:
-                    Debug.WriteLine($"Unknown Resource Category.");
-                    break;
+					Debug.WriteLine($"Unknown Resource Category.");
+					break;
+				case ResourceCategory.MobEntityTextures:
+				case ResourceCategory.ItemEntityTextures:
+				{
+					string texturePath = asset.Filename.Substring(0, asset.Filename.Length - Path.GetExtension(asset.Filename).Length);
+					string[] modelNames = GameModelImporter.ModelMetaData.Where(kv => kv.Value.TextureLocations.Contains(texturePath)).Select(kv => kv.Key).ToArray();
+
+					if (modelNames.Length == 0)
+					{
+						MessageBox.Show("No Model info found");
+						return;
+					}
+
+					string modelName = modelNames[0];
+					if (modelNames.Length > 1)
+					{
+						using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(modelNames.ToArray());
+						itemSelectionPopUp.ButtonText = "View";
+						itemSelectionPopUp.LabelText = "Models:";
+						if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && modelNames.IndexInRange(itemSelectionPopUp.SelectedIndex))
+						{
+							modelName = modelNames[itemSelectionPopUp.SelectedIndex];
+						}
+					}
+
+					NamedTexture modelTexture = new NamedTexture(Path.GetFileName(texturePath), asset.GetTexture());
+
+                    Model model = HandleDefaultEntityModel(modelName);
+                    if (currentPCK.TryGetAsset("models.bin", PckAssetType.ModelsFile, out PckAsset modelsAsset))
+					{
+						ModelContainer models = modelsAsset.GetData(new ModelFileReader());
+						if (models.ContainsModel(modelName))
+						{
+							Debug.WriteLine($"Custom model for '{modelName}' found.");
+							model = models.GetModelByName(modelName);
+						}
+					}
+
+					if (model is not null)
+					{
+						ShowSimpleModelRender(model, modelTexture);
+					}
+				}
+				break;
+
 				case ResourceCategory.ItemAnimation:
 				case ResourceCategory.BlockAnimation:
                     Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
@@ -504,7 +594,7 @@ namespace PckStudio
                         wasModified = true;
                         BuildMainTreeView();
                     }
-                    break;
+					break;
 				default:
 					Debug.WriteLine($"Unhandled Resource Category: {resourceLocation.Category}");
 					break;

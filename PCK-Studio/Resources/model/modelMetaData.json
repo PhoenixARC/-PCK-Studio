@@ -35,7 +35,7 @@
     "textureLocations": [
       "res/item/bed"
     ],
-    "uv_offsets": [ {"X": 0, "Y": 64} ],
+    "uv_offsets": [ {"X": 0, "Y": 64} ]
   },
   "blaze": {
     "textureLocations": [
@@ -711,7 +711,7 @@
       "res/mob/zombie_villager/professions/shepherd",
       "res/mob/zombie_villager/professions/stonemason",
       "res/mob/zombie_villager/professions/toolsmith",
-      "res/mob/zombie_villager/professions/weaponsmith",
+      "res/mob/zombie_villager/professions/weaponsmith"
     ]
   },
   "pillager": {

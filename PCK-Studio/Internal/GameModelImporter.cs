@@ -46,6 +46,7 @@ namespace PckStudio.Internal
 
         public ModelExportSettings ExportSettings { get; } = new ModelExportSettings();
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
+        internal static ReadOnlyDictionary<string, DefaultModel> DefaultModels { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, DefaultModel>>(Resources.defaultModels);
         
         private GameModelImporter()
         {
