@@ -25,12 +25,14 @@ namespace PckStudio.Internal
     internal sealed class ResourceLocation
     {
         private static List<ResourceLocation> ResourceGroups = new List<ResourceLocation>();
-        private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown, 1);
+        private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown, -1);
 
         private static readonly Dictionary<string, ResourceLocation> _categoryLookUp = new Dictionary<string, ResourceLocation>()
         {
             ["textures/items"]               = new ResourceLocation("textures/items", ResourceCategory.ItemAnimation, 16, isGroup: true),
             ["textures/blocks"]              = new ResourceLocation("textures/blocks", ResourceCategory.BlockAnimation, 16, isGroup: true),
+            ["mob"]                          = new ResourceLocation("mob", ResourceCategory.MobEntityTextures, 1, isGroup: true),
+            ["item"]                         = new ResourceLocation("item", ResourceCategory.ItemEntityTextures, 1, isGroup: true),
             ["terrain.png"]                  = new ResourceLocation("terrain.png", ResourceCategory.BlockAtlas, 16),
             ["items.png"]                    = new ResourceLocation("items.png", ResourceCategory.ItemAtlas, 16),
             ["particles.png"]                = new ResourceLocation("particles.png", ResourceCategory.ParticleAtlas, 16),
@@ -49,7 +51,8 @@ namespace PckStudio.Internal
             {
                 ResourceCategory.ItemAnimation              => _categoryLookUp["textures/items"].ToString(),
                 ResourceCategory.BlockAnimation             => _categoryLookUp["textures/blocks"].ToString(),
-                ResourceCategory.BlockAtlas                 => "res/terrain.png",
+                ResourceCategory.MobEntityTextures          => _categoryLookUp["mob"].ToString(),
+                ResourceCategory.ItemEntityTextures         => _categoryLookUp["item"].ToString(),
                 ResourceCategory.BlockAtlas                 => _categoryLookUp["terrain.png"].ToString(),
                 ResourceCategory.ItemAtlas                  => _categoryLookUp["items.png"].ToString(),
                 ResourceCategory.ParticleAtlas              => _categoryLookUp["particles.png"].ToString(),

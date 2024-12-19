@@ -23,6 +23,8 @@ namespace PckStudio.Internal
         Unknown = -1,
         ItemAnimation,
         BlockAnimation,
+        MobEntityTextures,
+        ItemEntityTextures,
         ItemAtlas,
         BlockAtlas,
         ParticleAtlas,
