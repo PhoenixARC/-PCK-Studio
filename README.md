@@ -1,5 +1,5 @@
-﻿# PCK Studio ![GitHub All Releases](https://img.shields.io/github/downloads/PhoenixARC/-PCK-Studio/total?label=Total%20Downloads&logo=github)
-Modify .PCK archives as you please.<br>
+# PCK Studio ![GitHub All Releases](https://img.shields.io/github/downloads/PhoenixARC/-PCK-Studio/total?label=Total%20Downloads&logo=github) ![GitHub Stars](https://img.shields.io/github/stars/PhoenixARC/-PCK-Studio?label=Stars&logo=github) ![GitHub Forks](https://img.shields.io/github/forks/PhoenixARC/-PCK-Studio?label=Forks&logo=github) ![GitHub Issues](https://img.shields.io/github/issues/PhoenixARC/-PCK-Studio?label=Open%20Issues&logo=github) ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/PhoenixARC/-PCK-Studio?label=Pull%20Requests&logo=github)  
+Modify .PCK archives as you please.<br>  
 
 > **If you have any issues or would like to suggested a feature, we encourage you to [open a new issue on Github](https://github.com/PhoenixARC/-PCK-Studio/issues).**
 
