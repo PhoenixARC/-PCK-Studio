@@ -29,14 +29,14 @@ namespace PckStudio.Rendering
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
             // 
             // ModelRenderer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.Name = "ModelRenderer";
             this.ResumeLayout(false);
-            this.PerformLayout();
+
         }
     }
 }

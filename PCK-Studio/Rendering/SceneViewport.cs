@@ -129,6 +129,11 @@ namespace PckStudio.Rendering
         };
 #endif
 
+        private SceneViewport()
+        {
+
+        }
+
         public SceneViewport(float fov, Vector3 camareaPosition = default)
 #if DEBUG
             : base(GraphicsMode.Default, 4, 6, GraphicsContextFlags.Debug)
@@ -414,6 +419,8 @@ namespace PckStudio.Rendering
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            if (DesignMode)
+                return;
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
         }

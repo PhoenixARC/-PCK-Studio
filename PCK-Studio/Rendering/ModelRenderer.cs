@@ -85,9 +85,10 @@ namespace PckStudio.Rendering
         {
             InitializeComponent();
             _rootCollection = new List<GenericMesh<TextureVertex>>(5);
-            if (DesignMode)
-                return;
-            InitializeShaders();
+            if (!DesignMode)
+            {
+                InitializeShaders();
+            }
         }
 
         private void InitializeShaders()
