@@ -28,7 +28,7 @@ namespace PckStudio.Forms.Additional_Popups
         public AddSkinPrompt()
         {
             InitializeComponent();
-            newSkin = new Skin("", Resources.classic_template);
+            newSkin = new Skin("", new SkinANIM(SkinAnimMask.RESOLUTION_64x64), Resources.classic_template, Enumerable.Empty<SkinBOX>(), Enumerable.Empty<SkinPartOffset>());
         }
 
         private void SetNewTexture(Image img)
