@@ -560,11 +560,12 @@ namespace PckStudio
 						using ItemSelectionPopUp itemSelectionPopUp = new ItemSelectionPopUp(modelNames.ToArray());
 						itemSelectionPopUp.ButtonText = "View";
 						itemSelectionPopUp.LabelText = "Models:";
-						if (itemSelectionPopUp.ShowDialog() == DialogResult.OK && modelNames.IndexInRange(itemSelectionPopUp.SelectedIndex))
+						if (itemSelectionPopUp.ShowDialog() != DialogResult.OK || !modelNames.IndexInRange(itemSelectionPopUp.SelectedIndex))
 						{
+							return;
+						}
 							modelName = modelNames[itemSelectionPopUp.SelectedIndex];
 						}
-					}
 
 					NamedTexture modelTexture = new NamedTexture(Path.GetFileName(texturePath), asset.GetTexture());
 
