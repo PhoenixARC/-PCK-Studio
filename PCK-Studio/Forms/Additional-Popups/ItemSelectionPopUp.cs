@@ -27,8 +27,11 @@ namespace PckStudio.Forms.Additional_Popups
 
 		private void okBtn_Click(object sender, EventArgs e)
 		{
-			if(ComboBox.SelectedIndex > -1)
+			if(ComboBox.SelectedIndex <= -1)
+			{
 				cancelButton_Click(sender, e);
+				return;
+			}
 			DialogResult = DialogResult.OK;
 		}
 
