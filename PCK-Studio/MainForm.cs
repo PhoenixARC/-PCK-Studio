@@ -478,8 +478,37 @@ namespace PckStudio
             form.StartPosition = FormStartPosition.CenterParent;
             form.Text = $"{model.Name} - {modelTexture.Name}";
             form.Size = new Size(600, 500);
+            form.MinimumSize = new Size(300, 300);
+
+			void ExportToolStripItem_Click(object sender, EventArgs e)
+			{
+                GameModelImporter.Default.ExportSettings.CreateModelOutline =
+                    MessageBox.Show(
+                        $"Do you wish to have all model parts contained in a group called '{model.Name}'?",
+                        "Group model parts", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
+                using SaveFileDialog openFileDialog = new SaveFileDialog();
+                openFileDialog.FileName = model.Name;
+                openFileDialog.Filter = GameModelImporter.Default.SupportedModelFileFormatsFilter;
+
+                if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    var modelInfo = new GameModelInfo(model, Enumerable.Empty<NamedTexture>());
+                    GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
+                }
+            }
+            ToolStripItem exportToolStripItem = new ToolStripButton("Export");
+            exportToolStripItem.Click += ExportToolStripItem_Click;
+
+            MenuStrip menu = new MenuStrip();
+			menu.BackColor = Color.FromArgb(35, 35, 35);
+			menu.ForeColor = Color.WhiteSmoke;
+			menu.Anchor = AnchorStyles.Top;
+			menu.Dock = DockStyle.Top;
+			menu.Items.Add(exportToolStripItem);
 
             ModelRenderer renderer = new ModelRenderer();
+            form.Controls.Add(menu);
             form.Controls.Add(renderer);
 
             renderer.VSync = true;
