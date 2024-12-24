@@ -755,6 +755,9 @@ namespace PckStudio
             var editor = new ModelEditor(modelContainer, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(entityMaterials.TryGetValue));
 			if (editor.ShowDialog() == DialogResult.OK)
 			{
+				asset.SetData(new ModelFileWriter(editor.GetModelContainer(), modelContainer.Version));
+				BuildMainTreeView();
+                wasModified = true;
 				return;
 			}
 		}

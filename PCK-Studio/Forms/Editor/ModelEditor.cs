@@ -39,6 +39,8 @@ namespace PckStudio.Forms.Editor
             modelTreeView.ImageList.Images.AddRange(ApplicationScope.EntityImages);
         }
 
+        internal ModelContainer GetModelContainer() => _models;
+
         private const int InvalidImageIndex = 127;
         // TODO: move to json file. -miku
         private static Dictionary<string, int> ModelImageIndex = new Dictionary<string, int>()
