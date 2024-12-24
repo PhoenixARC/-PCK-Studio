@@ -32,26 +32,35 @@ using OMI.Formats.Model;
 using PckStudio.External.Format;
 using PckStudio.Internal.Json;
 using PckStudio.Properties;
+using PckStudio.Extensions;
 
 namespace PckStudio.Internal
 {
     internal sealed class GameModelImporter : ModelImporter<GameModelInfo>
     {
         public static GameModelImporter Default { get; } = new GameModelImporter();
-        
-            public sealed class ModelExportSettings
+
+        public sealed class ModelExportSettings
         {
-        public bool CreateModelOutline { get; set; } = true;
+            public bool CreateModelOutline { get; set; } = true;
         }
 
         public ModelExportSettings ExportSettings { get; } = new ModelExportSettings();
+
+        public sealed class ModelImportSettings
+        {
+            public int ModelVersion { get; set; } = 1;
+        }
+        
+        public ModelImportSettings ImportSettings { get; } = new ModelImportSettings();
+
         internal static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
         internal static ReadOnlyDictionary<string, DefaultModel> DefaultModels { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, DefaultModel>>(Resources.defaultModels);
         
         private GameModelImporter()
         {
             // TODO: add import functionality -miku
-            InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), null, ExportBlockBenchModel);
+            InternalAddProvider(new FileDialogFilter("Block bench model(*.bbmodel)", "*.bbmodel"), ImportBlockBenchModel, ExportBlockBenchModel);
         }
 
         private readonly Vector3 bbModelTransformAxis = new Vector3(1, 1, 0);
@@ -79,7 +88,7 @@ namespace PckStudio.Internal
                 {
                     new Outline(modelInfo.Model.Name) { Children = JArray.FromObject(outlines) }
                 };
-
+            
             blockBenchModel.Outliner = JArray.FromObject(outlines);
 
             string content = JsonConvert.SerializeObject(blockBenchModel, Formatting.Indented);
@@ -116,7 +125,7 @@ namespace PckStudio.Internal
             }
 
             if (depth == 0 && keyValues.Count == 0)
-                {
+            {
                 return model.GetParts().Select(CreateOutline).ToArray();
             }
 
@@ -143,6 +152,86 @@ namespace PckStudio.Internal
             Vector3 size = box.Size;
             Vector3 transformPos = TransformSpace(pos + origin, size, translationUnit) + offset;
             return Element.CreateCube(name, box.Uv, transformPos, size, box.Inflate, box.Mirror);
+        }
+
+        private GameModelInfo ImportBlockBenchModel(string filepath)
+        {
+            BlockBenchModel blockBenchModel = JsonConvert.DeserializeObject<BlockBenchModel>(File.ReadAllText(filepath));
+            if (!blockBenchModel.Format.UseBoxUv)
+            {
+                Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import model '{blockBenchModel.ModelIdentifier}': Model does not use box uv.");
+                return null;
+            }
+
+            if (!ModelMetaData.TryGetValue(blockBenchModel.ModelIdentifier, out JsonModelMetaData modelMetaData))
+            {
+                Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import model '{blockBenchModel.ModelIdentifier}': No model meta data found.");
+                return null;
+            }
+
+            IEnumerable<NamedTexture> textures = blockBenchModel.Textures
+                .Where(t => modelMetaData.TextureLocations.Any(texName => !string.IsNullOrEmpty(t.Name) && texName.EndsWith(Path.GetFileNameWithoutExtension(t.Name))))
+                .Select(t => new NamedTexture(modelMetaData.TextureLocations.First(texName => texName.EndsWith(Path.GetFileNameWithoutExtension(t.Name))), (Image)t));
+
+            Model model = new Model(blockBenchModel.ModelIdentifier, blockBenchModel.TextureResolution);
+
+            JArray rootOutline = blockBenchModel.Outliner
+                .FirstOrDefault(token => token.Type == JTokenType.Object && token.ToObject<Outline>().Name == blockBenchModel.ModelIdentifier)
+                ?.ToObject<Outline>().Children ?? blockBenchModel.Outliner;
+
+            foreach (Outline outline in rootOutline.Where(token => token.Type == JTokenType.Object).Select(token => token.ToObject<Outline>()))
+            {
+                foreach (ModelPart part in ConvertOutlineToModelPart(outline, blockBenchModel.Elements))
+                {
+                    model.AddPart(part);
+                }
+            }
+
+            return new GameModelInfo(model, textures);
+        }
+
+        private IEnumerable<ModelPart> ConvertOutlineToModelPart(Outline root, IReadOnlyCollection<Element> elements)
+        {
+            List<ModelPart> parts = new List<ModelPart>(
+                root.Children
+                .Where(token => token.Type == JTokenType.Object)
+                .SelectMany(token => ConvertOutlineToModelPart(token.ToObject<Outline>(), elements))
+                );
+
+            IEnumerable<Element> modelBoxElements = root.Children
+                .Where(token => token.Type == JTokenType.String && Guid.TryParse(token.ToString(), out Guid _))
+                .Select(token => elements.First(e => e.Uuid == Guid.Parse(token.ToString())))
+                .Where(element => element.Type == "cube" && element.UseBoxUv && element.Export);
+
+            Vector3 additionalRotation = new Vector3();
+            Element first = modelBoxElements.FirstOrDefault() ?? new Element() { Rotation = Vector3.Zero };
+            if (first.Rotation != Vector3.Zero)
+            {
+                if (!modelBoxElements.All(e => e.Rotation == first.Rotation))
+                {
+                    Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ImportBlockBenchModel)}] Rotation can't be applied for single elements.");
+                    return Enumerable.Empty<ModelPart>();
+                }
+                additionalRotation = first.Rotation;
+            }
+            Vector3 translation = TransformSpace(root.Origin - _heightOffset, Vector3.Zero, bbModelTransformAxis);
+            Vector3 rotation = TransformSpace(root.Rotation, Vector3.Zero, bbModelTransformAxis);
+            ModelPart part = new ModelPart(root.Name, string.Empty, translation, rotation, additionalRotation);
+            part.AddBoxes(modelBoxElements.Select(box => ConvertElementToModelBox(box, part.Translation)));
+            parts.Add(part);
+            return parts;
+        }
+
+        private ModelBox ConvertElementToModelBox(Element element, Vector3 translation)
+        {
+            Rendering.BoundingBox boundingBox = new Rendering.BoundingBox(element.From, element.To);
+
+            Vector3 pos = boundingBox.Start.ToNumericsVector();
+            Vector3 size = boundingBox.Volume.ToNumericsVector();
+
+            Vector3 transformedPos = TransformSpace(pos, size, bbModelTransformAxis) - translation + _heightOffset;
+
+            return new ModelBox(transformedPos, size, element.UvOffset, element.Inflate, element.MirrorUv);
         }
     }
 }

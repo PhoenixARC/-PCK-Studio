@@ -42,7 +42,6 @@
       },
       {
         "name": "leftWing",
-        
         "boxes": [
           { "pos": { "X": 2, "Y": 1, "Z": 1.5 }, "size": { "X": 10, "Y": 16, "Z": 1 }, "uv": { "X": 42, "Y": 0 }, "mirror": true }
         ]
@@ -450,6 +449,10 @@
       }
     ]
   },
+  //"dragon_head": {
+  //  "textureSize": { "X": 256, "Y": 256 },
+  //  "parts": []
+  //},
   "": {
     "textureSize": { "X": 64, "Y": 32 },
     "parts": []

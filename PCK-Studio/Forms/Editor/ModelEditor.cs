@@ -191,10 +191,16 @@ namespace PckStudio.Forms.Editor
             public Image GetTexture() => _namedTexture.Texture;
         }
 
+        private void LoadModels()
+        {
+            modelTreeView.Nodes.Clear();
+            modelTreeView.Nodes.AddRange(_models.Select(ModelNode.Create).ToArray());
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            modelTreeView.Nodes.AddRange(_models.Select(ModelNode.Create).ToArray());
+            LoadModels();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,24 +295,20 @@ namespace PckStudio.Forms.Editor
                     return;
                 }
 
-                if (!GameModelImporter.ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
-                {
-                    MessageBox.Show($"Couldn't get model meta data for: '{modelInfo.Model.Name}'.", ProductName);
-                    return;
-                }
-
                 //if (models.Version < modelInfo.ModelVersion)
                 //{
                 //	MessageBox.Show("Model container version does not match with the model version.", ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //	return;
                 //}
 
-                _models.Add(modelInfo.Model);
+                _models.SetModel(modelInfo.Model);
 
                 foreach (NamedTexture texture in modelInfo.Textures)
                 {
                     _textures.TrySet(texture.Name, texture.Texture);
                 }
+
+                LoadModels();
             }
         }
 
