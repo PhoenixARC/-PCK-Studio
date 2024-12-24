@@ -1695,7 +1695,7 @@ namespace PckStudio
 			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog(this) == DialogResult.OK)
 			{
-				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
+				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, false);
                 MarkTemplateFile();
                 LoadEditorTab();
 			}
