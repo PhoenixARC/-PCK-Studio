@@ -752,18 +752,7 @@ namespace PckStudio
 				? entityMaterialAsset?.GetData(new MaterialFileReader()).ToDictionary(mat => mat.Name)
 				: new Dictionary<string, MaterialContainer.Material>();
 
-            TryGetDelegate<string, MaterialContainer.Material> tryGetEntityMaterial = (string materialName, out MaterialContainer.Material materialInfo) =>
-			{
-                if (entityMaterials.TryGetValue(materialName, out MaterialContainer.Material material))
-				{
-					materialInfo = material;
-					return true;
-				}
-				materialInfo = default;
-                return false;
-			};
-
-            var editor = new ModelEditor(modelContainer, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(tryGetEntityMaterial));
+            var editor = new ModelEditor(modelContainer, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(entityMaterials.TryGetValue));
 			if (editor.ShowDialog() == DialogResult.OK)
 			{
 				return;
