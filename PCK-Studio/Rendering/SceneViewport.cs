@@ -474,8 +474,8 @@ namespace PckStudio.Rendering
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            ReleaseMouse();
             base.OnMouseUp(e);
+            ReleaseMouse();
         }
 
         protected void ReleaseMouse()
