@@ -224,8 +224,9 @@ namespace PckStudio.Forms.Editor
         private void modelTreeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             exportToolStripMenuItem.Visible = e.Node is ModelNode;
+            removeToolStripMenuItem.Visible = e.Node is ModelNode;
             editToolStripMenuItem.Visible = e.Node is ModelBoxNode;
-            removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
+            //removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
             if (e.Node is ModelNode modelNode && modelNode.Model.Name != modelViewport.CurrentModelName)
             {
                 NamedTexture[] textures = GetModelTextures(modelNode.Model.Name).ToArray();
@@ -321,6 +322,14 @@ namespace PckStudio.Forms.Editor
         private void showModelBoundsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             modelViewport.RenderModelBounds = showModelBoundsToolStripMenuItem.Checked;
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (modelTreeView?.SelectedNode is ModelNode modelNode && _models.Remove(modelNode.Model))
+            {
+                modelNode.Remove();
+            }
         }
     }
 }
