@@ -228,7 +228,7 @@ namespace PckStudio.External.Format
         }
 
         [JsonProperty("name")]
-        internal string Name { get; }
+        internal string Name { get; set; }
         
         [JsonProperty("source")]
         internal string TextureSource { get; private set; }
