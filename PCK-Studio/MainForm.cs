@@ -493,7 +493,7 @@ namespace PckStudio
 
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    var modelInfo = new GameModelInfo(model, Enumerable.Empty<NamedTexture>());
+                    var modelInfo = new GameModelInfo(model, new NamedTexture[1] { modelTexture });
                     GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
                 }
             }
