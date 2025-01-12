@@ -51,14 +51,14 @@ namespace PckStudio.Internal
         {
             var reader = new PSMFileReader();
             PSMFile csmbFile = reader.FromFile(filepath);
-            return new SkinModelInfo(null, csmbFile.SkinANIM, csmbFile.Parts, csmbFile.Offsets);
+            return new SkinModelInfo(null, csmbFile.SkinANIM, new(csmbFile.Parts, csmbFile.Offsets));
         }
 
         internal static void ExportPsm(string filepath, SkinModelInfo modelInfo)
         {
-            PSMFile psmFile = new PSMFile(PSMFile.CurrentVersion, modelInfo.ANIM);
-            psmFile.Parts.AddRange(modelInfo.AdditionalBoxes);
-            psmFile.Offsets.AddRange(modelInfo.PartOffsets);
+            PSMFile psmFile = new PSMFile(PSMFile.CurrentVersion, modelInfo.Anim);
+            psmFile.Parts.AddRange(modelInfo.Model.AdditionalBoxes);
+            psmFile.Offsets.AddRange(modelInfo.Model.PartOffsets);
             var writer = new PSMFileWriter(psmFile);
             writer.WriteToFile(filepath);
         }
@@ -80,22 +80,19 @@ namespace PckStudio.Internal
 
             IEnumerable<SkinBOX> boxes = ReadOutliner(null, blockBenchModel.Outliner, blockBenchModel.Elements);
 
-            SkinModelInfo modelInfo = CreateSkinModelInfo(boxes, partOffsets);
-
+            Image texture = null;
             if (blockBenchModel.Textures.IndexInRange(0))
             {
-                modelInfo.Texture = blockBenchModel.Textures[0];
-                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
-                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, modelInfo.Texture.Size.Width == modelInfo.Texture.Size.Height);
+                texture = blockBenchModel.Textures[0];
+                texture = SwapBoxBottomTexture(texture, boxes);
             }
-
-            return modelInfo;
+            
+            return CreateSkinModelInfo(texture, boxes, partOffsets);
         }
 
-        private static SkinModelInfo CreateSkinModelInfo(IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets)
+        private static SkinModelInfo CreateSkinModelInfo(Image texture, IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets)
         {
-            SkinModelInfo modelInfo = new SkinModelInfo();
-            modelInfo.ANIM = (
+            SkinANIM skinANIM = (
                    SkinAnimMask.HEAD_DISABLED |
                    SkinAnimMask.HEAD_OVERLAY_DISABLED |
                    SkinAnimMask.BODY_DISABLED |
@@ -109,11 +106,15 @@ namespace PckStudio.Internal
                    SkinAnimMask.LEFT_LEG_DISABLED |
                    SkinAnimMask.LEFT_LEG_OVERLAY_DISABLED);
 
-            modelInfo.PartOffsets.AddRange(partOffsets);
+            skinANIM = skinANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, texture.Size.Width == texture.Size.Height);
+
+            SkinModel skinModel = new SkinModel();
+
+            skinModel.PartOffsets.AddRange(partOffsets);
 
             SkinBOX ApplyOffset(SkinBOX box)
             {
-                SkinPartOffset offset = modelInfo.PartOffsets.FirstOrDefault(offset => offset.Type == (box.IsOverlayPart() ? box.GetBaseType() : box.Type));
+                SkinPartOffset offset = skinModel.PartOffsets.FirstOrDefault(offset => offset.Type == (box.IsOverlayPart() ? box.GetBaseType() : box.Type));
                 return string.IsNullOrEmpty(offset.Type) ? box : new SkinBOX(box.Type, box.Pos - (Vector3.UnitY * offset.Value), box.Size, box.UV, box.HideWithArmor, box.Mirror, box.Scale);
             }
 
@@ -121,7 +122,7 @@ namespace PckStudio.Internal
 
             IEnumerable<SkinBOX> customBoxes = convertedBoxes.Where(box => !SkinBOX.KnownHashes.ContainsKey(box.GetHashCode()));
 
-            modelInfo.AdditionalBoxes.AddRange(customBoxes);
+            skinModel.AdditionalBoxes.AddRange(customBoxes);
 
             // check for know boxes and filter them out
             SkinAnimMask mask = (SkinAnimMask)convertedBoxes
@@ -132,9 +133,9 @@ namespace PckStudio.Internal
                 .Aggregate((a, b) => a | b);
 
             if (mask != SkinAnimMask.NONE)
-                modelInfo.ANIM &= ~mask;
+                skinANIM &= ~mask;
             
-            return modelInfo;
+            return new SkinModelInfo(texture, skinANIM, skinModel);
         }
 
         private static IEnumerable<SkinBOX> ReadOutliner(string parentName, JArray oulineChildren, IReadOnlyCollection<Element> elements)
@@ -177,7 +178,7 @@ namespace PckStudio.Internal
             BlockBenchModel blockBenchModel = BlockBenchModel.Create(BlockBenchFormatInfos.BedrockEntity, Path.GetFileNameWithoutExtension(filepath), new Size(64, exportTexture.Width == exportTexture.Height ? 64 : 32), [exportTexture]);
 
             Dictionary<string, Outline> outliners = new Dictionary<string, Outline>(5);
-            List<Element> elements = new List<Element>(modelInfo.AdditionalBoxes.Count);
+            List<Element> elements = new List<Element>(modelInfo.Model.AdditionalBoxes.Count);
 
             Dictionary<string, SkinPartOffset> offsetLookUp = new Dictionary<string, SkinPartOffset>(5);
 
@@ -185,7 +186,7 @@ namespace PckStudio.Internal
             {
                 string offsetType = box.IsOverlayPart() ? box.GetBaseType() : box.Type;
 
-                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.PartOffsets);
+                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.Model.PartOffsets);
                 if (!outliners.ContainsKey(offsetType))
                 {
                     outliners.Add(offsetType, new Outline(offsetType)
@@ -203,9 +204,9 @@ namespace PckStudio.Internal
                 outliners[offsetType].Children.Add(element.Uuid);
             }
 
-            ANIM2BOX(modelInfo.ANIM, AddElement);
+            ANIM2BOX(modelInfo.Anim, AddElement);
 
-            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
+            foreach (SkinBOX box in modelInfo.Model.AdditionalBoxes)
             {
                 AddElement(box);
             }
@@ -272,19 +273,15 @@ namespace PckStudio.Internal
 
             (IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets) = LoadGeometry(geometry);
 
-            SkinModelInfo modelInfo = CreateSkinModelInfo(boxes, partOffsets);
-
+            Image texture = null;
             string texturePath = Path.Combine(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath)) + ".png";
             if (File.Exists(texturePath))
             {
-                modelInfo.Texture = Image.FromFile(texturePath).ReleaseFromFile();
-                modelInfo.Texture = SwapBoxBottomTexture(modelInfo);
+                texture = Image.FromFile(texturePath).ReleaseFromFile();
+                texture = SwapBoxBottomTexture(texture, boxes);
             }
 
-            if (geometry.Description?.TextureSize.Width == geometry.Description?.TextureSize.Height)
-                modelInfo.ANIM = modelInfo.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, true);
-
-            return modelInfo;
+            return CreateSkinModelInfo(texture, boxes, partOffsets);
         }
 
         private static (IEnumerable<SkinBOX> boxes, IEnumerable<SkinPartOffset> partOffsets) LoadGeometry(Geometry geometry)
@@ -327,7 +324,7 @@ namespace PckStudio.Internal
             {
                 string offsetType = box.IsOverlayPart() ? box.GetBaseType() : box.Type;
 
-                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.PartOffsets);
+                Vector3 offset = GetOffsetForPart(offsetType, ref offsetLookUp, modelInfo.Model.PartOffsets);
 
                 if (!bones.ContainsKey(offsetType))
                 {
@@ -351,9 +348,9 @@ namespace PckStudio.Internal
                 });
             }
 
-            ANIM2BOX(modelInfo.ANIM, AddBone);
+            ANIM2BOX(modelInfo.Anim, AddBone);
 
-            foreach (SkinBOX box in modelInfo.AdditionalBoxes)
+            foreach (SkinBOX box in modelInfo.Model.AdditionalBoxes)
             {
                 AddBone(box);
             }
@@ -497,7 +494,12 @@ namespace PckStudio.Internal
 
         private static Image SwapBoxBottomTexture(SkinModelInfo modelInfo)
         {
-            return SwapTextureAreas(modelInfo.Texture, modelInfo.AdditionalBoxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
+            return SwapBoxBottomTexture(modelInfo.Texture, modelInfo.Model.AdditionalBoxes);
+        }
+
+        private static Image SwapBoxBottomTexture(Image texture, IEnumerable<SkinBOX> boxes)
+        {
+            return SwapTextureAreas(texture, boxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
             {
                 var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
                 var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));

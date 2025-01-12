@@ -49,15 +49,6 @@ namespace PckStudio.Internal.FileFormats
 
         public readonly List<SkinBOX> Parts = new List<SkinBOX>();
 		public readonly List<SkinPartOffset> Offsets = new List<SkinPartOffset>();
-
-		public static PSMFile FromSkin(SkinModelInfo skin)
-		{
-			var csmb = new PSMFile(1);
-			csmb.SkinANIM = skin.ANIM;
-			csmb.Parts.AddRange(skin.AdditionalBoxes);
-			csmb.Offsets.AddRange(skin.PartOffsets);
-			return csmb;
-		}
 	}
 
 	public enum PSMOffsetType : byte

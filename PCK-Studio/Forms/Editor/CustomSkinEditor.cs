@@ -74,10 +74,10 @@ namespace PckStudio.Forms.Editor
         {
             if (keyData == Keys.A)
             {
-                using var animeditor = new ANIMEditor(_skin.Model.ANIM);
+                using var animeditor = new ANIMEditor(_skin.ANIM);
                 if (animeditor.ShowDialog() == DialogResult.OK)
                 {
-                    renderer3D1.ANIM = _skin.Model.ANIM = animeditor.ResultAnim;
+                    renderer3D1.ANIM = _skin.ANIM = animeditor.ResultAnim;
                     skinPartListBox_SelectedIndexChanged(this, EventArgs.Empty);
                 }
                 return true;
@@ -87,12 +87,12 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData()
         {
-            SkinModelInfo modelInfo = _skin.Model;
+            SkinModel modelInfo = _skin.Model;
 
             List<SkinBOX> boxProperties = modelInfo.AdditionalBoxes;
             List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
             
-            renderer3D1.ANIM = modelInfo.ANIM;
+            renderer3D1.ANIM = _skin.ANIM;
 
             renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
@@ -105,14 +105,14 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.SetPartOffset(offset);
             }
 
-            if (modelInfo.Texture is not null)
+            if (_skin.Texture is not null)
             {
-                renderer3D1.Texture = modelInfo.Texture;
+                renderer3D1.Texture = _skin.Texture;
             }
 
-            if (modelInfo.Texture is null && renderer3D1.Texture is not null)
+            if (_skin.Texture is null && renderer3D1.Texture is not null)
             {
-                modelInfo.Texture = renderer3D1.Texture;
+                _skin.Texture = renderer3D1.Texture;
             }
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
@@ -126,12 +126,12 @@ namespace PckStudio.Forms.Editor
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
         {
-            if (_skin?.Model?.Texture is null)
+            if (_skin?.Texture is null)
             {
                 Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(GenerateUVTextureMap)}] Failed to generate uv for {skinBox}. Reason: Model.Texture was null");
                 return;
             }
-            using (Graphics graphics = Graphics.FromImage(_skin.Model.Texture))
+            using (Graphics graphics = Graphics.FromImage(_skin.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
                 int argb = rng.Next(unchecked((int)0xFF000000), -1);
@@ -139,7 +139,7 @@ namespace PckStudio.Forms.Editor
                 Brush brush = new SolidBrush(color);
                 graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
             }
-            renderer3D1.Texture = _skin.Model.Texture;
+            renderer3D1.Texture = _skin.Texture;
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -158,7 +158,7 @@ namespace PckStudio.Forms.Editor
 
         private void exportTextureButton_Click(object sender, EventArgs e)
         {
-            if (_skin?.Model?.Texture is null)
+            if (_skin?.Texture is null)
             {
                 Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(exportTextureButton_Click)}] Failed to export texture. Reason: skin.Model.Texture was null");
                 return;
@@ -167,7 +167,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                _skin.Model.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
+                _skin.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
@@ -191,7 +191,7 @@ namespace PckStudio.Forms.Editor
             _skin.Model.PartOffsets.Clear();
             _skin.Model.PartOffsets.AddRange(renderer3D1.GetOffsets());
             // just in case they're not the same instance
-            _skin.Model.ANIM = renderer3D1.ANIM;
+            _skin.ANIM = renderer3D1.ANIM;
             DialogResult = DialogResult.OK;
         }
 
@@ -202,7 +202,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = SkinModelImporter.Default.SupportedModelFileFormatsFilter;
             saveFileDialog.FileName = _skin.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                SkinModelImporter.Default.Export(saveFileDialog.FileName, _skin.Model);
+                SkinModelImporter.Default.Export(saveFileDialog.FileName, _skin.GetModelInfo());
         }
 
         private void importSkinButton_Click(object sender, EventArgs e)
@@ -215,7 +215,7 @@ namespace PckStudio.Forms.Editor
                 SkinModelInfo modelInfo = SkinModelImporter.Default.Import(openFileDialog.FileName);
                 if (modelInfo is not null)
                 {
-                    _skin.Model = modelInfo;
+                    _skin.SetModelInfo(modelInfo);
                     LoadModelData();
                 }
             }
@@ -268,7 +268,7 @@ namespace PckStudio.Forms.Editor
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            uvPictureBox.Image = _skin.Model.Texture = texture;
+            uvPictureBox.Image = _skin.Texture = texture;
             textureSizeLabel.Text = $"{texture.Width}x{texture.Height}";
         }
 
@@ -296,7 +296,7 @@ namespace PckStudio.Forms.Editor
                 sizeLabel.Text = $"Size: {box.Size}";
                 positionLabel.Text = $"Position: {box.Pos}";
 
-                Image uvArea = _skin.Model.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
+                Image uvArea = _skin.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
 
                 Bitmap refImg = new Bitmap(1, 1);
 
@@ -309,14 +309,14 @@ namespace PckStudio.Forms.Editor
                 Color avgColor = refImg.GetPixel(0, 0);
                 renderer3D1.HighlightlingColor = avgColor.Inversed();
 
-                Size scaleSize = new Size(_skin.Model.Texture.Width * scale, _skin.Model.Texture.Height * scale);
+                Size scaleSize = new Size(_skin.Texture.Width * scale, _skin.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     var brush = new SolidBrush(Color.FromArgb(127, avgColor.GreyScaled()));
                     g.ApplyConfig(_graphicsConfig);
-                    g.DrawImage(_skin.Model.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Model.Texture.Size), GraphicsUnit.Pixel);
+                    g.DrawImage(_skin.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Texture.Size), GraphicsUnit.Pixel);
                     g.FillPath(brush, graphicsPath);
                 }
                 uvPictureBox.Invalidate();
@@ -410,7 +410,7 @@ namespace PckStudio.Forms.Editor
         private void ClearSelection()
         {
             skinPartListBox.ClearSelected();
-            uvPictureBox.Image = _skin.Model.Texture;
+            uvPictureBox.Image = _skin.Texture;
         }
 
 
@@ -451,7 +451,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.FileName = templateFilename.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, new SkinANIM(templateAnimMask));
+                SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, templateAnimMask, new SkinModel());
                 SkinModelImporter.Default.Export(saveFileDialog.FileName, modelInfo);
             }
         }

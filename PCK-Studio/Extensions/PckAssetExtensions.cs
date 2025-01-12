@@ -94,9 +94,9 @@ namespace PckStudio.Extensions
             if (asset.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("Asset is not a skin file");
 
-            asset.SetTexture(skin.Model.Texture);
+            asset.SetTexture(skin.Texture);
 
-            string skinId = skin.MetaData.Id.ToString("d08");
+            string skinId = skin.Identifier.ToString("d08");
 
             // TODO: keep filepath 
             asset.Filename = $"dlcskin{skinId}.png";
@@ -118,7 +118,7 @@ namespace PckStudio.Extensions
                 asset.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            asset.SetProperty("ANIM", skin.Model.ANIM.ToString());
+            asset.SetProperty("ANIM", skin.ANIM.ToString());
             asset.SetProperty("GAME_FLAGS", "0x18");
             asset.SetProperty("FREE", "1");
 

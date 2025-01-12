@@ -659,7 +659,7 @@
     <None Include="Resources\atlases\moonPhaseData.json" />
     <None Include="Resources\atlases\paintingData.json" />
     <None Include="Resources\atlases\particleData.json" />
-	<None Include="Resources\model\defaultModels.json" />
+    <None Include="Resources\model\defaultModels.json" />
     <None Include="Resources\model\modelMetaData.json" />
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />

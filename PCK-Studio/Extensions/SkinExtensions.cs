@@ -15,7 +15,7 @@ namespace PckStudio.Extensions
     {
         public static PckAsset CreateFile(this Skin skin, LOCFile localizationFile)
         {
-            string skinId = skin.MetaData.Id.ToString("d08");
+            string skinId = skin.Identifier.ToString("d08");
             PckAsset skinFile = new PckAsset($"dlcskin{skinId}.png", PckAssetType.SkinFile);
 
             skinFile.AddProperty("DISPLAYNAME", skin.MetaData.Name);
@@ -41,7 +41,7 @@ namespace PckStudio.Extensions
                 skinFile.AddProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            skinFile.AddProperty("ANIM", skin.Model.ANIM);
+            skinFile.AddProperty("ANIM", skin.ANIM);
             skinFile.AddProperty("GAME_FLAGS", "0x18");
             skinFile.AddProperty("FREE", "1");
 
@@ -54,7 +54,7 @@ namespace PckStudio.Extensions
                 skinFile.AddProperty(offset.ToProperty());
             }
 
-            skinFile.SetTexture(skin.Model.Texture);
+            skinFile.SetTexture(skin.Texture);
 
             return skinFile;
         }
@@ -63,7 +63,7 @@ namespace PckStudio.Extensions
         {
             if (!skin.HasCape)
                 throw new InvalidOperationException("Skin does not contain a cape.");
-            string skinId = skin.MetaData.Id.ToString("d08");
+            string skinId = skin.Identifier.ToString("d08");
             PckAsset capeFile = new PckAsset($"dlccape{skinId}.png", PckAssetType.CapeFile);
             capeFile.SetTexture(skin.CapeTexture);
             return capeFile;
