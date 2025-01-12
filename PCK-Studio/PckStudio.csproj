@@ -198,7 +198,9 @@
     <Compile Include="Internal\App\CommitInfo.cs" />
     <Compile Include="External\Format\BlockBenchModel.cs" />
     <Compile Include="Internal\Skin\Skin.cs" />
+    <Compile Include="Internal\Skin\SkinIdentifier.cs" />
     <Compile Include="Internal\Skin\SkinMetaData.cs" />
+    <Compile Include="Internal\Skin\SkinModel.cs" />
     <Compile Include="Internal\Skin\SkinModelInfo.cs" />
     <Compile Include="Internal\Skin\SkinPartOffset.cs" />
     <Compile Include="Internal\ResourceLocation.cs" />
