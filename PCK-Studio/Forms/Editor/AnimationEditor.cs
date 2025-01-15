@@ -34,10 +34,11 @@ using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Serializer;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class AnimationEditor : MetroForm
+    public partial class AnimationEditor : ThemeForm
 	{
         public Animation Result => _animation;
 

@@ -126,10 +126,14 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 16</value>
+    <value>40, 18</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 13</value>
+    <value>34, 15</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -156,10 +160,13 @@
     <value>True</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 62</value>
+    <value>40, 72</value>
+  </data>
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 13</value>
+    <value>35, 15</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -180,10 +187,13 @@
     <value>1</value>
   </data>
   <data name="keyTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 32</value>
+    <value>43, 37</value>
+  </data>
+  <data name="keyTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
   </data>
   <data name="keyTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>225, 23</value>
   </data>
   <data name="keyTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -201,10 +211,13 @@
     <value>4</value>
   </data>
   <data name="valueTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 78</value>
+    <value>43, 90</value>
+  </data>
+  <data name="valueTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
   </data>
   <data name="valueTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>225, 23</value>
   </data>
   <data name="valueTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -221,7 +234,6 @@
   <data name="&gt;&gt;valueTextBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SaveBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -233,21 +245,24 @@
   </data>
   <data name="SaveBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAALtJREFUSEvt
-        1TEKwkAQheG9hKA23ke8T7TzpBZBD6HNOuv+ivDGxOyQLh9MYd5zVgwhaTFJzvlgc7GZqmPFMCv2td9k
-        /BCKmY+jqH8bPoRS5IDiTKwoRA/4/X3y+Q+IYp0iD2OdIg9jnSIPY50i99xtOpsdc7R52LhYp8g98gDZ
-        tVONFBVF7llT+bBrmxopKorc4x2wrZGiosg9s/9F75u8Yppv8rVWQnrWKQvLC+f2qrUpP3DPusU/UnoC
-        1EgDy/vtD/MAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAMBJREFUSEvt
+        1TsKwkAYReFsQlAb9yPuR+1cqUXQRWhzJZL/ZuaYBzNglw/ShJObYBSbZlVC0knSXeXO3BolqeWVBZZv
+        EiXPT8n3v+ZvEhXPT8m37cbOouD5KfnugJ0tBpDPDtgZw1rcNYa1uGsMa3HXGNbirjFMvLrvuKRDf1wk
+        vRkF7hrDxM8PSNKVUWBrDBPbkXbHKLA1homxG+wZBbbGMPH3jyhe8qY/ql/yg3GFlrvW/+E8eUWB7gGP
+        3F3N+gDUSAPLvdCH2wAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="SaveBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="SaveBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 130</value>
+    <value>84, 150</value>
+  </data>
+  <data name="SaveBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
   </data>
   <data name="SaveBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+    <value>140, 46</value>
   </data>
   <data name="SaveBtn.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -277,13 +292,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>264, 182</value>
+    <value>308, 210</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 8.25pt</value>
+    <value>Segoe UI, 9pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3105,8 +3120,11 @@
   <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 3, 4, 3</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>264, 105</value>
+    <value>305, 115</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

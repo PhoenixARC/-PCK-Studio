@@ -43,20 +43,22 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(57, 35);
+            this.label1.Location = new System.Drawing.Point(14, 36);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.Size = new System.Drawing.Size(96, 15);
             this.label1.TabIndex = 10;
-            this.label1.Text = "Animation Time";
+            this.label1.Text = "Animation Time:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(90, 13);
+            this.label3.Location = new System.Drawing.Point(63, 11);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 13);
+            this.label3.Size = new System.Drawing.Size(195, 15);
             this.label3.TabIndex = 12;
             this.label3.Text = "Frame Time must be greater than 0.";
             // 
@@ -65,14 +67,15 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.TimeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.TimeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TimeUpDown.ForeColor = System.Drawing.SystemColors.Window;
-            this.TimeUpDown.Location = new System.Drawing.Point(150, 33);
+            this.TimeUpDown.Location = new System.Drawing.Point(118, 34);
+            this.TimeUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TimeUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.TimeUpDown.Name = "TimeUpDown";
-            this.TimeUpDown.Size = new System.Drawing.Size(162, 22);
+            this.TimeUpDown.Size = new System.Drawing.Size(189, 23);
             this.TimeUpDown.TabIndex = 15;
             this.TimeUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -87,16 +90,17 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.CancelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.CancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
             this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CancelButton.ForeColor = System.Drawing.Color.White;
             this.CancelButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
             this.CancelButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
             this.CancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.CancelButton.Location = new System.Drawing.Point(187, 76);
+            this.CancelButton.Location = new System.Drawing.Point(164, 90);
+            this.CancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(120, 40);
+            this.CancelButton.Size = new System.Drawing.Size(106, 46);
             this.CancelButton.TabIndex = 24;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -116,16 +120,17 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.SaveButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.SaveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.SaveButton.ForeColor = System.Drawing.Color.White;
             this.SaveButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.SaveButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.SaveButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
             this.SaveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.SaveButton.Location = new System.Drawing.Point(61, 76);
+            this.SaveButton.Location = new System.Drawing.Point(50, 90);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(120, 40);
+            this.SaveButton.Size = new System.Drawing.Size(106, 46);
             this.SaveButton.TabIndex = 23;
             this.SaveButton.Text = "Save";
             this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -136,23 +141,24 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             // 
             // SetBulkSpeed
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(368, 128);
+            this.ClientSize = new System.Drawing.Size(321, 148);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TimeUpDown);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(266, 96);
+            this.MinimumSize = new System.Drawing.Size(308, 105);
             this.Name = "SetBulkSpeed";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Set Bulk Speed";

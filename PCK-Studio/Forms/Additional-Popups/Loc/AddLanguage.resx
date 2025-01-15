@@ -120,9 +120,9 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="AddButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAEFJREFUWEft
-        0jEKACAUw9De/9K6ZHewfBDzNkFqBiM9bYHjPN43wAADDOgHsFvH/Bn365jvYddPaIABBnwcIN1LNhlF
-        TsBTg9AAAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAERJREFUWEft
+        zkEKACAIRFHvf2nb1GYgCBqN4L+loP4I4Gc56bwNAQQQQEBZwDrspn+2dNFF/1wrO3yKAAIIIOB5AOAw
+        ABlFTsCYBMJTAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

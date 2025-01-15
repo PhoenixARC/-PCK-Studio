@@ -46,20 +46,22 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(65, 204);
+            this.label1.Location = new System.Drawing.Point(219, 45);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.Size = new System.Drawing.Size(73, 15);
             this.label1.TabIndex = 10;
-            this.label1.Text = "Frame Time";
+            this.label1.Text = "Frame Time:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(79, 13);
+            this.label3.Location = new System.Drawing.Point(133, 10);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 13);
+            this.label3.Size = new System.Drawing.Size(121, 15);
             this.label3.TabIndex = 12;
             this.label3.Text = "may/matt was here :3";
             // 
@@ -68,7 +70,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.FrameTimeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.FrameTimeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FrameTimeUpDown.ForeColor = System.Drawing.SystemColors.Window;
-            this.FrameTimeUpDown.Location = new System.Drawing.Point(135, 202);
+            this.FrameTimeUpDown.Location = new System.Drawing.Point(300, 43);
+            this.FrameTimeUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.FrameTimeUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -80,7 +83,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             0,
             0});
             this.FrameTimeUpDown.Name = "FrameTimeUpDown";
-            this.FrameTimeUpDown.Size = new System.Drawing.Size(73, 22);
+            this.FrameTimeUpDown.Size = new System.Drawing.Size(85, 23);
             this.FrameTimeUpDown.TabIndex = 15;
             this.FrameTimeUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.FrameTimeUpDown.Value = new decimal(new int[] {
@@ -97,12 +100,13 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.FrameList.HideSelection = false;
             this.FrameList.ImageIndex = 0;
             this.FrameList.ImageList = this.TextureIcons;
-            this.FrameList.Location = new System.Drawing.Point(59, 37);
+            this.FrameList.Location = new System.Drawing.Point(15, 43);
+            this.FrameList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.FrameList.Name = "FrameList";
             this.FrameList.SelectedImageIndex = 0;
             this.FrameList.ShowLines = false;
             this.FrameList.ShowRootLines = false;
-            this.FrameList.Size = new System.Drawing.Size(155, 159);
+            this.FrameList.Size = new System.Drawing.Size(180, 183);
             this.FrameList.TabIndex = 1;
             // 
             // TextureIcons
@@ -122,16 +126,17 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.CancelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.CancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
             this.CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CancelButton.ForeColor = System.Drawing.Color.White;
             this.CancelButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.CancelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
             this.CancelButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
             this.CancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.CancelButton.Location = new System.Drawing.Point(139, 240);
+            this.CancelButton.Location = new System.Drawing.Point(266, 180);
+            this.CancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(120, 40);
+            this.CancelButton.Size = new System.Drawing.Size(119, 46);
             this.CancelButton.TabIndex = 22;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -151,16 +156,17 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.SaveButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.SaveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.SaveButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.SaveButton.ForeColor = System.Drawing.Color.White;
             this.SaveButton.GradientColorPrimary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.SaveButton.GradientColorSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.SaveButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
             this.SaveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.SaveButton.Location = new System.Drawing.Point(13, 240);
+            this.SaveButton.Location = new System.Drawing.Point(266, 127);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(120, 40);
+            this.SaveButton.Size = new System.Drawing.Size(119, 46);
             this.SaveButton.TabIndex = 21;
             this.SaveButton.Text = "Save";
             this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -171,21 +177,22 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             // 
             // FrameEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(273, 292);
+            this.ClientSize = new System.Drawing.Size(399, 241);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.FrameList);
             this.Controls.Add(this.FrameTimeUpDown);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrameEditor";

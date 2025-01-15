@@ -73,13 +73,13 @@
             this.frameTreeView.ForeColor = System.Drawing.Color.White;
             this.frameTreeView.ImageIndex = 0;
             this.frameTreeView.ImageList = this.TextureIcons;
-            this.frameTreeView.Location = new System.Drawing.Point(20, 88);
+            this.frameTreeView.Location = new System.Drawing.Point(24, 101);
             this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
             this.frameTreeView.Name = "frameTreeView";
             this.frameTreeView.SelectedImageIndex = 0;
             this.frameTreeView.ShowLines = false;
             this.frameTreeView.ShowRootLines = false;
-            this.frameTreeView.Size = new System.Drawing.Size(134, 253);
+            this.frameTreeView.Size = new System.Drawing.Size(155, 292);
             this.frameTreeView.TabIndex = 15;
             this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
             this.frameTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.frameTreeView_AfterSelect);
@@ -125,10 +125,11 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(20, 60);
+            this.menuStrip.Location = new System.Drawing.Point(24, 69);
             this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip.Size = new System.Drawing.Size(134, 24);
+            this.menuStrip.Size = new System.Drawing.Size(157, 28);
             this.menuStrip.TabIndex = 14;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -141,21 +142,21 @@
             this.exportAsToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem1.Image")));
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(119, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
             // 
             // importToolStripMenuItem
             // 
@@ -164,7 +165,7 @@
             this.importJavaAnimationToolStripMenuItem,
             this.importGifToolStripMenuItem});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.importToolStripMenuItem.Text = "Import";
             // 
             // importAnimationTextureToolStripMenuItem
@@ -194,7 +195,7 @@
             this.exportJavaAnimationToolStripMenuItem,
             this.gifToolStripMenuItem});
             this.exportAsToolStripMenuItem.Name = "exportAsToolStripMenuItem";
-            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.exportAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.exportAsToolStripMenuItem.Text = "Export as";
             // 
             // exportJavaAnimationToolStripMenuItem
@@ -217,7 +218,7 @@
             this.bulkAnimationSpeedToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.editToolStripMenuItem.Text = "Tools";
             // 
             // bulkAnimationSpeedToolStripMenuItem
@@ -237,7 +238,7 @@
             this.javaAnimationSupportToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // frameTimeandTicksToolStripMenuItem
@@ -278,7 +279,8 @@
             // InterpolationCheckbox
             // 
             this.InterpolationCheckbox.AutoSize = true;
-            this.InterpolationCheckbox.Location = new System.Drawing.Point(161, 63);
+            this.InterpolationCheckbox.Location = new System.Drawing.Point(188, 72);
+            this.InterpolationCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.InterpolationCheckbox.Name = "InterpolationCheckbox";
             this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);
             this.InterpolationCheckbox.TabIndex = 17;
@@ -291,9 +293,10 @@
             // 
             this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AnimationStartStopBtn.Location = new System.Drawing.Point(157, 317);
+            this.AnimationStartStopBtn.Location = new System.Drawing.Point(183, 366);
+            this.AnimationStartStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
-            this.AnimationStartStopBtn.Size = new System.Drawing.Size(232, 24);
+            this.AnimationStartStopBtn.Size = new System.Drawing.Size(270, 28);
             this.AnimationStartStopBtn.Style = MetroFramework.MetroColorStyle.White;
             this.AnimationStartStopBtn.TabIndex = 18;
             this.AnimationStartStopBtn.Text = "Play Animation";
@@ -305,8 +308,9 @@
             // 
             this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tileLabel.AutoSize = true;
-            this.tileLabel.Location = new System.Drawing.Point(20, 341);
-            this.tileLabel.MinimumSize = new System.Drawing.Size(170, 19);
+            this.tileLabel.Location = new System.Drawing.Point(24, 394);
+            this.tileLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.tileLabel.MinimumSize = new System.Drawing.Size(199, 22);
             this.tileLabel.Name = "tileLabel";
             this.tileLabel.Size = new System.Drawing.Size(57, 19);
             this.tileLabel.TabIndex = 20;
@@ -322,30 +326,34 @@
             this.animationPictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
             this.animationPictureBox.Image = null;
             this.animationPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.animationPictureBox.Location = new System.Drawing.Point(157, 88);
+            this.animationPictureBox.Location = new System.Drawing.Point(183, 101);
+            this.animationPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.animationPictureBox.Name = "animationPictureBox";
-            this.animationPictureBox.Size = new System.Drawing.Size(235, 223);
+            this.animationPictureBox.Size = new System.Drawing.Size(274, 258);
             this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.animationPictureBox.TabIndex = 16;
             this.animationPictureBox.TabStop = false;
             // 
             // AnimationEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 362);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(480, 418);
             this.Controls.Add(this.InterpolationCheckbox);
             this.Controls.Add(this.AnimationStartStopBtn);
             this.Controls.Add(this.tileLabel);
             this.Controls.Add(this.animationPictureBox);
             this.Controls.Add(this.frameTreeView);
             this.Controls.Add(this.menuStrip);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(412, 362);
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(478, 411);
             this.Name = "AnimationEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Animation Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationEditor_FormClosing);
             this.Load += new System.EventHandler(this.AnimationEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);

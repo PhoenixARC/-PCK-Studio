@@ -40,6 +40,7 @@
             // 
             this.InputTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
             this.InputTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
+            this.InputTextBox.CustomButton.Margin = ((System.Windows.Forms.Padding)(resources.GetObject("resource.Margin")));
             this.InputTextBox.CustomButton.Name = "";
             this.InputTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.InputTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;

@@ -16,10 +16,11 @@ using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class BehaviourEditor : MetroForm
+	public partial class BehaviourEditor : ThemeForm
 	{
 		// Behaviours File Format research by Miku and MattNL
 		private readonly PckAsset _asset;

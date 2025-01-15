@@ -37,10 +37,10 @@
             // 
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.ItemHeight = 23;
-            this.LanguageComboBox.Location = new System.Drawing.Point(31, 15);
+            this.LanguageComboBox.Location = new System.Drawing.Point(27, 14);
             this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LanguageComboBox.Name = "LanguageComboBox";
-            this.LanguageComboBox.Size = new System.Drawing.Size(323, 29);
+            this.LanguageComboBox.Size = new System.Drawing.Size(283, 29);
             this.LanguageComboBox.Style = MetroFramework.MetroColorStyle.Black;
             this.LanguageComboBox.TabIndex = 0;
             this.LanguageComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -64,10 +64,10 @@
             this.AddButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.AddButton.Image = ((System.Drawing.Image)(resources.GetObject("AddButton.Image")));
             this.AddButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.AddButton.Location = new System.Drawing.Point(112, 60);
+            this.AddButton.Location = new System.Drawing.Point(98, 56);
             this.AddButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(160, 49);
+            this.AddButton.Size = new System.Drawing.Size(140, 46);
             this.AddButton.TabIndex = 18;
             this.AddButton.Text = "Add";
             this.AddButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -78,19 +78,20 @@
             // 
             // AddLanguage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(385, 124);
+            this.ClientSize = new System.Drawing.Size(337, 116);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.LanguageComboBox);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(380, 163);
+            this.MinimumSize = new System.Drawing.Size(334, 155);
             this.Name = "AddLanguage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add Language";

@@ -63,10 +63,10 @@
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.treeView1.ContextMenuStrip = this.metroContextMenu1;
             this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.Location = new System.Drawing.Point(20, 84);
+            this.treeView1.Location = new System.Drawing.Point(24, 97);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(186, 176);
+            this.treeView1.Size = new System.Drawing.Size(217, 203);
             this.treeView1.TabIndex = 13;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -126,9 +126,10 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(20, 60);
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(309, 24);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip.Size = new System.Drawing.Size(407, 28);
             this.menuStrip.TabIndex = 14;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -138,7 +139,7 @@
             this.saveToolStripMenuItem1});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveToolStripMenuItem1
@@ -153,14 +154,15 @@
             // 
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // MobIsTamedCheckbox
             // 
             this.MobIsTamedCheckbox.AutoSize = true;
             this.MobIsTamedCheckbox.Enabled = false;
-            this.MobIsTamedCheckbox.Location = new System.Drawing.Point(221, 104);
+            this.MobIsTamedCheckbox.Location = new System.Drawing.Point(258, 120);
+            this.MobIsTamedCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MobIsTamedCheckbox.Name = "MobIsTamedCheckbox";
             this.MobIsTamedCheckbox.Size = new System.Drawing.Size(96, 15);
             this.MobIsTamedCheckbox.TabIndex = 22;
@@ -173,7 +175,8 @@
             // 
             this.MobHasSaddleCheckbox.AutoSize = true;
             this.MobHasSaddleCheckbox.Enabled = false;
-            this.MobHasSaddleCheckbox.Location = new System.Drawing.Point(221, 136);
+            this.MobHasSaddleCheckbox.Location = new System.Drawing.Point(258, 157);
+            this.MobHasSaddleCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MobHasSaddleCheckbox.Name = "MobHasSaddleCheckbox";
             this.MobHasSaddleCheckbox.Size = new System.Drawing.Size(106, 15);
             this.MobHasSaddleCheckbox.TabIndex = 23;
@@ -188,7 +191,8 @@
             this.zUpDown.DecimalPlaces = 3;
             this.zUpDown.Enabled = false;
             this.zUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.zUpDown.Location = new System.Drawing.Point(254, 220);
+            this.zUpDown.Location = new System.Drawing.Point(297, 254);
+            this.zUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -200,7 +204,7 @@
             0,
             -2147483648});
             this.zUpDown.Name = "zUpDown";
-            this.zUpDown.Size = new System.Drawing.Size(75, 20);
+            this.zUpDown.Size = new System.Drawing.Size(88, 23);
             this.zUpDown.TabIndex = 29;
             this.zUpDown.ValueChanged += new System.EventHandler(this.zUpDown_ValueChanged);
             // 
@@ -210,7 +214,8 @@
             this.yUpDown.DecimalPlaces = 3;
             this.yUpDown.Enabled = false;
             this.yUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.yUpDown.Location = new System.Drawing.Point(254, 194);
+            this.yUpDown.Location = new System.Drawing.Point(297, 224);
+            this.yUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.yUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -222,14 +227,15 @@
             0,
             -2147483648});
             this.yUpDown.Name = "yUpDown";
-            this.yUpDown.Size = new System.Drawing.Size(75, 20);
+            this.yUpDown.Size = new System.Drawing.Size(88, 23);
             this.yUpDown.TabIndex = 28;
             this.yUpDown.ValueChanged += new System.EventHandler(this.yUpDown_ValueChanged);
             // 
             // zLabel
             // 
             this.zLabel.AutoSize = true;
-            this.zLabel.Location = new System.Drawing.Point(221, 220);
+            this.zLabel.Location = new System.Drawing.Point(258, 254);
+            this.zLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zLabel.Name = "zLabel";
             this.zLabel.Size = new System.Drawing.Size(20, 19);
             this.zLabel.TabIndex = 25;
@@ -239,7 +245,8 @@
             // yLabel
             // 
             this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(222, 194);
+            this.yLabel.Location = new System.Drawing.Point(259, 224);
+            this.yLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(20, 19);
             this.yLabel.TabIndex = 24;
@@ -252,7 +259,8 @@
             this.xUpDown.DecimalPlaces = 3;
             this.xUpDown.Enabled = false;
             this.xUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.xUpDown.Location = new System.Drawing.Point(254, 168);
+            this.xUpDown.Location = new System.Drawing.Point(297, 194);
+            this.xUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.xUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -264,14 +272,15 @@
             0,
             -2147483648});
             this.xUpDown.Name = "xUpDown";
-            this.xUpDown.Size = new System.Drawing.Size(75, 20);
+            this.xUpDown.Size = new System.Drawing.Size(88, 23);
             this.xUpDown.TabIndex = 31;
             this.xUpDown.ValueChanged += new System.EventHandler(this.xUpDown_ValueChanged);
             // 
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(222, 168);
+            this.xLabel.Location = new System.Drawing.Point(259, 194);
+            this.xLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(20, 19);
             this.xLabel.TabIndex = 30;
@@ -280,9 +289,10 @@
             // 
             // BehaviourEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 280);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(407, 323);
             this.Controls.Add(this.xUpDown);
             this.Controls.Add(this.xLabel);
             this.Controls.Add(this.zUpDown);
@@ -293,12 +303,13 @@
             this.Controls.Add(this.MobIsTamedCheckbox);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.treeView1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "BehaviourEditor";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Behaviour Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BehaviourEditor_FormClosing);
             this.metroContextMenu1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);

@@ -20,12 +20,13 @@ using PckStudio.Properties;
 using PckStudio.External.API.Miles;
 using PckStudio.Extensions;
 using PckStudio.Internal.App;
+using PckStudio.ToolboxItems;
 
 // Audio Editor by MattNL and Miku-666
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AudioEditor : MetroForm
+	public partial class AudioEditor : ThemeForm
 	{
 		public string defaultType = "yes";
 		PckAudioFile _audioFile = null;

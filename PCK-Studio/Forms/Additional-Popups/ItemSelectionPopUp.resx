@@ -123,14 +123,14 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>66, 34</value>
+    <value>42, 20</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 0, 6, 0</value>
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 25</value>
+    <value>39, 15</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -154,13 +154,13 @@
     <value>23</value>
   </data>
   <data name="ComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 66</value>
+    <value>45, 40</value>
   </data>
   <data name="ComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="ComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>349, 29</value>
+    <value>224, 29</value>
   </data>
   <data name="ComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -188,24 +188,23 @@
   </data>
   <data name="cancelBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAOFJREFUSEvt
-        lTEOgzAQBHkCTZq8MMlTKdPlNc4O2pOMuIAtQsdIJ4xvd08CC4aLbkopD9XNt83gwevbHAleKnirmoeg
-        tQee3l6j5qiaZlkpH9XdrZ+gsRbwjm7lILAQNofQswb2wwOENkA6hD33oD08wGAjLIaw9h70hwcYHQDz
-        ENfx8EAB9QnhWq+7j3MKQQ4M/hcOCqsfCyzeySEUdN4jUsDqhbrS09UFRgfA4rSw9h70D8FgI6RHkT33
-        oH0IQhsgDQ/oWQP7QxBYCJvhARprYXuImud+rkGC8344F2uG4QvjMhwJEIsdYQAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAKdJREFUSEvt
+        lTsOwjAQBXOENDScEDgqJR2nGfSEFzmrlfE6cZdpEtnvI3mtZFlOsgA34OLX/yGPvH59A/DgyytTUsLl
+        EXe//wNYgWcRvoGr13ikKVoh7+o1GzIl6XCjp2Q43GiV7A43opLDwg13Q/Ss37tvWhNXcmy4cMciwsEP
+        MfWIooFGg/e+LqLwam9fSSu80oyV9IQb6ZJMuJEqmf65FlN/OCcRH+MyHAmzXkcGAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="cancelBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 141</value>
+    <value>157, 85</value>
   </data>
   <data name="cancelBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 62</value>
+    <value>105, 37</value>
   </data>
   <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -244,13 +243,13 @@
     <value>NoControl</value>
   </data>
   <data name="addBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>73, 141</value>
+    <value>46, 85</value>
   </data>
   <data name="addBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="addBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>165, 62</value>
+    <value>105, 37</value>
   </data>
   <data name="addBtn.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
@@ -280,13 +279,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>11, 25</value>
+    <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>484, 222</value>
+    <value>308, 133</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 14.25pt</value>
+    <value>Segoe UI, 9pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3109,7 +3108,7 @@
     <value>0, 0</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
