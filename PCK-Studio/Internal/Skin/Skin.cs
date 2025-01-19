@@ -13,7 +13,7 @@ namespace PckStudio.Internal.Skin
         
         public SkinIdentifier Identifier { get; set; }
         
-        public SkinANIM ANIM { get; set; }
+        public SkinANIM Anim { get; set; }
 
         public SkinModel Model { get; set; }
         
@@ -44,7 +44,7 @@ namespace PckStudio.Internal.Skin
         {
             Model.AdditionalBoxes.AddRange(additionalBoxes);
             Model.PartOffsets.AddRange(partOffsets);
-            ANIM = anim;
+            Anim = anim;
         }
 
         internal Skin(string name, int id, Image texture, SkinANIM anim, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
@@ -53,12 +53,12 @@ namespace PckStudio.Internal.Skin
             Identifier = new(id);
         }
 
-        internal SkinModelInfo GetModelInfo() => new SkinModelInfo(Texture, ANIM, Model);
+        internal SkinModelInfo GetModelInfo() => new SkinModelInfo(Texture, Anim, Model);
 
         internal void SetModelInfo(SkinModelInfo modelInfo)
         {
             Texture = modelInfo.Texture;
-            ANIM = modelInfo.Anim;
+            Anim = modelInfo.Anim;
             Model = modelInfo.Model;
         }
     }

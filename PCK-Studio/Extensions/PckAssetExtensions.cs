@@ -118,7 +118,7 @@ namespace PckStudio.Extensions
                 asset.SetProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            asset.SetProperty("ANIM", skin.ANIM.ToString());
+            asset.SetProperty("ANIM", skin.Anim.ToString());
             asset.SetProperty("GAME_FLAGS", "0x18");
             asset.SetProperty("FREE", "1");
 

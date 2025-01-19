@@ -40,7 +40,7 @@ namespace PckStudio.Forms.Additional_Popups
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            newSkin.ANIM.SetFlag(SkinAnimFlag.RESOLUTION_64x64, img.Width == img.Height);
+            newSkin.Anim.SetFlag(SkinAnimFlag.RESOLUTION_64x64, img.Width == img.Height);
 
             skinPictureBox.Image = newSkin.Texture = img;
             labelSelectTexture.Visible = false;
@@ -53,43 +53,43 @@ namespace PckStudio.Forms.Additional_Popups
 
         private void DrawModel()
 		{
-            bool isSlim = newSkin.ANIM.GetFlag(SkinAnimFlag.SLIM_MODEL);
+            bool isSlim = newSkin.Anim.GetFlag(SkinAnimFlag.SLIM_MODEL);
             Pen outlineColor = Pens.LightGray;
             Brush fillColor = Brushes.Gray;
             Image previewTexture = new Bitmap(displayBox.Width, displayBox.Height);
             using (Graphics g = Graphics.FromImage(previewTexture))
             {
-                if(!newSkin.ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED))
+                if(!newSkin.Anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
 				{
                     //Head
                     g.DrawRectangle(outlineColor, 70, 15, 40, 40);
                     g.FillRectangle(fillColor, 71, 16, 39, 39);
                 }
-                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.BODY_DISABLED))
+                if (!newSkin.Anim.GetFlag(SkinAnimFlag.BODY_DISABLED))
                 {
                     //Body
                     g.DrawRectangle(outlineColor, 70, 55, 40, 60);
                     g.FillRectangle(fillColor, 71, 56, 39, 59);
                 }
-                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
+                if (!newSkin.Anim.GetFlag(SkinAnimFlag.RIGHT_ARM_DISABLED))
                 {
                     //Arm0
                     g.DrawRectangle(outlineColor, isSlim ? 55 : 50, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor   , isSlim ? 56 : 51, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
+                if (!newSkin.Anim.GetFlag(SkinAnimFlag.LEFT_ARM_DISABLED))
                 {
                     //Arm1
                     g.DrawRectangle(outlineColor, 110, 55, isSlim ? 15 : 20, 60);
                     g.FillRectangle(fillColor, 111, 56, isSlim ? 14 : 19, 59);
                 }
-                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
+                if (!newSkin.Anim.GetFlag(SkinAnimFlag.RIGHT_LEG_DISABLED))
                 {
                     //Leg0
                     g.DrawRectangle(outlineColor, 70, 115, 20, 60);
                     g.FillRectangle(fillColor, 71, 116, 19, 59);
                 }
-                if (!newSkin.ANIM.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
+                if (!newSkin.Anim.GetFlag(SkinAnimFlag.LEFT_LEG_DISABLED))
                 {
                     //Leg1
                     g.DrawRectangle(outlineColor, 90, 115, 20, 60);
@@ -255,10 +255,10 @@ namespace PckStudio.Forms.Additional_Popups
 
 		private void buttonAnimGen_Click(object sender, EventArgs e)
 		{
-            using ANIMEditor diag = new ANIMEditor(newSkin.ANIM);
+            using ANIMEditor diag = new ANIMEditor(newSkin.Anim);
             if (diag.ShowDialog(this) == DialogResult.OK)
             {
-                newSkin.ANIM = diag.ResultAnim;
+                newSkin.Anim = diag.ResultAnim;
                 DrawModel();
             }
         }

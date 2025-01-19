@@ -74,10 +74,10 @@ namespace PckStudio.Forms.Editor
         {
             if (keyData == Keys.A)
             {
-                using var animeditor = new ANIMEditor(_skin.ANIM);
+                using var animeditor = new ANIMEditor(_skin.Anim);
                 if (animeditor.ShowDialog() == DialogResult.OK)
                 {
-                    renderer3D1.ANIM = _skin.ANIM = animeditor.ResultAnim;
+                    renderer3D1.ANIM = _skin.Anim = animeditor.ResultAnim;
                     skinPartListBox_SelectedIndexChanged(this, EventArgs.Empty);
                 }
                 return true;
@@ -92,7 +92,7 @@ namespace PckStudio.Forms.Editor
             List<SkinBOX> boxProperties = modelInfo.AdditionalBoxes;
             List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
             
-            renderer3D1.ANIM = _skin.ANIM;
+            renderer3D1.ANIM = _skin.Anim;
 
             renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
@@ -191,7 +191,7 @@ namespace PckStudio.Forms.Editor
             _skin.Model.PartOffsets.Clear();
             _skin.Model.PartOffsets.AddRange(renderer3D1.GetOffsets());
             // just in case they're not the same instance
-            _skin.ANIM = renderer3D1.ANIM;
+            _skin.Anim = renderer3D1.ANIM;
             DialogResult = DialogResult.OK;
         }
 

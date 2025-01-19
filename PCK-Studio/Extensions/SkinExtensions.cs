@@ -41,7 +41,7 @@ namespace PckStudio.Extensions
                 skinFile.AddProperty("CAPEPATH", $"dlccape{skinId}.png");
             }
 
-            skinFile.AddProperty("ANIM", skin.ANIM);
+            skinFile.AddProperty("ANIM", skin.Anim);
             skinFile.AddProperty("GAME_FLAGS", "0x18");
             skinFile.AddProperty("FREE", "1");
 
