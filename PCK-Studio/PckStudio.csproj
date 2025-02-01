@@ -138,6 +138,7 @@
   <ItemGroup>
     <Compile Include="Extensions\BoundingBoxExtensions.cs" />
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
+    <Compile Include="Extensions\MaterialExtensions.cs" />
     <Compile Include="Extensions\PictureBoxExtensions.cs" />
     <Compile Include="Extensions\TreeViewExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
