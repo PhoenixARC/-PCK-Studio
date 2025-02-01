@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using OMI.Formats.Pck;
+using OMI.Formats.Color;
 using OMI.Formats.Model;
 using OMI.Formats.GameRule;
 using OMI.Formats.Material;
@@ -16,11 +17,12 @@ using OMI.Formats.Behaviour;
 using OMI.Formats.Languages;
 using OMI.Workers;
 using OMI.Workers.Pck;
-using OMI.Workers.GameRule;
-using OMI.Workers.Language;
+using OMI.Workers.Color;
 using OMI.Workers.Model;
-using OMI.Workers.Behaviour;
+using OMI.Workers.GameRule;
 using OMI.Workers.Material;
+using OMI.Workers.Language;
+using OMI.Workers.Behaviour;
 using PckStudio.Properties;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Forms;
@@ -595,12 +597,17 @@ namespace PckStudio
                     string displayname = textureInfos.FirstOrDefault(p => p.InternalName == internalName)?.DisplayName ?? internalName;
 
                     string[] specialTileNames = { "clock", "compass" };
-                    using (AnimationEditor animationEditor = new AnimationEditor(animation, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
+
+					DelegatedSaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+					{
+                        asset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
+					});
+
+                    using (AnimationEditor animationEditor = new AnimationEditor(animation, saveContext, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
                     {
                         if (animationEditor.ShowDialog(this) == DialogResult.OK)
                         {
                             wasModified = true;
-                            asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
                             BuildMainTreeView();
                         }
                     }
@@ -653,10 +660,14 @@ namespace PckStudio
 
 			GameRuleFile grf = asset.GetData(new GameRuleFileReader(compressiontype));
 
-			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf);
+			DelegatedSaveContext<GameRuleFile> saveContext = new DelegatedSaveContext<GameRuleFile>(Settings.Default.AutoSaveChanges, (gameRuleFile) =>
+			{
+				asset.SetData(new GameRuleFileWriter(gameRuleFile));
+			});
+
+			using GameRuleFileEditor grfEditor = new GameRuleFileEditor(grf, saveContext);
 			if (grfEditor.ShowDialog(this) == DialogResult.OK)
 			{
-				asset.SetData(new GameRuleFileWriter(grfEditor.Result));
 				wasModified = true;
 				UpdateRichPresence();
 			}
@@ -666,7 +677,13 @@ namespace PckStudio
 		{
 			try
             {
-				using AudioEditor audioEditor = new AudioEditor(asset, LittleEndianCheckBox.Checked);
+				OMI.Endianness endianness = LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian;
+                DelegatedSaveContext<PckAudioFile> saveContext = new DelegatedSaveContext<PckAudioFile>(Settings.Default.AutoSaveChanges, (audioFile) =>
+                {
+                    asset.SetData(new PckAudioFileWriter(audioFile, endianness));
+                });
+				PckAudioFile audioFile = asset.GetData(new PckAudioFileReader(endianness));
+                using AudioEditor audioEditor = new AudioEditor(audioFile, saveContext);
 				wasModified = audioEditor.ShowDialog(this) == DialogResult.OK;
 			}
 			catch (OverflowException)
@@ -684,14 +701,24 @@ namespace PckStudio
 
 		private void HandleLocalisationFile(PckAsset asset)
 		{
-			using LOCEditor locedit = new LOCEditor(asset);
+			LOCFile locFile = asset.GetData(new LOCFileReader());
+			DelegatedSaveContext<LOCFile> saveContext = new DelegatedSaveContext<LOCFile>(Settings.Default.AutoSaveChanges, (locFile) =>
+			{
+				asset.SetData(new LOCFileWriter(locFile, 2));
+			});
+			using LOCEditor locedit = new LOCEditor(locFile, saveContext);
 			wasModified = locedit.ShowDialog(this) == DialogResult.OK;
 			UpdateRichPresence();
 		}
 
 		private void HandleColourFile(PckAsset asset)
 		{
-			using COLEditor diag = new COLEditor(asset);
+			ColorContainer colorContainer = asset.GetData(new COLFileReader());
+			DelegatedSaveContext<ColorContainer> saveContext = new DelegatedSaveContext<ColorContainer>(Settings.Default.AutoSaveChanges, (colorContainer) =>
+			{
+				asset.SetData(new COLFileWriter(colorContainer));
+			});
+			using COLEditor diag = new COLEditor(colorContainer, saveContext);
 			wasModified = diag.ShowDialog(this) == DialogResult.OK;
         }
 
@@ -764,13 +791,23 @@ namespace PckStudio
 
 		public void HandleBehavioursFile(PckAsset asset)
 		{
-			using BehaviourEditor edit = new BehaviourEditor(asset);
+			BehaviourFile behaviourFile = asset.GetData(new BehavioursReader());
+			DelegatedSaveContext<BehaviourFile> saveContext = new DelegatedSaveContext<BehaviourFile>(Settings.Default.AutoSaveChanges, (behaviourFile) =>
+			{
+				asset.SetData(new BehavioursWriter(behaviourFile));
+			});
+			using BehaviourEditor edit = new BehaviourEditor(behaviourFile, saveContext);
 			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
 
 		public void HandleMaterialFile(PckAsset asset)
 		{
-			using MaterialsEditor edit = new MaterialsEditor(asset);
+			MaterialContainer materials = asset.GetData(new MaterialFileReader());
+			DelegatedSaveContext<MaterialContainer> saveContext = new DelegatedSaveContext<MaterialContainer>(Settings.Default.AutoSaveChanges, (materials) =>
+			{
+				asset.SetData(new MaterialFileWriter(materials));
+			});
+            using MaterialsEditor edit = new MaterialsEditor(materials, saveContext);
 			wasModified = edit.ShowDialog(this) == DialogResult.OK;
 		}
 
@@ -1162,15 +1199,20 @@ namespace PckStudio
 			}
 		}
 
-		private static PckAsset CreateNewAudioFile(bool isLittle)
+		private static PckAsset CreateNewAudioAsset(bool isLittle, PckAudioFile audioFile)
 		{
-			PckAudioFile audioPck = new PckAudioFile();
-			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
-			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
-			audioPck.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
 			PckAsset newAsset = new PckAsset("audio.pck", PckAssetType.AudioFile);
-			newAsset.SetData(new PckAudioFileWriter(audioPck, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			newAsset.SetData(new PckAudioFileWriter(audioFile, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
 			return newAsset;
+		}
+
+		private static PckAudioFile CreateNewAudioFile()
+		{
+			PckAudioFile audioFile = new PckAudioFile();
+			audioFile.AddCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
+			audioFile.AddCategory(PckAudioFile.AudioCategory.EAudioType.Nether);
+			audioFile.AddCategory(PckAudioFile.AudioCategory.EAudioType.End);
+			return audioFile;
 		}
 
 		private void audiopckToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1187,11 +1229,18 @@ namespace PckStudio
 				return;
 			}
 
-            PckAsset asset = CreateNewAudioFile(LittleEndianCheckBox.Checked);
-			AudioEditor diag = new AudioEditor(asset, LittleEndianCheckBox.Checked);
+            PckAudioFile newAudioFile = CreateNewAudioFile();
+            PckAsset newAudioAsset = CreateNewAudioAsset(LittleEndianCheckBox.Checked, newAudioFile);
+
+			DelegatedSaveContext<PckAudioFile> saveContext = new DelegatedSaveContext<PckAudioFile>(Settings.Default.AutoSaveChanges, (audioFile) =>
+			{
+				newAudioAsset.SetData(new PckAudioFileWriter(audioFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			});
+
+			AudioEditor diag = new AudioEditor(newAudioFile, saveContext);
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-				currentPCK.AddAsset(asset);
+				currentPCK.AddAsset(newAudioAsset);
 			}
 			diag.Dispose();
 			BuildMainTreeView();
@@ -1211,12 +1260,18 @@ namespace PckStudio
 				return;
 			}
 
-            using AnimationEditor animationEditor = new AnimationEditor(Animation.CreateEmpty(), diag.SelectedTile.DisplayName, diag.SelectedTile.InternalName.EqualsAny("clock", "compass"));
-			if (animationEditor.ShowDialog() == DialogResult.OK)
+			Animation newAnimation = default;
+			DelegatedSaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+			{
+				newAnimation = animation;
+            });
+
+            using AnimationEditor animationEditor = new AnimationEditor(Animation.CreateEmpty(), saveContext, diag.SelectedTile.DisplayName, diag.SelectedTile.InternalName.EqualsAny("clock", "compass"));
+			if (animationEditor.ShowDialog() == DialogResult.OK && newAnimation is not null)
 			{
 				wasModified = true;
 				PckAsset asset = currentPCK.CreateNewAsset(animationFilepath, PckAssetType.TextureFile);
-				asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
+				asset.SetSerializedData(newAnimation, AnimationSerializer.DefaultSerializer);
 				BuildMainTreeView();
 				ReloadMetaTreeView();
 			}

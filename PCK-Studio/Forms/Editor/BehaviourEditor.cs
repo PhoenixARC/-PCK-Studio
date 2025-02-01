@@ -16,32 +16,44 @@ using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
+using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class BehaviourEditor : MetroForm
+	// Behaviours File Format research by Miku and MattNL
+	public partial class BehaviourEditor : Editor<BehaviourFile>
 	{
-		// Behaviours File Format research by Miku and MattNL
-		private readonly PckAsset _asset;
-        BehaviourFile _behaviourFile;
 
 		private readonly List<EntityInfo> BehaviourData = Entities.BehaviourInfos;
 
-		void SetUpTree()
+        public BehaviourEditor(BehaviourFile behaviourFile, ISaveContext<BehaviourFile> saveContext)
+			: base(behaviourFile, saveContext)
+        {
+            InitializeComponent();
+
+            saveToolStripMenuItem1.Visible = !saveContext.AutoSave;
+
+            treeView1.ImageList = new ImageList();
+            treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
+            treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            SetUpTree();
+        }
+
+        void SetUpTree()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (var entry in _behaviourFile.entries)
+			foreach (BehaviourFile.RiderPositionOverride entry in EditorValue.entries)
 			{
 				TreeNode EntryNode = new TreeNode(entry.name);
 
-				var behaviour = BehaviourData.Find(b => b.InternalName == entry.name);
+                EntityInfo behaviour = BehaviourData.Find(b => b.InternalName == entry.name);
 				EntryNode.Text = behaviour.DisplayName;
 				EntryNode.ImageIndex = BehaviourData.IndexOf(behaviour);
 				EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
 				EntryNode.Tag = entry;
 
-				foreach (var posOverride in entry.overrides)
+				foreach (BehaviourFile.RiderPositionOverride.PositionOverride posOverride in entry.overrides)
 				{
 					TreeNode OverrideNode = new TreeNode("Position Override");
 					OverrideNode.Tag = posOverride;
@@ -53,21 +65,6 @@ namespace PckStudio.Forms.Editor
 				treeView1.Nodes.Add(EntryNode);
 			}
 			treeView1.EndUpdate();
-		}
-
-		public BehaviourEditor(PckAsset asset)
-		{
-			InitializeComponent();
-
-			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
-
-            _asset = asset;
-			_behaviourFile = asset.GetData(new BehavioursReader());
-
-			treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.AddRange(ApplicationScope.EntityImages);
-			treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
-			SetUpTree();
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -155,7 +152,7 @@ namespace PckStudio.Forms.Editor
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity))
 					return;
-				if (_behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				if (EditorValue.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
@@ -204,7 +201,7 @@ namespace PckStudio.Forms.Editor
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity))
 					return;
-				if (_behaviourFile.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
+				if (EditorValue.entries.FindAll(behaviour => behaviour.name == diag.SelectedEntity).Count() > 0)
 				{
 					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
 					return;
@@ -239,7 +236,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			_behaviourFile = new BehaviourFile();
+            EditorValue = new BehaviourFile();
 			foreach (TreeNode node in treeView1.Nodes)
 			{
 				if(node.Tag is BehaviourFile.RiderPositionOverride entry)
@@ -254,12 +251,11 @@ namespace PckStudio.Forms.Editor
 						}
 					}
 
-					_behaviourFile.entries.Add(entry);
+                    EditorValue.entries.Add(entry);
 				}
 			}
 
-			_asset.SetData(new BehavioursWriter(_behaviourFile));
-
+			Save();
 			DialogResult = DialogResult.OK;
 		}
 

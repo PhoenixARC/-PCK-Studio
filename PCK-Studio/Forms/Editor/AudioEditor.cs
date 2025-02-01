@@ -20,17 +20,16 @@ using PckStudio.External.API.Miles;
 using PckStudio.Internal.FileFormats;
 using PckStudio.Extensions;
 using PckStudio.Internal.App;
+using PckStudio.Internal;
+using PckStudio.Interfaces;
 
 // Audio Editor by MattNL and Miku-666
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AudioEditor : MetroForm
+	public partial class AudioEditor : Editor<PckAudioFile>
 	{
 		public string defaultType = "yes";
-		PckAudioFile _audioFile = null;
-		PckAsset _audioAsset;
-		bool _isLittleEndian = false;
         MainForm parent = null;
 
         private static readonly List<string> Categories = new List<string>
@@ -52,7 +51,15 @@ namespace PckStudio.Forms.Editor
 			 */
 		};
 
-		private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
+        public AudioEditor(PckAudioFile audioFile, ISaveContext<PckAudioFile> saveContext)
+			: base(audioFile, saveContext)
+        {
+            InitializeComponent();
+            saveToolStripMenuItem1.Visible = !saveContext.AutoSave;
+            SetUpTree();
+        }
+
+        private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
 			=> categoryId >= PckAudioFile.AudioCategory.EAudioType.Overworld &&
 				categoryId <= PckAudioFile.AudioCategory.EAudioType.Unused
 				? Categories[(int)categoryId]
@@ -63,26 +70,12 @@ namespace PckStudio.Forms.Editor
 			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
 		}
 
-		public AudioEditor(PckAsset asset, bool isLittleEndian)
-		{
-			InitializeComponent();
-
-			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
-
-            _isLittleEndian = isLittleEndian;
-
-			_audioAsset = asset;
-            _audioFile = _audioAsset.GetData(new PckAudioFileReader(isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
-
-			SetUpTree();
-		}
-
 		public void SetUpTree()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
 
-			foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
+			foreach (PckAudioFile.AudioCategory category in EditorValue.Categories)
 			{
 				// fix songs with directories using backslash instead of forward slash
 				// Songs with a backslash instead of a forward slash would not play in RPCS3
@@ -92,7 +85,7 @@ namespace PckStudio.Forms.Editor
 				if (category.AudioType == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
 					if (category.Name == "include_overworld" &&
-						_audioFile.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
+                        EditorValue.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
 					{
 						foreach (var name in category.SongNames.ToList())
 						{
@@ -108,7 +101,7 @@ namespace PckStudio.Forms.Editor
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
 			}
-			playOverworldInCreative.Enabled = _audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.Creative);
+			playOverworldInCreative.Enabled = EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Creative);
 			treeView1.EndUpdate();
 		}
 
@@ -144,7 +137,7 @@ namespace PckStudio.Forms.Editor
 
 		private void addCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string[] available = Categories.FindAll(str => !_audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			string[] available = Categories.FindAll(str => !EditorValue.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length == 0)
 			{
 				MessageBox.Show(this, "There are no more categories that could be added", "All possible categories are used");
@@ -154,8 +147,8 @@ namespace PckStudio.Forms.Editor
 			if (add.ShowDialog(this) != DialogResult.OK)
 				return;
 
-			_audioFile.AddCategory(GetCategoryId(add.SelectedItem));
-            PckAudioFile.AudioCategory category = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+			EditorValue.AddCategory(GetCategoryId(add.SelectedItem));
+            PckAudioFile.AudioCategory category = EditorValue.GetCategory(GetCategoryId(add.SelectedItem));
 
 			if (GetCategoryId(add.SelectedItem) == PckAudioFile.AudioCategory.EAudioType.Creative)
 			{
@@ -194,7 +187,7 @@ namespace PckStudio.Forms.Editor
 		private void removeCategoryStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode is TreeNode main &&
-				_audioFile.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
+				EditorValue.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
 			{
 				if(GetCategoryId(treeView1.SelectedNode.Text) == PckAudioFile.AudioCategory.EAudioType.Creative)
 				{
@@ -370,18 +363,18 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!_audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.Overworld) ||
-			   !_audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.Nether) ||
-			   !_audioFile.HasCategory(PckAudioFile.AudioCategory.EAudioType.End))
+			if (!EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Overworld) ||
+			   !EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Nether) ||
+			   !EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.End))
 			{
 				MessageBox.Show(this, "Your changes were not saved. The game will crash when loading your pack if the Overworld, Nether and End categories don't all exist with at least one valid song.", "Mandatory Categories Missing");
 				return;
 			}
 
-			PckAudioFile.AudioCategory overworldCategory = _audioFile.GetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
+			PckAudioFile.AudioCategory overworldCategory = EditorValue.GetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
 
 			bool songs_missing = false;
-			foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
+			foreach (PckAudioFile.AudioCategory category in EditorValue.Categories)
 			{
 				if (category.SongNames.Count < 1)
 				{
@@ -420,7 +413,7 @@ namespace PckStudio.Forms.Editor
 				return;
 			}
 
-			_audioAsset.SetData(new PckAudioFileWriter(_audioFile, _isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			Save();
 			DialogResult = DialogResult.OK;
 		}
 
@@ -444,7 +437,7 @@ namespace PckStudio.Forms.Editor
 			if (dr != DialogResult.Yes)
 				return;
 			var totalSongList = new List<string>();
-			foreach (string song in _audioFile.Categories.SelectMany(cat => cat.SongNames))
+			foreach (string song in EditorValue.Categories.SelectMany(cat => cat.SongNames))
 			{
 				Console.WriteLine(song);
 				totalSongList.Add(song);
@@ -544,7 +537,7 @@ namespace PckStudio.Forms.Editor
 				return;
 
 			var totalSongList = new List<string>();
-			foreach (string song in _audioFile.Categories.SelectMany(cat => cat.SongNames))
+			foreach (string song in EditorValue.Categories.SelectMany(cat => cat.SongNames))
 			{
 				totalSongList.Add(song);
 			}
@@ -596,7 +589,7 @@ namespace PckStudio.Forms.Editor
 			if (!(treeView1.SelectedNode is TreeNode t && t.Tag is PckAudioFile.AudioCategory category))
 				return;
 
-			string[] available = Categories.FindAll(str => !_audioFile.HasCategory(GetCategoryId(str))).ToArray();
+			string[] available = Categories.FindAll(str => !EditorValue.HasCategory(GetCategoryId(str))).ToArray();
 			if (available.Length > 0)
 			{
 				using ItemSelectionPopUp add = new ItemSelectionPopUp(available);
@@ -604,11 +597,11 @@ namespace PckStudio.Forms.Editor
 				if (add.ShowDialog(this) != DialogResult.OK)
 					return;
 
-				_audioFile.RemoveCategory(category.AudioType);
+				EditorValue.RemoveCategory(category.AudioType);
 
-				_audioFile.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+				EditorValue.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
 
-                PckAudioFile.AudioCategory newCategory = _audioFile.GetCategory(GetCategoryId(add.SelectedItem));
+                PckAudioFile.AudioCategory newCategory = EditorValue.GetCategory(GetCategoryId(add.SelectedItem));
 
 				category.SongNames.ForEach(c => newCategory.SongNames.Add(c));
 
@@ -628,7 +621,7 @@ namespace PckStudio.Forms.Editor
 					return;
 				string musicdir = Path.Combine(parent.GetDataPath(), "Music");
 				Directory.CreateDirectory(musicdir);
-				foreach (PckAudioFile.AudioCategory category in _audioFile.Categories)
+				foreach (PckAudioFile.AudioCategory category in EditorValue.Categories)
 				{
 					for (var i = 0; i < category.SongNames.Count; i++) // using standard for loop so the list can be modified
 					{

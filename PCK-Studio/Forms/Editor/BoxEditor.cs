@@ -10,8 +10,8 @@ namespace PckStudio.Forms.Editor
 		private SkinBOX result;
 		public SkinBOX Result => result;
 
-        public BoxEditor(string box, bool hasInflation)
-			: this(SkinBOX.FromString(box), hasInflation)
+        public BoxEditor(string formattedBoxString, bool hasInflation)
+			: this(SkinBOX.FromString(formattedBoxString), hasInflation)
 		{
 		}
 

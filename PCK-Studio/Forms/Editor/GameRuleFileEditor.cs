@@ -24,24 +24,18 @@ using PckStudio.Internal.Misc;
 using OMI.Formats.GameRule;
 using PckStudio.Properties;
 using PckStudio.ToolboxItems;
+using PckStudio.Internal;
+using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
+    public partial class GameRuleFileEditor : Editor<GameRuleFile>
     {
-        private GameRuleFile _file;
-
-        public GameRuleFile Result => _file;
-
-        private GameRuleFileEditor()
+        public GameRuleFileEditor(GameRuleFile gameRuleFile, ISaveContext<GameRuleFile> saveContext)
+            : base(gameRuleFile, saveContext)
         {
             InitializeComponent();
-            saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
-        }
-
-        public GameRuleFileEditor(GameRuleFile gameRuleFile) : this()
-        {
-            _file = gameRuleFile;
+            saveToolStripMenuItem.Visible = !saveContext.AutoSave;
         }
 
         private void OnLoad(object sender, EventArgs e)
@@ -64,16 +58,16 @@ namespace PckStudio.Forms.Editor
         private void ReloadGameRuleTree()
         {
             GrfTreeView.Nodes.Clear();
-            if (_file is not null)
+            if (EditorValue is not null)
             {
                 SetCompressionLevel();
-                LoadGameRuleTree(GrfTreeView.Nodes, _file.Root);
+                LoadGameRuleTree(GrfTreeView.Nodes, EditorValue.Root);
             }
         }
 
         private void SetCompressionLevel()
         {
-            switch (_file.Header.CompressionLevel)
+            switch (EditorValue.Header.CompressionLevel)
             {
                 case GameRuleFile.CompressionLevel.None:
                     noneToolStripMenuItem.Checked = true;
@@ -161,7 +155,7 @@ namespace PckStudio.Forms.Editor
             bool isValidNode = GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule;
             GameRuleFile.GameRule parentRule = isValidNode
                ? GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule
-               : _file.Root;
+               : EditorValue.Root;
 
             TreeNodeCollection root = isValidNode
                 ? GrfTreeView.SelectedNode.Nodes
@@ -205,11 +199,12 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_file.Header.unknownData[3] != 0)
+            if (EditorValue.Header.unknownData[3] != 0)
             {
                 MessageBox.Show(this, "World grf saving is currently unsupported");
                 return;
             }
+            Save();
             DialogResult = DialogResult.OK;
             MessageBox.Show("Saved!");
         }
@@ -222,43 +217,43 @@ namespace PckStudio.Forms.Editor
         private void noneToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.None;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.None;
         }
 
         private void compressedToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.Compressed;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.Compressed;
         }
 
         private void compressedRLEToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
         }
 
         private void compressedRLECRCToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
         }
 
         private void wiiUPSVitaToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.Zlib;
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.Zlib;
         }
 
         private void pS3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.Deflate;
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.Deflate;
         }
 
         private void xbox360ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.XMem;
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.XMem;
         }
 
         private void GameRuleFileEditor_FormClosing(object sender, FormClosingEventArgs e)

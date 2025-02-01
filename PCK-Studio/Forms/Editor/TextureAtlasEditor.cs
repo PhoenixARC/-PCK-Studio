@@ -31,10 +31,12 @@ using OMI.Formats.Pck;
 using OMI.Workers.Color;
 
 using PckStudio.Extensions;
+using PckStudio.Interfaces;
 using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.Serializer;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -522,10 +524,14 @@ namespace PckStudio.Forms.Editor
 
             Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
 
-            var animationEditor = new AnimationEditor(animation, _selectedTile.Tile.DisplayName);
+            DelegatedSaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+            {
+                asset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
+            });
+
+            var animationEditor = new AnimationEditor(animation, saveContext, _selectedTile.Tile.DisplayName);
             if (animationEditor.ShowDialog(this) == DialogResult.OK)
             {
-                asset.SetSerializedData(animationEditor.Result, AnimationSerializer.DefaultSerializer);
                 // so animations can automatically update upon saving
                 SelectedIndex = _selectedTile.Index;
             }
