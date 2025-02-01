@@ -164,6 +164,9 @@
     </Compile>
     <Compile Include="Interfaces\IModelImportProvider.cs" />
     <Compile Include="Internal\App\Updater.cs" />
+    <Compile Include="Internal\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Internal\GameModelInfo.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
     <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
