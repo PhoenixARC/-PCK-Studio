@@ -57,35 +57,37 @@ namespace PckStudio.Extensions
         internal static int GetSkinId(this PckAsset asset)
         {
             if (asset.Type != PckAssetType.SkinFile)
-                throw new InvalidOperationException("File is not a skin file");
-            
-            string filename = Path.GetFileNameWithoutExtension(asset.Filename);
-            if (!filename.StartsWith("dlcskin"))
+                throw new InvalidOperationException("Asset is not a skin.");
+
+            const string skinAssetnamePrefix = "dlcskin";
+
+            string assetPath = Path.GetFileNameWithoutExtension(asset.Filename);
+            if (!assetPath.StartsWith(skinAssetnamePrefix))
             {
-                Trace.TraceWarning($"[{nameof(GetSkinId)}] File does not start with 'dlcskin'");
+                Trace.TraceWarning($"[{nameof(GetSkinId)}] Asset name does not start with '{skinAssetnamePrefix}'");
                 return 0;
             }
 
             int skinId = 0;
-            if (!int.TryParse(filename.Substring("dlcskin".Length), out skinId))
+            if (!int.TryParse(assetPath.Substring(skinAssetnamePrefix.Length), out skinId))
             {
                 Trace.TraceWarning($"[{nameof(GetSkinId)}] Failed to parse Skin Id");
             }
             return skinId;
         }
 
-        internal static Skin GetSkin(this PckAsset file)
+        internal static Skin GetSkin(this PckAsset asset)
         {
-            if (file.Type != PckAssetType.SkinFile)
-                throw new InvalidOperationException("File is not a skin file");
+            if (asset.Type != PckAssetType.SkinFile)
+                throw new InvalidOperationException("Asset is not a skin.");
 
-            int skinId = file.GetSkinId();
+            int skinId = asset.GetSkinId();
 
-            string name = file.GetProperty("DISPLAYNAME");
-            Image texture = file.GetTexture();
-            SkinANIM anim = file.GetProperty("ANIM", SkinANIM.FromString);
-            IEnumerable<SkinBOX> boxes = file.GetMultipleProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value));
-            IEnumerable<SkinPartOffset> offsets = file.GetMultipleProperties("OFFSET").Select(kv => SkinPartOffset.FromString(kv.Value));
+            string name = asset.GetProperty("DISPLAYNAME");
+            Image texture = asset.GetTexture();
+            SkinANIM anim = asset.GetProperty("ANIM", SkinANIM.FromString);
+            IEnumerable<SkinBOX> boxes = asset.GetMultipleProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value));
+            IEnumerable<SkinPartOffset> offsets = asset.GetMultipleProperties("OFFSET").Select(kv => SkinPartOffset.FromString(kv.Value));
             return new Skin(name, skinId, texture, anim, boxes, offsets);
         }
 
