@@ -136,7 +136,7 @@ namespace PckStudio
 				catch (OverflowException ex)
 				{
 					MessageBox.Show(this, "Failed to open pck\n" +
-						"Try checking the 'Open/Save as Switch/Vita/PS4 pck' checkbox in the upper right corner.",
+						"Try checking the 'Open/Save as Switch/Vita/PS4/Xbox One pck' checkbox in the upper right corner.",
 						"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					Debug.WriteLine(ex.Message);
 				}
@@ -292,7 +292,7 @@ namespace PckStudio
 			catch (OverflowException ex)
 			{
 				MessageBox.Show(this, "Failed to open pck\n" +
-					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Switch/Vita/PS4 pck' check box in the upper right corner.",
+					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Switch/Vita/PS4/Xbox One pck' check box in the upper right corner.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Debug.WriteLine(ex.Message);
 			}

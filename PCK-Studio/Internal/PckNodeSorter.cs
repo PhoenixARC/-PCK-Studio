@@ -21,9 +21,9 @@ namespace PckStudio.Internal
 
         public int Compare(object x, object y)
         {
-            TreeNode tx = x as TreeNode;
-            TreeNode ty = y as TreeNode;
-			return Compare(tx, ty);
+			if (x is TreeNode tx && y is TreeNode ty)
+				return Compare(tx, ty);
+			return 0;
         }
 
         public int Compare(TreeNode x, TreeNode y)
