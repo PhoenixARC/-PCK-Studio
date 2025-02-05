@@ -106,13 +106,13 @@ namespace PckStudio.Extensions
             string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
             asset.SetProperty("DISPLAYNAME", skin.MetaData.Name);
             asset.SetProperty("DISPLAYNAMEID", skinLocKey);
-            localizationFile.AddLocKey(skinLocKey, skin.MetaData.Name);
+            localizationFile.SetLocEntry(skinLocKey, skin.MetaData.Name);
 
             if (!string.IsNullOrEmpty(skin.MetaData.Theme))
             {
                 asset.SetProperty("THEMENAME", skin.MetaData.Theme);
                 asset.SetProperty("THEMENAMEID", $"IDS_dlcskin{skinId}_THEMENAME");
-                localizationFile.AddLocKey($"IDS_dlcskin{skinId}_THEMENAME", skin.MetaData.Theme);
+                localizationFile.SetLocEntry($"IDS_dlcskin{skinId}_THEMENAME", skin.MetaData.Theme);
             }
 
             if (skin.HasCape)
