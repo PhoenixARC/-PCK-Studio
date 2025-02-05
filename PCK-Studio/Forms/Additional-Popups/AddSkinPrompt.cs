@@ -208,8 +208,7 @@ namespace PckStudio.Forms.Additional_Popups
                 }
                 newSkin.Identifier = new SkinIdentifier(_skinId);
             }
-            newSkin.MetaData.Name = textSkinName.Text;
-            newSkin.MetaData.Theme = textThemeName.Text;
+            newSkin.MetaData = new SkinMetaData(textSkinName.Text, textThemeName.Text);
             DialogResult = DialogResult.OK;
         }
 
@@ -224,8 +223,7 @@ namespace PckStudio.Forms.Additional_Popups
             if (MessageBox.Show("Create your own custom skin model?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                 return;
 
-            newSkin.MetaData.Name = textSkinName.Text;
-            newSkin.MetaData.Theme = textThemeName.Text;
+            newSkin.MetaData = new SkinMetaData(textSkinName.Text, textThemeName.Text);
 
             DelegatedSaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) =>
             {

@@ -25,10 +25,7 @@ namespace PckStudio.Internal.Skin
     
         public Skin(string name, Image texture)
         {
-            MetaData = new SkinMetaData()
-            {
-                Name = name,
-            };
+            MetaData = new SkinMetaData(name, string.Empty);
             Texture = texture;
             Model = new SkinModel();
         }
