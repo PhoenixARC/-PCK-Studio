@@ -727,10 +727,10 @@ namespace PckStudio
             Skin skin = asset.GetSkin();
             if (asset.HasProperty("CAPEPATH"))
 			{
-				string capePath = asset.GetProperty("CAPEPATH");
-				if (currentPCK.TryGetAsset(capePath, PckAssetType.CapeFile, out PckAsset cape))
+				string capeAssetPath = asset.GetProperty("CAPEPATH");
+				if (currentPCK.TryGetAsset(capeAssetPath, PckAssetType.CapeFile, out PckAsset capeAsset))
 				{
-					skin.CapeTexture = cape.GetTexture();
+					skin.CapeTexture = capeAsset.GetTexture();
 				}
 			}
 
