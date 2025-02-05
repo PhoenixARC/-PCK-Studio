@@ -14,13 +14,12 @@ using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using System.Collections.Generic;
 using PckStudio.Internal.App;
+using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class CustomSkinEditor : MetroForm
+    public partial class CustomSkinEditor : Editor<Skin>
     {
-        public Skin ResultSkin => _skin;
-        private Skin _skin;
         private Random rng;
         private bool _inflateOverlayParts;
         private bool _allowInflate;
@@ -36,7 +35,8 @@ namespace PckStudio.Forms.Editor
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
 
-        private CustomSkinEditor()
+        public CustomSkinEditor(Skin skin, ISaveContext<Skin> saveContext, bool inflateOverlayParts = false, bool allowInflate = false)
+            : base(skin, saveContext)
         {
             InitializeComponent();
             rng = new Random();
@@ -49,11 +49,6 @@ namespace PckStudio.Forms.Editor
             _settingsManager.AddSetting("showGuidelines" , false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
             _settingsManager.AddSetting("showArmor"      , false, "Show Armor"                     , state => renderer3D1.ShowArmor = state);
             _settingsManager.AddSetting("showBoundingBox", false, "Show Bounding Box"              , state => renderer3D1.ShowBoundingBox = state);
-        }
-
-        public CustomSkinEditor(Skin skin, bool inflateOverlayParts = false, bool allowInflate = false) : this()
-        {
-            _skin = skin;
             _allowInflate = allowInflate;
             _inflateOverlayParts = inflateOverlayParts;
         }
@@ -64,9 +59,9 @@ namespace PckStudio.Forms.Editor
             renderer3D1.Initialize(_inflateOverlayParts);
             renderer3D1.GuideLineColor = Color.LightCoral;
             framerateSlider_ValueChanged(this, EventArgs.Empty);
-            skinNameLabel.Text = _skin.MetaData.Name;
-            if (_skin.HasCape)
-                renderer3D1.CapeTexture = _skin.CapeTexture;
+            skinNameLabel.Text = EditorValue.MetaData.Name;
+            if (EditorValue.HasCape)
+                renderer3D1.CapeTexture = EditorValue.CapeTexture;
             LoadModelData();
         }
 
@@ -74,10 +69,10 @@ namespace PckStudio.Forms.Editor
         {
             if (keyData == Keys.A)
             {
-                using var animeditor = new ANIMEditor(_skin.Anim);
+                using var animeditor = new ANIMEditor(EditorValue.Anim);
                 if (animeditor.ShowDialog() == DialogResult.OK)
                 {
-                    renderer3D1.ANIM = _skin.Anim = animeditor.ResultAnim;
+                    renderer3D1.ANIM = EditorValue.Anim = animeditor.ResultAnim;
                     skinPartListBox_SelectedIndexChanged(this, EventArgs.Empty);
                 }
                 return true;
@@ -87,12 +82,12 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData()
         {
-            SkinModel modelInfo = _skin.Model;
+            SkinModel modelInfo = EditorValue.Model;
 
             List<SkinBOX> boxProperties = modelInfo.AdditionalBoxes;
             List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
             
-            renderer3D1.ANIM = _skin.Anim;
+            renderer3D1.ANIM = EditorValue.Anim;
 
             renderer3D1.ModelData.Clear();
             foreach (SkinBOX box in boxProperties)
@@ -105,14 +100,14 @@ namespace PckStudio.Forms.Editor
                 renderer3D1.SetPartOffset(offset);
             }
 
-            if (_skin.Texture is not null)
+            if (EditorValue.Texture is not null)
             {
-                renderer3D1.Texture = _skin.Texture;
+                renderer3D1.Texture = EditorValue.Texture;
             }
 
-            if (_skin.Texture is null && renderer3D1.Texture is not null)
+            if (EditorValue.Texture is null && renderer3D1.Texture is not null)
             {
-                _skin.Texture = renderer3D1.Texture;
+                EditorValue.Texture = renderer3D1.Texture;
             }
 
             skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
@@ -126,12 +121,12 @@ namespace PckStudio.Forms.Editor
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
         {
-            if (_skin?.Texture is null)
+            if (EditorValue?.Texture is null)
             {
                 Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(GenerateUVTextureMap)}] Failed to generate uv for {skinBox}. Reason: Model.Texture was null");
                 return;
             }
-            using (Graphics graphics = Graphics.FromImage(_skin.Texture))
+            using (Graphics graphics = Graphics.FromImage(EditorValue.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
                 int argb = rng.Next(unchecked((int)0xFF000000), -1);
@@ -139,7 +134,7 @@ namespace PckStudio.Forms.Editor
                 Brush brush = new SolidBrush(color);
                 graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
             }
-            renderer3D1.Texture = _skin.Texture;
+            renderer3D1.Texture = EditorValue.Texture;
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,7 +144,7 @@ namespace PckStudio.Forms.Editor
             {
                 SkinBOX newBox = boxEditor.Result;
                 renderer3D1.ModelData.Add(newBox);
-                _skin.Model.AdditionalBoxes.Add(newBox);
+                EditorValue.Model.AdditionalBoxes.Add(newBox);
                 skinPartListBindingSource.ResetBindings(false);
                 if (generateTextureCheckBox.Checked)
                     GenerateUVTextureMap(newBox);
@@ -158,7 +153,7 @@ namespace PckStudio.Forms.Editor
 
         private void exportTextureButton_Click(object sender, EventArgs e)
         {
-            if (_skin?.Texture is null)
+            if (EditorValue?.Texture is null)
             {
                 Trace.TraceWarning($"[{nameof(CustomSkinEditor)}@{nameof(exportTextureButton_Click)}] Failed to export texture. Reason: skin.Model.Texture was null");
                 return;
@@ -167,7 +162,7 @@ namespace PckStudio.Forms.Editor
             saveFileDialog.Filter = "PNG Image Files | *.png";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                _skin.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
+                EditorValue.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
@@ -186,12 +181,12 @@ namespace PckStudio.Forms.Editor
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            _skin.Model.AdditionalBoxes.Clear();
-            _skin.Model.AdditionalBoxes.AddRange(renderer3D1.ModelData);
-            _skin.Model.PartOffsets.Clear();
-            _skin.Model.PartOffsets.AddRange(renderer3D1.GetOffsets());
+            EditorValue.Model.AdditionalBoxes.Clear();
+            EditorValue.Model.AdditionalBoxes.AddRange(renderer3D1.ModelData);
+            EditorValue.Model.PartOffsets.Clear();
+            EditorValue.Model.PartOffsets.AddRange(renderer3D1.GetOffsets());
             // just in case they're not the same instance
-            _skin.Anim = renderer3D1.ANIM;
+            EditorValue.Anim = renderer3D1.ANIM;
             DialogResult = DialogResult.OK;
         }
 
@@ -200,9 +195,9 @@ namespace PckStudio.Forms.Editor
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Model File";
             saveFileDialog.Filter = SkinModelImporter.Default.SupportedModelFileFormatsFilter;
-            saveFileDialog.FileName = _skin.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
+            saveFileDialog.FileName = EditorValue.MetaData.Name.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                SkinModelImporter.Default.Export(saveFileDialog.FileName, _skin.GetModelInfo());
+                SkinModelImporter.Default.Export(saveFileDialog.FileName, EditorValue.GetModelInfo());
         }
 
         private void importSkinButton_Click(object sender, EventArgs e)
@@ -215,7 +210,7 @@ namespace PckStudio.Forms.Editor
                 SkinModelInfo modelInfo = SkinModelImporter.Default.Import(openFileDialog.FileName);
                 if (modelInfo is not null)
                 {
-                    _skin.SetModelInfo(modelInfo);
+                    EditorValue.SetModelInfo(modelInfo);
                     LoadModelData();
                 }
             }
@@ -227,7 +222,7 @@ namespace PckStudio.Forms.Editor
             {
                 SkinBOX clone = box;
                 renderer3D1.ModelData.Add(clone);
-                _skin.Model.AdditionalBoxes.Add(clone);
+                EditorValue.Model.AdditionalBoxes.Add(clone);
                 skinPartListBindingSource.ResetBindings(false);
             }
         }
@@ -237,7 +232,7 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
                 renderer3D1.ModelData.Remove(box);
-                _skin.Model.AdditionalBoxes.Remove(box);
+                EditorValue.Model.AdditionalBoxes.Remove(box);
                 skinPartListBindingSource.ResetBindings(false);
             }
         }
@@ -268,7 +263,7 @@ namespace PckStudio.Forms.Editor
                 MessageBox.Show("The selected image does not suit a skin texture.", "Invalid image dimensions.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            uvPictureBox.Image = _skin.Texture = texture;
+            uvPictureBox.Image = EditorValue.Texture = texture;
             textureSizeLabel.Text = $"{texture.Width}x{texture.Height}";
         }
 
@@ -296,7 +291,7 @@ namespace PckStudio.Forms.Editor
                 sizeLabel.Text = $"Size: {box.Size}";
                 positionLabel.Text = $"Position: {box.Pos}";
 
-                Image uvArea = _skin.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
+                Image uvArea = EditorValue.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
 
                 Bitmap refImg = new Bitmap(1, 1);
 
@@ -309,14 +304,14 @@ namespace PckStudio.Forms.Editor
                 Color avgColor = refImg.GetPixel(0, 0);
                 renderer3D1.HighlightlingColor = avgColor.Inversed();
 
-                Size scaleSize = new Size(_skin.Texture.Width * scale, _skin.Texture.Height * scale);
+                Size scaleSize = new Size(EditorValue.Texture.Width * scale, EditorValue.Texture.Height * scale);
                 uvPictureBox.Image = new Bitmap(scaleSize.Width, scaleSize.Height);
                 using (Graphics g = Graphics.FromImage(uvPictureBox.Image))
                 {
                     GraphicsPath graphicsPath = box.GetUVGraphicsPath(new System.Numerics.Vector2(scaleSize.Width * renderer3D1.TillingFactor.X, scaleSize.Height * renderer3D1.TillingFactor.Y));
                     var brush = new SolidBrush(Color.FromArgb(127, avgColor.GreyScaled()));
                     g.ApplyConfig(_graphicsConfig);
-                    g.DrawImage(_skin.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, _skin.Texture.Size), GraphicsUnit.Pixel);
+                    g.DrawImage(EditorValue.Texture, new Rectangle(Point.Empty, scaleSize), new Rectangle(Point.Empty, EditorValue.Texture.Size), GraphicsUnit.Pixel);
                     g.FillPath(brush, graphicsPath);
                 }
                 uvPictureBox.Invalidate();
@@ -410,7 +405,7 @@ namespace PckStudio.Forms.Editor
         private void ClearSelection()
         {
             skinPartListBox.ClearSelected();
-            uvPictureBox.Image = _skin.Texture;
+            uvPictureBox.Image = EditorValue.Texture;
         }
 
 

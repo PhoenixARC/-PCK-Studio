@@ -15,6 +15,7 @@ using PckStudio.Extensions;
 using System.Linq;
 using System.Diagnostics;
 using PckStudio.Internal.Skin;
+using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Additional_Popups
 {
@@ -226,12 +227,16 @@ namespace PckStudio.Forms.Additional_Popups
             newSkin.MetaData.Name = textSkinName.Text;
             newSkin.MetaData.Theme = textThemeName.Text;
 
-            using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin);
+            DelegatedSaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) =>
+            {
+                newSkin = customSkin;
+            });
+
+            using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin, saveContext);
 
             if (customSkinEditor.ShowDialog() == DialogResult.OK)
             {
-                skinPictureBox.Image = customSkinEditor.ResultSkin.Texture;
-                newSkin = customSkinEditor.ResultSkin;
+                skinPictureBox.Image = newSkin.Texture;
                 buttonDone.Enabled = true;
                 labelSelectTexture.Visible = false;
                 DrawModel();

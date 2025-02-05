@@ -734,13 +734,16 @@ namespace PckStudio
 				}
 			}
 
-			using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, currentPCK.HasVerionString);
-			if (skinEditor.ShowDialog() == DialogResult.OK)
+			DelegatedSaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) =>
 			{
 				if (!TryGetLocFile(out LOCFile locFile))
 					Debug.Fail("Failed to aquire loc file.");
-                asset.SetSkin(skinEditor.ResultSkin, locFile);
+                asset.SetSkin(customSkin, locFile);
+			});
 
+			using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, saveContext, currentPCK.HasVerionString);
+			if (skinEditor.ShowDialog() == DialogResult.OK)
+			{
 				entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
 				wasModified = true;
 				ReloadMetaTreeView(); 
