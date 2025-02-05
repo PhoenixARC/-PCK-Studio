@@ -847,11 +847,6 @@ namespace PckStudio
 						{
 							Image img = asset.GetTexture();
 
-							if (img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png)
-							{
-								img = new Bitmap(img);
-							}
-
 							try
 							{
 								previewPictureBox.Image = img;

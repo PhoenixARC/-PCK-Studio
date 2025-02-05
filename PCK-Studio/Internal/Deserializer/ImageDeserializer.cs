@@ -26,19 +26,11 @@ namespace PckStudio.Internal.Deserializer
                 return EmptyImage;
 
             using var stream = new MemoryStream(asset.Data);
-            try
-            {
-                if (Path.GetExtension(asset.Filename) == ".tga")
-                    return TGADeserializer.DeserializeFromStream(stream);
-                else
-                    return Image.FromStream(stream);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError($"Failed to read image from pck file data({asset.Filename}).");
-                Debug.WriteLine(ex.Message);
-                return EmptyImage;
-            }
+
+            Image img = Path.GetExtension(asset.Filename) == ".tga"
+                ? TGADeserializer.DeserializeFromStream(stream)
+                : Image.FromStream(stream);
+            return img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png ? new Bitmap(img) : img;
         }
     }
 }
