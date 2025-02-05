@@ -19,16 +19,15 @@ using OMI.Formats.Material;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class ModelEditor : MetroForm
+    public partial class ModelEditor : Editor<ModelContainer>
     {
-        private readonly ModelContainer _models;
         private readonly ITryGetSet<string, Image> _textures;
         private readonly ITryGet<string, MaterialContainer.Material> _tryGetEntityMaterial;
 
-        public ModelEditor(ModelContainer models, ITryGetSet<string, Image> tryGetSetTextures, ITryGet<string, MaterialContainer.Material> tryGetEntityMaterial)
+        public ModelEditor(ModelContainer models, ISaveContext<ModelContainer> saveContext, ITryGetSet<string, Image> tryGetSetTextures, ITryGet<string, MaterialContainer.Material> tryGetEntityMaterial)
+            : base(models, saveContext)
         {
             InitializeComponent();
-            _models = models;
             _textures = tryGetSetTextures;
             _tryGetEntityMaterial = tryGetEntityMaterial;
             modelTreeView.ImageList = new ImageList
@@ -38,8 +37,6 @@ namespace PckStudio.Forms.Editor
             };
             modelTreeView.ImageList.Images.AddRange(ApplicationScope.EntityImages);
         }
-
-        internal ModelContainer GetModelContainer() => _models;
 
         private const int InvalidImageIndex = 127;
         // TODO: move to json file. -miku
@@ -194,7 +191,7 @@ namespace PckStudio.Forms.Editor
         private void LoadModels()
         {
             modelTreeView.Nodes.Clear();
-            modelTreeView.Nodes.AddRange(_models.Select(ModelNode.Create).ToArray());
+            modelTreeView.Nodes.AddRange(EditorValue.Select(ModelNode.Create).ToArray());
         }
 
         protected override void OnLoad(EventArgs e)
@@ -301,7 +298,7 @@ namespace PckStudio.Forms.Editor
                 //	return;
                 //}
 
-                _models.SetModel(modelInfo.Model);
+                EditorValue.SetModel(modelInfo.Model);
 
                 foreach (NamedTexture texture in modelInfo.Textures)
                 {
@@ -314,6 +311,7 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Save();
             DialogResult = DialogResult.OK;
         }
 
@@ -330,7 +328,7 @@ namespace PckStudio.Forms.Editor
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (modelTreeView?.SelectedNode is ModelNode modelNode && _models.Remove(modelNode.Model))
+            if (modelTreeView?.SelectedNode is ModelNode modelNode && EditorValue.Remove(modelNode.Model))
             {
                 modelNode.Remove();
             }

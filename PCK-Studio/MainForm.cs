@@ -782,10 +782,14 @@ namespace PckStudio
 				? entityMaterialAsset?.GetData(new MaterialFileReader()).ToDictionary(mat => mat.Name)
 				: new Dictionary<string, MaterialContainer.Material>();
 
-            var editor = new ModelEditor(modelContainer, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(entityMaterials.TryGetValue));
+			DelegatedSaveContext<ModelContainer> saveContext = new DelegatedSaveContext<ModelContainer>(Settings.Default.AutoSaveChanges, (modelContainer) =>
+			{
+				asset.SetData(new ModelFileWriter(modelContainer, modelContainer.Version));
+			});
+
+            var editor = new ModelEditor(modelContainer, saveContext, TryGetSet<string, Image>.FromDelegates(tryGetTexture, trySetTexture), TryGet<string, MaterialContainer.Material>.FromDelegate(entityMaterials.TryGetValue));
 			if (editor.ShowDialog() == DialogResult.OK)
 			{
-				asset.SetData(new ModelFileWriter(editor.GetModelContainer(), modelContainer.Version));
 				BuildMainTreeView();
                 wasModified = true;
 				return;
