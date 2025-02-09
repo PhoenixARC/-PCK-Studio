@@ -465,7 +465,7 @@ namespace PckStudio.Internal
 
         private static Vector3 GetOffsetFromOrigin(string boxType, Vector3 origin)
         {
-            Vector3 partTranslation = ModelPartSpecifics.GetPositioningInfo(boxType).Pivot;
+            Vector3 partTranslation = GameConstants.GetSkinPartPivot(boxType);
             Vector3 offset = partTranslation - ((Vector3.UnitY * 24f) - origin);
             if (offset.X != 0f || offset.Z != 0f)
                 Trace.TraceWarning($"[{nameof(SkinModelImporter)}:{nameof(GetOffsetFromOrigin)}] Warning: skin part({boxType}) offsets only support horizontal offsets.");
@@ -474,7 +474,7 @@ namespace PckStudio.Internal
 
         private static Vector3 GetSkinPartPivot(string partName, Vector3 translationUnit)
         {
-            return TransformSpace(ModelPartSpecifics.GetPositioningInfo(partName).Pivot, Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
+            return TransformSpace(GameConstants.GetSkinPartPivot(partName), Vector3.Zero, translationUnit) + (24f * Vector3.UnitY);
         }
 
         private static Vector3 GetOffsetForPart(string offsetType, ref Dictionary<string, SkinPartOffset> offsetLookUp, IEnumerable<SkinPartOffset> partOffsets)
@@ -542,7 +542,7 @@ namespace PckStudio.Internal
             pos.Y += 24f;
 
             // This will cancel out the part specific translation.
-            Vector3 translation = ModelPartSpecifics.GetPositioningInfo(boxType).Translation;
+            Vector3 translation = GameConstants.GetSkinPartTranslation(boxType);
             pos -= translation;
 
             return pos;

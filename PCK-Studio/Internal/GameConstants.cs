@@ -2,13 +2,56 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using PckStudio.Extensions;
+using PckStudio.Internal.Skin;
 
 namespace PckStudio.Internal
 {
     internal static class GameConstants
     {
+
+        internal static readonly Vector3 SkinHeadTranslation = Vector3.Zero;
+        internal static readonly Vector3 SkinHeadPivot = Vector3.Zero;
+        
+        internal static readonly Vector3 SkinBodyTranslation = Vector3.Zero;
+        internal static readonly Vector3 SkinBodyPivot = Vector3.Zero;
+                
+        internal static readonly Vector3 SkinRightArmTranslation = new(-5f, 2f, 0f);
+        internal static readonly Vector3 SkinRightArmPivot = new(-6f, 2f, 0f);
+                        
+        internal static readonly Vector3 SkinLeftArmTranslation = new(5f, 2f, 0f);
+        internal static readonly Vector3 SkinLeftArmPivot = new(6f, 2f, 0f);
+                                
+        internal static readonly Vector3 SkinRightLegTranslation = new(-2f, 12f, 0f);
+        internal static readonly Vector3 SkinRightLegPivot = new(-2f, 12f, 0f);
+                                        
+        internal static readonly Vector3 SkinLeftLegTranslation = new(2f, 12f, 0f);
+        internal static readonly Vector3 SkinLeftLegPivot = new(2f, 12f, 0f);
+
+        private static Dictionary<string, PositioningInfo> _posisioningInfos = new Dictionary<string, PositioningInfo>()
+        {
+            ["HEAD"] = new PositioningInfo(SkinHeadTranslation, SkinHeadPivot),
+            ["BODY"] = new PositioningInfo(SkinBodyTranslation, SkinBodyPivot),
+            ["ARM0"] = new PositioningInfo(SkinRightArmTranslation, SkinRightArmPivot),
+            ["ARM1"] = new PositioningInfo(SkinLeftArmTranslation, SkinLeftArmPivot),
+            ["LEG0"] = new PositioningInfo(SkinRightLegTranslation, SkinRightLegPivot),
+            ["LEG1"] = new PositioningInfo(SkinLeftLegTranslation, SkinLeftLegPivot),
+        };
+        internal record struct PositioningInfo(Vector3 Translation, Vector3 Pivot);
+
+        internal static PositioningInfo GetPositioningInfo(string partName)
+        {
+            if (SkinBOX.IsOverlayPart(partName))
+                partName = SkinBOXExtensions.GetBaseType(partName);
+            return _posisioningInfos.ContainsKey(partName) ? _posisioningInfos[partName] : default;
+        }
+
+        internal static Vector3 GetSkinPartPivot(string partName) => GetPositioningInfo(partName).Pivot;
+
+        internal static Vector3 GetSkinPartTranslation(string partName) => GetPositioningInfo(partName).Translation;
 
         public const int GameTickInMilliseconds = 50;
 

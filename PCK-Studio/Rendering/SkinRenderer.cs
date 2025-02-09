@@ -297,36 +297,30 @@ namespace PckStudio.Rendering
 
         private void InitializeSkinData()
         {
-            ModelPartSpecifics.PositioningInfo headInfo = ModelPartSpecifics.GetPositioningInfo("HEAD");
-            head ??= new CubeMeshCollection("Head", headInfo.Translation.ToOpenTKVector(), headInfo.Pivot.ToOpenTKVector())
+            head ??= new CubeMeshCollection("Head", GameConstants.SkinHeadTranslation.ToOpenTKVector(), GameConstants.SkinHeadPivot.ToOpenTKVector())
             {
                 FlipZMapping = true
             };
             head.AddNamed("DefaultHead", new(-4, -8, -4), new(8, 8, 8), new(0, 0));
             head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
             
-            ModelPartSpecifics.PositioningInfo bodyInfo = ModelPartSpecifics.GetPositioningInfo("BODY");
-            body ??= new CubeMeshCollection("Body", bodyInfo.Translation.ToOpenTKVector(), bodyInfo.Pivot.ToOpenTKVector());
+            body ??= new CubeMeshCollection("Body", GameConstants.SkinBodyTranslation.ToOpenTKVector(), GameConstants.SkinBodyPivot.ToOpenTKVector());
             body.AddNamed("DefaultBody",new(-4, 0, -2), new(8, 12, 4), new(16, 16));
             body.AddNamed("DefaultBodyOverlay", new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
 
-            ModelPartSpecifics.PositioningInfo rightArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM0");
-            rightArm ??= new CubeMeshCollection("Right Arm", rightArmInfo.Translation.ToOpenTKVector(), rightArmInfo.Pivot.ToOpenTKVector());
+            rightArm ??= new CubeMeshCollection("Right Arm", GameConstants.SkinRightArmTranslation.ToOpenTKVector(), GameConstants.SkinRightArmPivot.ToOpenTKVector());
             rightArm.AddNamed("DefaultRightArm",new(-3, -2, -2), new(4, 12, 4), new(40, 16));
             rightArm.AddNamed("DefaultRightArmOverlay", new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
 
-            ModelPartSpecifics.PositioningInfo leftArmInfo = ModelPartSpecifics.GetPositioningInfo("ARM1");
-            leftArm ??= new CubeMeshCollection("Left Arm", leftArmInfo.Translation.ToOpenTKVector(), leftArmInfo.Pivot.ToOpenTKVector());
+            leftArm ??= new CubeMeshCollection("Left Arm", GameConstants.SkinLeftArmTranslation.ToOpenTKVector(), GameConstants.SkinLeftArmPivot.ToOpenTKVector());
             leftArm.AddNamed("DefaultLeftArm",new(-1, -2, -2), new(4, 12, 4), new(32, 48));
             leftArm.AddNamed("DefaultLeftArmOverlay", new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
 
-            ModelPartSpecifics.PositioningInfo rightLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG0");
-            rightLeg ??= new CubeMeshCollection("Right Leg", rightLegInfo.Translation.ToOpenTKVector(), rightLegInfo.Pivot.ToOpenTKVector());
+            rightLeg ??= new CubeMeshCollection("Right Leg", GameConstants.SkinRightLegTranslation.ToOpenTKVector(), GameConstants.SkinRightLegPivot.ToOpenTKVector());
             rightLeg.AddNamed("DefaultRightLeg",new(-2, 0, -2), new(4, 12, 4), new(0, 16));
             rightLeg.AddNamed("DefaultRightLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
 
-            ModelPartSpecifics.PositioningInfo leftLegInfo = ModelPartSpecifics.GetPositioningInfo("LEG1");
-            leftLeg ??= new CubeMeshCollection("Left Leg", leftLegInfo.Translation.ToOpenTKVector(), leftLegInfo.Pivot.ToOpenTKVector());
+            leftLeg ??= new CubeMeshCollection("Left Leg", GameConstants.SkinLeftLegTranslation.ToOpenTKVector(), GameConstants.SkinLeftLegPivot.ToOpenTKVector());
             leftLeg.AddNamed("DefaultLeftLeg",new(-2, 0, -2), new(4, 12, 4), new(16, 48));
             leftLeg.AddNamed("DefaultLeftLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
         }

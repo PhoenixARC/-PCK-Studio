@@ -189,7 +189,6 @@
     <Compile Include="Internal\GameModelImporter.cs" />
     <Compile Include="Internal\ModelImporter.cs" />
     <Compile Include="Internal\SkinModelImporter.cs" />
-    <Compile Include="Internal\ModelPartSpecifics.cs" />
     <Compile Include="Internal\Json\JsonModelMetaData.cs" />
     <Compile Include="Internal\NamedTexture.cs" />
     <Compile Include="Internal\Json\UpdateInformation.cs" />
