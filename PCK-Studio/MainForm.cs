@@ -78,6 +78,16 @@ namespace PckStudio
 		{
 			InitializeComponent();
 
+			Text = Application.ProductName;
+			
+			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
+
+			ChangelogRichTextBox.Text = Resources.CHANGELOG;
+			
+			pckOpen.AllowDrop = true;
+			
+			treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
+
 			skinToolStripMenuItem1.Click += (sender, e) => SetFileType(PckAssetType.SkinFile);
 			capeToolStripMenuItem.Click += (sender, e) => SetFileType(PckAssetType.CapeFile);
 			textureToolStripMenuItem.Click += (sender, e) => SetFileType(PckAssetType.TextureFile);
@@ -91,14 +101,6 @@ namespace PckStudio
 			behavioursFileBINToolStripMenuItem.Click += (sender, e) => SetFileType(PckAssetType.BehavioursFile);
 			entityMaterialsFileBINToolStripMenuItem.Click += (sender, e) => SetFileType(PckAssetType.MaterialFile);
 
-			treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
-
-			pckOpen.AllowDrop = true;
-
-			Text = Application.ProductName;
-
-			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
-			ChangelogRichTextBox.Text = Resources.CHANGELOG;
 
 			pckFileTypeHandler = new Dictionary<PckAssetType, Action<PckAsset>>(15)
 			{
@@ -217,19 +219,36 @@ namespace PckStudio
 			for (int i = 0; i < Settings.Default.RecentFiles.Count && i < 5; i++)
 			{
 				string filepath = Settings.Default.RecentFiles[i];
-				if (!string.IsNullOrWhiteSpace(filepath))
+				if (!string.IsNullOrWhiteSpace(filepath) && File.Exists(filepath))
 				{
 					string displayFilepath = Regex.Replace(filepath, @"([A-Z]{1}\:\\[Uu]sers\\)([^\\]*\\)(.*)", "~\\$3");
                     ToolStripItem item = recentlyOpenToolStripMenuItem.DropDownItems.Add(displayFilepath, null, HandleOpenFile);
 					item.Tag = filepath;
 				}
             }
+			if (recentlyOpenToolStripMenuItem.DropDownItems.Count > 0)
+			{
+				void clearRecentFileList(object sender, EventArgs e)
+				{
+					Settings.Default.RecentFiles.Clear();
+					LoadRecentFileList();
+        }
+				recentlyOpenToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+				recentlyOpenToolStripMenuItem.DropDownItems.Add("Clear", null, clearRecentFileList);
+			}
         }
 
 		private void HandleOpenFile(object sender, EventArgs e)
 		{
-			if (sender is ToolStripItem menuItem && menuItem.Tag is string filepath && File.Exists(filepath))
+			if (sender is ToolStripItem menuItem && menuItem.Tag is string filepath)
+			{
+				if (!File.Exists(filepath))
+				{
+					menuItem.Available = false;
+					return;
+				}				
 				LoadPckFromFile(filepath);
+        }
         }
 
 		private void SaveToRecentFiles(string filepath)
