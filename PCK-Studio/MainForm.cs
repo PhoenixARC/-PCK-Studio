@@ -756,7 +756,7 @@ namespace PckStudio
 			DelegatedSaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) =>
 			{
 				if (!TryGetLocFile(out LOCFile locFile))
-					Debug.Fail("Failed to aquire loc file.");
+					Debug.WriteLine("Failed to aquire loc file.");
                 asset.SetSkin(customSkin, locFile);
 			});
 
