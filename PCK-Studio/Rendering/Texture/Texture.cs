@@ -6,9 +6,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PckStudio.Rendering.Texture
 {
-    internal class Texture
+    internal abstract class Texture : IDisposable
     {
-        protected readonly int _id;
+        protected readonly int _GL_Id;
 
         protected readonly TextureTarget Target;
 
@@ -73,7 +73,7 @@ namespace PckStudio.Rendering.Texture
 
         protected Texture(TextureTarget target)
         {
-            _id = GL.GenTexture();
+            _GL_Id = GL.GenTexture();
             Target = target;
         }
 
@@ -85,7 +85,7 @@ namespace PckStudio.Rendering.Texture
         public void Bind(int slot = 0)
         {
             GL.ActiveTexture(TextureUnit.Texture0 + slot);
-            GL.BindTexture(Target, _id);
+            GL.BindTexture(Target, _GL_Id);
         }
 
         public void Unbind()
@@ -98,6 +98,12 @@ namespace PckStudio.Rendering.Texture
             Bind();
             GL.TexParameter(Target, parameterName, value);
             Debug.WriteLineIf(GL.GetError() != ErrorCode.NoError, $"{Target}: {parameterName} = {value}");
+        }
+
+        public void Dispose()
+        {
+            Unbind();
+            GL.DeleteTexture(_GL_Id);
         }
     }
 }
