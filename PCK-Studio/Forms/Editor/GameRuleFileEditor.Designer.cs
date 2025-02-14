@@ -68,9 +68,10 @@
             this.GrfTreeView.ContextMenuStrip = this.MessageContextMenu;
             this.GrfTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrfTreeView.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.GrfTreeView.Location = new System.Drawing.Point(3, 23);
+            this.GrfTreeView.Location = new System.Drawing.Point(4, 27);
+            this.GrfTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GrfTreeView.Name = "GrfTreeView";
-            this.GrfTreeView.Size = new System.Drawing.Size(219, 312);
+            this.GrfTreeView.Size = new System.Drawing.Size(254, 360);
             this.GrfTreeView.TabIndex = 0;
             this.GrfTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.GrfTreeView_AfterSelect);
             this.GrfTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GrfTreeView_KeyDown);
@@ -104,9 +105,10 @@
             this.GrfParametersTreeView.ContextMenuStrip = this.DetailContextMenu;
             this.GrfParametersTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrfParametersTreeView.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.GrfParametersTreeView.Location = new System.Drawing.Point(228, 23);
+            this.GrfParametersTreeView.Location = new System.Drawing.Point(266, 27);
+            this.GrfParametersTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GrfParametersTreeView.Name = "GrfParametersTreeView";
-            this.GrfParametersTreeView.Size = new System.Drawing.Size(219, 312);
+            this.GrfParametersTreeView.Size = new System.Drawing.Size(255, 360);
             this.GrfParametersTreeView.TabIndex = 1;
             this.GrfParametersTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.GrfDetailsTreeView_NodeMouseDoubleClick);
             this.GrfParametersTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GrfDetailsTreeView_KeyDown);
@@ -136,7 +138,8 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
+            this.metroLabel1.Location = new System.Drawing.Point(4, 0);
+            this.metroLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(73, 19);
             this.metroLabel1.TabIndex = 2;
@@ -147,7 +150,8 @@
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(228, 0);
+            this.metroLabel2.Location = new System.Drawing.Point(266, 0);
+            this.metroLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(75, 19);
             this.metroLabel2.TabIndex = 0;
@@ -161,9 +165,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.compressionLvlToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(25, 60);
+            this.menuStrip1.Location = new System.Drawing.Point(29, 69);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(450, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(526, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -302,31 +307,35 @@
             this.tableLayoutPanel1.Controls.Add(this.GrfParametersTreeView, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.GrfTreeView, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.metroLabel2, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(25, 110);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(29, 127);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(450, 312);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(525, 360);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // GameRuleFileEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(584, 519);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(500, 450);
+            this.MinimumSize = new System.Drawing.Size(580, 513);
             this.Name = "GameRuleFileEditor";
-            this.Padding = new System.Windows.Forms.Padding(25, 60, 25, 25);
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.Padding = new System.Windows.Forms.Padding(29, 69, 29, 29);
             this.Text = "GRF Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameRuleFileEditor_FormClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.MessageContextMenu.ResumeLayout(false);

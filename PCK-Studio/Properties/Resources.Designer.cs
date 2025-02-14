@@ -836,6 +836,16 @@ namespace PckStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Minecraft_Book_Videos_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Minecraft_Book_Videos_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap MODELS_ICON {
             get {
                 object obj = ResourceManager.GetObject("MODELS_ICON", resourceCulture);
@@ -1195,6 +1205,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap TexturePackIcon {
             get {
                 object obj = ResourceManager.GetObject("TexturePackIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Theme_Color_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Theme_Color_Icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

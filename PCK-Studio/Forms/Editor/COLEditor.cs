@@ -10,10 +10,11 @@ using OMI.Formats.Pck;
 using OMI.Workers.Color;
 using PckStudio.Extensions;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class COLEditor : MetroForm
+	public partial class COLEditor : ThemeForm
 	{
 		ColorContainer _defaultColourfile;
         ColorContainer _colourfile;

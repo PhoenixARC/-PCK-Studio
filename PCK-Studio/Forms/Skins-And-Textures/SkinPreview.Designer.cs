@@ -46,21 +46,24 @@ namespace PckStudio.Forms
             this.ModelView.ForeColor = System.Drawing.Color.Black;
             this.ModelView.FOV = 90;
             this.ModelView.Location = new System.Drawing.Point(0, 0);
+            this.ModelView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ModelView.Name = "ModelView";
             this.ModelView.Projection = PckStudio.Models.ProjectionTypes.Perspective;
-            this.ModelView.Size = new System.Drawing.Size(418, 568);
+            this.ModelView.Size = new System.Drawing.Size(487, 656);
             this.ModelView.TabIndex = 1;
             this.ModelView.Text = "PCK Model View";
             // 
             // SkinPreview
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(418, 568);
+            this.ClientSize = new System.Drawing.Size(487, 656);
             this.Controls.Add(this.ModelView);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SkinPreview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SkinPreview";

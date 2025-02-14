@@ -327,6 +327,7 @@
             this.Controls.Add(label3);
             this.Controls.Add(label2);
             this.Controls.Add(label1);
+            this.ForeColor = System.Drawing.Color.White;
             this.MaximizeBox = false;
             this.Name = "AddSkinPrompt";
             this.Load += new System.EventHandler(this.AddNewSkin_Load);

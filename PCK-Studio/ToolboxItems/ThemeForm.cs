@@ -17,6 +17,7 @@
 **/
 
 using Dark.Net;
+using PckStudio.Classes.FormColoring;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -47,11 +48,10 @@ namespace PckStudio.ToolboxItems
         {
             base.OnLoad(e);
 
-            // Check if the form is not in design mode
             if (!DesignMode)
             {
-                // Center the form on the screen manually
-                CenterToScreen();
+                CenterToScreen(); // Center the form manually
+                ColorSettingsManager.LoadColorSettings(this); // Sync colors on all forms
             }
         }
     }

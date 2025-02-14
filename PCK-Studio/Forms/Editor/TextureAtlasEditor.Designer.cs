@@ -60,9 +60,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.internalTileNameLabel, 2);
             this.internalTileNameLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.internalTileNameLabel.Location = new System.Drawing.Point(3, 281);
+            this.internalTileNameLabel.Location = new System.Drawing.Point(4, 374);
+            this.internalTileNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.internalTileNameLabel.Name = "internalTileNameLabel";
-            this.internalTileNameLabel.Size = new System.Drawing.Size(208, 15);
+            this.internalTileNameLabel.Size = new System.Drawing.Size(259, 18);
             this.internalTileNameLabel.TabIndex = 18;
             this.internalTileNameLabel.Text = "InternalTileName";
             this.internalTileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -75,9 +76,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(20, 60);
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(590, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(735, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -149,7 +151,8 @@
             this.tableLayoutPanel1.Controls.Add(this.variantComboBox, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.internalTileNameLabel, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 84);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.82212F));
@@ -161,8 +164,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.350623F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.352765F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.352765F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(590, 565);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(735, 748);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // originalPictureBox
@@ -172,10 +175,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
+            this.originalPictureBox.Location = new System.Drawing.Point(271, 4);
+            this.originalPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.originalPictureBox.Name = "originalPictureBox";
             this.tableLayoutPanel1.SetRowSpan(this.originalPictureBox, 9);
-            this.originalPictureBox.Size = new System.Drawing.Size(370, 535);
+            this.originalPictureBox.Size = new System.Drawing.Size(460, 710);
             this.originalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.originalPictureBox.TabIndex = 4;
             this.originalPictureBox.TabStop = false;
@@ -192,9 +196,10 @@
             this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
             this.selectTilePictureBox.Image = null;
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.selectTilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.selectTilePictureBox.Location = new System.Drawing.Point(4, 4);
+            this.selectTilePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.selectTilePictureBox.Name = "selectTilePictureBox";
-            this.selectTilePictureBox.Size = new System.Drawing.Size(208, 227);
+            this.selectTilePictureBox.Size = new System.Drawing.Size(259, 302);
             this.selectTilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.selectTilePictureBox.TabIndex = 0;
             this.selectTilePictureBox.TabStop = false;
@@ -206,9 +211,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.replaceButton, 2);
-            this.replaceButton.Location = new System.Drawing.Point(3, 515);
+            this.replaceButton.Location = new System.Drawing.Point(4, 688);
+            this.replaceButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.replaceButton.Name = "replaceButton";
-            this.replaceButton.Size = new System.Drawing.Size(208, 23);
+            this.replaceButton.Size = new System.Drawing.Size(259, 26);
             this.replaceButton.TabIndex = 14;
             this.replaceButton.Text = "Replace Tile on Atlas";
             this.replaceButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -221,9 +227,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.tileNameLabel, 2);
-            this.tileNameLabel.Location = new System.Drawing.Point(3, 233);
+            this.tileNameLabel.Location = new System.Drawing.Point(4, 310);
+            this.tileNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tileNameLabel.Name = "tileNameLabel";
-            this.tileNameLabel.Size = new System.Drawing.Size(208, 48);
+            this.tileNameLabel.Size = new System.Drawing.Size(259, 64);
             this.tileNameLabel.TabIndex = 19;
             this.tileNameLabel.Text = "TileName";
             this.tileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -235,9 +242,10 @@
             this.setColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.setColorButton, 2);
-            this.setColorButton.Location = new System.Drawing.Point(3, 434);
+            this.setColorButton.Location = new System.Drawing.Point(4, 581);
+            this.setColorButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.setColorButton.Name = "setColorButton";
-            this.setColorButton.Size = new System.Drawing.Size(208, 17);
+            this.setColorButton.Size = new System.Drawing.Size(259, 19);
             this.setColorButton.TabIndex = 25;
             this.setColorButton.Text = "Set Custom Colour";
             this.setColorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -250,9 +258,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.animationButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.animationButton, 2);
-            this.animationButton.Location = new System.Drawing.Point(3, 544);
+            this.animationButton.Location = new System.Drawing.Point(4, 722);
+            this.animationButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.animationButton.Name = "animationButton";
-            this.animationButton.Size = new System.Drawing.Size(208, 18);
+            this.animationButton.Size = new System.Drawing.Size(259, 22);
             this.animationButton.TabIndex = 16;
             this.animationButton.Text = "Animation";
             this.animationButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -265,9 +274,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.clearColorButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.clearColorButton, 2);
-            this.clearColorButton.Location = new System.Drawing.Point(3, 457);
+            this.clearColorButton.Location = new System.Drawing.Point(4, 612);
+            this.clearColorButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.clearColorButton.Name = "clearColorButton";
-            this.clearColorButton.Size = new System.Drawing.Size(208, 23);
+            this.clearColorButton.Size = new System.Drawing.Size(259, 26);
             this.clearColorButton.TabIndex = 24;
             this.clearColorButton.Text = "Clear Custom Colour";
             this.clearColorButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -280,9 +290,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.extractButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.extractButton, 2);
-            this.extractButton.Location = new System.Drawing.Point(3, 486);
+            this.extractButton.Location = new System.Drawing.Point(4, 650);
+            this.extractButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.extractButton.Name = "extractButton";
-            this.extractButton.Size = new System.Drawing.Size(208, 23);
+            this.extractButton.Size = new System.Drawing.Size(259, 26);
             this.extractButton.TabIndex = 27;
             this.extractButton.Text = "Extract Tile from Atlas";
             this.extractButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -293,10 +304,11 @@
             // 
             this.colorSlider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.colorSlider.BackColor = System.Drawing.Color.Transparent;
-            this.colorSlider.Location = new System.Drawing.Point(64, 380);
+            this.colorSlider.Location = new System.Drawing.Point(85, 506);
+            this.colorSlider.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorSlider.Maximum = 255;
             this.colorSlider.Name = "colorSlider";
-            this.colorSlider.Size = new System.Drawing.Size(147, 42);
+            this.colorSlider.Size = new System.Drawing.Size(172, 56);
             this.colorSlider.TabIndex = 26;
             this.colorSlider.Text = "metroTrackBar1";
             this.colorSlider.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -311,9 +323,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.colorSliderLabel.BackColor = System.Drawing.Color.Transparent;
             this.colorSliderLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.colorSliderLabel.Location = new System.Drawing.Point(3, 377);
+            this.colorSliderLabel.Location = new System.Drawing.Point(4, 502);
+            this.colorSliderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.colorSliderLabel.Name = "colorSliderLabel";
-            this.colorSliderLabel.Size = new System.Drawing.Size(55, 48);
+            this.colorSliderLabel.Size = new System.Drawing.Size(68, 64);
             this.colorSliderLabel.TabIndex = 19;
             this.colorSliderLabel.Text = "Color Value:";
             this.colorSliderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -328,9 +341,10 @@
             this.variantComboBox.Enabled = false;
             this.variantComboBox.FormattingEnabled = true;
             this.variantComboBox.ItemHeight = 23;
-            this.variantComboBox.Location = new System.Drawing.Point(3, 338);
+            this.variantComboBox.Location = new System.Drawing.Point(4, 455);
+            this.variantComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.variantComboBox.Name = "variantComboBox";
-            this.variantComboBox.Size = new System.Drawing.Size(208, 29);
+            this.variantComboBox.Size = new System.Drawing.Size(259, 29);
             this.variantComboBox.TabIndex = 17;
             this.variantComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.variantComboBox.UseSelectable = true;
@@ -338,19 +352,21 @@
             // 
             // TextureAtlasEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 669);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(735, 772);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(630, 669);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(733, 766);
             this.Name = "TextureAtlasEditor";
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Texture Atlas Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextureAtlasEditor_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

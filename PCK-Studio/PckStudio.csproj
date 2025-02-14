@@ -133,6 +133,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\FormColoring\coloringModes.cs" />
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
     <Compile Include="Extensions\PictureBoxExtensions.cs" />
     <Compile Include="Extensions\TreeViewExtensions.cs" />
@@ -608,6 +609,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Theme-Color-Icon.png" />
     <None Include="Resources\packSettingsAsset.png" />
     <None Include="Resources\updateAsset.png" />
     <None Include="Resources\settingsAsset.png" />
@@ -705,6 +707,7 @@
     <Content Include="Resources\icons\Replace.png" />
     <Content Include="Resources\icons\Save.png" />
     <None Include="Resources\newFileAsset.png" />
+    <None Include="Resources\Minecraft-Book_Videos-Icon.png" />
     <Content Include="Resources\NoImageFound.png" />
   </ItemGroup>
   <ItemGroup>

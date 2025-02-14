@@ -436,4 +436,10 @@
   <data name="updateAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\updateAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Minecraft_Book_Videos_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Minecraft-Book_Videos-Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Theme_Color_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Theme-Color-Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

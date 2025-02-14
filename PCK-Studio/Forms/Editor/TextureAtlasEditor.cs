@@ -35,10 +35,11 @@ using PckStudio.Internal;
 using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.Serializer;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-    internal partial class TextureAtlasEditor : MetroForm
+    internal partial class TextureAtlasEditor : ThemeForm
     {
         private Image _atlasTexture;
         public Image FinalTexture => DialogResult == DialogResult.OK ? _atlasTexture : null;

@@ -27,7 +27,7 @@ using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
+    public partial class GameRuleFileEditor : ThemeForm
     {
         private GameRuleFile _file;
 

@@ -123,10 +123,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="resource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 1</value>
+    <value>85, 1</value>
+  </data>
+  <data name="resource.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="resource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>21, 21</value>
+    <value>13, 13</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="resource.TabIndex" type="System.Int32, mscorlib">
@@ -136,10 +139,13 @@
     <value>False</value>
   </data>
   <data name="metroTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>101, 27</value>
+    <value>118, 31</value>
+  </data>
+  <data name="metroTextBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="metroTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 23</value>
+    <value>158, 26</value>
   </data>
   <data name="metroTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -160,7 +166,10 @@
     <value>True</value>
   </data>
   <data name="metroLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>62, 27</value>
+    <value>73, 31</value>
+  </data>
+  <data name="metroLabel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="metroLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 19</value>
@@ -184,10 +193,13 @@
     <value>3</value>
   </data>
   <data name="setColorBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 290</value>
+    <value>466, 334</value>
+  </data>
+  <data name="setColorBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="setColorBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 23</value>
+    <value>146, 26</value>
   </data>
   <data name="setColorBtn.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -208,10 +220,13 @@
     <value>4</value>
   </data>
   <data name="blueUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 397</value>
+    <value>466, 458</value>
+  </data>
+  <data name="blueUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="blueUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
+    <value>146, 23</value>
   </data>
   <data name="blueUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -229,10 +244,13 @@
     <value>5</value>
   </data>
   <data name="greenUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 371</value>
+    <value>466, 428</value>
+  </data>
+  <data name="greenUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="greenUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
+    <value>146, 23</value>
   </data>
   <data name="greenUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -250,10 +268,13 @@
     <value>6</value>
   </data>
   <data name="redUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 345</value>
+    <value>466, 398</value>
+  </data>
+  <data name="redUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="redUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
+    <value>146, 23</value>
   </data>
   <data name="redUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -271,10 +292,13 @@
     <value>7</value>
   </data>
   <data name="alphaUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 319</value>
+    <value>466, 368</value>
+  </data>
+  <data name="alphaUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="alphaUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
+    <value>146, 23</value>
   </data>
   <data name="alphaUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -298,7 +322,10 @@
     <value>True</value>
   </data>
   <data name="alphaLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>342, 320</value>
+    <value>399, 369</value>
+  </data>
+  <data name="alphaLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="alphaLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 19</value>
@@ -328,7 +355,10 @@
     <value>True</value>
   </data>
   <data name="blueLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>351, 397</value>
+    <value>410, 458</value>
+  </data>
+  <data name="blueLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="blueLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 19</value>
@@ -355,7 +385,10 @@
     <value>True</value>
   </data>
   <data name="greenLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>341, 371</value>
+    <value>398, 428</value>
+  </data>
+  <data name="greenLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="greenLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 19</value>
@@ -382,7 +415,10 @@
     <value>True</value>
   </data>
   <data name="redLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 345</value>
+    <value>412, 398</value>
+  </data>
+  <data name="redLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="redLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 19</value>
@@ -412,10 +448,13 @@
     <value>NoControl</value>
   </data>
   <data name="resource.Location1" type="System.Drawing.Point, System.Drawing">
-    <value>103, 1</value>
+    <value>78, 1</value>
+  </data>
+  <data name="resource.Margin1" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="resource.Size1" type="System.Drawing.Size, System.Drawing">
-    <value>21, 21</value>
+    <value>13, 13</value>
   </data>
   <data name="resource.TabIndex1" type="System.Int32, mscorlib">
     <value>0</value>
@@ -424,10 +463,13 @@
     <value>False</value>
   </data>
   <data name="colorTextbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 423</value>
+    <value>466, 488</value>
+  </data>
+  <data name="colorTextbox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="colorTextbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 23</value>
+    <value>146, 26</value>
   </data>
   <data name="colorTextbox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -448,7 +490,10 @@
     <value>True</value>
   </data>
   <data name="metroLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>354, 423</value>
+    <value>413, 488</value>
+  </data>
+  <data name="metroLabel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="metroLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 19</value>
@@ -472,10 +517,13 @@
     <value>14</value>
   </data>
   <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 92</value>
+    <value>441, 106</value>
+  </data>
+  <data name="pictureBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 173</value>
+    <value>202, 199</value>
   </data>
   <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -496,10 +544,13 @@
     <value>Fill</value>
   </data>
   <data name="metroPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
+  </data>
+  <data name="metroPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="metroPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>612, 523</value>
+    <value>760, 696</value>
   </data>
   <data name="metroPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -539,7 +590,7 @@
     <value>Save</value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
+    <value>37, 24</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
@@ -635,16 +686,19 @@
     <value>Target Update</value>
   </data>
   <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 20</value>
+    <value>47, 24</value>
   </data>
   <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
     <value>Tools</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 2, 0, 2</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>612, 24</value>
+    <value>760, 28</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -712,11 +766,14 @@
   <data name="waterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="waterTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="waterTreeView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
   </data>
   <data name="waterTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="waterTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -736,8 +793,11 @@
   <data name="waterTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
+  <data name="waterTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="waterTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="waterTab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -760,8 +820,11 @@
   <data name="underwaterTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="underwaterTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="underwaterTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>372, 488</value>
   </data>
   <data name="underwaterTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -781,8 +844,11 @@
   <data name="fogTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="fogTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="fogTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>372, 488</value>
   </data>
   <data name="fogTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -805,8 +871,11 @@
   <data name="colorTreeView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="colorTreeView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="colorTreeView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="colorTreeView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -826,8 +895,11 @@
   <data name="colorsTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
+  <data name="colorsTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="colorsTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="colorsTab.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -853,8 +925,11 @@
   <data name="underwaterTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
+  <data name="underwaterTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="underwaterTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="underwaterTab.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -877,8 +952,11 @@
   <data name="fogTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
+  <data name="fogTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="fogTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 424</value>
+    <value>374, 496</value>
   </data>
   <data name="fogTab.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -899,10 +977,13 @@
     <value>3</value>
   </data>
   <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 114</value>
+    <value>27, 131</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 466</value>
+    <value>382, 538</value>
   </data>
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -923,10 +1004,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>652, 603</value>
+    <value>760, 696</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3434,8 +3518,14 @@
         AP//AAA=
 </value>
   </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>652, 603</value>
+    <value>758, 690</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -3585,6 +3675,6 @@
     <value>COLEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

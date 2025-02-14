@@ -12,10 +12,11 @@ using OMI.Workers.Language;
 using OMI.Formats.Pck;
 using PckStudio.Properties;
 using PckStudio.Extensions;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class LOCEditor : MetroForm
+	public partial class LOCEditor : ThemeForm
     {
 		LOCFile _currentLoc;
 		PckAsset _asset;

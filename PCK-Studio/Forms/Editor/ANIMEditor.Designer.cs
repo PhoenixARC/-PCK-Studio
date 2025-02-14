@@ -82,7 +82,7 @@
             // saveButton
             // 
             this.saveButton.Location = new System.Drawing.Point(291, 593);
-            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(4);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(147, 26);
             this.saveButton.TabIndex = 1;
@@ -109,9 +109,9 @@
             this.effectsGroup.Controls.Add(this.rightArmOCheckBox);
             this.effectsGroup.ForeColor = System.Drawing.SystemColors.Window;
             this.effectsGroup.Location = new System.Drawing.Point(25, 171);
-            this.effectsGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.effectsGroup.Margin = new System.Windows.Forms.Padding(4);
             this.effectsGroup.Name = "effectsGroup";
-            this.effectsGroup.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.effectsGroup.Padding = new System.Windows.Forms.Padding(4);
             this.effectsGroup.Size = new System.Drawing.Size(458, 274);
             this.effectsGroup.TabIndex = 2;
             this.effectsGroup.TabStop = false;
@@ -122,7 +122,7 @@
             this.rightLegOCheckBox.AutoSize = true;
             this.rightLegOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightLegOCheckBox.Location = new System.Drawing.Point(210, 240);
-            this.rightLegOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightLegOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightLegOCheckBox.Name = "rightLegOCheckBox";
             this.rightLegOCheckBox.Size = new System.Drawing.Size(199, 19);
             this.rightLegOCheckBox.TabIndex = 13;
@@ -138,7 +138,7 @@
             this.headOCheckBox.AutoSize = true;
             this.headOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.headOCheckBox.Location = new System.Drawing.Point(210, 58);
-            this.headOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.headOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.headOCheckBox.Name = "headOCheckBox";
             this.headOCheckBox.Size = new System.Drawing.Size(173, 19);
             this.headOCheckBox.TabIndex = 12;
@@ -154,7 +154,7 @@
             this.leftLegOCheckBox.AutoSize = true;
             this.leftLegOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftLegOCheckBox.Location = new System.Drawing.Point(210, 201);
-            this.leftLegOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftLegOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftLegOCheckBox.Name = "leftLegOCheckBox";
             this.leftLegOCheckBox.Size = new System.Drawing.Size(190, 19);
             this.leftLegOCheckBox.TabIndex = 11;
@@ -170,7 +170,7 @@
             this.leftArmOCheckBox.AutoSize = true;
             this.leftArmOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftArmOCheckBox.Location = new System.Drawing.Point(210, 129);
-            this.leftArmOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftArmOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftArmOCheckBox.Name = "leftArmOCheckBox";
             this.leftArmOCheckBox.Size = new System.Drawing.Size(194, 19);
             this.leftArmOCheckBox.TabIndex = 9;
@@ -186,7 +186,7 @@
             this.bodyOCheckBox.AutoSize = true;
             this.bodyOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.bodyOCheckBox.Location = new System.Drawing.Point(210, 94);
-            this.bodyOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bodyOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.bodyOCheckBox.Name = "bodyOCheckBox";
             this.bodyOCheckBox.Size = new System.Drawing.Size(172, 19);
             this.bodyOCheckBox.TabIndex = 8;
@@ -202,7 +202,7 @@
             this.rightLegCheckBox.AutoSize = true;
             this.rightLegCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightLegCheckBox.Location = new System.Drawing.Point(7, 240);
-            this.rightLegCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightLegCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightLegCheckBox.Name = "rightLegCheckBox";
             this.rightLegCheckBox.Size = new System.Drawing.Size(162, 19);
             this.rightLegCheckBox.TabIndex = 7;
@@ -218,7 +218,7 @@
             this.slimCheckBox.AutoSize = true;
             this.slimCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.slimCheckBox.Location = new System.Drawing.Point(210, 22);
-            this.slimCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.slimCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.slimCheckBox.Name = "slimCheckBox";
             this.slimCheckBox.Size = new System.Drawing.Size(151, 19);
             this.slimCheckBox.TabIndex = 6;
@@ -234,7 +234,7 @@
             this.headCheckBox.AutoSize = true;
             this.headCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.headCheckBox.Location = new System.Drawing.Point(7, 58);
-            this.headCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.headCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.headCheckBox.Name = "headCheckBox";
             this.headCheckBox.Size = new System.Drawing.Size(136, 19);
             this.headCheckBox.TabIndex = 5;
@@ -250,7 +250,7 @@
             this.leftLegCheckBox.AutoSize = true;
             this.leftLegCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftLegCheckBox.Location = new System.Drawing.Point(7, 201);
-            this.leftLegCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftLegCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftLegCheckBox.Name = "leftLegCheckBox";
             this.leftLegCheckBox.Size = new System.Drawing.Size(153, 19);
             this.leftLegCheckBox.TabIndex = 4;
@@ -266,7 +266,7 @@
             this.rightArmCheckBox.AutoSize = true;
             this.rightArmCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightArmCheckBox.Location = new System.Drawing.Point(7, 165);
-            this.rightArmCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightArmCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightArmCheckBox.Name = "rightArmCheckBox";
             this.rightArmCheckBox.Size = new System.Drawing.Size(166, 19);
             this.rightArmCheckBox.TabIndex = 3;
@@ -282,7 +282,7 @@
             this.leftArmCheckBox.AutoSize = true;
             this.leftArmCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftArmCheckBox.Location = new System.Drawing.Point(7, 129);
-            this.leftArmCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftArmCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftArmCheckBox.Name = "leftArmCheckBox";
             this.leftArmCheckBox.Size = new System.Drawing.Size(157, 19);
             this.leftArmCheckBox.TabIndex = 2;
@@ -298,7 +298,7 @@
             this.bodyCheckBox.AutoSize = true;
             this.bodyCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.bodyCheckBox.Location = new System.Drawing.Point(7, 94);
-            this.bodyCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bodyCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.bodyCheckBox.Name = "bodyCheckBox";
             this.bodyCheckBox.Size = new System.Drawing.Size(135, 19);
             this.bodyCheckBox.TabIndex = 1;
@@ -314,7 +314,7 @@
             this.classicCheckBox.AutoSize = true;
             this.classicCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.classicCheckBox.Location = new System.Drawing.Point(7, 22);
-            this.classicCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.classicCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.classicCheckBox.Name = "classicCheckBox";
             this.classicCheckBox.Size = new System.Drawing.Size(136, 19);
             this.classicCheckBox.TabIndex = 0;
@@ -330,7 +330,7 @@
             this.rightArmOCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.rightArmOCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightArmOCheckBox.Location = new System.Drawing.Point(210, 165);
-            this.rightArmOCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightArmOCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightArmOCheckBox.Name = "rightArmOCheckBox";
             this.rightArmOCheckBox.Size = new System.Drawing.Size(203, 19);
             this.rightArmOCheckBox.TabIndex = 10;
@@ -351,9 +351,9 @@
             this.effectsGroup2.Controls.Add(this.chestplateCheckBox);
             this.effectsGroup2.ForeColor = System.Drawing.SystemColors.Window;
             this.effectsGroup2.Location = new System.Drawing.Point(491, 211);
-            this.effectsGroup2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.effectsGroup2.Margin = new System.Windows.Forms.Padding(4);
             this.effectsGroup2.Name = "effectsGroup2";
-            this.effectsGroup2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.effectsGroup2.Padding = new System.Windows.Forms.Padding(4);
             this.effectsGroup2.Size = new System.Drawing.Size(220, 234);
             this.effectsGroup2.TabIndex = 14;
             this.effectsGroup2.TabStop = false;
@@ -365,7 +365,7 @@
             this.rightLeggingCheckBox.Enabled = false;
             this.rightLeggingCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightLeggingCheckBox.Location = new System.Drawing.Point(7, 201);
-            this.rightLeggingCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightLeggingCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightLeggingCheckBox.Name = "rightLeggingCheckBox";
             this.rightLeggingCheckBox.Size = new System.Drawing.Size(173, 19);
             this.rightLeggingCheckBox.TabIndex = 7;
@@ -380,7 +380,7 @@
             this.helmetCheckBox.Enabled = false;
             this.helmetCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.helmetCheckBox.Location = new System.Drawing.Point(7, 22);
-            this.helmetCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.helmetCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.helmetCheckBox.Name = "helmetCheckBox";
             this.helmetCheckBox.Size = new System.Drawing.Size(147, 19);
             this.helmetCheckBox.TabIndex = 5;
@@ -395,7 +395,7 @@
             this.leftLeggingCheckBox.Enabled = false;
             this.leftLeggingCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftLeggingCheckBox.Location = new System.Drawing.Point(7, 165);
-            this.leftLeggingCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftLeggingCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftLeggingCheckBox.Name = "leftLeggingCheckBox";
             this.leftLeggingCheckBox.Size = new System.Drawing.Size(164, 19);
             this.leftLeggingCheckBox.TabIndex = 4;
@@ -410,7 +410,7 @@
             this.rightArmorCheckBox.Enabled = false;
             this.rightArmorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.rightArmorCheckBox.Location = new System.Drawing.Point(7, 129);
-            this.rightArmorCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rightArmorCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.rightArmorCheckBox.Name = "rightArmorCheckBox";
             this.rightArmorCheckBox.Size = new System.Drawing.Size(177, 19);
             this.rightArmorCheckBox.TabIndex = 3;
@@ -425,7 +425,7 @@
             this.leftArmorCheckBox.Enabled = false;
             this.leftArmorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.leftArmorCheckBox.Location = new System.Drawing.Point(7, 94);
-            this.leftArmorCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.leftArmorCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.leftArmorCheckBox.Name = "leftArmorCheckBox";
             this.leftArmorCheckBox.Size = new System.Drawing.Size(168, 19);
             this.leftArmorCheckBox.TabIndex = 2;
@@ -440,7 +440,7 @@
             this.chestplateCheckBox.Enabled = false;
             this.chestplateCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.chestplateCheckBox.Location = new System.Drawing.Point(7, 58);
-            this.chestplateCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chestplateCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.chestplateCheckBox.Name = "chestplateCheckBox";
             this.chestplateCheckBox.Size = new System.Drawing.Size(146, 19);
             this.chestplateCheckBox.TabIndex = 1;
@@ -465,9 +465,9 @@
             this.groupBox1.Controls.Add(this.staticLegsCheckBox);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
             this.groupBox1.Location = new System.Drawing.Point(25, 448);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(685, 132);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
@@ -478,7 +478,7 @@
             this.unknownCheckBox.AutoSize = true;
             this.unknownCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.unknownCheckBox.Location = new System.Drawing.Point(147, 94);
-            this.unknownCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.unknownCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.unknownCheckBox.Name = "unknownCheckBox";
             this.unknownCheckBox.Size = new System.Drawing.Size(84, 19);
             this.unknownCheckBox.TabIndex = 13;
@@ -493,7 +493,7 @@
             this.crouchCheckBox.AutoSize = true;
             this.crouchCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.crouchCheckBox.Location = new System.Drawing.Point(147, 58);
-            this.crouchCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.crouchCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.crouchCheckBox.Name = "crouchCheckBox";
             this.crouchCheckBox.Size = new System.Drawing.Size(137, 19);
             this.crouchCheckBox.TabIndex = 12;
@@ -508,7 +508,7 @@
             this.dinnerboneCheckBox.AutoSize = true;
             this.dinnerboneCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.dinnerboneCheckBox.Location = new System.Drawing.Point(147, 22);
-            this.dinnerboneCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dinnerboneCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.dinnerboneCheckBox.Name = "dinnerboneCheckBox";
             this.dinnerboneCheckBox.Size = new System.Drawing.Size(97, 19);
             this.dinnerboneCheckBox.TabIndex = 11;
@@ -523,7 +523,7 @@
             this.noArmorCheckBox.AutoSize = true;
             this.noArmorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.noArmorCheckBox.Location = new System.Drawing.Point(490, 94);
-            this.noArmorCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.noArmorCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.noArmorCheckBox.Name = "noArmorCheckBox";
             this.noArmorCheckBox.Size = new System.Drawing.Size(131, 19);
             this.noArmorCheckBox.TabIndex = 10;
@@ -537,7 +537,7 @@
             this.bobbingCheckBox.AutoSize = true;
             this.bobbingCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.bobbingCheckBox.Location = new System.Drawing.Point(318, 58);
-            this.bobbingCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bobbingCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.bobbingCheckBox.Name = "bobbingCheckBox";
             this.bobbingCheckBox.Size = new System.Drawing.Size(124, 19);
             this.bobbingCheckBox.TabIndex = 9;
@@ -551,7 +551,7 @@
             this.santaCheckBox.AutoSize = true;
             this.santaCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.santaCheckBox.Location = new System.Drawing.Point(490, 58);
-            this.santaCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.santaCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.santaCheckBox.Name = "santaCheckBox";
             this.santaCheckBox.Size = new System.Drawing.Size(86, 19);
             this.santaCheckBox.TabIndex = 8;
@@ -566,7 +566,7 @@
             this.syncLegsCheckBox.AutoSize = true;
             this.syncLegsCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.syncLegsCheckBox.Location = new System.Drawing.Point(318, 22);
-            this.syncLegsCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.syncLegsCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.syncLegsCheckBox.Name = "syncLegsCheckBox";
             this.syncLegsCheckBox.Size = new System.Drawing.Size(136, 19);
             this.syncLegsCheckBox.TabIndex = 7;
@@ -580,7 +580,7 @@
             this.staticArmsCheckBox.AutoSize = true;
             this.staticArmsCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.staticArmsCheckBox.Location = new System.Drawing.Point(7, 22);
-            this.staticArmsCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.staticArmsCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.staticArmsCheckBox.Name = "staticArmsCheckBox";
             this.staticArmsCheckBox.Size = new System.Drawing.Size(94, 19);
             this.staticArmsCheckBox.TabIndex = 5;
@@ -594,7 +594,7 @@
             this.syncArmsCheckBox.AutoSize = true;
             this.syncArmsCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.syncArmsCheckBox.Location = new System.Drawing.Point(490, 22);
-            this.syncArmsCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.syncArmsCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.syncArmsCheckBox.Name = "syncArmsCheckBox";
             this.syncArmsCheckBox.Size = new System.Drawing.Size(140, 19);
             this.syncArmsCheckBox.TabIndex = 4;
@@ -608,7 +608,7 @@
             this.statueCheckBox.AutoSize = true;
             this.statueCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.statueCheckBox.Location = new System.Drawing.Point(318, 94);
-            this.statueCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.statueCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.statueCheckBox.Name = "statueCheckBox";
             this.statueCheckBox.Size = new System.Drawing.Size(126, 19);
             this.statueCheckBox.TabIndex = 3;
@@ -623,7 +623,7 @@
             this.zombieCheckBox.AutoSize = true;
             this.zombieCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.zombieCheckBox.Location = new System.Drawing.Point(7, 94);
-            this.zombieCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zombieCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.zombieCheckBox.Name = "zombieCheckBox";
             this.zombieCheckBox.Size = new System.Drawing.Size(107, 19);
             this.zombieCheckBox.TabIndex = 2;
@@ -637,7 +637,7 @@
             this.staticLegsCheckBox.AutoSize = true;
             this.staticLegsCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
             this.staticLegsCheckBox.Location = new System.Drawing.Point(7, 58);
-            this.staticLegsCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.staticLegsCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.staticLegsCheckBox.Name = "staticLegsCheckBox";
             this.staticLegsCheckBox.Size = new System.Drawing.Size(90, 19);
             this.staticLegsCheckBox.TabIndex = 1;
@@ -649,7 +649,7 @@
             // copyButton
             // 
             this.copyButton.Location = new System.Drawing.Point(496, 138);
-            this.copyButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.copyButton.Margin = new System.Windows.Forms.Padding(4);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(202, 26);
             this.copyButton.TabIndex = 22;
@@ -661,7 +661,7 @@
             // importButton
             // 
             this.importButton.Location = new System.Drawing.Point(38, 138);
-            this.importButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.importButton.Margin = new System.Windows.Forms.Padding(4);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(217, 26);
             this.importButton.TabIndex = 23;
@@ -673,7 +673,7 @@
             // exportButton
             // 
             this.exportButton.Location = new System.Drawing.Point(267, 138);
-            this.exportButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.exportButton.Margin = new System.Windows.Forms.Padding(4);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(217, 26);
             this.exportButton.TabIndex = 24;
@@ -699,7 +699,7 @@
             // uncheckAllButton
             // 
             this.uncheckAllButton.Location = new System.Drawing.Point(267, 104);
-            this.uncheckAllButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.uncheckAllButton.Margin = new System.Windows.Forms.Padding(4);
             this.uncheckAllButton.Name = "uncheckAllButton";
             this.uncheckAllButton.Size = new System.Drawing.Size(217, 26);
             this.uncheckAllButton.TabIndex = 26;
@@ -711,7 +711,7 @@
             // checkAllButton
             // 
             this.checkAllButton.Location = new System.Drawing.Point(38, 104);
-            this.checkAllButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkAllButton.Margin = new System.Windows.Forms.Padding(4);
             this.checkAllButton.Name = "checkAllButton";
             this.checkAllButton.Size = new System.Drawing.Size(217, 26);
             this.checkAllButton.TabIndex = 27;
@@ -730,7 +730,7 @@
             // resetButton
             // 
             this.resetButton.Location = new System.Drawing.Point(496, 104);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(202, 26);
             this.resetButton.TabIndex = 28;
@@ -742,7 +742,7 @@
             // templateButton
             // 
             this.templateButton.Location = new System.Drawing.Point(496, 178);
-            this.templateButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.templateButton.Margin = new System.Windows.Forms.Padding(4);
             this.templateButton.Name = "templateButton";
             this.templateButton.Size = new System.Drawing.Size(202, 26);
             this.templateButton.TabIndex = 29;
@@ -755,7 +755,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(717, 594);
             this.Controls.Add(this.templateButton);
             this.Controls.Add(this.effectsGroup);
@@ -770,9 +770,10 @@
             this.Controls.Add(this.effectsGroup2);
             this.Controls.Add(this.saveButton);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(733, 633);
             this.MinimizeBox = false;

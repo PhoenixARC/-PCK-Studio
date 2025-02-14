@@ -67,7 +67,8 @@
             // 
             parentLabel.AutoSize = true;
             parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            parentLabel.Location = new System.Drawing.Point(357, 72);
+            parentLabel.Location = new System.Drawing.Point(416, 83);
+            parentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             parentLabel.Name = "parentLabel";
             parentLabel.Size = new System.Drawing.Size(64, 25);
             parentLabel.TabIndex = 2;
@@ -78,7 +79,8 @@
             // 
             positionLabel.AutoSize = true;
             positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            positionLabel.Location = new System.Drawing.Point(33, 72);
+            positionLabel.Location = new System.Drawing.Point(38, 83);
+            positionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             positionLabel.Name = "positionLabel";
             positionLabel.Size = new System.Drawing.Size(75, 25);
             positionLabel.TabIndex = 4;
@@ -89,7 +91,8 @@
             // 
             sizeLabel.AutoSize = true;
             sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            sizeLabel.Location = new System.Drawing.Point(33, 97);
+            sizeLabel.Location = new System.Drawing.Point(38, 112);
+            sizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             sizeLabel.Name = "sizeLabel";
             sizeLabel.Size = new System.Drawing.Size(46, 25);
             sizeLabel.TabIndex = 22;
@@ -100,7 +103,8 @@
             // 
             uvLabel.AutoSize = true;
             uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            uvLabel.Location = new System.Drawing.Point(33, 123);
+            uvLabel.Location = new System.Drawing.Point(38, 142);
+            uvLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             uvLabel.Name = "uvLabel";
             uvLabel.Size = new System.Drawing.Size(39, 25);
             uvLabel.TabIndex = 26;
@@ -111,7 +115,8 @@
             // 
             inflationLabel.AutoSize = true;
             inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            inflationLabel.Location = new System.Drawing.Point(33, 149);
+            inflationLabel.Location = new System.Drawing.Point(38, 172);
+            inflationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             inflationLabel.Name = "inflationLabel";
             inflationLabel.Size = new System.Drawing.Size(55, 25);
             inflationLabel.TabIndex = 31;
@@ -120,9 +125,10 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(252, 187);
+            this.closeButton.Location = new System.Drawing.Point(294, 216);
+            this.closeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(126, 23);
+            this.closeButton.Size = new System.Drawing.Size(147, 27);
             this.closeButton.TabIndex = 1;
             this.closeButton.Text = "Save";
             this.closeButton.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -164,9 +170,10 @@
             "ARMARMOR0",
             "BODYARMOR",
             "BELT"});
-            this.parentComboBox.Location = new System.Drawing.Point(417, 72);
+            this.parentComboBox.Location = new System.Drawing.Point(486, 83);
+            this.parentComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.parentComboBox.Name = "parentComboBox";
-            this.parentComboBox.Size = new System.Drawing.Size(163, 29);
+            this.parentComboBox.Size = new System.Drawing.Size(190, 29);
             this.parentComboBox.TabIndex = 3;
             this.parentComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.parentComboBox.UseSelectable = true;
@@ -181,7 +188,8 @@
             0,
             0,
             65536});
-            this.PosXUpDown.Location = new System.Drawing.Point(120, 76);
+            this.PosXUpDown.Location = new System.Drawing.Point(140, 88);
+            this.PosXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosXUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -193,7 +201,7 @@
             0,
             -2147483648});
             this.PosXUpDown.Name = "PosXUpDown";
-            this.PosXUpDown.Size = new System.Drawing.Size(73, 22);
+            this.PosXUpDown.Size = new System.Drawing.Size(85, 23);
             this.PosXUpDown.TabIndex = 19;
             // 
             // PosYUpDown
@@ -206,7 +214,8 @@
             0,
             0,
             65536});
-            this.PosYUpDown.Location = new System.Drawing.Point(199, 76);
+            this.PosYUpDown.Location = new System.Drawing.Point(232, 88);
+            this.PosYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosYUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -218,7 +227,7 @@
             0,
             -2147483648});
             this.PosYUpDown.Name = "PosYUpDown";
-            this.PosYUpDown.Size = new System.Drawing.Size(73, 22);
+            this.PosYUpDown.Size = new System.Drawing.Size(85, 23);
             this.PosYUpDown.TabIndex = 20;
             // 
             // PosZUpDown
@@ -231,7 +240,8 @@
             0,
             0,
             65536});
-            this.PosZUpDown.Location = new System.Drawing.Point(278, 76);
+            this.PosZUpDown.Location = new System.Drawing.Point(324, 88);
+            this.PosZUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosZUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -243,7 +253,7 @@
             0,
             -2147483648});
             this.PosZUpDown.Name = "PosZUpDown";
-            this.PosZUpDown.Size = new System.Drawing.Size(73, 22);
+            this.PosZUpDown.Size = new System.Drawing.Size(85, 23);
             this.PosZUpDown.TabIndex = 21;
             // 
             // SizeZUpDown
@@ -256,14 +266,15 @@
             0,
             0,
             65536});
-            this.SizeZUpDown.Location = new System.Drawing.Point(278, 102);
+            this.SizeZUpDown.Location = new System.Drawing.Point(324, 118);
+            this.SizeZUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeZUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.SizeZUpDown.Name = "SizeZUpDown";
-            this.SizeZUpDown.Size = new System.Drawing.Size(73, 22);
+            this.SizeZUpDown.Size = new System.Drawing.Size(85, 23);
             this.SizeZUpDown.TabIndex = 25;
             // 
             // SizeYUpDown
@@ -276,14 +287,15 @@
             0,
             0,
             65536});
-            this.SizeYUpDown.Location = new System.Drawing.Point(199, 102);
+            this.SizeYUpDown.Location = new System.Drawing.Point(232, 118);
+            this.SizeYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeYUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.SizeYUpDown.Name = "SizeYUpDown";
-            this.SizeYUpDown.Size = new System.Drawing.Size(73, 22);
+            this.SizeYUpDown.Size = new System.Drawing.Size(85, 23);
             this.SizeYUpDown.TabIndex = 24;
             // 
             // SizeXUpDown
@@ -296,14 +308,15 @@
             0,
             0,
             65536});
-            this.SizeXUpDown.Location = new System.Drawing.Point(120, 102);
+            this.SizeXUpDown.Location = new System.Drawing.Point(140, 118);
+            this.SizeXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeXUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.SizeXUpDown.Name = "SizeXUpDown";
-            this.SizeXUpDown.Size = new System.Drawing.Size(73, 22);
+            this.SizeXUpDown.Size = new System.Drawing.Size(85, 23);
             this.SizeXUpDown.TabIndex = 23;
             // 
             // uvYUpDown
@@ -316,7 +329,8 @@
             0,
             0,
             65536});
-            this.uvYUpDown.Location = new System.Drawing.Point(199, 128);
+            this.uvYUpDown.Location = new System.Drawing.Point(232, 148);
+            this.uvYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.uvYUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -328,7 +342,7 @@
             0,
             -2147483648});
             this.uvYUpDown.Name = "uvYUpDown";
-            this.uvYUpDown.Size = new System.Drawing.Size(73, 22);
+            this.uvYUpDown.Size = new System.Drawing.Size(85, 23);
             this.uvYUpDown.TabIndex = 28;
             // 
             // uvXUpDown
@@ -341,7 +355,8 @@
             0,
             0,
             65536});
-            this.uvXUpDown.Location = new System.Drawing.Point(120, 128);
+            this.uvXUpDown.Location = new System.Drawing.Point(140, 148);
+            this.uvXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.uvXUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -353,7 +368,7 @@
             0,
             -2147483648});
             this.uvXUpDown.Name = "uvXUpDown";
-            this.uvXUpDown.Size = new System.Drawing.Size(73, 22);
+            this.uvXUpDown.Size = new System.Drawing.Size(85, 23);
             this.uvXUpDown.TabIndex = 27;
             // 
             // armorCheckBox
@@ -363,7 +378,8 @@
             this.armorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
             this.armorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
             this.armorCheckBox.ForeColor = System.Drawing.Color.White;
-            this.armorCheckBox.Location = new System.Drawing.Point(363, 101);
+            this.armorCheckBox.Location = new System.Drawing.Point(424, 117);
+            this.armorCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.armorCheckBox.Name = "armorCheckBox";
             this.armorCheckBox.Size = new System.Drawing.Size(225, 25);
             this.armorCheckBox.TabIndex = 29;
@@ -376,7 +392,8 @@
             this.mirrorCheckBox.AutoSize = true;
             this.mirrorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
             this.mirrorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
-            this.mirrorCheckBox.Location = new System.Drawing.Point(363, 130);
+            this.mirrorCheckBox.Location = new System.Drawing.Point(424, 150);
+            this.mirrorCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.mirrorCheckBox.Name = "mirrorCheckBox";
             this.mirrorCheckBox.Size = new System.Drawing.Size(133, 25);
             this.mirrorCheckBox.TabIndex = 30;
@@ -394,22 +411,23 @@
             0,
             0,
             65536});
-            this.inflationUpDown.Location = new System.Drawing.Point(120, 154);
+            this.inflationUpDown.Location = new System.Drawing.Point(140, 178);
+            this.inflationUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.inflationUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.inflationUpDown.Name = "inflationUpDown";
-            this.inflationUpDown.Size = new System.Drawing.Size(73, 22);
+            this.inflationUpDown.Size = new System.Drawing.Size(85, 23);
             this.inflationUpDown.TabIndex = 32;
             // 
             // BoxEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(614, 220);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.ClientSize = new System.Drawing.Size(716, 254);
             this.Controls.Add(this.inflationUpDown);
             this.Controls.Add(this.uvYUpDown);
             this.Controls.Add(this.uvXUpDown);
@@ -428,12 +446,13 @@
             this.Controls.Add(positionLabel);
             this.Controls.Add(parentLabel);
             this.Controls.Add(this.closeButton);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Location = new System.Drawing.Point(0, 0);
-            this.MaximumSize = new System.Drawing.Size(630, 554);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximumSize = new System.Drawing.Size(732, 633);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(630, 220);
+            this.MinimumSize = new System.Drawing.Size(732, 248);
             this.Name = "BoxEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BOX Editor";

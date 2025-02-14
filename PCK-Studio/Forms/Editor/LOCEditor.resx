@@ -121,6 +121,15 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 48</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
+    <value>contextMenuStrip1</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="addDisplayIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 22</value>
   </data>
@@ -133,18 +142,18 @@
   <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Display ID</value>
   </data>
-  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 48</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
-    <value>contextMenuStrip1</value>
-  </data>
-  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="GridContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
+  <data name="GridContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 48</value>
+  </data>
+  <data name="&gt;&gt;GridContextMenu.Name" xml:space="preserve">
+    <value>GridContextMenu</value>
+  </data>
+  <data name="&gt;&gt;GridContextMenu.Type" xml:space="preserve">
+    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+  </data>
   <data name="addLanguageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
   </data>
@@ -156,15 +165,6 @@
   </data>
   <data name="removeLanguageToolStripMenuItem.Text" xml:space="preserve">
     <value>Remove Language</value>
-  </data>
-  <data name="GridContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 48</value>
-  </data>
-  <data name="&gt;&gt;GridContextMenu.Name" xml:space="preserve">
-    <value>GridContextMenu</value>
-  </data>
-  <data name="&gt;&gt;GridContextMenu.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroContextMenu, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>321, 17</value>
@@ -181,10 +181,13 @@
     <value>NoControl</value>
   </data>
   <data name="buttonReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>783, 23</value>
+    <value>911, 27</value>
+  </data>
+  <data name="buttonReplaceAll.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="buttonReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 23</value>
+    <value>87, 26</value>
   </data>
   <data name="buttonReplaceAll.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -220,10 +223,13 @@
     <value>Fill</value>
   </data>
   <data name="dataGridViewLocEntryData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 52</value>
+    <value>354, 61</value>
+  </data>
+  <data name="dataGridViewLocEntryData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="dataGridViewLocEntryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>554, 532</value>
+    <value>644, 612</value>
   </data>
   <data name="dataGridViewLocEntryData.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -244,10 +250,13 @@
     <value>Fill</value>
   </data>
   <data name="textBoxReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 23</value>
+    <value>354, 27</value>
+  </data>
+  <data name="textBoxReplaceAll.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="textBoxReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>474, 20</value>
+    <value>549, 23</value>
   </data>
   <data name="textBoxReplaceAll.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -268,10 +277,13 @@
     <value>Fill</value>
   </data>
   <data name="treeViewLocKeys.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 23</value>
+    <value>4, 27</value>
+  </data>
+  <data name="treeViewLocKeys.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="treeViewLocKeys.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 561</value>
+    <value>342, 646</value>
   </data>
   <data name="treeViewLocKeys.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -292,13 +304,16 @@
     <value>Fill</value>
   </data>
   <data name="locSort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>24, 69</value>
+  </data>
+  <data name="locSort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="locSort.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="locSort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>860, 587</value>
+    <value>1002, 677</value>
   </data>
   <data name="locSort.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -316,19 +331,13 @@
     <value>2</value>
   </data>
   <data name="locSort.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonReplaceAll" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="dataGridViewLocEntryData" Row="2" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="menuStrip" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="textBoxReplaceAll" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="treeViewLocKeys" Row="1" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Absolute,20,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="buttonReplaceAll" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="dataGridViewLocEntryData" Row="2" RowSpan="1" Column="1" ColumnSpan="2" /&gt;&lt;Control Name="menuStrip" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="textBoxReplaceAll" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="treeViewLocKeys" Row="1" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,350,Percent,100,AutoSize,0" /&gt;&lt;Rows Styles="Absolute,23,AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="menuStrip.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 22</value>
-  </data>
-  <data name="saveToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 16</value>
+    <value>37, 19</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
@@ -336,8 +345,11 @@
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="menuStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 2, 0, 2</value>
+  </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>860, 20</value>
+    <value>1002, 23</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -354,14 +366,23 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 22</value>
+  </data>
+  <data name="saveToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>7, 15</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>900, 667</value>
+    <value>1050, 769</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2869,8 +2890,17 @@
         AP//AAA=
 </value>
   </data>
+  <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>900, 667</value>
+    <value>1056, 784</value>
+  </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>24, 69, 24, 23</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -2930,6 +2960,6 @@
     <value>LOCEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.ToolboxItems.ThemeForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

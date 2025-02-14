@@ -12,6 +12,7 @@ using OMI.Workers.Language;
 using OMI.Workers.Material;
 using OMI.Workers.Model;
 using OMI.Workers.Pck;
+using PckStudio.Classes.FormColoring;
 using PckStudio.Extensions;
 using PckStudio.External.API.Miles;
 using PckStudio.FileFormats;
@@ -2390,6 +2391,24 @@ namespace PckStudio
         private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             currentPCK.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
+        }
+
+        private void themeColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog { FullOpen = true })
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Use the selected color for both primary and secondary gradients
+                    Color selectedColor = colorDialog.Color;
+
+                    // Save the color for both primary and secondary
+                    ColorSettingsManager.SaveColorSettings(selectedColor, selectedColor);
+                }
+            }
+
+            // Load color settings
+            ColorSettingsManager.LoadColorSettings(this);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

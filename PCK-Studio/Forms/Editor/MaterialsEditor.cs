@@ -14,10 +14,11 @@ using PckStudio.Internal;
 using PckStudio.Extensions;
 using PckStudio.Internal.Json;
 using PckStudio.Internal.App;
+using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class MaterialsEditor : MetroForm
+	public partial class MaterialsEditor : ThemeForm
 	{
 		// Materials File Format research by PhoenixARC
 		private readonly PckAsset _asset;

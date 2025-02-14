@@ -43,10 +43,10 @@
             this.locSort = new System.Windows.Forms.TableLayoutPanel();
             this.buttonReplaceAll = new System.Windows.Forms.Button();
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
-            this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
-            this.treeViewLocKeys = new System.Windows.Forms.TreeView();
             this.Language = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
+            this.treeViewLocKeys = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1.SuspendLayout();
             this.GridContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -145,7 +145,7 @@
             this.dataGridViewLocEntryData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.dataGridViewLocEntryData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -161,6 +161,18 @@
             this.dataGridViewLocEntryData.Name = "dataGridViewLocEntryData";
             this.dataGridViewLocEntryData.RowHeadersVisible = false;
             this.dataGridViewLocEntryData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            // 
+            // Language
+            // 
+            this.Language.FillWeight = 15F;
+            resources.ApplyResources(this.Language, "Language");
+            this.Language.Name = "Language";
+            this.Language.ReadOnly = true;
+            // 
+            // DisplayName
+            // 
+            resources.ApplyResources(this.DisplayName, "DisplayName");
+            this.DisplayName.Name = "DisplayName";
             // 
             // textBoxReplaceAll
             // 
@@ -180,26 +192,14 @@
             this.treeViewLocKeys.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLocKeys_AfterSelect);
             this.treeViewLocKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
-            // Language
-            // 
-            this.Language.FillWeight = 15F;
-            resources.ApplyResources(this.Language, "Language");
-            this.Language.Name = "Language";
-            this.Language.ReadOnly = true;
-            // 
-            // DisplayName
-            // 
-            resources.ApplyResources(this.DisplayName, "DisplayName");
-            this.DisplayName.Name = "DisplayName";
-            // 
             // LOCEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.Controls.Add(this.locSort);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "LOCEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LOCEditor_FormClosing);
             this.Load += new System.EventHandler(this.LOCEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);
