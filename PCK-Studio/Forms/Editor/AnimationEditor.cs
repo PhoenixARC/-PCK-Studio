@@ -46,7 +46,8 @@ namespace PckStudio.Forms.Editor
 			: base(animation, saveContext)
 		{
             InitializeComponent();
-            toolStripSeparator1.Visible = saveToolStripMenuItem1.Visible = !saveContext.AutoSave;
+			saveToolStripMenuItem1.Available = !saveContext.AutoSave;
+            toolStripSeparator1.Available = !saveContext.AutoSave;
             tileLabel.Text = displayName;
             _isSpecialTile = isSpecialTile;
             animationPictureBox.Image = animation.CreateAnimationImage();
@@ -160,6 +161,7 @@ namespace PckStudio.Forms.Editor
 		{
 			if (!_isSpecialTile && EditorValue is not null && EditorValue.FrameCount > 0)
 			{
+				Save();
 				DialogResult = DialogResult.OK;
 				return;
 			}
@@ -392,7 +394,7 @@ namespace PckStudio.Forms.Editor
 			{
                 animationPictureBox.Stop();
 			}
-			if (Settings.Default.AutoSaveChanges)
+			if (!saveToolStripMenuItem1.Available)
 			{
 				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
 			}
