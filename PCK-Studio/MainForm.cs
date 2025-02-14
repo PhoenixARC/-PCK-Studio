@@ -617,7 +617,7 @@ namespace PckStudio
 
                     string[] specialTileNames = { "clock", "compass" };
 
-					DelegatedSaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+					ISaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
 					{
                         asset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
 					});
@@ -641,12 +641,53 @@ namespace PckStudio
 				case ResourceCategory.MoonPhaseAtlas:
 				case ResourceCategory.MapIconAtlas:
 				case ResourceCategory.AdditionalMapIconsAtlas:
-                    Image img = asset.GetTexture();
-                    var viewer = new TextureAtlasEditor(currentPCK, resourceLocation, img);
+                    Image atlas = asset.GetTexture();
+					ColorContainer colorContainer = default;
+					if (currentPCK.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out PckAsset colAsset))
+						colorContainer = colAsset.GetData(new COLFileReader());
+
+					ITryGet<string, Animation> tryGetAnimation = TryGet<string, Animation>.FromDelegate((string key, out Animation animation) =>
+					{
+                        bool found = currentPCK.TryGetAsset(key + ".png", PckAssetType.TextureFile, out PckAsset foundAsset) ||
+									 currentPCK.TryGetAsset(key + ".tga", PckAssetType.TextureFile, out foundAsset);
+						if (found)
+						{
+							animation = foundAsset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
+							return true;
+						}
+                        animation = default;
+						return false;
+					});
+
+					ITryGet<string, ISaveContext<Animation>> tryGetAnimationSaveContext = TryGet<string, ISaveContext<Animation>>.FromDelegate((string key, out ISaveContext<Animation> animationSaveContext) =>
+					{
+                        bool found = currentPCK.TryGetAsset(key + ".png", PckAssetType.TextureFile, out PckAsset foundAsset) ||
+                                     currentPCK.TryGetAsset(key + ".tga", PckAssetType.TextureFile, out foundAsset);
+
+						if (found)
+						{
+                            animationSaveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+								foundAsset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer));
+							return true;
+						}
+
+						// you could validate the key(animationAssetPath) for validity. -miku
+                        animationSaveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
+						{
+							if (animation.FrameCount == 0)
+								return;
+							PckAsset newAnimationAsset = currentPCK.CreateNewAsset(key + ".png", PckAssetType.TextureFile);
+							newAnimationAsset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
+							BuildMainTreeView();
+                        });
+                        return true;
+					});
+
+					ISaveContext<Image> textureAtlasSaveContext = new DelegatedSaveContext<Image>(Settings.Default.AutoSaveChanges, asset.SetTexture);
+
+                    var viewer = new TextureAtlasEditor(atlas, textureAtlasSaveContext, resourceLocation, colorContainer, tryGetAnimation, tryGetAnimationSaveContext);
                     if (viewer.ShowDialog(this) == DialogResult.OK)
                     {
-                        Image texture = viewer.FinalTexture;
-                        asset.SetTexture(texture);
                         wasModified = true;
                         BuildMainTreeView();
                     }
