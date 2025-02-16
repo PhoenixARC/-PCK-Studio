@@ -16,27 +16,20 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
+using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 
 using OMI.Formats.Color;
-using OMI.Formats.Pck;
-using OMI.Workers.Color;
 
 using PckStudio.Extensions;
 using PckStudio.Interfaces;
 using PckStudio.Internal;
-using PckStudio.Internal.Deserializer;
 using PckStudio.Internal.Json;
-using PckStudio.Internal.Serializer;
-using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
