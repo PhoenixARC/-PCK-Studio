@@ -225,10 +225,7 @@ namespace PckStudio.Forms.Additional_Popups
 
             newSkin.MetaData = new SkinMetaData(textSkinName.Text, textThemeName.Text);
 
-            DelegatedSaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) =>
-            {
-                newSkin = customSkin;
-            });
+            ISaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) => newSkin = customSkin);
 
             using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin, saveContext);
 
