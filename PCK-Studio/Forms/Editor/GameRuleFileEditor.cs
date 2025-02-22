@@ -255,13 +255,5 @@ namespace PckStudio.Forms.Editor
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
                 EditorValue.Header.CompressionType = GameRuleFile.CompressionType.XMem;
         }
-
-        private void GameRuleFileEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (Settings.Default.AutoSaveChanges)
-            {
-                saveToolStripMenuItem_Click(sender, EventArgs.Empty);
-            }
-        }
     }
 }

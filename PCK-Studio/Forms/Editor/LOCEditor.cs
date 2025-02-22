@@ -130,13 +130,5 @@ namespace PckStudio.Forms.Editor
 			Save();
 			DialogResult = DialogResult.OK;
         }
-
-        private void LOCEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			if (Settings.Default.AutoSaveChanges)
-			{
-				saveToolStripMenuItem_Click(sender, EventArgs.Empty);
-			}
-        }
     }
 }

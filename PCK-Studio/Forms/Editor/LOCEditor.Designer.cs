@@ -200,7 +200,6 @@
             this.Name = "LOCEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LOCEditor_FormClosing);
             this.Load += new System.EventHandler(this.LOCEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.GridContextMenu.ResumeLayout(false);

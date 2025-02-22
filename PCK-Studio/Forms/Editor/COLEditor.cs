@@ -40,7 +40,7 @@ namespace PckStudio.Forms.Editor
 		{
 			InitializeComponent();
 
-			saveToolStripMenuItem1.Visible = !Settings.Default.AutoSaveChanges;
+			saveToolStripMenuItem1.Visible = !saveContext.AutoSave;
 
 			TU12ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 0);
 			TU13ToolStripMenuItem.Click += (sender, e) => SetUpDefaultFile(sender, e, 1);
@@ -595,14 +595,6 @@ namespace PckStudio.Forms.Editor
 		{
 			colorTextbox.Text = _clipboard_color;
 		}
-
-        private void COLEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-			if (Settings.Default.AutoSaveChanges)
-			{
-				saveToolStripMenuItem1_Click(sender, EventArgs.Empty);
-			}
-        }
 
         private void colorTextbox_KeyPress(object sender, KeyPressEventArgs e)
         {

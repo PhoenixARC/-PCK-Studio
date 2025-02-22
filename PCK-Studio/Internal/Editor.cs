@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Interfaces;
 
@@ -21,5 +22,12 @@ namespace PckStudio.Internal
         }
 
         protected void Save() => SaveContext.Save(EditorValue);
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (SaveContext.AutoSave)
+                Save();
+            base.OnFormClosing(e);
+        }
     }
 }

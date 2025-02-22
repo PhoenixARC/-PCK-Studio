@@ -299,7 +299,6 @@
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Behaviour Editor";
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BehaviourEditor_FormClosing);
             this.metroContextMenu1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
