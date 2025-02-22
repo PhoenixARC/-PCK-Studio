@@ -659,7 +659,8 @@ namespace PckStudio
 						return false;
 					});
 
-					ITryGet<string, ISaveContext<Animation>> tryGetAnimationSaveContext = TryGet<string, ISaveContext<Animation>>.FromDelegate((string key, out ISaveContext<Animation> animationSaveContext) =>
+					ITryGet<string, ISaveContext<Animation>> tryGetAnimationSaveContext = TryGet<string, ISaveContext<Animation>>
+						.FromDelegate((string key, out ISaveContext<Animation> animationSaveContext) =>
 					{
                         bool found = currentPCK.TryGetAsset(key + ".png", PckAssetType.TextureFile, out PckAsset foundAsset) ||
                                      currentPCK.TryGetAsset(key + ".tga", PckAssetType.TextureFile, out foundAsset);
@@ -675,7 +676,10 @@ namespace PckStudio
                         animationSaveContext = new DelegatedSaveContext<Animation>(Settings.Default.AutoSaveChanges, (animation) =>
 						{
 							if (animation.FrameCount == 0)
+							{
+								Debug.WriteLine("New animation has 0 frames. Aborting saving.");
 								return;
+							}
 							PckAsset newAnimationAsset = currentPCK.CreateNewAsset(key + ".png", PckAssetType.TextureFile);
 							newAnimationAsset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
 							BuildMainTreeView();
