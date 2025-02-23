@@ -706,7 +706,7 @@ namespace PckStudio
 		{
 			const string use_deflate = "PS3";
 			const string use_xmem = "Xbox 360";
-			const string use_zlib = "Wii U, PS Vita";
+			const string use_zlib = "Other Platforms";
 
 	        ItemSelectionPopUp dialog = new ItemSelectionPopUp(use_zlib, use_deflate, use_xmem);
             dialog.LabelText = "Type";
