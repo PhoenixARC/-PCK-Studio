@@ -2,7 +2,7 @@
 
 namespace PckStudio.Rendering
 {
-    partial class ModelRenderer
+    internal partial class ModelRenderer
     {
         [DebuggerNonUserCode()]
         protected override void Dispose(bool disposing)
@@ -29,14 +29,14 @@ namespace PckStudio.Rendering
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            this.components = new System.ComponentModel.Container();
             // 
             // ModelRenderer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.Name = "ModelRenderer";
             this.ResumeLayout(false);
-
+            this.PerformLayout();
         }
     }
 }
