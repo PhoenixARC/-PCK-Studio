@@ -75,7 +75,7 @@ namespace PckStudio.Forms.Editor
 				var reader = new MaterialFileReader();
 				_materialFile = reader.FromStream(stream);
 
-				if (_materialFile.hasInvalidEntries())
+				if (_materialFile.HasInvalidEntries())
                 {
 					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
 
