@@ -291,23 +291,39 @@ namespace PckStudio
             }
         }
 
+		private PckFile ReadPck(string filePath, bool isLittleEndian)
+		{
+            var pckReader = new PckFileReader(isLittleEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+            return pckReader.FromFile(filePath);
+        }
+
 		private PckFile OpenPck(string filePath)
 		{
 			isTemplateFile = false;
 			saveLocation = filePath;
 			SaveToRecentFiles(filePath);
-            var reader = new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
-			try
+            PckFile pck;
+            try
 			{
-				PckFile pck = reader.FromFile(filePath);
+                pck = ReadPck(filePath, LittleEndianCheckBox.Checked);
 				return pck;
-			}
-			catch (OverflowException ex)
+            }
+			catch (OverflowException c)
 			{
-				MessageBox.Show(this, "Failed to open pck\n" +
+				try
+				{
+                    // if failed, attempt again in the reverse. THEN throw an error if failed
+                    pck = ReadPck(filePath, !LittleEndianCheckBox.Checked);
+					LittleEndianCheckBox.Checked = !LittleEndianCheckBox.Checked;
+					return pck;
+                }
+				catch (OverflowException ex)
+				{
+					MessageBox.Show(this, "Failed to open pck\n" +
 					$"Try {(LittleEndianCheckBox.Checked ? "unchecking" : "checking")} the 'Open/Save as Switch/Vita/PS4/Xbox One pck' check box in the upper right corner.",
 					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				Debug.WriteLine(ex.Message);
+					Debug.WriteLine(ex.Message);
+				}
 			}
 			catch
 			{
