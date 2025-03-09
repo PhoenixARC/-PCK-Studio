@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 using PckStudio.Internal.Misc;
 using PckStudio.Internal.App;
+using System.Linq;
+using System.Collections.Generic;
 
 
 namespace PckStudio
@@ -33,8 +35,10 @@ namespace PckStudio
             RPC.Initialize();
             MainInstance = new MainForm();
             Updater.SetOwner(MainInstance);
-            if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                MainInstance.InitPckFromFile(args[0]);
+            if (args.Length > 0)
+            {
+                MainInstance.LoadPckFromFile(args.Where(arg => File.Exists(arg) && arg.EndsWith(".pck")));
+            }
             Application.ApplicationExit += (sender, e) => { RPC.Deinitialize(); };
             MainInstance.FocusMe();
             Application.Run(MainInstance);

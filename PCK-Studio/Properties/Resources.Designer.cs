@@ -318,20 +318,20 @@ namespace PckStudio.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;dolphin&quot;: {
-        ///      &quot;textureSize&quot;: { &quot;X&quot;: 64, &quot;Y&quot;: 64 },
-        ///      &quot;parts&quot;: [
-        ///        {
-        ///          &quot;name&quot;: &quot;head&quot;,
-        ///          &quot;boxes&quot;: [
-        ///            { &quot;pos&quot;: { &quot;X&quot;: -4, &quot;Y&quot;: -7, &quot;Z&quot;: -6 }, &quot;size&quot;: { &quot;X&quot;: 8, &quot;Y&quot;: 7, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0 } }
-        ///          ]
-        ///        },
-        ///        {
-        ///          &quot;name&quot;: &quot;nose&quot;,
-        ///          &quot;translation&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0, &quot;Z&quot;: -10 },
-        ///          &quot;boxes&quot;: [
-        ///            { &quot;pos&quot;: { &quot;X&quot;: -1, &quot;Y&quot;: -2, &quot;Z&quot;: 0 }, &quot;size&quot;: { &quot;X&quot;: 2, &quot;Y&quot;: 2, &quot;Z&quot;: 4 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 13 } } [rest of string was truncated]&quot;;.
+        ///  &quot;bat&quot;: {
+        ///    &quot;textureSize&quot;: { &quot;X&quot;: 64, &quot;Y&quot;: 64 },
+        ///    &quot;parts&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;head&quot;,
+        ///        &quot;boxes&quot;: [
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -3, &quot;Y&quot;: -3, &quot;Z&quot;: -3 }, &quot;size&quot;: { &quot;X&quot;: 6, &quot;Y&quot;: 6, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0 } }
+        ///        ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;body&quot;,
+        ///        &quot;boxes&quot;: [
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -3, &quot;Y&quot;: 4, &quot;Z&quot;: -3 }, &quot;size&quot;: { &quot;X&quot;: 6, &quot;Y&quot;: 12, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 16 } },
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -5, &quot;Y&quot;: 16, &quot;Z&quot;: 0 }, &quot;size&quot;: { &quot;X&quot;: 10, &quot;Y&quot;: 6, &quot;Z&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         public static string defaultModels {
             get {
@@ -1167,6 +1167,16 @@ namespace PckStudio.Properties {
         public static System.Drawing.Bitmap Replace {
             get {
                 object obj = ResourceManager.GetObject("Replace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Save {
+            get {
+                object obj = ResourceManager.GetObject("Save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

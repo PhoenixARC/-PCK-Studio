@@ -136,6 +136,16 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CustomTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PageClosingEventArgs.cs" />
+    <Compile Include="Controls\PckEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PckEditor.Designer.cs">
+      <DependentUpon>PckEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\BoundingBoxExtensions.cs" />
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
     <Compile Include="Extensions\MaterialExtensions.cs" />
@@ -154,6 +164,7 @@
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\OpenTKExtensions.cs" />
+    <Compile Include="Interfaces\IEditor.cs" />
     <Compile Include="Interfaces\ISaveContext.cs" />
     <Compile Include="Interfaces\ITryGetSet.cs" />
     <Compile Include="Forms\Editor\ModelEditor.cs">
@@ -492,6 +503,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
+    <EmbeddedResource Include="Controls\PckEditor.resx">
+      <DependentUpon>PckEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\FilterPrompt.resx">
       <DependentUpon>FilterPrompt.cs</DependentUpon>
     </EmbeddedResource>
