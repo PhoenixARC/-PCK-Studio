@@ -33,7 +33,7 @@ using PckStudio.Internal.Json;
 
 namespace PckStudio.Forms.Editor
 {
-    internal partial class TextureAtlasEditor : Editor<Image>
+    internal partial class TextureAtlasEditor : EditorForm<Image>
     {
         private readonly ITryGet<string, Animation> _tryGetAnimation;
         private readonly ITryGet<string, ISaveContext<Animation>> _tryGetAnimationSaveContext;

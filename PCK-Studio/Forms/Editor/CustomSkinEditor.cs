@@ -18,7 +18,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class CustomSkinEditor : Editor<Skin>
+    public partial class CustomSkinEditor : EditorForm<Skin>
     {
         private Random rng;
         private bool _inflateOverlayParts;

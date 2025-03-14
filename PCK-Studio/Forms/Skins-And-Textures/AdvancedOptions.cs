@@ -54,9 +54,7 @@ namespace PckStudio.Popups
                 {
                     try
                     {
-                        var reader = new PckFileReader(_endianness);
-                        using var ms = new MemoryStream(asset.Data);
-                        PckFile subPCK = reader.FromStream(ms);
+                        PckFile subPCK = asset.GetData(new PckFileReader(_endianness));
                         applyBulkProperties(subPCK.GetAssets(), index);
                         asset.SetData(new PckFileWriter(subPCK, _endianness));
                     }

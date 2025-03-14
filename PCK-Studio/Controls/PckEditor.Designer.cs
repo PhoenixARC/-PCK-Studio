@@ -721,6 +721,7 @@ namespace PckStudio.Controls
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.previewPictureBox);
             this.Controls.Add(this.LittleEndianCheckBox);
             this.Controls.Add(this.pckFileLabel);
             this.Controls.Add(this.labelImageSize);
@@ -729,7 +730,6 @@ namespace PckStudio.Controls
             this.Controls.Add(this.label11);
             this.Controls.Add(this.treeViewMain);
             this.Controls.Add(logoPictureBox);
-            this.Controls.Add(this.previewPictureBox);
             this.ForeColor = System.Drawing.Color.Transparent;
             this.Name = "PckEditor";
             this.Load += new System.EventHandler(this.PckEditor_Load);

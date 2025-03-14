@@ -27,7 +27,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class AudioEditor : Editor<PckAudioFile>
+	public partial class AudioEditor : EditorForm<PckAudioFile>
 	{
 		public string defaultType = "yes";
         MainForm parent = null;

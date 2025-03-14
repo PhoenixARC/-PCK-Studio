@@ -12,7 +12,7 @@ using PckStudio.Forms.Additional_Popups.EntityForms;
 namespace PckStudio.Forms.Editor
 {
 	// Behaviours File Format research by Miku and MattNL
-	public partial class BehaviourEditor : Editor<BehaviourFile>
+	public partial class BehaviourEditor : EditorForm<BehaviourFile>
 	{
         private const string BehaviourEntryDataType = "behaviours";
         private readonly List<EntityInfo> BehaviourData = Entities.BehaviourInfos;

@@ -13,7 +13,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class LOCEditor : Editor<LOCFile>
+	public partial class LOCEditor : EditorForm<LOCFile>
     {
         public LOCEditor(LOCFile locFile, ISaveContext<LOCFile> context)
             : base(locFile, context)

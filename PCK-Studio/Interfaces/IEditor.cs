@@ -9,19 +9,13 @@ namespace PckStudio.Interfaces
 {
     internal interface IEditor<T> where T : class
     {
-        T Value { get; }
+        T EditorValue { get; }
 
-        string SavePath { get; } 
-
-        bool Open(string filepath, OMI.Endianness endianness);
-
-        bool Open(T value);
+        ISaveContext<T> SaveContext { get; }
 
         void Save();
 
         void SaveAs();
-        
-        void SaveTo(string filepath);
 
         void Close();
 

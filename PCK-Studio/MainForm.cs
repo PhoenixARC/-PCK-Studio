@@ -1,52 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using System.Drawing.Imaging;
+using System.Windows.Forms;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using OMI.Formats.Pck;
-using OMI.Formats.Color;
-using OMI.Formats.Model;
 using OMI.Formats.GameRule;
-using OMI.Formats.Material;
-using OMI.Formats.Behaviour;
 using OMI.Formats.Languages;
-using OMI.Workers;
 using OMI.Workers.Pck;
-using OMI.Workers.Color;
-using OMI.Workers.Model;
 using OMI.Workers.GameRule;
-using OMI.Workers.Material;
 using OMI.Workers.Language;
-using OMI.Workers.Behaviour;
 using PckStudio.Properties;
-using PckStudio.Internal.FileFormats;
 using PckStudio.Forms;
-using PckStudio.Forms.Editor;
-using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Internal.Misc;
-using PckStudio.Internal.IO.PckAudio;
-using PckStudio.Internal.IO._3DST;
-using PckStudio.Internal;
 using PckStudio.Forms.Features;
 using PckStudio.Extensions;
 using PckStudio.Popups;
 using PckStudio.External.API.Miles;
-using PckStudio.Internal.Json;
-using PckStudio.Internal.Deserializer;
-using PckStudio.Internal.Serializer;
 using PckStudio.Internal.App;
-using PckStudio.Internal.Skin;
 using PckStudio.Interfaces;
-using PckStudio.Rendering;
-using MetroFramework.Forms;
-using System.Windows.Forms.Design;
 using PckStudio.Controls;
+using PckStudio.Internal;
 
 namespace PckStudio
 {
@@ -54,7 +30,7 @@ namespace PckStudio
 	{
 		private PckManager PckManager = null;
 
-        private Dictionary<string, TabPage> openFiles = new Dictionary<string, TabPage>();
+        private Dictionary<string, TabPage> openTabPages = new Dictionary<string, TabPage>();
 
 		public MainForm()
 		{
@@ -82,40 +58,122 @@ namespace PckStudio
             AddEditorPage(filepath);
         }
 
-        private void AddEditorPage(PckFile pck)
-        {
-            var editor = new PckEditor();
-            editor.Open(pck);
-            AddPage("Unsaved pck", editor);
+		internal void OpenNewPckTab(string caption, string identifier, PckFile pckFile, ISaveContext<PckFile> saveContext)
+		{
+            if (openTabPages.ContainsKey(identifier))
+            {
+                tabControl.SelectTab(openTabPages[identifier]);
+                return;
+            }
+            var editor = new PckEditor(pckFile, saveContext);
+            AddPage(caption, identifier, editor);
         }
 
-        private TabPage AddPage(string caption, Control control)
+        private void AddEditorPage(string caption, string identifier, PckFile pck, OMI.Endianness endianness = OMI.Endianness.BigEndian, ISaveContext<PckFile> saveContext = null)
+        {
+            saveContext ??= GetSaveContext("./new.pck", "PCK (Minecraft Console Package)", endianness);
+            var editor = new PckEditor(pck, saveContext);
+            AddPage(caption, identifier, editor);   
+        }
+
+
+        private PckFile ReadPck(string filePath, OMI.Endianness endianness)
+        {
+            var pckReader = new PckFileReader(endianness);
+            return pckReader.FromFile(filePath);
+        }
+
+        private class PackInfo
+        {
+            public static readonly PackInfo Empty = new PackInfo(default, default, default);
+            public bool IsValid { get; }
+            public PckFile File { get; }
+            public OMI.Endianness Endianness { get; }
+
+            public bool AllowEndianSwap { get; }
+
+            public PackInfo(PckFile file, OMI.Endianness endianness, bool allowEndianSwap)
+            {
+                File = file;
+                Endianness = endianness;
+                AllowEndianSwap = allowEndianSwap;
+                IsValid = file is not null && Enum.IsDefined(typeof(OMI.Endianness), endianness);
+            }
+        }
+
+        private bool TryOpenPck(string filepath, out PackInfo packInfo)
+        {
+            if (!File.Exists(filepath) || !filepath.EndsWith(".pck"))
+            {
+                packInfo = PackInfo.Empty;
+                return false;
+            }
+            try
+            {
+                PckFile pckFile = ReadPck(filepath, OMI.Endianness.BigEndian);
+                packInfo = new PackInfo(pckFile, OMI.Endianness.BigEndian, true);
+                return packInfo.IsValid;
+            }
+            catch (OverflowException)
+            {
+                try
+                {
+                    // if failed, attempt again in the reverse. THEN throw an error if failed
+                    PckFile pckFile = ReadPck(filepath, OMI.Endianness.LittleEndian);
+                    packInfo = new PackInfo(pckFile, OMI.Endianness.LittleEndian, true);
+                    return packInfo.IsValid;
+                }
+                catch (OverflowException ex)
+                {
+                    MessageBox.Show(this, "Failed to open pck", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(this, "Failed to open pck. There's two common reasons for this:\n" +
+                    "1. The file is audio/music cues PCK file. Please use the specialized editor while inside of a pck file.\n" +
+                    "2. We're aware of an issue where a pck file might fail to load because it contains multiple entries with the same path.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            packInfo = PackInfo.Empty;
+            return false;
+        }
+
+        private void AddEditorPage(string filepath)
+        {
+            if (openTabPages.ContainsKey(filepath))
+            {
+                tabControl.SelectTab(openTabPages[filepath]);
+                return;
+            }
+            SaveToRecentFiles(filepath);
+
+            if (TryOpenPck(filepath, out PackInfo packInfo))
+            {
+                ISaveContext<PckFile> saveContext = GetSaveContext(filepath, "PCK (Minecraft Console Package)", packInfo.Endianness);
+                var editor = new PckEditor(packInfo.File, saveContext);
+                TabPage page = AddPage(Path.GetFileName(filepath), filepath, editor);
+                return;
+            }
+            MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private ISaveContext<PckFile> GetSaveContext(string filepath, string description, OMI.Endianness endianness)
+        {
+            return new DelegatedFileSaveContext<PckFile>(filepath, false, new FileDialogFilter(description, "*"+Path.GetExtension(filepath)),(pck, stream) => new PckFileWriter(pck, endianness).WriteToStream(stream));
+        }
+
+        private TabPage AddPage(string caption, string identifier, Control control)
         {
             control.Dock = DockStyle.Fill;
             var page = new TabPage(caption);
             page.Controls.Add(control);
             tabControl.TabPages.Add(page);
             tabControl.SelectTab(page);
+            if (!openTabPages.ContainsKey(identifier))
+                openTabPages.Add(identifier, page);
             return page;
-        }
-
-        private void AddEditorPage(string filepath)
-        {
-            if (openFiles.ContainsKey(filepath))
-            {
-                tabControl.SelectTab(openFiles[filepath]);
-                return;
-            }
-            SaveToRecentFiles(filepath);
-
-            var editor = new PckEditor();
-            if (editor.Open(filepath, Settings.Default.UseLittleEndianAsDefault ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian))
-            {
-                TabPage page = AddPage(Path.GetFileName(filepath), editor);
-                openFiles.Add(filepath, page);
-                return;
-            }
-            MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private bool TryGetEditor(TabPage page, out IEditor<PckFile> editor)
@@ -129,50 +187,17 @@ namespace PckStudio
             return false;
         }
 
-        private bool TryGetEditor(out IEditor<PckFile> editor)
-        {
-            return TryGetEditor(tabControl.SelectedTab, out editor);
-        }
+        private bool TryGetCurrentEditor(out IEditor<PckFile> editor) => TryGetEditor(tabControl.SelectedTab, out editor);
 
-        // TODO: decide on how to handle embedded pck files
-   //     private void HandleInnerPckFile(PckAsset asset)
-   //     {
-			//if (Settings.Default.LoadSubPcks &&
-			//	(asset.Type == PckAssetType.SkinDataFile || asset.Type == PckAssetType.TexturePackInfoFile) &&
-			//	asset.Size > 0 && treeViewMain.SelectedNode.Nodes.Count == 0)
-			//{
-			//	try
-			//	{
-			//		PckFile subPCKfile = asset.GetData(new PckFileReader(LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
-			//		BuildPckTreeView(treeViewMain.SelectedNode.Nodes, subPCKfile);
-			//		treeViewMain.SelectedNode.ExpandAll();
-   //             }
-			//	catch (OverflowException ex)
-			//	{
-			//		MessageBox.Show(this, "Failed to open pck\n" +
-			//			"Try checking the 'Open/Save as Switch/Vita/PS4/Xbox One pck' checkbox in the upper right corner.",
-			//			"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//		Debug.WriteLine(ex.Message);
-			//	}
-			//	return;
-			//}
-			//treeViewMain.SelectedNode.Nodes.Clear();
-			//treeViewMain.SelectedNode.Collapse();
-   //     }
-
-		private void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
 		{
-			SettingsManager.Default.RegisterPropertyChangedCallback<bool>(nameof(Settings.Default.UseLittleEndianAsDefault), state =>
-			{
-				LittleEndianCheckBox.Checked = state;
-			});
-			SettingsManager.Default.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
-			{
-                if (TryGetEditor(out IEditor<PckFile> editor))
-                {
-                    editor.UpdateView();
-                }
-            });
+			//SettingsManager.Default.RegisterPropertyChangedCallback(nameof(Settings.Default.LoadSubPcks), () =>
+			//{
+   //             if (TryGetCurrentEditor(out IEditor<PckFile> editor))
+   //             {
+   //                 editor.UpdateView();
+   //             }
+   //         });
 
 			LoadRecentFileList();
 		}
@@ -209,10 +234,10 @@ namespace PckStudio
 
         private void RemoveOpenFile(TabPage page)
         {
-            KeyValuePair<string, TabPage> kv = openFiles.FirstOrDefault((kv) => kv.Value == page);
-            if (kv.Key != null && kv.Value != null)
+            KeyValuePair<string, TabPage> kv = openTabPages.FirstOrDefault((kv) => kv.Value == page);
+            if (kv.Key != default)
             {
-                openFiles.Remove(kv.Key);
+                openTabPages.Remove(kv.Key);
             }
         }
 
@@ -308,9 +333,8 @@ namespace PckStudio
         {
             closeToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
             closeAllToolStripMenuItem.Visible = tabControl.SelectedIndex == 0 && tabControl.TabCount > 1;
+            saveToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
             saveAsToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
-            saveAsToolStripMenuItem.Visible = tabControl.SelectedIndex > 0;
-
 
             if (tabControl.SelectedIndex == 0)
             {
@@ -330,10 +354,7 @@ namespace PckStudio
 			locFile.InitializeDefault(packName);
 			pack.CreateNewAsset("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
-				LittleEndianCheckBox.Checked
-					? OMI.Endianness.LittleEndian
-					: OMI.Endianness.BigEndian));
+			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true), OMI.Endianness.BigEndian));
 
 			return pack;
 		}
@@ -354,7 +375,7 @@ namespace PckStudio
 			texturepackInfoAsset.AddProperty("PACKID", "0");
 			texturepackInfoAsset.AddProperty("DATAPATH", $"{res}Data.pck");
 
-			texturepackInfoAsset.SetData(new PckFileWriter(infoPCK, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+			texturepackInfoAsset.SetData(new PckFileWriter(infoPCK, OMI.Endianness.BigEndian));
 
 			return pack;
 		}
@@ -391,7 +412,7 @@ namespace PckStudio
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
                 PckFile skinPck = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, true);
-                AddEditorPage(skinPck);
+                AddEditorPage("Unsaved skin pack", "Unsaved skin pack", skinPck);
             }
         }
 
@@ -401,7 +422,7 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
-                AddEditorPage(texturePackPck);
+                AddEditorPage("Unsaved texture pack", "Unsaved texture pack", texturePackPck);
             }
         }
 
@@ -411,16 +432,17 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile mashUpPck = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
-                AddEditorPage(mashUpPck);
+                AddEditorPage("Unsaved mash-up pack", "Unsaved mash-up pack", mashUpPck);
             }
         }
 
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetEditor(out IEditor<PckFile> editor))
+            if (TryGetCurrentEditor(out IEditor<PckFile> editor))
             {
-                using AdvancedOptions advanced = new AdvancedOptions(editor.Value);
-                advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
+                using AdvancedOptions advanced = new AdvancedOptions(editor.EditorValue);
+                // TODO: 
+                //advanced.IsLittleEndian = LittleEndianCheckBox.Checked;
                 if (advanced.ShowDialog() == DialogResult.OK)
                 {
                     editor.UpdateView();
@@ -439,13 +461,9 @@ namespace PckStudio
 			info.ShowDialog(this);
 		}
 
-		[Obsolete("Move this")]
+		[Obsolete("ReMove this")]
 		public string GetDataPath()
 		{
-			if (TryGetEditor(out IEditor<PckFile> editor))
-			{
-                return Path.Combine(Path.GetDirectoryName(editor.SavePath), "Data");
-            }
 			return "";
 		}
 
@@ -561,7 +579,7 @@ namespace PckStudio
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetEditor(out IEditor<PckFile> editor))
+            if (TryGetCurrentEditor(out IEditor<PckFile> editor))
             {
                 editor.Save();
             }
@@ -569,7 +587,7 @@ namespace PckStudio
 
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetEditor(out IEditor<PckFile> editor))
+            if (TryGetCurrentEditor(out IEditor<PckFile> editor))
             {
                 editor.SaveAs();
             }
@@ -625,9 +643,9 @@ namespace PckStudio
 
 		private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
 		{
-            if (TryGetEditor(out IEditor<PckFile> editor))
+            if (TryGetCurrentEditor(out IEditor<PckFile> editor))
             {
-                editor.Value.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
+                editor.EditorValue.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
             }
         }
 

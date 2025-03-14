@@ -38,7 +38,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class AnimationEditor : Editor<Animation>
+    public partial class AnimationEditor : EditorForm<Animation>
 	{
 		private bool _isSpecialTile;
 

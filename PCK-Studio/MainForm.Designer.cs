@@ -81,7 +81,6 @@
             this.pckOpen = new System.Windows.Forms.PictureBox();
             this.editorTab = new MetroFramework.Controls.MetroTabPage();
             this.label11 = new MetroFramework.Controls.MetroLabel();
-            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -503,21 +502,11 @@
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
-            // LittleEndianCheckBox
-            // 
-            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
-            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
-            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
-            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.LittleEndianCheckBox.UseSelectable = true;
-            // 
             // MainForm
             // 
             this.ApplyImageInvert = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.LittleEndianCheckBox);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.tabControl);
             this.DisplayHeader = false;
@@ -553,7 +542,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private PckStudio.Controls.CustomTabControl tabControl;
         private MetroFramework.Controls.MetroTabPage editorTab;
-        private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
         private MetroFramework.Controls.MetroLabel label11;
         private System.Windows.Forms.ToolStripMenuItem skinPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem texturePackToolStripMenuItem;

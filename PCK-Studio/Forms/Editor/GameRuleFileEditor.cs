@@ -29,7 +29,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GameRuleFileEditor : Editor<GameRuleFile>
+    public partial class GameRuleFileEditor : EditorForm<GameRuleFile>
     {
         public GameRuleFileEditor(GameRuleFile gameRuleFile, ISaveContext<GameRuleFile> saveContext)
             : base(gameRuleFile, saveContext)

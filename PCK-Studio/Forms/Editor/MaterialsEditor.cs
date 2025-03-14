@@ -12,7 +12,7 @@ using PckStudio.Interfaces;
 namespace PckStudio.Forms.Editor
 {
 	// Materials File Format research by PhoenixARC
-	public partial class MaterialsEditor : Editor<MaterialContainer>
+	public partial class MaterialsEditor : EditorForm<MaterialContainer>
 	{
 		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
 

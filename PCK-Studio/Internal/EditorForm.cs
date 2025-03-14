@@ -9,12 +9,12 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Internal
 {
-    public abstract class Editor<T> : MetroForm where T : class
+    public abstract class EditorForm<T> : MetroForm where T : class
     {
         protected T EditorValue;
         private readonly ISaveContext<T> SaveContext;
 
-        protected Editor(T value, ISaveContext<T> saveContext)
+        protected EditorForm(T value, ISaveContext<T> saveContext)
         {
             _ = value ?? throw new ArgumentNullException(nameof(value));
             EditorValue = value;

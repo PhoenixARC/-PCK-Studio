@@ -47,7 +47,8 @@ namespace PckStudio.Controls
                 PageClosing?.Invoke(this, eventArg);
                 if (!eventArg.Cancel)
                 {
-                    TabPages.RemoveAt(SelectedIndex);
+                    SelectedIndex -= 1;
+                    TabPages.RemoveAt(SelectedIndex + 1);
                 }
             }
         }

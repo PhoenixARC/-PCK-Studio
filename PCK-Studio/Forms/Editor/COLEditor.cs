@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class COLEditor : Editor<ColorContainer>
+	public partial class COLEditor : EditorForm<ColorContainer>
 	{
 		ColorContainer _defaultColourfile;
         string _clipboard_color = "#FFFFFF";

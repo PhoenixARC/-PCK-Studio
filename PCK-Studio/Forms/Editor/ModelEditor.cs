@@ -19,7 +19,7 @@ using OMI.Formats.Material;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class ModelEditor : Editor<ModelContainer>
+    public partial class ModelEditor : EditorForm<ModelContainer>
     {
         private readonly ITryGetSet<string, Image> _textures;
         private readonly ITryGet<string, MaterialContainer.Material> _tryGetEntityMaterial;
