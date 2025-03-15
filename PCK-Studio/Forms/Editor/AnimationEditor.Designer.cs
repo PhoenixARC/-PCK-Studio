@@ -278,7 +278,7 @@
             // InterpolationCheckbox
             // 
             this.InterpolationCheckbox.AutoSize = true;
-            this.InterpolationCheckbox.Location = new System.Drawing.Point(351, 8);
+            this.InterpolationCheckbox.Location = new System.Drawing.Point(341, 6);
             this.InterpolationCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.InterpolationCheckbox.Name = "InterpolationCheckbox";
             this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);

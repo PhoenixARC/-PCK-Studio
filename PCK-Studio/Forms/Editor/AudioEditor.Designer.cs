@@ -68,9 +68,10 @@ namespace PckStudio.Forms.Editor
             // 
             // treeView1
             // 
-            resources.ApplyResources(this.treeView1, "treeView1");
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
+            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.ImageList = this.catImages;
             this.treeView1.LabelEdit = true;
@@ -121,7 +122,7 @@ namespace PckStudio.Forms.Editor
             // menuStrip
             // 
             resources.ApplyResources(this.menuStrip, "menuStrip");
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem,
@@ -221,7 +222,8 @@ namespace PckStudio.Forms.Editor
             // 
             this.treeView2.AllowDrop = true;
             resources.ApplyResources(this.treeView2, "treeView2");
-            this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.treeView2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView2.ContextMenuStrip = this.contextMenuStrip2;
             this.treeView2.ForeColor = System.Drawing.Color.White;
             this.treeView2.Name = "treeView2";
@@ -264,7 +266,7 @@ namespace PckStudio.Forms.Editor
             // playOverworldInCreative
             // 
             resources.ApplyResources(this.playOverworldInCreative, "playOverworldInCreative");
-            this.playOverworldInCreative.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.playOverworldInCreative.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.playOverworldInCreative.ForeColor = System.Drawing.SystemColors.Window;
             this.playOverworldInCreative.Name = "playOverworldInCreative";
             this.playOverworldInCreative.Theme = MetroFramework.MetroThemeStyle.Dark;

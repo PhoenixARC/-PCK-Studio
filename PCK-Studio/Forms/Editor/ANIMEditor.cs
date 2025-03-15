@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Collections.Generic;
-
+﻿using PckStudio.Forms.Additional_Popups;
 using PckStudio.Internal;
-using PckStudio.Forms.Additional_Popups;
-using PckStudio.ToolboxItems;
 using PckStudio.Properties;
+using PckStudio.ToolboxItems;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PckStudio.Forms.Editor
 {
@@ -73,8 +72,8 @@ namespace PckStudio.Forms.Editor
                     {
                         checkbox.Enabled = true; // fix for checkboxes being stuck as disabled
                         checkbox.Checked = state;
-                        switch(checkBoxLinkage[checkbox])
-						{
+                        switch (checkBoxLinkage[checkbox])
+                        {
                             case SkinAnimFlag.FORCE_HEAD_ARMOR:
                             case SkinAnimFlag.FORCE_BODY_ARMOR:
                             case SkinAnimFlag.FORCE_LEFT_ARM_ARMOR:
@@ -86,10 +85,10 @@ namespace PckStudio.Forms.Editor
                             case SkinAnimFlag.RESOLUTION_64x64:
                                 checkbox.Enabled = !state;
                                 // Prioritize slim model > classic model, LCE would
-                                if(state)
+                                if (state)
                                     checkbox.Checked = false;
                                 break;
-						}
+                        }
                         _anim.SetFlag(item.Value, checkbox.Checked);
                     });
                 }
@@ -142,7 +141,7 @@ namespace PckStudio.Forms.Editor
                             checkBoxLinkage[SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR].Enabled = checkBox.Checked;
                             Uncheck(checkBoxLinkage[SkinAnimFlag.FORCE_RIGHT_ARM_ARMOR]);
                             break;
-                        
+
                         case SkinAnimFlag.RESOLUTION_64x64:
                             Uncheck(checkBoxLinkage[SkinAnimFlag.SLIM_MODEL]);
                             checkBoxLinkage[SkinAnimFlag.SLIM_MODEL].Enabled = !checkBox.Checked;
