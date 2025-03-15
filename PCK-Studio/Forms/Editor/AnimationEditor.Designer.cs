@@ -66,20 +66,19 @@
             // frameTreeView
             // 
             this.frameTreeView.AllowDrop = true;
-            this.frameTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
+            this.frameTreeView.Dock = System.Windows.Forms.DockStyle.Left;
             this.frameTreeView.ForeColor = System.Drawing.Color.White;
             this.frameTreeView.ImageIndex = 0;
             this.frameTreeView.ImageList = this.TextureIcons;
-            this.frameTreeView.Location = new System.Drawing.Point(24, 101);
+            this.frameTreeView.Location = new System.Drawing.Point(0, 28);
             this.frameTreeView.Margin = new System.Windows.Forms.Padding(0);
             this.frameTreeView.Name = "frameTreeView";
             this.frameTreeView.SelectedImageIndex = 0;
             this.frameTreeView.ShowLines = false;
             this.frameTreeView.ShowRootLines = false;
-            this.frameTreeView.Size = new System.Drawing.Size(155, 292);
+            this.frameTreeView.Size = new System.Drawing.Size(155, 390);
             this.frameTreeView.TabIndex = 15;
             this.frameTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.frameTreeView_ItemDrag);
             this.frameTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.frameTreeView_AfterSelect);
@@ -120,16 +119,15 @@
             // 
             this.menuStrip.AutoSize = false;
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(24, 69);
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip.Size = new System.Drawing.Size(157, 28);
+            this.menuStrip.Size = new System.Drawing.Size(480, 28);
             this.menuStrip.TabIndex = 14;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -279,8 +277,8 @@
             // InterpolationCheckbox
             // 
             this.InterpolationCheckbox.AutoSize = true;
-            this.InterpolationCheckbox.Location = new System.Drawing.Point(188, 72);
-            this.InterpolationCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InterpolationCheckbox.Location = new System.Drawing.Point(351, 8);
+            this.InterpolationCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.InterpolationCheckbox.Name = "InterpolationCheckbox";
             this.InterpolationCheckbox.Size = new System.Drawing.Size(129, 15);
             this.InterpolationCheckbox.TabIndex = 17;
@@ -293,8 +291,8 @@
             // 
             this.AnimationStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AnimationStartStopBtn.Location = new System.Drawing.Point(183, 366);
-            this.AnimationStartStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AnimationStartStopBtn.Location = new System.Drawing.Point(183, 341);
+            this.AnimationStartStopBtn.Margin = new System.Windows.Forms.Padding(4);
             this.AnimationStartStopBtn.Name = "AnimationStartStopBtn";
             this.AnimationStartStopBtn.Size = new System.Drawing.Size(270, 28);
             this.AnimationStartStopBtn.Style = MetroFramework.MetroColorStyle.White;
@@ -308,11 +306,11 @@
             // 
             this.tileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tileLabel.AutoSize = true;
-            this.tileLabel.Location = new System.Drawing.Point(24, 394);
+            this.tileLabel.Location = new System.Drawing.Point(183, 50);
             this.tileLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tileLabel.MinimumSize = new System.Drawing.Size(199, 22);
             this.tileLabel.Name = "tileLabel";
-            this.tileLabel.Size = new System.Drawing.Size(57, 19);
+            this.tileLabel.Size = new System.Drawing.Size(199, 22);
             this.tileLabel.TabIndex = 20;
             this.tileLabel.Text = "tileLabel";
             this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -326,8 +324,8 @@
             this.animationPictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
             this.animationPictureBox.Image = null;
             this.animationPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.animationPictureBox.Location = new System.Drawing.Point(183, 101);
-            this.animationPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.animationPictureBox.Location = new System.Drawing.Point(183, 76);
+            this.animationPictureBox.Margin = new System.Windows.Forms.Padding(4);
             this.animationPictureBox.Name = "animationPictureBox";
             this.animationPictureBox.Size = new System.Drawing.Size(274, 258);
             this.animationPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -350,7 +348,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(478, 411);
             this.Name = "AnimationEditor";
             this.Text = "Animation Editor";
