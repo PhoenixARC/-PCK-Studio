@@ -7031,12 +7031,6 @@
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;themeColorToolStripMenuItem.Name" xml:space="preserve">
-    <value>themeColorToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;themeColorToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;videosToolStripMenuItem.Name" xml:space="preserve">
     <value>videosToolStripMenuItem</value>
   </data>
@@ -7083,6 +7077,12 @@
     <value>trelloBoardToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;trelloBoardToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;themeColorToolStripMenuItem.Name" xml:space="preserve">
+    <value>themeColorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;themeColorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">

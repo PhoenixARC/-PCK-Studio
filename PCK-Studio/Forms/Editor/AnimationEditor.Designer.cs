@@ -66,7 +66,8 @@
             // frameTreeView
             // 
             this.frameTreeView.AllowDrop = true;
-            this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.frameTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.frameTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.frameTreeView.ContextMenuStrip = this.contextMenuStrip1;
             this.frameTreeView.Dock = System.Windows.Forms.DockStyle.Left;
             this.frameTreeView.ForeColor = System.Drawing.Color.White;
@@ -118,7 +119,7 @@
             // menuStrip
             // 
             this.menuStrip.AutoSize = false;
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -310,7 +311,7 @@
             this.tileLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tileLabel.MinimumSize = new System.Drawing.Size(199, 22);
             this.tileLabel.Name = "tileLabel";
-            this.tileLabel.Size = new System.Drawing.Size(199, 22);
+            this.tileLabel.Size = new System.Drawing.Size(57, 19);
             this.tileLabel.TabIndex = 20;
             this.tileLabel.Text = "tileLabel";
             this.tileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;

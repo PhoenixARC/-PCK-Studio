@@ -81,7 +81,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(291, 593);
+            this.saveButton.Location = new System.Drawing.Point(281, 546);
             this.saveButton.Margin = new System.Windows.Forms.Padding(4);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(147, 26);
@@ -108,7 +108,7 @@
             this.effectsGroup.Controls.Add(this.classicCheckBox);
             this.effectsGroup.Controls.Add(this.rightArmOCheckBox);
             this.effectsGroup.ForeColor = System.Drawing.SystemColors.Window;
-            this.effectsGroup.Location = new System.Drawing.Point(25, 171);
+            this.effectsGroup.Location = new System.Drawing.Point(15, 124);
             this.effectsGroup.Margin = new System.Windows.Forms.Padding(4);
             this.effectsGroup.Name = "effectsGroup";
             this.effectsGroup.Padding = new System.Windows.Forms.Padding(4);
@@ -350,7 +350,7 @@
             this.effectsGroup2.Controls.Add(this.leftArmorCheckBox);
             this.effectsGroup2.Controls.Add(this.chestplateCheckBox);
             this.effectsGroup2.ForeColor = System.Drawing.SystemColors.Window;
-            this.effectsGroup2.Location = new System.Drawing.Point(491, 211);
+            this.effectsGroup2.Location = new System.Drawing.Point(481, 164);
             this.effectsGroup2.Margin = new System.Windows.Forms.Padding(4);
             this.effectsGroup2.Name = "effectsGroup2";
             this.effectsGroup2.Padding = new System.Windows.Forms.Padding(4);
@@ -464,7 +464,7 @@
             this.groupBox1.Controls.Add(this.zombieCheckBox);
             this.groupBox1.Controls.Add(this.staticLegsCheckBox);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBox1.Location = new System.Drawing.Point(25, 448);
+            this.groupBox1.Location = new System.Drawing.Point(15, 401);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
@@ -648,7 +648,7 @@
             // 
             // copyButton
             // 
-            this.copyButton.Location = new System.Drawing.Point(496, 138);
+            this.copyButton.Location = new System.Drawing.Point(486, 91);
             this.copyButton.Margin = new System.Windows.Forms.Padding(4);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(202, 26);
@@ -660,7 +660,7 @@
             // 
             // importButton
             // 
-            this.importButton.Location = new System.Drawing.Point(38, 138);
+            this.importButton.Location = new System.Drawing.Point(28, 91);
             this.importButton.Margin = new System.Windows.Forms.Padding(4);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(217, 26);
@@ -672,7 +672,7 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(267, 138);
+            this.exportButton.Location = new System.Drawing.Point(257, 91);
             this.exportButton.Margin = new System.Windows.Forms.Padding(4);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(217, 26);
@@ -687,7 +687,7 @@
             this.animValue.AutoSize = true;
             this.animValue.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.animValue.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.animValue.Location = new System.Drawing.Point(304, 69);
+            this.animValue.Location = new System.Drawing.Point(294, 22);
             this.animValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.animValue.Name = "animValue";
             this.animValue.Size = new System.Drawing.Size(110, 25);
@@ -698,7 +698,7 @@
             // 
             // uncheckAllButton
             // 
-            this.uncheckAllButton.Location = new System.Drawing.Point(267, 104);
+            this.uncheckAllButton.Location = new System.Drawing.Point(257, 57);
             this.uncheckAllButton.Margin = new System.Windows.Forms.Padding(4);
             this.uncheckAllButton.Name = "uncheckAllButton";
             this.uncheckAllButton.Size = new System.Drawing.Size(217, 26);
@@ -710,7 +710,7 @@
             // 
             // checkAllButton
             // 
-            this.checkAllButton.Location = new System.Drawing.Point(38, 104);
+            this.checkAllButton.Location = new System.Drawing.Point(28, 57);
             this.checkAllButton.Margin = new System.Windows.Forms.Padding(4);
             this.checkAllButton.Name = "checkAllButton";
             this.checkAllButton.Size = new System.Drawing.Size(217, 26);
@@ -729,7 +729,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(496, 104);
+            this.resetButton.Location = new System.Drawing.Point(486, 57);
             this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(202, 26);
@@ -741,7 +741,7 @@
             // 
             // templateButton
             // 
-            this.templateButton.Location = new System.Drawing.Point(496, 178);
+            this.templateButton.Location = new System.Drawing.Point(486, 131);
             this.templateButton.Margin = new System.Windows.Forms.Padding(4);
             this.templateButton.Name = "templateButton";
             this.templateButton.Size = new System.Drawing.Size(202, 26);

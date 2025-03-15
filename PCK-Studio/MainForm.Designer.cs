@@ -106,7 +106,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.themeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toNobledezJackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,6 +114,7 @@
             this.forEternalModzContributorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinDevelopmentDiscordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trelloBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToMakeABasicSkinPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToMakeACustomSkinModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -718,13 +718,6 @@
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // themeColorToolStripMenuItem
-            // 
-            this.themeColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Theme_Color_Icon;
-            this.themeColorToolStripMenuItem.Name = "themeColorToolStripMenuItem";
-            resources.ApplyResources(this.themeColorToolStripMenuItem, "themeColorToolStripMenuItem");
-            this.themeColorToolStripMenuItem.Click += new System.EventHandler(this.themeColorToolStripMenuItem_Click);
-            // 
             // videosToolStripMenuItem
             // 
             this.videosToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Minecraft_Book_Videos_Icon;
@@ -777,6 +770,13 @@
             this.trelloBoardToolStripMenuItem.Name = "trelloBoardToolStripMenuItem";
             resources.ApplyResources(this.trelloBoardToolStripMenuItem, "trelloBoardToolStripMenuItem");
             this.trelloBoardToolStripMenuItem.Click += new System.EventHandler(this.trelloBoardToolStripMenuItem_Click);
+            // 
+            // themeColorToolStripMenuItem
+            // 
+            this.themeColorToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Theme_Color_Icon;
+            this.themeColorToolStripMenuItem.Name = "themeColorToolStripMenuItem";
+            resources.ApplyResources(this.themeColorToolStripMenuItem, "themeColorToolStripMenuItem");
+            this.themeColorToolStripMenuItem.Click += new System.EventHandler(this.themeColorToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
