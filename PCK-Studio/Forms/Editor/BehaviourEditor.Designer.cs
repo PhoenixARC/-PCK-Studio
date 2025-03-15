@@ -60,10 +60,11 @@
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView1.ContextMenuStrip = this.metroContextMenu1;
             this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.Location = new System.Drawing.Point(24, 97);
+            this.treeView1.Location = new System.Drawing.Point(24, 60);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(217, 203);
@@ -122,7 +123,7 @@
             // menuStrip
             // 
             this.menuStrip.AutoSize = false;
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -161,8 +162,8 @@
             // 
             this.MobIsTamedCheckbox.AutoSize = true;
             this.MobIsTamedCheckbox.Enabled = false;
-            this.MobIsTamedCheckbox.Location = new System.Drawing.Point(258, 120);
-            this.MobIsTamedCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MobIsTamedCheckbox.Location = new System.Drawing.Point(258, 83);
+            this.MobIsTamedCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.MobIsTamedCheckbox.Name = "MobIsTamedCheckbox";
             this.MobIsTamedCheckbox.Size = new System.Drawing.Size(96, 15);
             this.MobIsTamedCheckbox.TabIndex = 22;
@@ -175,8 +176,8 @@
             // 
             this.MobHasSaddleCheckbox.AutoSize = true;
             this.MobHasSaddleCheckbox.Enabled = false;
-            this.MobHasSaddleCheckbox.Location = new System.Drawing.Point(258, 157);
-            this.MobHasSaddleCheckbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MobHasSaddleCheckbox.Location = new System.Drawing.Point(258, 120);
+            this.MobHasSaddleCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.MobHasSaddleCheckbox.Name = "MobHasSaddleCheckbox";
             this.MobHasSaddleCheckbox.Size = new System.Drawing.Size(106, 15);
             this.MobHasSaddleCheckbox.TabIndex = 23;
@@ -191,8 +192,8 @@
             this.zUpDown.DecimalPlaces = 3;
             this.zUpDown.Enabled = false;
             this.zUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.zUpDown.Location = new System.Drawing.Point(297, 254);
-            this.zUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zUpDown.Location = new System.Drawing.Point(297, 217);
+            this.zUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.zUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -214,8 +215,8 @@
             this.yUpDown.DecimalPlaces = 3;
             this.yUpDown.Enabled = false;
             this.yUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.yUpDown.Location = new System.Drawing.Point(297, 224);
-            this.yUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.yUpDown.Location = new System.Drawing.Point(297, 187);
+            this.yUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.yUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -234,7 +235,7 @@
             // zLabel
             // 
             this.zLabel.AutoSize = true;
-            this.zLabel.Location = new System.Drawing.Point(258, 254);
+            this.zLabel.Location = new System.Drawing.Point(258, 217);
             this.zLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zLabel.Name = "zLabel";
             this.zLabel.Size = new System.Drawing.Size(20, 19);
@@ -245,7 +246,7 @@
             // yLabel
             // 
             this.yLabel.AutoSize = true;
-            this.yLabel.Location = new System.Drawing.Point(259, 224);
+            this.yLabel.Location = new System.Drawing.Point(259, 187);
             this.yLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(20, 19);
@@ -259,8 +260,8 @@
             this.xUpDown.DecimalPlaces = 3;
             this.xUpDown.Enabled = false;
             this.xUpDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.xUpDown.Location = new System.Drawing.Point(297, 194);
-            this.xUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.xUpDown.Location = new System.Drawing.Point(297, 157);
+            this.xUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.xUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -279,7 +280,7 @@
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(259, 194);
+            this.xLabel.Location = new System.Drawing.Point(259, 157);
             this.xLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(20, 19);
@@ -307,7 +308,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BehaviourEditor";
             this.Text = "Behaviour Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BehaviourEditor_FormClosing);
