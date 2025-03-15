@@ -42,24 +42,28 @@
             // metroLabel1
             // 
             metroLabel1.AutoSize = true;
-            metroLabel1.Location = new System.Drawing.Point(21, 31);
+            metroLabel1.Location = new System.Drawing.Point(30, 20);
             metroLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             metroLabel1.Name = "metroLabel1";
             metroLabel1.Size = new System.Drawing.Size(48, 19);
             metroLabel1.TabIndex = 4;
             metroLabel1.Text = "Name:";
             metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            metroLabel1.UseCustomBackColor = true;
+            metroLabel1.UseCustomForeColor = true;
             // 
             // metroLabel2
             // 
             metroLabel2.AutoSize = true;
-            metroLabel2.Location = new System.Drawing.Point(20, 64);
+            metroLabel2.Location = new System.Drawing.Point(36, 53);
             metroLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             metroLabel2.Name = "metroLabel2";
             metroLabel2.Size = new System.Drawing.Size(42, 19);
             metroLabel2.TabIndex = 5;
             metroLabel2.Text = "Value:";
             metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            metroLabel2.UseCustomBackColor = true;
+            metroLabel2.UseCustomForeColor = true;
             // 
             // NameTextBox
             // 
@@ -69,18 +73,18 @@
             // 
             // 
             this.NameTextBox.CustomButton.Image = null;
-            this.NameTextBox.CustomButton.Location = new System.Drawing.Point(107, 1);
-            this.NameTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NameTextBox.CustomButton.Location = new System.Drawing.Point(168, 2);
+            this.NameTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(4);
             this.NameTextBox.CustomButton.Name = "";
-            this.NameTextBox.CustomButton.Size = new System.Drawing.Size(13, 13);
+            this.NameTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.NameTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.NameTextBox.CustomButton.TabIndex = 1;
             this.NameTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.NameTextBox.CustomButton.UseSelectable = true;
             this.NameTextBox.CustomButton.Visible = false;
             this.NameTextBox.Lines = new string[0];
-            this.NameTextBox.Location = new System.Drawing.Point(84, 31);
-            this.NameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NameTextBox.Location = new System.Drawing.Point(86, 20);
+            this.NameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NameTextBox.MaxLength = 32767;
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.PasswordChar = '\0';
@@ -103,18 +107,18 @@
             // 
             // 
             this.ValueTextBox.CustomButton.Image = null;
-            this.ValueTextBox.CustomButton.Location = new System.Drawing.Point(107, 1);
-            this.ValueTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ValueTextBox.CustomButton.Location = new System.Drawing.Point(168, 2);
+            this.ValueTextBox.CustomButton.Margin = new System.Windows.Forms.Padding(4);
             this.ValueTextBox.CustomButton.Name = "";
-            this.ValueTextBox.CustomButton.Size = new System.Drawing.Size(13, 13);
+            this.ValueTextBox.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ValueTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ValueTextBox.CustomButton.TabIndex = 1;
             this.ValueTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ValueTextBox.CustomButton.UseSelectable = true;
             this.ValueTextBox.CustomButton.Visible = false;
             this.ValueTextBox.Lines = new string[0];
-            this.ValueTextBox.Location = new System.Drawing.Point(84, 64);
-            this.ValueTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ValueTextBox.Location = new System.Drawing.Point(86, 53);
+            this.ValueTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ValueTextBox.MaxLength = 32767;
             this.ValueTextBox.Name = "ValueTextBox";
             this.ValueTextBox.PasswordChar = '\0';
@@ -134,7 +138,7 @@
             // 
             this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelBtn.Location = new System.Drawing.Point(27, 98);
-            this.CancelBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CancelBtn.Margin = new System.Windows.Forms.Padding(4);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(111, 26);
             this.CancelBtn.Style = MetroFramework.MetroColorStyle.White;
@@ -146,7 +150,7 @@
             // ConfirmBtn
             // 
             this.ConfirmBtn.Location = new System.Drawing.Point(164, 98);
-            this.ConfirmBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ConfirmBtn.Margin = new System.Windows.Forms.Padding(4);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(112, 26);
             this.ConfirmBtn.Style = MetroFramework.MetroColorStyle.White;
@@ -173,7 +177,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddParameter";

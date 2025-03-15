@@ -38,7 +38,7 @@
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.ItemHeight = 23;
             this.LanguageComboBox.Location = new System.Drawing.Point(27, 14);
-            this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.LanguageComboBox.Name = "LanguageComboBox";
             this.LanguageComboBox.Size = new System.Drawing.Size(283, 29);
             this.LanguageComboBox.Style = MetroFramework.MetroColorStyle.Black;
@@ -65,7 +65,7 @@
             this.AddButton.Image = ((System.Drawing.Image)(resources.GetObject("AddButton.Image")));
             this.AddButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.AddButton.Location = new System.Drawing.Point(98, 56);
-            this.AddButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(140, 46);
             this.AddButton.TabIndex = 18;
@@ -88,7 +88,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(334, 155);

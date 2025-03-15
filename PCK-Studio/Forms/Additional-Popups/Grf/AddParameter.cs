@@ -1,7 +1,7 @@
-﻿using PckStudio.ToolboxItems;
+﻿using OMI.Formats.GameRule;
+using PckStudio.ToolboxItems;
 using System;
 using System.Windows.Forms;
-using OMI.Formats.GameRule;
 
 namespace PckStudio.Forms.Additional_Popups.Grf
 {
@@ -10,14 +10,14 @@ namespace PckStudio.Forms.Additional_Popups.Grf
         public string ParameterName => NameTextBox.Text;
         public string ParameterValue => ValueTextBox.Text;
 
-        
+
         public AddParameter()
         {
             InitializeComponent();
             NameTextBox.AutoCompleteCustomSource = new AutoCompleteStringCollection();
             NameTextBox.AutoCompleteCustomSource.AddRange(GameRuleFile.GameRule.ValidParameters);
         }
-        
+
         public AddParameter(string parameterName, string parameterValue, bool isKeyReadonly = true) : this()
         {
             NameTextBox.Text = parameterName;
