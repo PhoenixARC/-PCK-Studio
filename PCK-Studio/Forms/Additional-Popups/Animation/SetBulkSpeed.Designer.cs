@@ -43,7 +43,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(14, 36);
+            this.label1.Location = new System.Drawing.Point(38, 41);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 15);
@@ -67,7 +67,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.TimeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.TimeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TimeUpDown.ForeColor = System.Drawing.SystemColors.Window;
-            this.TimeUpDown.Location = new System.Drawing.Point(118, 34);
+            this.TimeUpDown.Location = new System.Drawing.Point(142, 39);
             this.TimeUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TimeUpDown.Maximum = new decimal(new int[] {
             10000,
@@ -75,7 +75,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             0,
             0});
             this.TimeUpDown.Name = "TimeUpDown";
-            this.TimeUpDown.Size = new System.Drawing.Size(189, 23);
+            this.TimeUpDown.Size = new System.Drawing.Size(140, 23);
             this.TimeUpDown.TabIndex = 15;
             this.TimeUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -97,10 +97,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.CancelButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(36)))), ((int)(((byte)(38)))));
             this.CancelButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelButton.Image")));
             this.CancelButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.CancelButton.Location = new System.Drawing.Point(164, 90);
+            this.CancelButton.Location = new System.Drawing.Point(164, 89);
             this.CancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(106, 46);
+            this.CancelButton.Size = new System.Drawing.Size(81, 39);
             this.CancelButton.TabIndex = 24;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -127,10 +127,10 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.SaveButton.HoverOverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(165)))));
             this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
             this.SaveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.SaveButton.Location = new System.Drawing.Point(50, 90);
+            this.SaveButton.Location = new System.Drawing.Point(75, 89);
             this.SaveButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(106, 46);
+            this.SaveButton.Size = new System.Drawing.Size(81, 39);
             this.SaveButton.TabIndex = 23;
             this.SaveButton.Text = "Save";
             this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -144,7 +144,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(321, 148);
+            this.ClientSize = new System.Drawing.Size(321, 140);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.label3);

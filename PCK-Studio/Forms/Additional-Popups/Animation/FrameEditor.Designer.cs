@@ -49,7 +49,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label1.Location = new System.Drawing.Point(219, 45);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
+            this.label1.Size = new System.Drawing.Size(126, 30);
             this.label1.TabIndex = 10;
             this.label1.Text = "Frame Time:";
             // 
@@ -61,7 +61,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             this.label3.Location = new System.Drawing.Point(133, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 15);
+            this.label3.Size = new System.Drawing.Size(213, 30);
             this.label3.TabIndex = 12;
             this.label3.Text = "may/matt was here :3";
             // 
@@ -83,7 +83,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             0,
             0});
             this.FrameTimeUpDown.Name = "FrameTimeUpDown";
-            this.FrameTimeUpDown.Size = new System.Drawing.Size(85, 23);
+            this.FrameTimeUpDown.Size = new System.Drawing.Size(85, 35);
             this.FrameTimeUpDown.TabIndex = 15;
             this.FrameTimeUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.FrameTimeUpDown.Value = new decimal(new int[] {
@@ -177,7 +177,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
             // 
             // FrameEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(399, 241);
