@@ -1270,7 +1270,7 @@
 </value>
   </data>
   <data name="openToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+O</value>
+    <value>Control+O</value>
   </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1352,7 +1352,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+S</value>
+    <value>Control+S</value>
   </data>
   <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1374,7 +1374,7 @@
 </value>
   </data>
   <data name="saveToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Shift+S</value>
+    <value>Control+Shift+S</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1657,7 +1657,7 @@
 </value>
   </data>
   <data name="quickChangeToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Q</value>
+    <value>Control+Q</value>
   </data>
   <data name="quickChangeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 22</value>
