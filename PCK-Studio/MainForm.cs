@@ -1512,6 +1512,8 @@ namespace PckStudio
 
 			PckFile infoPCK = new PckFile(3);
 
+			pack.GetAsset("localisation.loc", PckAssetType.LocalisationFile).Filename = "languages.loc";
+
             PckAsset iconAsset = infoPCK.CreateNewAsset("icon.png", PckAssetType.TextureFile);
 			iconAsset.SetTexture(Resources.TexturePackIcon);
 
@@ -1559,7 +1561,7 @@ namespace PckStudio
 			namePrompt.OKButtonText = "Ok";
 			if (namePrompt.ShowDialog(this) == DialogResult.OK)
 			{
-				currentPCK = InitializePack(new Random().Next(8000, int.MaxValue), 0, namePrompt.NewText, false);
+				currentPCK = InitializePack(new Random().Next(8000, 16777215), 0, namePrompt.NewText, false); // 16777215 being the uint24 max value
                 MarkTemplateFile();
                 LoadEditorTab();
 			}
@@ -1571,7 +1573,7 @@ namespace PckStudio
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
             {
-                currentPCK = InitializeTexturePack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
+                currentPCK = InitializeTexturePack(new Random().Next(8000, 16777215), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck); // 16777215 being the uint24 max value
                 MarkTemplateFile();
                 LoadEditorTab();
             }
@@ -1583,7 +1585,7 @@ namespace PckStudio
 			CreateTexturePackPrompt packPrompt = new CreateTexturePackPrompt();
 			if (packPrompt.ShowDialog(this) == DialogResult.OK)
 			{
-				currentPCK = InitializeMashUpPack(new Random().Next(8000, int.MaxValue), 0, packPrompt.PackName, packPrompt.PackRes);
+				currentPCK = InitializeMashUpPack(new Random().Next(8000, 16777215), 0, packPrompt.PackName, packPrompt.PackRes); // 16777215 being the uint24 max value
                 MarkTemplateFile();
                 LoadEditorTab();
 			}
