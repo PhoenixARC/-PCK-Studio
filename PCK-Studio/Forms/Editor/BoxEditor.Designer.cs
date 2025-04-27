@@ -67,7 +67,7 @@
             // 
             parentLabel.AutoSize = true;
             parentLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            parentLabel.Location = new System.Drawing.Point(416, 83);
+            parentLabel.Location = new System.Drawing.Point(416, 28);
             parentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             parentLabel.Name = "parentLabel";
             parentLabel.Size = new System.Drawing.Size(64, 25);
@@ -79,7 +79,7 @@
             // 
             positionLabel.AutoSize = true;
             positionLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            positionLabel.Location = new System.Drawing.Point(38, 83);
+            positionLabel.Location = new System.Drawing.Point(38, 28);
             positionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             positionLabel.Name = "positionLabel";
             positionLabel.Size = new System.Drawing.Size(75, 25);
@@ -91,7 +91,7 @@
             // 
             sizeLabel.AutoSize = true;
             sizeLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            sizeLabel.Location = new System.Drawing.Point(38, 112);
+            sizeLabel.Location = new System.Drawing.Point(38, 57);
             sizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             sizeLabel.Name = "sizeLabel";
             sizeLabel.Size = new System.Drawing.Size(46, 25);
@@ -103,7 +103,7 @@
             // 
             uvLabel.AutoSize = true;
             uvLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            uvLabel.Location = new System.Drawing.Point(38, 142);
+            uvLabel.Location = new System.Drawing.Point(38, 87);
             uvLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             uvLabel.Name = "uvLabel";
             uvLabel.Size = new System.Drawing.Size(39, 25);
@@ -115,7 +115,7 @@
             // 
             inflationLabel.AutoSize = true;
             inflationLabel.FontSize = MetroFramework.MetroLabelSize.Tall;
-            inflationLabel.Location = new System.Drawing.Point(38, 172);
+            inflationLabel.Location = new System.Drawing.Point(38, 117);
             inflationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             inflationLabel.Name = "inflationLabel";
             inflationLabel.Size = new System.Drawing.Size(55, 25);
@@ -125,7 +125,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(294, 216);
+            this.closeButton.Location = new System.Drawing.Point(294, 161);
             this.closeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(147, 27);
@@ -170,7 +170,7 @@
             "ARMARMOR0",
             "BODYARMOR",
             "BELT"});
-            this.parentComboBox.Location = new System.Drawing.Point(486, 83);
+            this.parentComboBox.Location = new System.Drawing.Point(486, 28);
             this.parentComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.parentComboBox.Name = "parentComboBox";
             this.parentComboBox.Size = new System.Drawing.Size(190, 29);
@@ -188,7 +188,7 @@
             0,
             0,
             65536});
-            this.PosXUpDown.Location = new System.Drawing.Point(140, 88);
+            this.PosXUpDown.Location = new System.Drawing.Point(140, 33);
             this.PosXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosXUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -214,7 +214,7 @@
             0,
             0,
             65536});
-            this.PosYUpDown.Location = new System.Drawing.Point(232, 88);
+            this.PosYUpDown.Location = new System.Drawing.Point(232, 33);
             this.PosYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosYUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -240,7 +240,7 @@
             0,
             0,
             65536});
-            this.PosZUpDown.Location = new System.Drawing.Point(324, 88);
+            this.PosZUpDown.Location = new System.Drawing.Point(324, 33);
             this.PosZUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PosZUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -266,7 +266,7 @@
             0,
             0,
             65536});
-            this.SizeZUpDown.Location = new System.Drawing.Point(324, 118);
+            this.SizeZUpDown.Location = new System.Drawing.Point(324, 63);
             this.SizeZUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeZUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -287,7 +287,7 @@
             0,
             0,
             65536});
-            this.SizeYUpDown.Location = new System.Drawing.Point(232, 118);
+            this.SizeYUpDown.Location = new System.Drawing.Point(232, 63);
             this.SizeYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeYUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -308,7 +308,7 @@
             0,
             0,
             65536});
-            this.SizeXUpDown.Location = new System.Drawing.Point(140, 118);
+            this.SizeXUpDown.Location = new System.Drawing.Point(140, 63);
             this.SizeXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SizeXUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -329,7 +329,7 @@
             0,
             0,
             65536});
-            this.uvYUpDown.Location = new System.Drawing.Point(232, 148);
+            this.uvYUpDown.Location = new System.Drawing.Point(232, 93);
             this.uvYUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.uvYUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -355,7 +355,7 @@
             0,
             0,
             65536});
-            this.uvXUpDown.Location = new System.Drawing.Point(140, 148);
+            this.uvXUpDown.Location = new System.Drawing.Point(140, 93);
             this.uvXUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.uvXUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -378,7 +378,7 @@
             this.armorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
             this.armorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
             this.armorCheckBox.ForeColor = System.Drawing.Color.White;
-            this.armorCheckBox.Location = new System.Drawing.Point(424, 117);
+            this.armorCheckBox.Location = new System.Drawing.Point(424, 62);
             this.armorCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.armorCheckBox.Name = "armorCheckBox";
             this.armorCheckBox.Size = new System.Drawing.Size(225, 25);
@@ -392,7 +392,7 @@
             this.mirrorCheckBox.AutoSize = true;
             this.mirrorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
             this.mirrorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
-            this.mirrorCheckBox.Location = new System.Drawing.Point(424, 150);
+            this.mirrorCheckBox.Location = new System.Drawing.Point(424, 95);
             this.mirrorCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.mirrorCheckBox.Name = "mirrorCheckBox";
             this.mirrorCheckBox.Size = new System.Drawing.Size(133, 25);
@@ -411,7 +411,7 @@
             0,
             0,
             65536});
-            this.inflationUpDown.Location = new System.Drawing.Point(140, 178);
+            this.inflationUpDown.Location = new System.Drawing.Point(140, 123);
             this.inflationUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.inflationUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -427,7 +427,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(716, 254);
+            this.ClientSize = new System.Drawing.Size(716, 216);
             this.Controls.Add(this.inflationUpDown);
             this.Controls.Add(this.uvYUpDown);
             this.Controls.Add(this.uvXUpDown);

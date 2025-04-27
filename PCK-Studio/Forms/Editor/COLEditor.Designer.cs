@@ -99,6 +99,7 @@ namespace PckStudio.Forms.Editor
             // 
             // metroPanel1
             // 
+            this.metroPanel1.Controls.Add(this.tabControl);
             this.metroPanel1.Controls.Add(this.metroTextBox1);
             this.metroPanel1.Controls.Add(this.metroLabel2);
             this.metroPanel1.Controls.Add(this.setColorBtn);
@@ -544,7 +545,6 @@ namespace PckStudio.Forms.Editor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.Controls.Add(this.menuStrip);
-            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.metroPanel1);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "COLEditor";
