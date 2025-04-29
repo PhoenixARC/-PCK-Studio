@@ -664,5 +664,64 @@ namespace PckStudio.Forms.Editor
                 RemoveEntry(entry, colorCache);
             }
         }
+
+        private void colorSelectBtn_Click(object sender, EventArgs e)
+        {
+			// Select custom colors with a visual window instead of just the textboxes :D
+            using (ColorDialog colorDialog = new ColorDialog())
+            {
+                colorDialog.FullOpen = true; // Show the full dialog
+                colorDialog.AnyColor = true; // Allow any color to be selected
+                colorDialog.Color = pictureBox1.BackColor; // Set initial color to current color
+
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Color selectedColor = colorDialog.Color;
+
+                    // Update the color display
+                    pictureBox1.BackColor = selectedColor;
+
+                    // Update the number up/down controls
+                    SetUpValueChanged(false); // Temporarily disable event handlers
+
+                    if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null)
+                    {
+                        // For water color, preserve alpha unless we're specifically editing water surface stuff
+                        alphaUpDown.Value = selectedColor.A;
+                    }
+
+                    redUpDown.Value = selectedColor.R;
+                    greenUpDown.Value = selectedColor.G;
+                    blueUpDown.Value = selectedColor.B;
+
+                    // Update the hex textbox
+                    colorTextbox.Text = ColorTranslator.ToHtml(selectedColor).TrimStart('#');
+
+                    SetUpValueChanged(true); // Re-enable event handlers
+
+                    // Update the actual color data based on which tab/view is selected
+                    if (tabControl.SelectedTab == colorsTab && colorTreeView.SelectedNode != null)
+                    {
+                        var colorEntry = (ColorContainer.Color)colorTreeView.SelectedNode.Tag;
+                        colorEntry.ColorPallette = Color.FromArgb(selectedColor.R, selectedColor.G, selectedColor.B);
+                    }
+                    else if (tabControl.SelectedTab == waterTab && waterTreeView.SelectedNode != null)
+                    {
+                        var waterEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
+                        waterEntry.SurfaceColor = selectedColor;
+                    }
+                    else if (tabControl.SelectedTab == underwaterTab && underwaterTreeView.SelectedNode != null)
+                    {
+                        var waterEntry = (ColorContainer.WaterColor)underwaterTreeView.SelectedNode.Tag;
+                        waterEntry.UnderwaterColor = Color.FromArgb(selectedColor.R, selectedColor.G, selectedColor.B);
+                    }
+                    else if (tabControl.SelectedTab == fogTab && fogTreeView.SelectedNode != null)
+                    {
+                        var waterEntry = (ColorContainer.WaterColor)fogTreeView.SelectedNode.Tag;
+                        waterEntry.FogColor = Color.FromArgb(selectedColor.R, selectedColor.G, selectedColor.B);
+                    }
+                }
+            }
+        }
     }
 }
