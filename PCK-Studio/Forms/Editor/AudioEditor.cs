@@ -61,7 +61,7 @@ namespace PckStudio.Forms.Editor
 
         private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
 			=> categoryId >= PckAudioFile.AudioCategory.EAudioType.Overworld &&
-				categoryId <= PckAudioFile.AudioCategory.EAudioType.Unused
+				categoryId <= PckAudioFile.AudioCategory.EAudioType.BuildOff
 				? Categories[(int)categoryId]
 				: "Not valid";
 

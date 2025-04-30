@@ -32,7 +32,7 @@ namespace PckStudio.Internal.FileFormats
 				Battle,
 				Tumble,
 				Glide,
-				Unused,
+				BuildOff,
 			}
 
 			public enum EAudioParameterType : int
@@ -108,7 +108,7 @@ namespace PckStudio.Internal.FileFormats
 		public AudioCategory GetCategory(AudioCategory.EAudioType category)
 		{
 			if (category < AudioCategory.EAudioType.Overworld ||
-				category > AudioCategory.EAudioType.Unused)
+				category > AudioCategory.EAudioType.BuildOff)
 				throw new InvalidCategoryException(nameof(category));
 			return _categories[(int)category];
 		}
@@ -130,7 +130,7 @@ namespace PckStudio.Internal.FileFormats
 		public bool AddCategory(AudioCategory.EAudioParameterType parameterType, AudioCategory.EAudioType category, string name = "")
 		{
 			if (category < AudioCategory.EAudioType.Overworld ||
-				category > AudioCategory.EAudioType.Unused)
+				category > AudioCategory.EAudioType.BuildOff)
 				throw new InvalidCategoryException(nameof(category));
 			bool exists = HasCategory(category);
 			if (!exists)
