@@ -48,10 +48,11 @@
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView1.ContextMenuStrip = this.metroContextMenu1;
             this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.Location = new System.Drawing.Point(24, 97);
+            this.treeView1.Location = new System.Drawing.Point(23, 41);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(287, 270);
@@ -85,7 +86,7 @@
             // menuStrip
             // 
             this.menuStrip.AutoSize = false;
-            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -123,7 +124,7 @@
             // xLabel
             // 
             this.xLabel.AutoSize = true;
-            this.xLabel.Location = new System.Drawing.Point(115, 375);
+            this.xLabel.Location = new System.Drawing.Point(121, 333);
             this.xLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.xLabel.Name = "xLabel";
             this.xLabel.Size = new System.Drawing.Size(91, 19);
@@ -142,8 +143,8 @@
             "entity_emissive_alpha_only",
             "entity_alphatest_change_color",
             "entity_change_color"});
-            this.materialComboBox.Location = new System.Drawing.Point(24, 401);
-            this.materialComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.materialComboBox.Location = new System.Drawing.Point(23, 359);
+            this.materialComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.materialComboBox.Name = "materialComboBox";
             this.materialComboBox.Size = new System.Drawing.Size(287, 29);
             this.materialComboBox.TabIndex = 31;
@@ -156,7 +157,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(333, 461);
+            this.ClientSize = new System.Drawing.Size(333, 408);
             this.Controls.Add(this.materialComboBox);
             this.Controls.Add(this.xLabel);
             this.Controls.Add(this.menuStrip);
@@ -165,7 +166,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MaterialsEditor";
             this.Text = "Materials Editor";
             this.metroContextMenu1.ResumeLayout(false);
