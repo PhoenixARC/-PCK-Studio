@@ -81,7 +81,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(281, 546);
+            this.saveButton.Location = new System.Drawing.Point(285, 550);
             this.saveButton.Margin = new System.Windows.Forms.Padding(4);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(147, 26);
@@ -687,7 +687,7 @@
             this.animValue.AutoSize = true;
             this.animValue.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.animValue.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.animValue.Location = new System.Drawing.Point(294, 22);
+            this.animValue.Location = new System.Drawing.Point(303, 14);
             this.animValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.animValue.Name = "animValue";
             this.animValue.Size = new System.Drawing.Size(110, 25);
