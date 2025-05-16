@@ -17,6 +17,7 @@ namespace PckStudio.Forms.Editor
     {
         LOCFile _currentLoc;
         PckAsset _asset;
+        private bool _isModified = false; // Track changes to the LOC strings
 
         public LOCEditor(PckAsset asset)
         {
@@ -36,8 +37,7 @@ namespace PckStudio.Forms.Editor
         private void treeViewLocKeys_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode node = e.Node;
-            if (node == null ||
-                !_currentLoc.LocKeys.ContainsKey(node.Text))
+            if (node == null || !_currentLoc.LocKeys.ContainsKey(node.Text))
             {
                 MessageBox.Show(this, "Selected Node does not seem to be in the loc file");
                 return;
@@ -54,6 +54,7 @@ namespace PckStudio.Forms.Editor
                     _currentLoc.AddLocKey(prompt.NewText, ""))
                 {
                     treeViewLocKeys.Nodes.Add(prompt.NewText);
+                    _isModified = true;
                 }
             }
         }
@@ -64,22 +65,24 @@ namespace PckStudio.Forms.Editor
             {
                 treeViewLocKeys.SelectedNode.Remove();
                 ReloadTranslationTable();
+                _isModified = true;
             }
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != 1 ||
-                treeViewLocKeys.SelectedNode is null)
+            if (e.ColumnIndex != 1 || treeViewLocKeys.SelectedNode is null)
             {
                 MessageBox.Show(this, "something went wrong");
                 return;
             }
+
             DataGridViewRow row = dataGridViewLocEntryData.Rows[e.RowIndex];
             string locKey = treeViewLocKeys.SelectedNode.Text;
             string language = row.Cells[0].Value.ToString();
             string value = row.Cells[1].Value.ToString();
             _currentLoc.SetLocEntry(locKey, language, value);
+            _isModified = true;
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -94,8 +97,8 @@ namespace PckStudio.Forms.Editor
             {
                 dataGridViewLocEntryData.Rows[i].Cells[1].Value = textBoxReplaceAll.Text;
             }
-
             _currentLoc.SetLocEntry(treeViewLocKeys.SelectedNode.Text, textBoxReplaceAll.Text);
+            _isModified = true;
         }
 
         private void ReloadTranslationTable()
@@ -126,12 +129,14 @@ namespace PckStudio.Forms.Editor
                 {
                     _currentLoc.AddLanguage(dialog.SelectedLanguage);
                     ReloadTranslationTable();
+                    _isModified = true;
                 }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _asset.SetData(new LOCFileWriter(_currentLoc, 2));
+            _isModified = false; // Reset modified flag after saving
             DialogResult = DialogResult.OK;
         }
 
@@ -140,6 +145,19 @@ namespace PckStudio.Forms.Editor
             if (Settings.Default.AutoSaveChanges)
             {
                 saveToolStripMenuItem_Click(sender, EventArgs.Empty);
+            }
+            else if (_isModified) // Use local modified flag
+            {
+                DialogResult result = MessageBox.Show(
+                    "You have unsaved changes. Close without saving?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }
