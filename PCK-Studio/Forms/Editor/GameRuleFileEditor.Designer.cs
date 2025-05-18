@@ -44,6 +44,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionLvlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
@@ -55,6 +56,7 @@
             this.pS3ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
             this.xbox360ToolStripMenuItem = new PckStudio.ToolboxItems.ToolStripRadioButtonMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.MessageContextMenu.SuspendLayout();
             this.DetailContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -77,9 +79,7 @@
             // 
             // MessageContextMenu
             // 
-            this.MessageContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addGameRuleToolStripMenuItem,
-            this.removeGameRuleToolStripMenuItem});
+            this.MessageContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.addGameRuleToolStripMenuItem, this.removeGameRuleToolStripMenuItem });
             this.MessageContextMenu.Name = "MessageContextMenu";
             this.MessageContextMenu.Size = new System.Drawing.Size(178, 48);
             // 
@@ -113,9 +113,7 @@
             // 
             // DetailContextMenu
             // 
-            this.DetailContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem1,
-            this.removeToolStripMenuItem});
+            this.DetailContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.addToolStripMenuItem1, this.removeToolStripMenuItem });
             this.DetailContextMenu.Name = "DetailContextMenu";
             this.DetailContextMenu.Size = new System.Drawing.Size(118, 48);
             // 
@@ -158,9 +156,7 @@
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.compressionLvlToolStripMenuItem});
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.fileToolStripMenuItem, this.compressionLvlToolStripMenuItem });
             this.menuStrip1.Location = new System.Drawing.Point(25, 60);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(450, 24);
@@ -169,9 +165,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.openToolStripMenuItem, this.saveToolStripMenuItem, this.exportToJSONToolStripMenuItem });
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -180,7 +174,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -188,15 +182,20 @@
             // 
             this.saveToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
+            // exportToJSONToolStripMenuItem
+            // 
+            this.exportToJSONToolStripMenuItem.Name = "exportToJSONToolStripMenuItem";
+            this.exportToJSONToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.exportToJSONToolStripMenuItem.Text = "Export To JSON";
+            this.exportToJSONToolStripMenuItem.Click += new System.EventHandler(this.exportToJSONToolStripMenuItem_Click);
+            // 
             // compressionLvlToolStripMenuItem
             // 
-            this.compressionLvlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.levelToolStripMenuItem,
-            this.typeToolStripMenuItem});
+            this.compressionLvlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.levelToolStripMenuItem, this.typeToolStripMenuItem });
             this.compressionLvlToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
             this.compressionLvlToolStripMenuItem.Name = "compressionLvlToolStripMenuItem";
             this.compressionLvlToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
@@ -205,11 +204,7 @@
             // levelToolStripMenuItem
             // 
             this.levelToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.noneToolStripMenuItem,
-            this.compressedToolStripMenuItem,
-            this.compressedRLEToolStripMenuItem,
-            this.compressedRLECRCToolStripMenuItem});
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.noneToolStripMenuItem, this.compressedToolStripMenuItem, this.compressedRLEToolStripMenuItem, this.compressedRLECRCToolStripMenuItem });
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.levelToolStripMenuItem.Text = "Level";
@@ -251,10 +246,7 @@
             // typeToolStripMenuItem
             // 
             this.typeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.typeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wiiUPSVitaToolStripMenuItem,
-            this.pS3ToolStripMenuItem,
-            this.xbox360ToolStripMenuItem});
+            this.typeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.wiiUPSVitaToolStripMenuItem, this.pS3ToolStripMenuItem, this.xbox360ToolStripMenuItem });
             this.typeToolStripMenuItem.Name = "typeToolStripMenuItem";
             this.typeToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.typeToolStripMenuItem.Text = "Type";
@@ -293,9 +285,7 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
@@ -309,6 +299,13 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(450, 312);
             this.tableLayoutPanel1.TabIndex = 4;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "json";
+            this.saveFileDialog1.Filter = "JSON File|*.json";
+            this.saveFileDialog1.Title = "Export to JSON";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // GameRuleFileEditor
             // 
@@ -337,8 +334,11 @@
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+
+        private System.Windows.Forms.ToolStripMenuItem exportToJSONToolStripMenuItem;
 
         #endregion
 
