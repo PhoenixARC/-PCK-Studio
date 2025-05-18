@@ -289,6 +289,7 @@ namespace PckStudio.Forms.Editor
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;
             serializer.Serialize(writer, _file.Root.ChildRules);
+            writer.Flush();
         }
     }
 }
