@@ -17,8 +17,11 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using PckStudio.Forms.Additional_Popups.Grf;
 using PckStudio.Internal.Misc;
 using OMI.Formats.GameRule;
@@ -267,6 +270,25 @@ namespace PckStudio.Forms.Editor
             {
                 saveToolStripMenuItem_Click(sender, EventArgs.Empty);
             }
+        }
+
+        private void exportToJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.FileName = "gameRules.json";
+            saveFileDialog1.ShowDialog();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            if (saveFileDialog1.FileName == "")
+            {
+                return;
+            }
+
+            TextWriter writer = new StreamWriter(saveFileDialog1.FileName);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Formatting = Formatting.Indented;
+            serializer.Serialize(writer, _file.Root.ChildRules);
         }
     }
 }
