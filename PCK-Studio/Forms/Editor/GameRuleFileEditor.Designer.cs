@@ -108,7 +108,6 @@
             this.GrfParametersTreeView.Name = "GrfParametersTreeView";
             this.GrfParametersTreeView.Size = new System.Drawing.Size(219, 312);
             this.GrfParametersTreeView.TabIndex = 1;
-            this.GrfParametersTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.GrfParametersTreeView_AfterSelect);
             this.GrfParametersTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.GrfDetailsTreeView_NodeMouseDoubleClick);
             this.GrfParametersTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GrfDetailsTreeView_KeyDown);
             // 
