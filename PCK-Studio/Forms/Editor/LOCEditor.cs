@@ -17,7 +17,7 @@ namespace PckStudio.Forms.Editor
     {
         LOCFile _currentLoc;
         PckAsset _asset;
-        private bool _isModified = false; // Track changes to the LOC strings
+        private bool _isModified = false; // Track string changes
 
         public LOCEditor(PckAsset asset)
         {

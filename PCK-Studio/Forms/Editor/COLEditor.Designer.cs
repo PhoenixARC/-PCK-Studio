@@ -454,7 +454,7 @@ namespace PckStudio.Forms.Editor
             // 
             // colorTreeView
             // 
-            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.colorTreeView, "colorTreeView");
             this.colorTreeView.ForeColor = System.Drawing.Color.White;
@@ -471,7 +471,8 @@ namespace PckStudio.Forms.Editor
             // 
             // waterTreeView
             // 
-            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.waterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
             resources.ApplyResources(this.waterTreeView, "waterTreeView");
             this.waterTreeView.ForeColor = System.Drawing.Color.White;
@@ -488,7 +489,8 @@ namespace PckStudio.Forms.Editor
             // 
             // underwaterTreeView
             // 
-            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.underwaterTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
             this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
@@ -505,7 +507,8 @@ namespace PckStudio.Forms.Editor
             // 
             // fogTreeView
             // 
-            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.fogTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
             this.fogTreeView.ForeColor = System.Drawing.Color.White;
             resources.ApplyResources(this.fogTreeView, "fogTreeView");
