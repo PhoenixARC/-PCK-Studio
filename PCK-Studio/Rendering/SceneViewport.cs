@@ -85,7 +85,7 @@ namespace PckStudio.Rendering
         private Point PreviousMouseLocation;
         private Point CurrentMouseLocation;
 
-        private int _refreshRate = 120;
+        private int _refreshRate = 60;
         private Timer _timer;
         private bool _initialized;
         private ShaderLibrary _shaderLibrary;
