@@ -28,8 +28,6 @@ namespace PckStudio.Internal
             SaveContext = saveContext;
         }
 
-        public void Save() => SaveContext.Save(EditorValue);
-
         protected override void OnControlRemoved(ControlEventArgs e)
         {
             if (SaveContext.AutoSave)
@@ -37,16 +35,12 @@ namespace PckStudio.Internal
             base.OnControlRemoved(e);
         }
 
-        public virtual void SaveAs()
-        {
-        }
+        public void Save() => SaveContext.Save(EditorValue);
 
-        public virtual void Close()
-        {
-        }
+        public virtual void SaveAs() => throw new NotImplementedException();
 
-        public virtual void UpdateView()
-        {
-        }
+        public virtual void Close() => throw new NotImplementedException();
+
+        public virtual void UpdateView() => throw new NotImplementedException();
     }
 }
