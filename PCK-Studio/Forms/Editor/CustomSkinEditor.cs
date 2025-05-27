@@ -21,11 +21,12 @@ namespace PckStudio.Forms.Editor
     public partial class CustomSkinEditor : EditorForm<Skin>
     {
         private const float cOffsetMaximum = 100_000f;
+        private Random _rng;
         private bool _inflateOverlayParts;
         private bool _allowInflate;
 
-        private BindingSource skinPartListBindingSource;
-        private BindingSource skinOffsetListBindingSource;
+        private BindingSource _skinPartListBindingSource;
+        private BindingSource _skinOffsetListBindingSource;
 
         private SettingsManager _settingsManager;
 
@@ -40,17 +41,18 @@ namespace PckStudio.Forms.Editor
         {
             InitializeComponent();
             rng = new Random();
-            skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
-            skinPartListBox.DataSource = skinPartListBindingSource;
+            _rng = new Random();
+            _skinPartListBindingSource = new BindingSource(renderer3D1.ModelData, null);
+            skinPartListBox.DataSource = _skinPartListBindingSource;
             skinPartListBox.DisplayMember = "Type";
+            _allowInflate = allowInflate;
+            _inflateOverlayParts = inflateOverlayParts;
             _settingsManager = SettingsManager.CreateSettings();
             _settingsManager.AddSetting("shouldAnimate"  , true , "Animate skin"                   , state => renderer3D1.Animate = state);
             _settingsManager.AddSetting("lockMouse"      , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
             _settingsManager.AddSetting("showGuidelines" , false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
             _settingsManager.AddSetting("showArmor"      , false, "Show Armor"                     , state => renderer3D1.ShowArmor = state);
             _settingsManager.AddSetting("showBoundingBox", false, "Show Bounding Box"              , state => renderer3D1.ShowBoundingBox = state);
-            _allowInflate = allowInflate;
-            _inflateOverlayParts = inflateOverlayParts;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -109,13 +111,13 @@ namespace PckStudio.Forms.Editor
                 EditorValue.Texture = renderer3D1.Texture;
             }
 
-            skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
-            offsetListBox.DataSource = skinOffsetListBindingSource;
+            _skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
+            offsetListBox.DataSource = _skinOffsetListBindingSource;
             offsetListBox.DisplayMember = "Type";
             offsetListBox.ValueMember = "Value";
 
-            skinPartListBindingSource.ResetBindings(false);
-            skinOffsetListBindingSource.ResetBindings(false);
+            _skinPartListBindingSource.ResetBindings(false);
+            _skinOffsetListBindingSource.ResetBindings(false);
         }
 
         private void GenerateUVTextureMap(SkinBOX skinBox)
@@ -128,7 +130,7 @@ namespace PckStudio.Forms.Editor
             using (Graphics graphics = Graphics.FromImage(EditorValue.Texture))
             {
                 graphics.ApplyConfig(_graphicsConfig);
-                int argb = rng.Next(unchecked((int)0xFF000000), -1);
+                int argb = _rng.Next(unchecked((int)0xFF000000), -1);
                 var color = Color.FromArgb(argb);
                 Brush brush = new SolidBrush(color);
                 graphics.FillPath(brush, skinBox.GetUVGraphicsPath());
@@ -144,7 +146,7 @@ namespace PckStudio.Forms.Editor
                 SkinBOX newBox = boxEditor.Result;
                 renderer3D1.ModelData.Add(newBox);
                 EditorValue.Model.AdditionalBoxes.Add(newBox);
-                skinPartListBindingSource.ResetBindings(false);
+                _skinPartListBindingSource.ResetBindings(false);
                 if (generateTextureCheckBox.Checked)
                     GenerateUVTextureMap(newBox);
             }
@@ -222,7 +224,7 @@ namespace PckStudio.Forms.Editor
                 SkinBOX clone = box;
                 renderer3D1.ModelData.Add(clone);
                 EditorValue.Model.AdditionalBoxes.Add(clone);
-                skinPartListBindingSource.ResetBindings(false);
+                _skinPartListBindingSource.ResetBindings(false);
             }
         }
 
@@ -232,7 +234,7 @@ namespace PckStudio.Forms.Editor
             {
                 renderer3D1.ModelData.Remove(box);
                 EditorValue.Model.AdditionalBoxes.Remove(box);
-                skinPartListBindingSource.ResetBindings(false);
+                _skinPartListBindingSource.ResetBindings(false);
             }
         }
 
@@ -274,7 +276,7 @@ namespace PckStudio.Forms.Editor
                 if (boxEditor.ShowDialog() == DialogResult.OK)
                 {
                     renderer3D1.ModelData[skinPartListBox.SelectedIndex] = boxEditor.Result;
-                    skinPartListBindingSource.ResetItem(skinPartListBox.SelectedIndex);
+                    _skinPartListBindingSource.ResetItem(skinPartListBox.SelectedIndex);
                 }
             }
         }
@@ -351,9 +353,9 @@ namespace PckStudio.Forms.Editor
 
         private void ReloadOffsetList()
         {
-            skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
-            offsetListBox.DataSource = skinOffsetListBindingSource;
-            skinOffsetListBindingSource.ResetBindings(false);
+            _skinOffsetListBindingSource = new BindingSource(renderer3D1.GetOffsets().ToArray(), null);
+            offsetListBox.DataSource = _skinOffsetListBindingSource;
+            _skinOffsetListBindingSource.ResetBindings(false);
         }
 
         private void addOffsetToolStripMenuItem_Click(object sender, EventArgs e)
