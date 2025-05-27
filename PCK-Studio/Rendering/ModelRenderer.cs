@@ -282,10 +282,17 @@ namespace PckStudio.Rendering
                 DrawBoundingBox(renderTransform, _maxBounds, Color.Red);
             }
         }
+
         internal void Highlight(ModelPart part)
         {
-            BoundingBox bb = part.GetBoxes().Select(b => new BoundingBox(b.Position, b.Position + b.Size)).GetEnclosingBoundingBox();
+            BoundingBox bb = part.GetBoxes().Select(b => b.GetBoundingBox()).GetEnclosingBoundingBox();
             _highlightingInfo = new HighlightInfo(part.Translation, part.Rotation + part.AdditionalRotation, bb);
+        }
+
+        internal void Highlight(ModelBox box, ModelPart parent)
+        {
+            BoundingBox bb = box.GetBoundingBox();
+            _highlightingInfo = new HighlightInfo(parent.Translation, parent.Rotation + parent.AdditionalRotation, bb);
         }
 
         internal void ResetHighlight()

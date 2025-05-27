@@ -163,6 +163,7 @@ namespace PckStudio.Forms.Editor
         private class ModelBoxNode : TreeNode
         {
             private ModelBox _modelBox;
+            public ModelBox Box => _modelBox;
             private ModelBoxNode(ModelBox modelBox)
                 : base($"Box: pos:{modelBox.Position} size:{modelBox.Size}")
             {
@@ -260,10 +261,12 @@ namespace PckStudio.Forms.Editor
             {
                 modelViewport.Highlight(modelPartNode.Part);
             }
-            //if (e.Node is ModelBoxNode modelBoxNode)
-            //{
 
-            //}
+            if (e.Node is ModelBoxNode modelBoxNode && modelBoxNode.Parent is ModelPartNode parentPartNode && parentPartNode.Parent is ModelNode parentNode1 &&
+                modelViewport.CurrentModelName == parentNode1.Model.Name)
+            {
+                modelViewport.Highlight(modelBoxNode.Box, parentPartNode.Part);
+            }
         }
 
         private IEnumerable<NamedTexture> GetModelTextures(string modelName)
