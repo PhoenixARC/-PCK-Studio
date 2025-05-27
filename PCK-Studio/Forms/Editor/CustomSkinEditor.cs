@@ -20,7 +20,7 @@ namespace PckStudio.Forms.Editor
 {
     public partial class CustomSkinEditor : EditorForm<Skin>
     {
-        private Random rng;
+        private const float cOffsetMaximum = 100_000f;
         private bool _inflateOverlayParts;
         private bool _allowInflate;
 
@@ -362,7 +362,7 @@ namespace PckStudio.Forms.Editor
             var offsets = renderer3D1.GetOffsets().Select(offset => offset.Type).ToList();
             string[] available = SkinPartOffset.ValidModelOffsetTypes.Where(s => !offsets.Contains(s)).ToArray();
             using ItemSelectionPopUp typeSelection = new ItemSelectionPopUp(available);
-            using NumericPrompt valuePrompt = new NumericPrompt(0f, -100_000f, 100_000f);
+            using NumericPrompt valuePrompt = new NumericPrompt(0f, -cOffsetMaximum, cOffsetMaximum);
             valuePrompt.DecimalPlaces = 1;
             valuePrompt.ValueStep = (decimal)0.1f;
             if (typeSelection.ShowDialog() == DialogResult.OK && valuePrompt.ShowDialog() == DialogResult.OK)
@@ -385,7 +385,7 @@ namespace PckStudio.Forms.Editor
             if (offsetListBox.SelectedItem is not SkinPartOffset offset)
                 return;
 
-            using NumericPrompt valuePrompt = new NumericPrompt(offset.Value, -100_000f, 100_000f);
+            using NumericPrompt valuePrompt = new NumericPrompt(offset.Value, -cOffsetMaximum, cOffsetMaximum);
             valuePrompt.ToolTipText = "Set new Value for " + offset.Type;
             valuePrompt.DecimalPlaces = 1;
             valuePrompt.ValueStep = (decimal)0.1f;
