@@ -58,7 +58,6 @@ namespace PckStudio.Forms.Editor
             base.OnLoad(e);
             renderer3D1.Initialize(_inflateOverlayParts);
             renderer3D1.GuideLineColor = Color.LightCoral;
-            framerateSlider_ValueChanged(this, EventArgs.Empty);
             skinNameLabel.Text = EditorValue.MetaData.Name;
             if (EditorValue.HasCape)
                 renderer3D1.CapeTexture = EditorValue.CapeTexture;
@@ -420,12 +419,6 @@ namespace PckStudio.Forms.Editor
             {
                 GenerateUVTextureMap(skinBox);
             }
-        }
-
-        private void framerateSlider_ValueChanged(object sender, EventArgs e)
-        {
-            renderer3D1.RefreshRate = framerateSlider.Value * 30 + 30;
-            framerateLabel.Text = "FPS: " + renderer3D1.RefreshRate.ToString();
         }
 
         private void renderSettingsButton_Click(object sender, EventArgs e)

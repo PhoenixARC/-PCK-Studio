@@ -117,56 +117,155 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="labelTextureMapping.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="labelTextureMapping.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="labelTextureMapping.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelTextureMapping.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelTextureMapping.Location" type="System.Drawing.Point, System.Drawing">
-    <value>703, 42</value>
-  </data>
-  <data name="labelTextureMapping.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 13</value>
-  </data>
-  <data name="labelTextureMapping.TabIndex" type="System.Int32, mscorlib">
-    <value>113</value>
-  </data>
-  <data name="labelTextureMapping.Text" xml:space="preserve">
-    <value>Texture Mapping</value>
-  </data>
-  <data name="&gt;&gt;labelTextureMapping.Name" xml:space="preserve">
-    <value>labelTextureMapping</value>
-  </data>
-  <data name="&gt;&gt;labelTextureMapping.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelTextureMapping.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;labelTextureMapping.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
   <metadata name="groupBox1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="sizeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="groupBox1.AutoSize" type="System.Boolean, mscorlib">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="sizeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="sizeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="sizeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 47</value>
+  </data>
+  <data name="sizeLabel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="sizeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 19</value>
+  </data>
+  <data name="sizeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>142</value>
+  </data>
+  <data name="sizeLabel.Text" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="&gt;&gt;sizeLabel.Name" xml:space="preserve">
+    <value>sizeLabel</value>
+  </data>
+  <data name="&gt;&gt;sizeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;sizeLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;sizeLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="positionLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="positionLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="positionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="positionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 76</value>
+  </data>
+  <data name="positionLabel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="positionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="positionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>127</value>
+  </data>
+  <data name="positionLabel.Text" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="&gt;&gt;positionLabel.Name" xml:space="preserve">
+    <value>positionLabel</value>
+  </data>
+  <data name="&gt;&gt;positionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;positionLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;positionLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="uvLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="uvLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="uvLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="uvLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 21</value>
+  </data>
+  <data name="uvLabel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="uvLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>28, 19</value>
+  </data>
+  <data name="uvLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>131</value>
+  </data>
+  <data name="uvLabel.Text" xml:space="preserve">
+    <value>UV</value>
+  </data>
+  <data name="&gt;&gt;uvLabel.Name" xml:space="preserve">
+    <value>uvLabel</value>
+  </data>
+  <data name="&gt;&gt;uvLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uvLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;uvLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 276</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 0</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 117</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>170</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Porperties</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="importTextureButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <data name="importTextureButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 19</value>
+    <value>23, 249</value>
   </data>
   <data name="importTextureButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -184,13 +283,16 @@
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;importTextureButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;importTextureButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
+  </data>
+  <data name="exportTextureButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
   </data>
   <data name="exportTextureButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 46</value>
+    <value>90, 249</value>
   </data>
   <data name="exportTextureButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -208,136 +310,10 @@
     <value>MetroFramework.Controls.MetroButton, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
   </data>
   <data name="&gt;&gt;exportTextureButton.Parent" xml:space="preserve">
-    <value>groupBox1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;exportTextureButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>803, 329</value>
-  </data>
-  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 0</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 83</value>
-  </data>
-  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>170</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Texture</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="positionLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="positionLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="positionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="positionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 392</value>
-  </data>
-  <data name="positionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="positionLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>127</value>
-  </data>
-  <data name="positionLabel.Text" xml:space="preserve">
-    <value>Position</value>
-  </data>
-  <data name="&gt;&gt;positionLabel.Name" xml:space="preserve">
-    <value>positionLabel</value>
-  </data>
-  <data name="&gt;&gt;positionLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;positionLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;positionLabel.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="sizeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="sizeLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="sizeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="sizeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 363</value>
-  </data>
-  <data name="sizeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>27, 13</value>
-  </data>
-  <data name="sizeLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>142</value>
-  </data>
-  <data name="sizeLabel.Text" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="&gt;&gt;sizeLabel.Name" xml:space="preserve">
-    <value>sizeLabel</value>
-  </data>
-  <data name="&gt;&gt;sizeLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;sizeLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;sizeLabel.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="uvLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="uvLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="uvLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="uvLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 337</value>
-  </data>
-  <data name="uvLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 13</value>
-  </data>
-  <data name="uvLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>131</value>
-  </data>
-  <data name="uvLabel.Text" xml:space="preserve">
-    <value>UV</value>
-  </data>
-  <data name="&gt;&gt;uvLabel.Name" xml:space="preserve">
-    <value>uvLabel</value>
-  </data>
-  <data name="&gt;&gt;uvLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;uvLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;uvLabel.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>2</value>
   </data>
   <metadata name="skinPartTabContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -445,7 +421,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonDone.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>21</value>
   </data>
   <data name="importSkinButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -472,7 +448,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;importSkinButton.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="exportSkinButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -499,16 +475,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;exportSkinButton.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="outlineColorButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+    <value>Left</value>
   </data>
   <data name="outlineColorButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 485</value>
+    <value>19, 429</value>
   </data>
   <data name="outlineColorButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 21</value>
+    <value>161, 21</value>
   </data>
   <data name="outlineColorButton.TabIndex" type="System.Int32, mscorlib">
     <value>145</value>
@@ -529,16 +505,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;outlineColorButton.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>10</value>
   </data>
   <data name="generateTextureCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+    <value>Left</value>
   </data>
   <data name="generateTextureCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="generateTextureCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 465</value>
+    <value>22, 399</value>
   </data>
   <data name="generateTextureCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 15</value>
@@ -559,16 +535,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;generateTextureCheckBox.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>9</value>
   </data>
   <data name="showArmorCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+    <value>Left</value>
   </data>
   <data name="showArmorCheckbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="showArmorCheckbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 528</value>
+    <value>23, 532</value>
   </data>
   <data name="showArmorCheckbox.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 15</value>
@@ -589,7 +565,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;showArmorCheckbox.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>8</value>
   </data>
   <data name="skinPartListBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -598,7 +574,7 @@
     <value>0, 0</value>
   </data>
   <data name="skinPartListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
+    <value>242, 446</value>
   </data>
   <data name="skinPartListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -640,16 +616,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;captureScreenshotButton.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>17</value>
   </data>
   <data name="showToolsCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+    <value>Left</value>
   </data>
   <data name="showToolsCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="showToolsCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>722, 528</value>
+    <value>23, 511</value>
   </data>
   <data name="showToolsCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 15</value>
@@ -670,7 +646,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;showToolsCheckBox.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>6</value>
   </data>
   <data name="skinNameLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -700,13 +676,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;skinNameLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>16</value>
+  </data>
+  <data name="metroTabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="skinPartsTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 38</value>
   </data>
   <data name="skinPartsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
+    <value>242, 446</value>
   </data>
   <data name="skinPartsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -757,7 +736,7 @@
     <value>0, 0</value>
   </data>
   <data name="offsetListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
+    <value>242, 446</value>
   </data>
   <data name="offsetListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -778,7 +757,7 @@
     <value>4, 38</value>
   </data>
   <data name="skinOffsetsTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 446</value>
+    <value>242, 446</value>
   </data>
   <data name="skinOffsetsTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -799,10 +778,10 @@
     <value>1</value>
   </data>
   <data name="metroTabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 59</value>
+    <value>627, 59</value>
   </data>
   <data name="metroTabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 488</value>
+    <value>250, 488</value>
   </data>
   <data name="metroTabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -817,7 +796,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;metroTabControl1.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>15</value>
   </data>
   <data name="renderer3D1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -841,10 +820,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;renderer3D1.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>18</value>
   </data>
   <data name="uvPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Left</value>
   </data>
   <data name="uvPictureBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -853,10 +832,10 @@
     <value>NoControl</value>
   </data>
   <data name="uvPictureBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 59</value>
+    <value>23, 63</value>
   </data>
   <data name="uvPictureBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 250</value>
+    <value>160, 160</value>
   </data>
   <data name="uvPictureBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -874,16 +853,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;uvPictureBox.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>11</value>
   </data>
   <data name="centerSelectionCheckbox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+    <value>Left</value>
   </data>
   <data name="centerSelectionCheckbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="centerSelectionCheckbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 507</value>
+    <value>22, 465</value>
   </data>
   <data name="centerSelectionCheckbox.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 15</value>
@@ -904,10 +883,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;centerSelectionCheckbox.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>7</value>
   </data>
   <data name="textureSizeLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>Left</value>
   </data>
   <data name="textureSizeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -916,7 +895,7 @@
     <value>NoControl</value>
   </data>
   <data name="textureSizeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>729, 312</value>
+    <value>129, 226</value>
   </data>
   <data name="textureSizeLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 13</value>
@@ -937,67 +916,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textureSizeLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="framerateSlider.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="framerateSlider.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="framerateSlider.Location" type="System.Drawing.Point, System.Drawing">
-    <value>627, 432</value>
-  </data>
-  <data name="framerateSlider.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 27</value>
-  </data>
-  <data name="framerateSlider.TabIndex" type="System.Int32, mscorlib">
-    <value>173</value>
-  </data>
-  <data name="&gt;&gt;framerateSlider.Name" xml:space="preserve">
-    <value>framerateSlider</value>
-  </data>
-  <data name="&gt;&gt;framerateSlider.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;framerateSlider.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;framerateSlider.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="framerateLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="framerateLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="framerateLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>668, 410</value>
-  </data>
-  <data name="framerateLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 19</value>
-  </data>
-  <data name="framerateLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>174</value>
-  </data>
-  <data name="framerateLabel.Text" xml:space="preserve">
-    <value>framerate</value>
-  </data>
-  <data name="framerateLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;framerateLabel.Name" xml:space="preserve">
-    <value>framerateLabel</value>
-  </data>
-  <data name="&gt;&gt;framerateLabel.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroLabel, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;framerateLabel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;framerateLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="renderSettingsButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1024,7 +943,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;renderSettingsButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>14</value>
   </data>
   <data name="exportTemplateButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1051,7 +970,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;exportTemplateButton.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>13</value>
   </data>
   <data name="animEditorButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1078,7 +997,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;animEditorButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3647,6 +3566,6 @@
     <value>CustomSkinEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.Internal.EditorForm`1[[PckStudio.Internal.Skin.Skin, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null]], PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

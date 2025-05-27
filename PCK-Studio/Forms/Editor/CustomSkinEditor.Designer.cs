@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label labelTextureMapping;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomSkinEditor));
             System.Windows.Forms.GroupBox groupBox1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomSkinEditor));
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.positionLabel = new System.Windows.Forms.Label();
+            this.uvLabel = new System.Windows.Forms.Label();
             this.importTextureButton = new MetroFramework.Controls.MetroButton();
             this.exportTextureButton = new MetroFramework.Controls.MetroButton();
-            this.positionLabel = new System.Windows.Forms.Label();
-            this.sizeLabel = new System.Windows.Forms.Label();
-            this.uvLabel = new System.Windows.Forms.Label();
             this.skinPartTabContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,12 +62,9 @@
             this.uvPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.centerSelectionCheckbox = new MetroFramework.Controls.MetroCheckBox();
             this.textureSizeLabel = new System.Windows.Forms.Label();
-            this.framerateSlider = new System.Windows.Forms.TrackBar();
-            this.framerateLabel = new MetroFramework.Controls.MetroLabel();
             this.renderSettingsButton = new MetroFramework.Controls.MetroButton();
             this.exportTemplateButton = new MetroFramework.Controls.MetroButton();
             this.animEditorButton = new MetroFramework.Controls.MetroButton();
-            labelTextureMapping = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             this.skinPartTabContextMenu.SuspendLayout();
@@ -77,47 +73,17 @@
             this.skinOffsetsTabPage.SuspendLayout();
             this.offsetTabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.framerateSlider)).BeginInit();
             this.SuspendLayout();
-            // 
-            // labelTextureMapping
-            // 
-            resources.ApplyResources(labelTextureMapping, "labelTextureMapping");
-            labelTextureMapping.ForeColor = System.Drawing.Color.White;
-            labelTextureMapping.Name = "labelTextureMapping";
             // 
             // groupBox1
             // 
             resources.ApplyResources(groupBox1, "groupBox1");
-            groupBox1.Controls.Add(this.importTextureButton);
-            groupBox1.Controls.Add(this.exportTextureButton);
+            groupBox1.Controls.Add(this.sizeLabel);
+            groupBox1.Controls.Add(this.positionLabel);
+            groupBox1.Controls.Add(this.uvLabel);
             groupBox1.ForeColor = System.Drawing.SystemColors.Control;
             groupBox1.Name = "groupBox1";
             groupBox1.TabStop = false;
-            // 
-            // importTextureButton
-            // 
-            this.importTextureButton.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.importTextureButton, "importTextureButton");
-            this.importTextureButton.Name = "importTextureButton";
-            this.importTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.importTextureButton.UseSelectable = true;
-            this.importTextureButton.Click += new System.EventHandler(this.importTextureButton_Click);
-            // 
-            // exportTextureButton
-            // 
-            this.exportTextureButton.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.exportTextureButton, "exportTextureButton");
-            this.exportTextureButton.Name = "exportTextureButton";
-            this.exportTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.exportTextureButton.UseSelectable = true;
-            this.exportTextureButton.Click += new System.EventHandler(this.exportTextureButton_Click);
-            // 
-            // positionLabel
-            // 
-            resources.ApplyResources(this.positionLabel, "positionLabel");
-            this.positionLabel.ForeColor = System.Drawing.Color.White;
-            this.positionLabel.Name = "positionLabel";
             // 
             // sizeLabel
             // 
@@ -125,11 +91,35 @@
             this.sizeLabel.ForeColor = System.Drawing.Color.White;
             this.sizeLabel.Name = "sizeLabel";
             // 
+            // positionLabel
+            // 
+            resources.ApplyResources(this.positionLabel, "positionLabel");
+            this.positionLabel.ForeColor = System.Drawing.Color.White;
+            this.positionLabel.Name = "positionLabel";
+            // 
             // uvLabel
             // 
             resources.ApplyResources(this.uvLabel, "uvLabel");
             this.uvLabel.ForeColor = System.Drawing.Color.White;
             this.uvLabel.Name = "uvLabel";
+            // 
+            // importTextureButton
+            // 
+            resources.ApplyResources(this.importTextureButton, "importTextureButton");
+            this.importTextureButton.ForeColor = System.Drawing.Color.White;
+            this.importTextureButton.Name = "importTextureButton";
+            this.importTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.importTextureButton.UseSelectable = true;
+            this.importTextureButton.Click += new System.EventHandler(this.importTextureButton_Click);
+            // 
+            // exportTextureButton
+            // 
+            resources.ApplyResources(this.exportTextureButton, "exportTextureButton");
+            this.exportTextureButton.ForeColor = System.Drawing.Color.White;
+            this.exportTextureButton.Name = "exportTextureButton";
+            this.exportTextureButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.exportTextureButton.UseSelectable = true;
+            this.exportTextureButton.Click += new System.EventHandler(this.exportTextureButton_Click);
             // 
             // skinPartTabContextMenu
             // 
@@ -225,7 +215,7 @@
             resources.ApplyResources(this.skinPartListBox, "skinPartListBox");
             this.skinPartListBox.FormattingEnabled = true;
             this.skinPartListBox.Name = "skinPartListBox";
-            this.skinPartListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.skinPartListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.skinPartListBox.Tag = "";
             this.skinPartListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.skinPartListBox_MouseClick);
             this.skinPartListBox.SelectedIndexChanged += new System.EventHandler(this.skinPartListBox_SelectedIndexChanged);
@@ -256,9 +246,10 @@
             // 
             // metroTabControl1
             // 
+            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
             this.metroTabControl1.Controls.Add(this.skinPartsTabPage);
             this.metroTabControl1.Controls.Add(this.skinOffsetsTabPage);
-            resources.ApplyResources(this.metroTabControl1, "metroTabControl1");
+            this.metroTabControl1.Multiline = true;
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Pink;
@@ -317,9 +308,12 @@
             this.renderer3D1.HighlightlingColor = System.Drawing.Color.Aqua;
             this.renderer3D1.MouseSensetivity = 0.01F;
             this.renderer3D1.Name = "renderer3D1";
-            this.renderer3D1.RefreshRate = 120;
+            this.renderer3D1.RefreshRate = 60;
             this.renderer3D1.SelectedIndex = -1;
+            this.renderer3D1.SelectedIndices = new int[] {
+        -1};
             this.renderer3D1.ShowArmor = false;
+            this.renderer3D1.ShowBoundingBox = false;
             this.renderer3D1.ShowGuideLines = false;
             this.renderer3D1.Texture = null;
             this.renderer3D1.VSync = true;
@@ -346,23 +340,6 @@
             resources.ApplyResources(this.textureSizeLabel, "textureSizeLabel");
             this.textureSizeLabel.ForeColor = System.Drawing.Color.White;
             this.textureSizeLabel.Name = "textureSizeLabel";
-            // 
-            // framerateSlider
-            // 
-            this.framerateSlider.AccessibleRole = System.Windows.Forms.AccessibleRole.Slider;
-            resources.ApplyResources(this.framerateSlider, "framerateSlider");
-            this.framerateSlider.LargeChange = 1;
-            this.framerateSlider.Maximum = 3;
-            this.framerateSlider.Name = "framerateSlider";
-            this.framerateSlider.Tag = "";
-            this.framerateSlider.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.framerateSlider.ValueChanged += new System.EventHandler(this.framerateSlider_ValueChanged);
-            // 
-            // framerateLabel
-            // 
-            resources.ApplyResources(this.framerateLabel, "framerateLabel");
-            this.framerateLabel.Name = "framerateLabel";
-            this.framerateLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // renderSettingsButton
             // 
@@ -393,42 +370,38 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.animEditorButton);
-            this.Controls.Add(this.exportTemplateButton);
-            this.Controls.Add(this.renderSettingsButton);
-            this.Controls.Add(this.framerateLabel);
-            this.Controls.Add(this.framerateSlider);
+            this.Controls.Add(this.exportTextureButton);
+            this.Controls.Add(this.importTextureButton);
             this.Controls.Add(this.textureSizeLabel);
             this.Controls.Add(groupBox1);
-            this.Controls.Add(this.metroTabControl1);
-            this.Controls.Add(this.skinNameLabel);
             this.Controls.Add(this.showToolsCheckBox);
-            this.Controls.Add(this.captureScreenshotButton);
             this.Controls.Add(this.centerSelectionCheckbox);
-            this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.showArmorCheckbox);
             this.Controls.Add(this.generateTextureCheckBox);
             this.Controls.Add(this.outlineColorButton);
+            this.Controls.Add(this.uvPictureBox);
+            this.Controls.Add(this.animEditorButton);
+            this.Controls.Add(this.exportTemplateButton);
+            this.Controls.Add(this.renderSettingsButton);
+            this.Controls.Add(this.metroTabControl1);
+            this.Controls.Add(this.skinNameLabel);
+            this.Controls.Add(this.captureScreenshotButton);
+            this.Controls.Add(this.renderer3D1);
             this.Controls.Add(this.exportSkinButton);
             this.Controls.Add(this.importSkinButton);
-            this.Controls.Add(labelTextureMapping);
-            this.Controls.Add(this.uvLabel);
             this.Controls.Add(this.buttonDone);
-            this.Controls.Add(this.sizeLabel);
-            this.Controls.Add(this.positionLabel);
-            this.Controls.Add(this.uvPictureBox);
             this.Name = "CustomSkinEditor";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomSkinEditor_FormClosing);
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             this.skinPartTabContextMenu.ResumeLayout(false);
             this.metroTabControl1.ResumeLayout(false);
             this.skinPartsTabPage.ResumeLayout(false);
             this.skinOffsetsTabPage.ResumeLayout(false);
             this.offsetTabContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uvPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.framerateSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -466,8 +439,6 @@
         private System.Windows.Forms.Label sizeLabel;
         private System.Windows.Forms.Label uvLabel;
         private System.Windows.Forms.Label textureSizeLabel;
-        private System.Windows.Forms.TrackBar framerateSlider;
-        private MetroFramework.Controls.MetroLabel framerateLabel;
         private MetroFramework.Controls.MetroButton renderSettingsButton;
         private MetroFramework.Controls.MetroButton exportTemplateButton;
         private MetroFramework.Controls.MetroButton animEditorButton;
