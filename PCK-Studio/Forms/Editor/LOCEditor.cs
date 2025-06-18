@@ -39,7 +39,7 @@ namespace PckStudio.Forms.Editor
             TreeNode node = e.Node;
             if (node == null || !_currentLoc.LocKeys.ContainsKey(node.Text))
             {
-                MessageBox.Show(this, "Selected Node does not seem to be in the loc file");
+                MessageBox.Show(this, "Selected Node does not seem to be in the LOC file.");
                 return;
             }
             ReloadTranslationTable();
@@ -73,7 +73,7 @@ namespace PckStudio.Forms.Editor
         {
             if (e.ColumnIndex != 1 || treeViewLocKeys.SelectedNode is null)
             {
-                MessageBox.Show(this, "something went wrong");
+                MessageBox.Show(this, "Something went wrong.");
                 return;
             }
 
