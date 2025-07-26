@@ -108,7 +108,7 @@
             // contributorsLayoutPanel
             // 
             this.contributorsLayoutPanel.AutoScroll = true;
-            this.contributorsLayoutPanel.Location = new System.Drawing.Point(18, 72);
+            this.contributorsLayoutPanel.Location = new System.Drawing.Point(17, 72);
             this.contributorsLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.contributorsLayoutPanel.Name = "contributorsLayoutPanel";
             this.contributorsLayoutPanel.Size = new System.Drawing.Size(798, 450);

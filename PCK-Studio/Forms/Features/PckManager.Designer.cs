@@ -71,7 +71,7 @@
             this.supportedPlatformComboBox.FormattingEnabled = true;
             this.supportedPlatformComboBox.ItemHeight = 23;
             this.supportedPlatformComboBox.Location = new System.Drawing.Point(248, 4);
-            this.supportedPlatformComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.supportedPlatformComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.supportedPlatformComboBox.Name = "supportedPlatformComboBox";
             this.supportedPlatformComboBox.PromptText = "Select Platform";
             this.supportedPlatformComboBox.Size = new System.Drawing.Size(237, 29);
@@ -97,7 +97,7 @@
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.mainPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.mainPanel.Size = new System.Drawing.Size(489, 739);
+            this.mainPanel.Size = new System.Drawing.Size(489, 736);
             this.mainPanel.TabIndex = 3;
             // 
             // PckManager
@@ -105,14 +105,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(489, 739);
+            this.ClientSize = new System.Drawing.Size(489, 736);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(metroLabel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(486, 733);

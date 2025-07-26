@@ -1,12 +1,11 @@
-﻿using System;
+﻿using MetroFramework.Controls;
+using PckStudio.Properties;
+using PckStudio.ToolboxItems;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Windows.Forms;
-using MetroFramework.Controls;
-using MetroFramework.Forms;
-using PckStudio.Properties;
-using PckStudio.ToolboxItems;
 
 namespace PckStudio.Forms
 {
@@ -28,12 +27,12 @@ namespace PckStudio.Forms
 
         private static Dictionary<string, string> CheckBoxText = new Dictionary<string, string>()
         {
-            ["ShowRichPresence"]           = "Show Rich Presence",
-            ["AutoSaveChanges"]            = "Auto Save",
-            ["UseLittleEndianAsDefault"]   = "Open as Little Endian",
-            ["AutoUpdate"]                 = "Auto Update",
-            ["LoadSubPcks"]                = "Load Sub Pcks",
-            ["UsePrerelease"]              = "Use Prerelease",
+            ["ShowRichPresence"] = "Show Rich Presence",
+            ["AutoSaveChanges"] = "Auto Save",
+            ["UseLittleEndianAsDefault"] = "Open as Little Endian",
+            ["AutoUpdate"] = "Auto Update",
+            ["LoadSubPcks"] = "Load Sub Pcks",
+            ["UsePrerelease"] = "Use Prerelease",
         };
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
