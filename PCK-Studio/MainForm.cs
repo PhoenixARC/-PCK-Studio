@@ -2605,7 +2605,16 @@ namespace PckStudio
 
         private void whatsNewBtn_Click(object sender, EventArgs e)
         {
-            new ChangeLogForm().Show(); // Shows what's new
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm is ChangeLogForm)
+                {
+                    openForm.BringToFront();
+                    return;
+                }
+            }
+
+            new ChangeLogForm().ShowDialog();
         }
 
         private void pckCenterBtn_Click(object sender, EventArgs e)

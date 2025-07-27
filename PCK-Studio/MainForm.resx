@@ -1318,10 +1318,10 @@
     <value>False</value>
   </data>
   <data name="fullBoxSupportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="fullBoxSupportToolStripMenuItem.Text" xml:space="preserve">
-    <value>Full box support</value>
+    <value>Full Box Support</value>
   </data>
   <data name="packSettingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
@@ -1571,7 +1571,7 @@
 </value>
   </data>
   <data name="openPckManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="openPckManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Pck Manager</value>
@@ -1589,7 +1589,7 @@
     <value>Binka -&gt; Wav</value>
   </data>
   <data name="convertMusicFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="convertMusicFilesToolStripMenuItem.Text" xml:space="preserve">
     <value>Audio Converter</value>
