@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
-using PckStudio.Internal.Skin;
+using PckStudio.Core.Skin;
 
 namespace PckStudio.Forms.Editor
 {

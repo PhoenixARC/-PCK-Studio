@@ -7,21 +7,15 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-
-using MetroFramework.Forms;
 using NAudio.Wave;
-
-using OMI.Formats.Pck;
-
-using PckStudio.Internal.IO.PckAudio;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.External.API.Miles;
-using PckStudio.Internal.FileFormats;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Internal.App;
 using PckStudio.Internal;
 using PckStudio.Interfaces;
+using PckStudio.Core.FileFormats;
 
 // Audio Editor by MattNL and Miku-666
 
@@ -113,9 +107,9 @@ namespace PckStudio.Forms.Editor
 
 			if (!parent.CreateDataFolder())
 				return;
-			string FileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
+			string fileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
 
-			if (File.Exists(FileName))
+			if (File.Exists(fileName))
 				MessageBox.Show(this, $"\"{entry.Text}.binka\" exists in the \"Data\" folder", "File found");
 			else
 				MessageBox.Show(this, $"\"{entry.Text}.binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");
@@ -384,8 +378,8 @@ namespace PckStudio.Forms.Editor
 
 				foreach(var song in category.SongNames)
 				{
-					string FileName = Path.Combine(parent.GetDataPath(), song + ".binka");
-					if (!File.Exists(FileName))
+                    string fileName = Path.Combine(parent.GetDataPath(), song + ".binka");
+					if (!File.Exists(fileName))
 					{
 						songs_missing = true;
 						MessageBox.Show(this, "\"" + song + ".binka\" does not exist in the \"Data\" folder. The game will crash when attempting to load this track.", "File missing");

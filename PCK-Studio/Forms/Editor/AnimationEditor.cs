@@ -29,11 +29,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Properties;
 using PckStudio.Internal;
-using PckStudio.Internal.Deserializer;
-using PckStudio.Internal.Serializer;
+using PckStudio.Core.Deserializer;
+using PckStudio.Core.Serializer;
+using PckStudio.Core;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor

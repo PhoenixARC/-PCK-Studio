@@ -4,10 +4,11 @@ using System.Linq;
 using System.Windows.Forms;
 using OMI.Formats.Material;
 using PckStudio.Internal;
-using PckStudio.Extensions;
-using PckStudio.Internal.Json;
+using PckStudio.Core.Extensions;
+using PckStudio.Core.Json;
 using PckStudio.Internal.App;
 using PckStudio.Interfaces;
+using PckStudio.Json;
 
 namespace PckStudio.Forms.Editor
 {

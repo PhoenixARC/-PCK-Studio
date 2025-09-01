@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using PckStudio.Forms.Additional_Popups.Animation;
-using PckStudio.Internal.Json;
+using PckStudio.Core.Json;
+using PckStudio.Json;
 
 
 namespace PckStudio.Forms.Additional_Popups.EntityForms

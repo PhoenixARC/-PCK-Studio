@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+	<PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{345EABED-F0D1-4D04-B409-BABDEF747352}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PckStudio.Core</RootNamespace>
+    <AssemblyName>PckStudio.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<LangVersion>12</LangVersion>
+		<FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="App\SettingsManager.cs" />
+    <Compile Include="App\Updater.cs" />
+    <Compile Include="BoundingBox.cs" />
+    <Compile Include="DelegatedFileSaveContext.cs" />
+    <Compile Include="DelegatedSaveContext.cs" />
+    <Compile Include="Deserializer\AnimationDeserializer.cs" />
+    <Compile Include="Deserializer\ImageDeserializer.cs" />
+    <Compile Include="Extensions\AnimationExtensions.cs" />
+    <Compile Include="Extensions\BlendMode.cs" />
+    <Compile Include="Extensions\BoundingBoxExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\CursorExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Extensions\ImageLayoutDirection.cs" />
+    <Compile Include="Extensions\ImageSection.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\LocFileExtensions.cs" />
+    <Compile Include="Extensions\MaterialContainerExtensions.cs" />
+    <Compile Include="Extensions\MaterialExtensions.cs" />
+    <Compile Include="Extensions\MathExtensions.cs" />
+    <Compile Include="Extensions\ModelBoxExtension.cs" />
+    <Compile Include="Extensions\OpenTKExtensions.cs" />
+    <Compile Include="Extensions\PckAssetExtensions.cs" />
+    <Compile Include="Extensions\PictureBoxExtensions.cs" />
+    <Compile Include="Extensions\SkinBOXExtensions.cs" />
+    <Compile Include="Extensions\SkinExtensions.cs" />
+    <Compile Include="Extensions\System.Numerics.cs" />
+    <Compile Include="Extensions\TreeNodeExtensions.cs" />
+    <Compile Include="Extensions\TreeViewExtensions.cs" />
+    <Compile Include="FileDialogFilter.cs" />
+    <Compile Include="FileFormats\PckAudioFile.cs" />
+    <Compile Include="GameConstants.cs" />
+    <Compile Include="Interfaces\IEditor.cs" />
+    <Compile Include="Interfaces\IModelImportProvider.cs" />
+    <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
+    <Compile Include="Interfaces\IPckAssetSerializer.cs" />
+    <Compile Include="Interfaces\ISaveContext.cs" />
+    <Compile Include="Interfaces\ITryGetSet.cs" />
+    <Compile Include="IO\3DST\3DSTextureReader.cs" />
+    <Compile Include="IO\3DST\3DSTextureWriter.cs" />
+    <Compile Include="IO\3DST\TextureCodec.cs" />
+    <Compile Include="IO\PckAudio\PckAudioFileReader.cs" />
+    <Compile Include="IO\PckAudio\PckAudioFileWriter.cs" />
+    <Compile Include="IO\TGA\TGADataTypeCode.cs" />
+    <Compile Include="IO\TGA\TGADeserializer.cs" />
+    <Compile Include="IO\TGA\TGAException.cs" />
+    <Compile Include="IO\TGA\TGAExtentionData.cs" />
+    <Compile Include="IO\TGA\TGAFileData.cs" />
+    <Compile Include="IO\TGA\TGAFooter.cs" />
+    <Compile Include="IO\TGA\TGAHeader.cs" />
+    <Compile Include="IO\TGA\TGAReader.cs" />
+    <Compile Include="IO\TGA\TGASerializer.cs" />
+    <Compile Include="IO\TGA\TGAWriter.cs" />
+    <Compile Include="ItemSelectionPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemSelectionPopUp.Designer.cs" />
+    <Compile Include="Json\ColorEntry.cs" />
+    <Compile Include="Json\EntityInfo.cs" />
+    <Compile Include="Json\TileInfo.cs" />
+    <Compile Include="Json\UpdateInformation.cs" />
+    <Compile Include="Misc\FileCacher.cs" />
+    <Compile Include="Misc\OpenFolderDialog.cs" />
+    <Compile Include="PackInfo.cs" />
+    <Compile Include="ResourceCategory.cs" />
+    <Compile Include="ResourceLocation.cs" />
+    <Compile Include="Serializer\AnimationSerializer.cs" />
+    <Compile Include="Serializer\ImageSerializer.cs" />
+    <Compile Include="Skin\Skin.cs" />
+    <Compile Include="Skin\SkinANIM.cs" />
+    <Compile Include="Skin\SkinAnimFlag.cs" />
+    <Compile Include="Skin\SkinAnimMask.cs" />
+    <Compile Include="Skin\SkinBOX.cs" />
+    <Compile Include="Skin\SkinIdentifier.cs" />
+    <Compile Include="Skin\SkinMetaData.cs" />
+    <Compile Include="Skin\SkinModel.cs" />
+    <Compile Include="Skin\SkinPartOffset.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AnimatedGif" Version="1.0.5" />
+    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+	  <PackageReference Include="Autoupdater.NET.Official">
+		  <Version>1.9.2</Version>
+	  </PackageReference>
+	  <PackageReference Include="OpenTK" Version="3.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
+      <Project>{693aebc1-293d-4df0-bcae-26a1099fe7bb}</Project>
+      <Name>OMI Filetype Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

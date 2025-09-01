@@ -8,14 +8,15 @@ using OMI.Formats.Languages;
 using OMI.Formats.Pck;
 using PckStudio.Internal;
 using PckStudio.Forms.Editor;
-using PckStudio.Internal.IO._3DST;
+using PckStudio.Core.IO._3DST;
 using PckStudio.Properties;
 using PckStudio.Forms;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using System.Linq;
 using System.Diagnostics;
-using PckStudio.Internal.Skin;
+using PckStudio.Core.Skin;
 using PckStudio.Interfaces;
+using PckStudio.Core;
 
 namespace PckStudio.Forms.Additional_Popups
 {
@@ -201,12 +202,12 @@ namespace PckStudio.Forms.Additional_Popups
         {
             if (radioButtonManual.Checked)
             {
-                if (!int.TryParse(textSkinID.Text, out int _skinId))
+                if (!int.TryParse(textSkinID.Text, out int skinId))
                 {
                     MessageBox.Show("The Skin Id must be a unique 8 digit number that is not already in use", "Invalid Skin Id", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                newSkin.Identifier = new SkinIdentifier(_skinId);
+                newSkin.Identifier = new SkinIdentifier(skinId);
             }
             newSkin.MetaData = new SkinMetaData(textSkinName.Text, textThemeName.Text);
             DialogResult = DialogResult.OK;

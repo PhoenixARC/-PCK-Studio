@@ -188,7 +188,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.selectTilePictureBox.BackColor = System.Drawing.Color.Transparent;
             this.selectTilePictureBox.BlendColor = System.Drawing.Color.White;
-            this.selectTilePictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
+            this.selectTilePictureBox.BlendMode = PckStudio.Core.Extensions.BlendMode.Multiply;
             this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
             this.selectTilePictureBox.Image = null;
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;

@@ -5,10 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using PckStudio.Internal;
-using PckStudio.Internal.Misc;
 using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
-using PckStudio.Properties;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor

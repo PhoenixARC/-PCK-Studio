@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using PckStudio.Internal.Misc;
 using PckStudio.Internal.App;
 using System.Linq;
-using System.Collections.Generic;
+using PckStudio.Internal;
+using PckStudio.Core.App;
+using PckStudio.Properties;
 
 
 namespace PckStudio
@@ -28,7 +29,7 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            Updater.Initialize(RawProjectUrl);
+            Updater.Initialize(RawProjectUrl, Settings.Default.AutoUpdate);
 
             ApplicationScope.Initialize();
             Trace.TraceInformation("Startup");

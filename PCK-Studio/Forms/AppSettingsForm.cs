@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
+using PckStudio.Core.App;
 using PckStudio.Internal.App;
 using PckStudio.Properties;
 

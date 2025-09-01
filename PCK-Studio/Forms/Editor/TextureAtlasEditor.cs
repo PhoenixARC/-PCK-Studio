@@ -24,12 +24,13 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 
-using OMI.Formats.Color;
-
-using PckStudio.Extensions;
+using PckStudio.Core;
+using PckStudio.Core.Extensions;
 using PckStudio.Interfaces;
 using PckStudio.Internal;
-using PckStudio.Internal.Json;
+using OMI.Formats.Color;
+using PckStudio.Core.Json;
+using PckStudio.Json;
 
 namespace PckStudio.Forms.Editor
 {

@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using OMI.Formats.Behaviour;
 using PckStudio.Internal;
 using PckStudio.Internal.App;
-using PckStudio.Internal.Json;
 using PckStudio.Interfaces;
 using PckStudio.Forms.Additional_Popups.EntityForms;
+using PckStudio.Json;
+using PckStudio.Core.Json;
 
 namespace PckStudio.Forms.Editor
 {
@@ -36,24 +37,24 @@ namespace PckStudio.Forms.Editor
 			treeView1.Nodes.Clear();
 			foreach (BehaviourFile.RiderPositionOverride entry in EditorValue.entries)
 			{
-				TreeNode EntryNode = new TreeNode(entry.name);
+				TreeNode entryNode = new TreeNode(entry.name);
 
                 EntityInfo behaviour = BehaviourData.Find(b => b.InternalName == entry.name);
-				EntryNode.Text = behaviour.DisplayName;
-				EntryNode.ImageIndex = BehaviourData.IndexOf(behaviour);
-				EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
-				EntryNode.Tag = entry;
+				entryNode.Text = behaviour.DisplayName;
+				entryNode.ImageIndex = BehaviourData.IndexOf(behaviour);
+				entryNode.SelectedImageIndex = entryNode.ImageIndex;
+				entryNode.Tag = entry;
 
 				foreach (BehaviourFile.RiderPositionOverride.PositionOverride posOverride in entry.overrides)
 				{
-					TreeNode OverrideNode = new TreeNode("Position Override");
-					OverrideNode.Tag = posOverride;
-					EntryNode.Nodes.Add(OverrideNode);
-					OverrideNode.ImageIndex = 103;
-					OverrideNode.SelectedImageIndex = OverrideNode.ImageIndex;
+					TreeNode overrideNode = new TreeNode("Position Override");
+					overrideNode.Tag = posOverride;
+					entryNode.Nodes.Add(overrideNode);
+					overrideNode.ImageIndex = 103;
+					overrideNode.SelectedImageIndex = overrideNode.ImageIndex;
 				}
 
-				treeView1.Nodes.Add(EntryNode);
+				treeView1.Nodes.Add(entryNode);
 			}
 			treeView1.EndUpdate();
 		}

@@ -139,6 +139,12 @@
     <Compile Include="Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\EditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\PageClosingEventArgs.cs" />
     <Compile Include="Controls\PckEditor.cs">
       <SubType>UserControl</SubType>
@@ -146,12 +152,6 @@
     <Compile Include="Controls\PckEditor.Designer.cs">
       <DependentUpon>PckEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\BoundingBoxExtensions.cs" />
-    <Compile Include="Extensions\MaterialContainerExtensions.cs" />
-    <Compile Include="Extensions\MaterialExtensions.cs" />
-    <Compile Include="Extensions\ModelBoxExtension.cs" />
-    <Compile Include="Extensions\PictureBoxExtensions.cs" />
-    <Compile Include="Extensions\TreeViewExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,112 +164,40 @@
     <Compile Include="Forms\ContributorsForm.Designer.cs">
       <DependentUpon>ContributorsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\OpenTKExtensions.cs" />
-    <Compile Include="Internal\DelegatedSaveContext.cs" />
-    <Compile Include="Interfaces\IEditor.cs" />
-    <Compile Include="Interfaces\ISaveContext.cs" />
-    <Compile Include="Interfaces\ITryGetSet.cs" />
     <Compile Include="Forms\Editor\ModelEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Editor\ModelEditor.Designer.cs">
       <DependentUpon>ModelEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IModelImportProvider.cs" />
-    <Compile Include="Internal\App\Updater.cs" />
-    <Compile Include="Internal\EditorControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Internal\EditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Internal\DelegatedFileSaveContext.cs" />
-    <Compile Include="Internal\GameModelInfo.cs" />
-    <Compile Include="Internal\IO\PSM\PSMFileReader.cs" />
-    <Compile Include="Internal\IO\PSM\PSMFileWriter.cs" />
-    <Compile Include="Internal\GameConstants.cs" />
-    <Compile Include="Internal\IO\TGA\TGADeserializer.cs" />
-    <Compile Include="Internal\IO\TGA\TGASerializer.cs" />
-    <Compile Include="Extensions\LocFileExtensions.cs" />
-    <Compile Include="Extensions\PckAssetExtensions.cs" />
-    <Compile Include="Extensions\CursorExtensions.cs" />
-    <Compile Include="Extensions\SkinBOXExtensions.cs" />
-    <Compile Include="Extensions\SkinExtensions.cs" />
-    <Compile Include="Extensions\System.Numerics.cs" />
-    <Compile Include="Extensions\TreeNodeExtensions.cs" />
-    <Compile Include="External\Format\BedrockLegacyModel.cs" />
-    <Compile Include="External\Format\BedrockModel.cs" />
-    <Compile Include="Internal\FileDialogFilter.cs" />
-    <Compile Include="Internal\Deserializer\ImageDeserializer.cs" />
-    <Compile Include="Internal\Json\JsonDefaultModel.cs" />
-    <Compile Include="Internal\Misc\RichPresenceClient.cs" />
-    <Compile Include="Internal\GameModelImporter.cs" />
-    <Compile Include="Internal\ModelImporter.cs" />
-    <Compile Include="Internal\SkinModelImporter.cs" />
-    <Compile Include="Internal\Json\JsonModelMetaData.cs" />
-    <Compile Include="Internal\NamedTexture.cs" />
-    <Compile Include="Internal\Json\UpdateInformation.cs" />
-    <Compile Include="Internal\Serializer\AnimationSerializer.cs" />
-    <Compile Include="Internal\Deserializer\AnimationDeserializer.cs" />
-    <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
-    <Compile Include="Interfaces\IPckAssetSerializer.cs" />
-    <Compile Include="Internal\Json\Entities.cs" />
-    <Compile Include="Internal\Json\EntityInfo.cs" />
-    <Compile Include="Internal\ResourceCategory.cs" />
-    <Compile Include="Internal\App\CommitInfo.cs" />
-    <Compile Include="External\Format\BlockBenchModel.cs" />
-    <Compile Include="Internal\Skin\Skin.cs" />
-    <Compile Include="Internal\Skin\SkinIdentifier.cs" />
-    <Compile Include="Internal\Skin\SkinMetaData.cs" />
-    <Compile Include="Internal\Skin\SkinModel.cs" />
-    <Compile Include="Internal\Skin\SkinModelInfo.cs" />
-    <Compile Include="Internal\Skin\SkinPartOffset.cs" />
-    <Compile Include="Internal\ResourceLocation.cs" />
-    <Compile Include="Internal\Serializer\ImageSerializer.cs" />
-    <Compile Include="Internal\Skin\SkinAnimFlag.cs" />
-    <Compile Include="Internal\Skin\SkinAnimMask.cs" />
+    <Compile Include="Internal\ApplicationBuildInfo.cs" />
+    <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\CommitInfo.cs" />
+    <Compile Include="Internal\Entities.cs" />
+    <Compile Include="Internal\RichPresenceClient.cs" />
+    <Compile Include="Internal\PckNodeSorter.cs" />
+    <Compile Include="Internal\SettingsManager.cs" />
+    <Compile Include="Internal\Tiles.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\BoundingBox.cs" />
-    <Compile Include="Rendering\Camera\Camera.cs" />
-    <Compile Include="Rendering\Camera\PerspectiveCamera.cs" />
-    <Compile Include="Rendering\Cube.cs" />
-    <Compile Include="Rendering\CubeMesh.cs" />
-    <Compile Include="Rendering\CubeMeshCollection.cs" />
-    <Compile Include="Rendering\FrameBuffer.cs" />
-    <Compile Include="Rendering\IndexBuffer.cs" />
-    <Compile Include="Rendering\DrawContext.cs" />
-    <Compile Include="Rendering\ColorVertex.cs" />
     <Compile Include="Rendering\ModelRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Rendering\ModelRenderer.Designer.cs">
       <DependentUpon>ModelRenderer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\Renderer.cs" />
-    <Compile Include="Rendering\GenericMesh.cs" />
-    <Compile Include="Rendering\Shader\ShaderLibrary.cs" />
-    <Compile Include="Rendering\Shader\ShaderProgram.cs" />
-    <Compile Include="Rendering\Shader\ShaderObject.cs" />
-    <Compile Include="Rendering\Shader\ShaderSource.cs" />
+    <Compile Include="Rendering\SceneViewport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Rendering\SkinRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Rendering\SkinRenderer.Designer.cs">
       <DependentUpon>SkinRenderer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\Spherical.cs" />
-    <Compile Include="Rendering\TextureChangingEventArgs.cs" />
-    <Compile Include="Rendering\TextureVertex.cs" />
-    <Compile Include="Rendering\Texture\CubeTexture.cs" />
-    <Compile Include="Rendering\Texture\Texture.cs" />
-    <Compile Include="Rendering\Texture\Texture2D.cs" />
-    <Compile Include="Rendering\VertexArray.cs" />
-    <Compile Include="Rendering\VertexBuffer.cs" />
-    <Compile Include="Rendering\VertexBufferLayout.cs" />
     <Compile Include="ToolboxItems\BlendPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -282,18 +210,10 @@
     <Compile Include="ToolboxItems\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Rendering\SceneViewport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ToolboxItems\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="External\API\Miles\BinkaConverter.cs" />
-    <Compile Include="Extensions\AnimationExtensions.cs" />
-    <Compile Include="Extensions\ImageLayoutDirection.cs" />
-    <Compile Include="Extensions\ImageSection.cs" />
-    <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Forms\Additional-Popups\NumericPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,49 +226,19 @@
     <Compile Include="Forms\AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\App\ApplicationBuildInfo.cs" />
     <Compile Include="Forms\Editor\TextureAtlasEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Editor\TextureAtlasEditor.Designer.cs">
       <DependentUpon>TextureAtlasEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\BlendMode.cs" />
-    <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\GraphicsExtensions.cs" />
-    <Compile Include="Internal\FileFormats\PSMFile.cs" />
-    <Compile Include="Internal\FileFormats\PckAudioFile.cs" />
     <Compile Include="External\API\Miles\Binka.cs" />
-    <Compile Include="Internal\IO\3DST\3DSTextureReader.cs" />
-    <Compile Include="Internal\IO\3DST\3DSTextureWriter.cs" />
-    <Compile Include="Internal\IO\PckAudio\PckAudioFileReader.cs" />
-    <Compile Include="Internal\IO\PckAudio\PckAudioFileWriter.cs" />
-    <Compile Include="Internal\Misc\FileCacher.cs" />
-    <Compile Include="Internal\Misc\OpenFolderDialog.cs" />
-    <Compile Include="Internal\App\ApplicationScope.cs" />
-    <Compile Include="Internal\Json\ColorEntry.cs" />
-    <Compile Include="Internal\Json\TileInfo.cs" />
-    <Compile Include="Internal\Json\Tiles.cs" />
-    <Compile Include="Internal\App\Profiler.cs" />
-    <Compile Include="Internal\App\SettingsManager.cs" />
-    <Compile Include="Internal\Skin\SkinBOX.cs" />
-    <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Internal\Skin\SkinANIM.cs" />
     <Compile Include="Forms\Features\CemuPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Features\CemuPanel.Designer.cs">
       <DependentUpon>CemuPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\IO\TGA\TGAFileData.cs" />
-    <Compile Include="Internal\IO\TGA\TGADataTypeCode.cs" />
-    <Compile Include="Internal\IO\TGA\TGAException.cs" />
-    <Compile Include="Internal\IO\TGA\TGAExtentionData.cs" />
-    <Compile Include="Internal\IO\TGA\TGAFooter.cs" />
-    <Compile Include="Internal\IO\TGA\TGAHeader.cs" />
-    <Compile Include="Internal\IO\TGA\TGAReader.cs" />
-    <Compile Include="Internal\IO\TGA\TGAWriter.cs" />
     <Compile Include="Forms\Additional-Popups\EntityForms\AddEntry.cs" />
     <Compile Include="Forms\Additional-Popups\Loc\AddLanguage.cs">
       <SubType>Form</SubType>
@@ -380,7 +270,6 @@
     <Compile Include="Forms\Additional-Popups\MultiTextPrompt.Designer.cs">
       <DependentUpon>MultiTextPrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\Animation.cs" />
     <Compile Include="ToolboxItems\AnimationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -505,10 +394,8 @@
     <Compile Include="Forms\Editor\AudioEditor.Designer.cs">
       <DependentUpon>AudioEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\IO\3DST\TextureCodec.cs" />
     <EmbeddedResource Include="Controls\PckEditor.resx">
       <DependentUpon>PckEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -771,16 +658,10 @@
     <PackageReference Include="AnimatedGif">
       <Version>1.0.5</Version>
     </PackageReference>
-    <PackageReference Include="Autoupdater.NET.Official">
-      <Version>1.9.2</Version>
-    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>5.8.0-alpha0098</Version>
       <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="DiscordRichPresence">
-      <Version>1.2.1.24</Version>
     </PackageReference>
     <PackageReference Include="MetroFramework">
       <Version>1.2.0.3</Version>
@@ -803,12 +684,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
-    <PackageReference Include="OpenTK">
-      <Version>3.3.3</Version>
-    </PackageReference>
-    <PackageReference Include="OpenTK.GLControl">
-      <Version>3.3.3</Version>
-    </PackageReference>
     <PackageReference Include="Octokit">
       <Version>13.0.1</Version>
     </PackageReference>
@@ -826,6 +701,18 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PckStudio.Core\PckStudio.Core.csproj">
+      <Project>{345eabed-f0d1-4d04-b409-babdef747352}</Project>
+      <Name>PckStudio.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PckStudio.Rendering\PckStudio.Rendering.csproj">
+      <Project>{b1e19d0f-6dd5-4d91-9b45-9818759ca8ef}</Project>
+      <Name>PckStudio.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PckStuido.ModelSupport\PckStuido.ModelSupport.csproj">
+      <Project>{43bcacd7-5405-4499-9b45-e1435ac03c26}</Project>
+      <Name>PckStuido.ModelSupport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>
       <Name>OMI Filetype Library</Name>

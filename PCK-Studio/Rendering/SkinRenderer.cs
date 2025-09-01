@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK;
 using PckStudio.Internal;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -30,10 +30,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
 using System.IO;
+using PckStudio.Rendering.Extension;
 using PckStudio.Rendering.Texture;
 using PckStudio.Rendering.Shader;
 using System.Linq;
-using PckStudio.Internal.Skin;
+using PckStudio.Core.Skin;
+using PckStudio.Core;
 
 namespace PckStudio.Rendering
 {
@@ -499,8 +501,8 @@ namespace PckStudio.Rendering
                     void AddOutline(BoundingBox boundingBox, ref List<ColorVertex> vertices, ref List<int> indices)
                     {
                         int offset = vertices.Count;
-                        vertices.AddRange(BoundingBox.GetVertices().Select(vert => new ColorVertex(Vector3.TransformPosition(vert.Position, boundingBox.GetTransform()), vert.Color)));
-                        indices.AddRange(BoundingBox.GetIndecies().Select(i => i + offset));
+                        vertices.AddRange(Addon.BoundingBox.GetVertices().Select(vert => new ColorVertex(Vector3.TransformPosition(vert.Position, boundingBox.GetTransform()), vert.Color)));
+                        indices.AddRange(Addon.BoundingBox.GetIndecies().Select(i => i + offset));
                     }
 
                     List<ColorVertex> vertices = new List<ColorVertex>(8 * 6);

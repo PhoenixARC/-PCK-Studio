@@ -11,13 +11,14 @@ using OMI.Formats.Material;
 using OMI.Formats.Model;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Interfaces;
-using PckStudio.Internal;
-using PckStudio.Internal.Json;
+using PckStudio.Core.Json;
 using PckStudio.Properties;
 using PckStudio.Rendering.Shader;
 using PckStudio.Rendering.Texture;
+using PckStudio.Core;
+using PckStudio.ModelSupport;
 
 namespace PckStudio.Rendering
 {

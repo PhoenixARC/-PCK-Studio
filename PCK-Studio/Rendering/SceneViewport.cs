@@ -36,8 +36,9 @@ using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Properties;
+using PckStudio.Rendering;
 using PckStudio.Rendering.Camera;
 using PckStudio.Rendering.Shader;
 
@@ -173,8 +174,8 @@ namespace PckStudio.Rendering
             layout.Add(ShaderDataType.Float3);
             layout.Add(ShaderDataType.Float4);
             int id = vao.AddNewBuffer(layout);
-            vao.GetBuffer(id).SetData(BoundingBox.GetVertices());
-            var ibo = IndexBuffer.Create(BoundingBox.GetIndecies());
+            vao.GetBuffer(id).SetData(Addon.BoundingBox.GetVertices());
+            var ibo = IndexBuffer.Create(Addon.BoundingBox.GetIndecies());
             _boundingBoxDrawContext = new DrawContext(vao, ibo, PrimitiveType.Lines);
 
             _meshTypeVertexArray = new Dictionary<Type, VertexArray>();
@@ -267,7 +268,7 @@ namespace PckStudio.Rendering
             Renderer.Draw(shader, drawContext);
         }
 
-        protected void DrawBoundingBox(Matrix4 transform, BoundingBox boundingBox, Color color)
+        protected void DrawBoundingBox(Matrix4 transform, Core.BoundingBox boundingBox, Color color)
         {
             ShaderProgram colorShader = _shaderLibrary.GetShader("Internal_colorShader");
             colorShader.Bind();

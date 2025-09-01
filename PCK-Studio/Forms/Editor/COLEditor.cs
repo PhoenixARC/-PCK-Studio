@@ -8,7 +8,7 @@ using MetroFramework.Forms;
 using OMI.Formats.Color;
 using OMI.Formats.Pck;
 using OMI.Workers.Color;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Properties;
 using PckStudio.Internal;
 using PckStudio.Interfaces;
@@ -120,7 +120,7 @@ namespace PckStudio.Forms.Editor
 
 			ColorContainer temp = targetVersion ? _defaultColourfile : EditorValue;
 
-			List<string> CurrentEntries = new List<string>();
+            List<string> currentEntries = new List<string>();
 
 			colorCache.Clear();
 			fogCache.Clear();
@@ -134,7 +134,7 @@ namespace PckStudio.Forms.Editor
                 {
 					if (_defaultColourfile.Colors.Find(c => c.Name == col.Name) == null)
 						continue;
-					CurrentEntries.Add(col.Name);
+					currentEntries.Add(col.Name);
 					AddEntry(colorTreeView, colorCache, col.Name, col);
 				}
             }
@@ -142,12 +142,12 @@ namespace PckStudio.Forms.Editor
 			foreach (ColorContainer.Color col in temp.Colors)
 			{
                 ColorContainer.Color entry = EditorValue.Colors.Find(color => color.Name == col.Name);
-				if (CurrentEntries.Contains(col.Name))
+				if (currentEntries.Contains(col.Name))
 					continue;
                 ColorContainer.Color color = entry ?? col;
 				AddEntry(colorTreeView, colorCache, color.Name, color);
 			}
-			CurrentEntries.Clear();
+			currentEntries.Clear();
 
 			// fixes the duplicate entry bug
 			if (targetVersion)
@@ -167,7 +167,7 @@ namespace PckStudio.Forms.Editor
 			foreach (ColorContainer.WaterColor col in temp.WaterColors)
 			{
                 ColorContainer.WaterColor entry = EditorValue.WaterColors.Find(color => color.Name == col.Name);
-				if (CurrentEntries.Contains(col.Name))
+				if (currentEntries.Contains(col.Name))
 					continue;
                 ColorContainer.WaterColor color = entry ?? col;
 				AddEntry(waterTreeView, waterCache, color.Name, color);
@@ -493,14 +493,14 @@ namespace PckStudio.Forms.Editor
 				}
 				else
                 {
-                    ColorContainer.WaterColor WaterEntry = _defaultColourfile.WaterColors.Find(color => color.Name == node.Text);
+                    ColorContainer.WaterColor waterEntry = _defaultColourfile.WaterColors.Find(color => color.Name == node.Text);
 
-					if (WaterEntry == null)
+					if (waterEntry == null)
 						return;
 
 					color = 
-						tab == waterTab ? WaterEntry.SurfaceColor : 
-						tab == underwaterTab ? WaterEntry.UnderwaterColor : WaterEntry.FogColor;
+						tab == waterTab ? waterEntry.SurfaceColor : 
+						tab == underwaterTab ? waterEntry.UnderwaterColor : waterEntry.FogColor;
 
 					if (tab == waterTab)
                     {
@@ -531,52 +531,52 @@ namespace PckStudio.Forms.Editor
 			fogTreeView.Nodes.Clear();
 			if (!string.IsNullOrEmpty(metroTextBox1.Text))
 			{
-				foreach (TreeNode _node in colorCache)
+                foreach (TreeNode node in colorCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
-						colorTreeView.Nodes.Add((TreeNode)_node.Clone());
+						colorTreeView.Nodes.Add((TreeNode)node.Clone());
 					}
 				}
-				foreach (TreeNode _node in waterCache)
+                foreach (TreeNode node in waterCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
-						waterTreeView.Nodes.Add((TreeNode)_node.Clone());
+						waterTreeView.Nodes.Add((TreeNode)node.Clone());
 					}
 				}
-				foreach (TreeNode _node in underwaterCache)
+                foreach (TreeNode node in underwaterCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
-						underwaterTreeView.Nodes.Add((TreeNode)_node.Clone());
+						underwaterTreeView.Nodes.Add((TreeNode)node.Clone());
 					}
 				}
-				foreach (TreeNode _node in fogCache)
+                foreach (TreeNode node in fogCache)
 				{
-					if (_node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
+					if (node.Text.ToLower().Contains(metroTextBox1.Text.ToLower()))
 					{
-						fogTreeView.Nodes.Add((TreeNode)_node.Clone());
+						fogTreeView.Nodes.Add((TreeNode)node.Clone());
 					}
 				}
 			}
 			else
 			{
-				foreach (TreeNode _node in colorCache)
+				foreach (TreeNode node in colorCache)
 				{
-					colorTreeView.Nodes.Add((TreeNode)_node.Clone());
+					colorTreeView.Nodes.Add((TreeNode)node.Clone());
 				}
-				foreach (TreeNode _node in waterCache)
+				foreach (TreeNode node in waterCache)
 				{
-					waterTreeView.Nodes.Add((TreeNode)_node.Clone());
+					waterTreeView.Nodes.Add((TreeNode)node.Clone());
 				}
-				foreach (TreeNode _node in underwaterCache)
+				foreach (TreeNode node in underwaterCache)
 				{
-					underwaterTreeView.Nodes.Add((TreeNode)_node.Clone());
+					underwaterTreeView.Nodes.Add((TreeNode)node.Clone());
 				}
-				foreach (TreeNode _node in fogCache)
+				foreach (TreeNode node in fogCache)
 				{
-					fogTreeView.Nodes.Add((TreeNode)_node.Clone());
+					fogTreeView.Nodes.Add((TreeNode)node.Clone());
 				}
 			}
 			//enables redrawing tree after all objects have been added

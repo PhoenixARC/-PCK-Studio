@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using PckStudio.Internal.Skin;
+using PckStudio.Core.Skin;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor

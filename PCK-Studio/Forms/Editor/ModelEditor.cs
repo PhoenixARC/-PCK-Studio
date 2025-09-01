@@ -12,10 +12,11 @@ using MetroFramework.Forms;
 
 using PckStudio.Internal;
 using PckStudio.Interfaces;
-using PckStudio.Internal.Json;
-using PckStudio.Internal.App;
-using PckStudio.Extensions;
 using OMI.Formats.Material;
+using PckStudio.ModelSupport;
+using PckStudio.Core.Json;
+using PckStudio.Core.Extensions;
+using PckStudio.Internal.App;
 
 namespace PckStudio.Forms.Editor
 {

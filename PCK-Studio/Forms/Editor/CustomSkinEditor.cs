@@ -8,13 +8,16 @@ using System.Drawing.Drawing2D;
 using MetroFramework.Forms;
 
 using PckStudio.Internal;
-using PckStudio.Extensions;
-using PckStudio.Internal.Skin;
+using PckStuido.ModelSupport.Extension;
+using PckStudio.Core.Skin;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using System.Collections.Generic;
 using PckStudio.Internal.App;
 using PckStudio.Interfaces;
+using System.Text;
+using PckStudio.Core.Extensions;
+using PckStudio.ModelSupport;
 
 namespace PckStudio.Forms.Editor
 {
@@ -28,13 +31,16 @@ namespace PckStudio.Forms.Editor
         private BindingSource _skinPartListBindingSource;
         private BindingSource _skinOffsetListBindingSource;
 
-        private SettingsManager _settingsManager;
+        private Core.App.SettingsManager _settingsManager;
 
         private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
         {
             InterpolationMode = InterpolationMode.NearestNeighbor,
             PixelOffsetMode = PixelOffsetMode.HighQuality,
         };
+
+        private CustomSkinEditor() : this(null, null)
+        { }
 
         public CustomSkinEditor(Skin skin, ISaveContext<Skin> saveContext, bool inflateOverlayParts = false, bool allowInflate = false)
             : base(skin, saveContext)
@@ -51,7 +57,7 @@ namespace PckStudio.Forms.Editor
 
         private void InitializeRenderSettings()
         {
-            _settingsManager = SettingsManager.CreateSettings();
+            _settingsManager = Core.App.SettingsManager.CreateSettings();
             _settingsManager.AddSetting("shouldAnimate"  , true , "Animate skin"                   , state => renderer3D1.Animate = state);
             _settingsManager.AddSetting("lockMouse"      , true , "Lock mouse when paning/rotating", state => renderer3D1.LockMousePosition = state);
             _settingsManager.AddSetting("showGuidelines" , false, "Show guidelines"                , state => renderer3D1.ShowGuideLines = state);
@@ -289,11 +295,26 @@ namespace PckStudio.Forms.Editor
         {
             int scale = 1;
             renderer3D1.SelectedIndices = skinPartListBox.SelectedIndices.Cast<int>().ToArray();
+            StringBuilder uv_sb = new StringBuilder();
+            StringBuilder size_sb = new StringBuilder();
+            StringBuilder pos_sb = new StringBuilder();
+            foreach (SkinBOX b in skinPartListBox.SelectedItems.Cast<SkinBOX>())
+            {
+                uv_sb.Append(b.UV);
+                uv_sb.Append(", ");
+                size_sb.Append(b.Size);
+                size_sb.Append(", ");
+                pos_sb.Append(b.Pos);
+                pos_sb.Append(", ");
+            }
+
+            uvLabel.Text = $"UV: {uv_sb}";
+            sizeLabel.Text = $"Size: {size_sb}";
+            positionLabel.Text = $"Position: {pos_sb}";
+
+            // TODO: highlight all selected boxes
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
-                uvLabel.Text = $"UV: {box.UV}";
-                sizeLabel.Text = $"Size: {box.Size}";
-                positionLabel.Text = $"Position: {box.Pos}";
 
                 Image uvArea = EditorValue.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
 
@@ -432,16 +453,20 @@ namespace PckStudio.Forms.Editor
             settingsForm.ShowDialog();
         }
 
+        private string SanitizeModelFilename(in string modelFilename)
+        {
+            return string.IsNullOrWhiteSpace(modelFilename) ? "template" : modelFilename.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
+        }
+
         private void exportTemplateButton_Click(object sender, EventArgs e)
         {
             Image templateTexture = Resources.classic_template;
-            string templateFilename = "template";
             SkinAnimMask templateAnimMask = SkinAnimMask.RESOLUTION_64x64;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "Save Template Model";
             saveFileDialog.Filter = SkinModelImporter.Default.SupportedModelFileFormatsFilter;
-            saveFileDialog.FileName = templateFilename.TrimEnd(new char[] { '\n', '\r' }).Replace(' ', '_');
+            saveFileDialog.FileName = SanitizeModelFilename(EditorValue.MetaData.Name);
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 SkinModelInfo modelInfo = new SkinModelInfo(templateTexture, templateAnimMask, new SkinModel());
