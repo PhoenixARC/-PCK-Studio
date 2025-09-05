@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using OMI.Formats.Material;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Json;
 using PckStudio.Internal.App;

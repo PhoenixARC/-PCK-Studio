@@ -13,7 +13,7 @@ using PckStudio.Properties;
 using PckStudio.External.API.Miles;
 using PckStudio.Core.Extensions;
 using PckStudio.Internal.App;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Interfaces;
 using PckStudio.Core.FileFormats;
 

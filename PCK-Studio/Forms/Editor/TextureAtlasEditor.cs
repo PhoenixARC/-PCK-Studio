@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using PckStudio.Core;
 using PckStudio.Core.Extensions;
 using PckStudio.Interfaces;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using OMI.Formats.Color;
 using PckStudio.Core.Json;
 using PckStudio.Json;

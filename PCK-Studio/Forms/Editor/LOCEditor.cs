@@ -8,6 +8,7 @@ using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups.Loc;
 using OMI.Formats.Languages;
 using PckStudio.Interfaces;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Editor
 {

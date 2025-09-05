@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using OMI.Formats.Behaviour;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Internal.App;
 using PckStudio.Interfaces;
 using PckStudio.Forms.Additional_Popups.EntityForms;

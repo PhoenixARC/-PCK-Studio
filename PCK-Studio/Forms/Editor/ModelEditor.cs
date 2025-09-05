@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using OMI.Formats.Model;
 using MetroFramework.Forms;
 
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Interfaces;
 using OMI.Formats.Material;
 using PckStudio.ModelSupport;

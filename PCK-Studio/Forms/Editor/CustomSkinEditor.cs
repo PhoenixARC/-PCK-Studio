@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using MetroFramework.Forms;
-
-using PckStudio.Internal;
-using PckStuido.ModelSupport.Extension;
-using PckStudio.Core.Skin;
-using PckStudio.Forms.Additional_Popups;
-using PckStudio.Properties;
 using System.Collections.Generic;
-using PckStudio.Internal.App;
-using PckStudio.Interfaces;
-using System.Text;
+
+using PckStudio.Controls;
+using PckStudio.Properties;
+using PckStudio.Forms.Additional_Popups;
+
+using PckStudio.Core.Skin;
 using PckStudio.Core.Extensions;
+using PckStudio.Interfaces;
 using PckStudio.ModelSupport;
+using PckStuido.ModelSupport.Extension;
 
 namespace PckStudio.Forms.Editor
 {

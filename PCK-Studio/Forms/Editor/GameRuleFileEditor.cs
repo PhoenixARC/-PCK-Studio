@@ -22,8 +22,9 @@ using System.Windows.Forms;
 using PckStudio.Forms.Additional_Popups.Grf;
 using OMI.Formats.GameRule;
 using PckStudio.ToolboxItems;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Interfaces;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {

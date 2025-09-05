@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PckStudio.Interfaces;
 
-namespace PckStudio.Internal
+namespace PckStudio.Controls
 {
     internal class EditorControl<T> : UserControl, IEditor<T> where T : class
     {

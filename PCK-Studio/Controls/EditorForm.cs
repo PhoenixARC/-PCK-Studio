@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using PckStudio.Interfaces;
 
-namespace PckStudio.Internal
+namespace PckStudio.Controls
 {
     public class EditorForm<T> : MetroForm where T : class
     {

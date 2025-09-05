@@ -10,7 +10,7 @@ using OMI.Formats.Pck;
 using OMI.Workers.Color;
 using PckStudio.Core.Extensions;
 using PckStudio.Properties;
-using PckStudio.Internal;
+using PckStudio.Controls;
 using PckStudio.Interfaces;
 using System.Collections.ObjectModel;
 
