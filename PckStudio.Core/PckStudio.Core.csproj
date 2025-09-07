@@ -6,6 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{345EABED-F0D1-4D04-B409-BABDEF747352}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <DefineConstants Condition="'$(Configuration)' != 'Debug'">NDEBUG</DefineConstants>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio.Core</RootNamespace>
     <AssemblyName>PckStudio.Core</AssemblyName>
