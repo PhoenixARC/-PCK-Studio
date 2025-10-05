@@ -170,7 +170,6 @@
     <Compile Include="Forms\Editor\ModelEditor.Designer.cs">
       <DependentUpon>ModelEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\ApplicationBuildInfo.cs" />
     <Compile Include="Internal\ApplicationScope.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\Entities.cs" />
