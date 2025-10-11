@@ -1,6 +1,6 @@
 [submodule "OMI-Lib"]
 	path = Vendor/OMI-Lib
-	url = https://github.com/PhoenixARC/-OMI-Filetype-Library.git
+	url = https://github.com/LCERD/OMI-Filetype-Library.git
 [submodule "Vendor/SharpMss32"]
 	path = Vendor/SharpMss32
 	url = https://github.com/NessieHax/SharpMss32.git
