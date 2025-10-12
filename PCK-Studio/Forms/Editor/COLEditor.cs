@@ -695,7 +695,7 @@ namespace PckStudio.Forms.Editor
                     blueUpDown.Value = selectedColor.B;
 
                     // Update the hex textbox
-                    colorTextbox.Text = ColorTranslator.ToHtml(selectedColor).TrimStart('#');
+                    colorTextbox.Text = $"{selectedColor.R:X2}{selectedColor.G:X2}{selectedColor.B:X2}"; // Fixed to convert preset Windows color text to hex
 
                     SetUpValueChanged(true); // Re-enable event handlers
 
