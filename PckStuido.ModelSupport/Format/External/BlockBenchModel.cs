@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NamedTexture = PckStudio.Core.NamedData<System.Drawing.Image>;
 
 namespace PckStudio.ModelSupport.Format.External
 {
@@ -200,7 +201,7 @@ namespace PckStudio.ModelSupport.Format.External
     {
         public static implicit operator Image(Texture texture) => texture.GetImage();
         public static implicit operator Texture(Image image) => new Texture(image);
-        public static implicit operator Texture(NamedTexture namedTexture) => new Texture(namedTexture.Name, namedTexture.Texture);
+        public static implicit operator Texture(NamedTexture namedTexture) => new Texture(namedTexture.Name, namedTexture.Value);
         
         private const string _TEXTUREDATAHEAD = "data:image/png;base64,";
 

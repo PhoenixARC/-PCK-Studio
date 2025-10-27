@@ -113,6 +113,7 @@
     <Compile Include="Json\UpdateInformation.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
+    <Compile Include="NamedData.cs" />
     <Compile Include="PackInfo.cs" />
     <Compile Include="ResourceCategory.cs" />
     <Compile Include="ResourceLocation.cs" />

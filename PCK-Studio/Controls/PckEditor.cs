@@ -253,7 +253,7 @@ namespace PckStudio.Controls
                     Image texture = asset.GetTexture();
                     string textureName = Path.GetFileName(texturePath);
 
-                    NamedTexture modelTexture = new NamedTexture(textureName, texture);
+                    NamedData<Image> modelTexture = new NamedData<Image>(textureName, texture);
 
                     bool hasCustomModel = false;
                     bool hasDefaultModel = TryGetDefaultEntityModel(modelName, out Model model);
@@ -2033,7 +2033,7 @@ namespace PckStudio.Controls
             return true;
         }
 
-        private void ShowSimpleModelRender(Model model, NamedTexture modelTexture)
+        private void ShowSimpleModelRender(Model model, NamedData<Image> modelTexture)
         {
             MetroForm form = new MetroForm();
             form.Icon = Resources.ProjectLogo;
@@ -2057,7 +2057,7 @@ namespace PckStudio.Controls
 
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    var modelInfo = new GameModelInfo(model, new NamedTexture[1] { modelTexture });
+                    var modelInfo = new GameModelInfo(model, new NamedData<Image>[1] { modelTexture });
                     GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
                 }
             }
@@ -2078,7 +2078,7 @@ namespace PckStudio.Controls
             renderer.VSync = true;
             renderer.BackColor = Color.FromArgb(30, 30, 30);
             renderer.Dock = DockStyle.Fill;
-            renderer.Texture = modelTexture.Texture;
+            renderer.Texture = modelTexture.Value;
             renderer.LoadModel(model);
             renderer.ResetCamera();
 

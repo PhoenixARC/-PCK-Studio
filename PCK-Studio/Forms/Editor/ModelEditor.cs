@@ -17,6 +17,7 @@ using PckStudio.ModelSupport;
 using PckStudio.Core.Json;
 using PckStudio.Core.Extensions;
 using PckStudio.Internal.App;
+using PckStudio.Core;
 
 namespace PckStudio.Forms.Editor
 {
@@ -178,16 +179,16 @@ namespace PckStudio.Forms.Editor
 
         private class NamedTextureTreeNode : TreeNode
         {
-            private readonly NamedTexture _namedTexture;
+            private readonly NamedData<Image> _namedTexture;
 
-            public NamedTextureTreeNode(NamedTexture namedTexture)
+            public NamedTextureTreeNode(NamedData<Image> namedTexture)
                 : base(namedTexture.Name)
             {
                 Tag = namedTexture;
                 _namedTexture = namedTexture;
             }
 
-            public Image GetTexture() => _namedTexture.Texture;
+            public Image GetTexture() => _namedTexture.Value;
         }
 
         private void LoadModels()
@@ -221,7 +222,7 @@ namespace PckStudio.Forms.Editor
 
                 if (openFileDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    IEnumerable<NamedTexture> textures = GetModelTextures(model.Name);
+                    IEnumerable<NamedData<Image>> textures = GetModelTextures(model.Name);
                     var modelInfo = new GameModelInfo(model, textures);
                     GameModelImporter.Default.Export(openFileDialog.FileName, modelInfo);
                 }
@@ -236,18 +237,18 @@ namespace PckStudio.Forms.Editor
             //removeToolStripMenuItem.Visible = e.Node is ModelPartNode || e.Node is ModelBoxNode;
             if (e.Node is ModelNode modelNode && modelNode.Model.Name != modelViewport.CurrentModelName)
             {
-                NamedTexture[] textures = GetModelTextures(modelNode.Model.Name).ToArray();
+                NamedData<Image>[] textures = GetModelTextures(modelNode.Model.Name).ToArray();
                 
                 textureImageList.Images.Clear();
                 namedTexturesTreeView.Nodes.Clear();
 
-                foreach ((int i, NamedTexture item) in textures.enumerate())
+                foreach ((int i, NamedData<Image> item) in textures.enumerate())
                 {
-                    textureImageList.Images.Add(item.Texture);
+                    textureImageList.Images.Add(item.Value);
                     namedTexturesTreeView.Nodes.Add(new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i });
                 }
                 if (textures.Length != 0)
-                    modelViewport.Texture = textures[0].Texture;
+                    modelViewport.Texture = textures[0].Value;
 
                 modelViewport.LoadModel(modelNode.Model);
                 if (GameModelImporter.ModelMetaData.TryGetValue(modelNode.Model.Name, out JsonModelMetaData modelMetaData) && !string.IsNullOrEmpty(modelMetaData.MaterialName) &&
@@ -270,14 +271,14 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private IEnumerable<NamedTexture> GetModelTextures(string modelName)
+        private IEnumerable<NamedData<Image>> GetModelTextures(string modelName)
         {
             if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
                 yield break;
             foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
             {
                 if (_textures.TryGet(textureLocation, out Image img))
-                    yield return new NamedTexture(Path.GetFileName(textureLocation), img);
+                    yield return new NamedData<Image>(Path.GetFileName(textureLocation), img);
             }
             yield break;
         }
@@ -304,9 +305,9 @@ namespace PckStudio.Forms.Editor
 
                 EditorValue.SetModel(modelInfo.Model);
 
-                foreach (NamedTexture texture in modelInfo.Textures)
+                foreach (NamedData<Image> texture in modelInfo.Textures)
                 {
-                    _textures.TrySet(texture.Name, texture.Texture);
+                    _textures.TrySet(texture.Name, texture.Value);
                 }
 
                 LoadModels();
