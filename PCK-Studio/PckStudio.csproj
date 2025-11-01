@@ -176,7 +176,6 @@
     <Compile Include="Internal\RichPresenceClient.cs" />
     <Compile Include="Internal\PckNodeSorter.cs" />
     <Compile Include="Internal\SettingsManager.cs" />
-    <Compile Include="Internal\Tiles.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -569,6 +568,9 @@
     <None Include="Resources\atlases\moonPhaseData.json" />
     <None Include="Resources\atlases\paintingData.json" />
     <None Include="Resources\atlases\particleData.json" />
+    <None Include="Resources\entityBehavioursData.json" />
+    <None Include="Resources\entityMaterialsData.json" />
+    <None Include="Resources\entityModelsData.json" />
     <None Include="Resources\shader\framebufferFragmentShader.glsl" />
     <None Include="Resources\shader\framebufferVertexShader.glsl" />
     <None Include="Resources\shader\plainColorFragmentShader.glsl" />

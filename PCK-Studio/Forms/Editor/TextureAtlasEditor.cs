@@ -22,7 +22,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 
 using PckStudio.Core;
 using PckStudio.Core.Extensions;
@@ -30,7 +29,6 @@ using PckStudio.Interfaces;
 using PckStudio.Controls;
 using OMI.Formats.Color;
 using PckStudio.Core.Json;
-using PckStudio.Json;
 
 namespace PckStudio.Forms.Editor
 {

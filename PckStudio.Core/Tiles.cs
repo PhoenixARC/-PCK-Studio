@@ -6,11 +6,11 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Json;
-using PckStudio.Properties;
+using PckStudio.Core.Properties;
 
 namespace PckStudio.Json
 {
-    internal class JsonTiles
+    public class JsonTiles
     {
         [JsonProperty("entries")]
         public List<JsonTileInfo> Entries { get; set; }
@@ -19,33 +19,33 @@ namespace PckStudio.Json
         public List<JsonTileInfo> AdditionalEntries { get; set; }
     }
 
-    internal static class Tiles
+    public static class Tiles
     {
-        private static JsonTiles 
-            _jsonBlockData, _jsonItemData, 
+        private static JsonTiles
+            _jsonBlockData, _jsonItemData,
             _jsonParticleData, _jsonMoonPhaseData,
-            _jsonMapIconData, _jsonExplosionData, 
+            _jsonMapIconData, _jsonExplosionData,
             _jsonExperienceOrbData, _jsonPaintingData, _jsonBannerData;
-        internal static JsonTiles JsonBlockData => _jsonBlockData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
-        internal static JsonTiles JsonItemData => _jsonItemData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
-        internal static JsonTiles JsonParticleData => _jsonParticleData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
-        internal static JsonTiles JsonMoonPhaseData => _jsonMoonPhaseData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.moonPhaseData);
-        internal static JsonTiles JsonMapIconData => _jsonMapIconData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.mapIconData);
-        internal static JsonTiles JsonExplosionData => _jsonExplosionData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
-        internal static JsonTiles JsonExperienceOrbData => _jsonExperienceOrbData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
-        internal static JsonTiles JsonPaintingData => _jsonPaintingData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
-        internal static JsonTiles JsonBannerData => _jsonBannerData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
+        public static JsonTiles JsonBlockData => _jsonBlockData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
+        public static JsonTiles JsonItemData => _jsonItemData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
+        public static JsonTiles JsonParticleData => _jsonParticleData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
+        public static JsonTiles JsonMoonPhaseData => _jsonMoonPhaseData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.moonPhaseData);
+        public static JsonTiles JsonMapIconData => _jsonMapIconData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.mapIconData);
+        public static JsonTiles JsonExplosionData => _jsonExplosionData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
+        public static JsonTiles JsonExperienceOrbData => _jsonExperienceOrbData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
+        public static JsonTiles JsonPaintingData => _jsonPaintingData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
+        public static JsonTiles JsonBannerData => _jsonBannerData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
 
-        internal static List<JsonTileInfo> ItemTileInfos => JsonItemData.Entries;
-        internal static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Entries;
-        internal static List<JsonTileInfo> ParticleTileInfos => JsonParticleData.Entries;
-        internal static List<JsonTileInfo> MoonPhaseTileInfos => JsonMoonPhaseData.Entries;
-        internal static List<JsonTileInfo> MapIconTileInfos => JsonMapIconData.Entries;
-        internal static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonMapIconData.AdditionalEntries;
-        internal static List<JsonTileInfo> ExperienceOrbTileInfos => JsonExperienceOrbData.Entries;
-        internal static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Entries;
-        internal static List<JsonTileInfo> PaintingTileInfos => JsonPaintingData.Entries;
-        internal static List<JsonTileInfo> BannerTileInfos => JsonBannerData.Entries;
+        public static List<JsonTileInfo> ItemTileInfos => JsonItemData.Entries;
+        public static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Entries;
+        public static List<JsonTileInfo> ParticleTileInfos => JsonParticleData.Entries;
+        public static List<JsonTileInfo> MoonPhaseTileInfos => JsonMoonPhaseData.Entries;
+        public static List<JsonTileInfo> MapIconTileInfos => JsonMapIconData.Entries;
+        public static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonMapIconData.AdditionalEntries;
+        public static List<JsonTileInfo> ExperienceOrbTileInfos => JsonExperienceOrbData.Entries;
+        public static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Entries;
+        public static List<JsonTileInfo> PaintingTileInfos => JsonPaintingData.Entries;
+        public static List<JsonTileInfo> BannerTileInfos => JsonBannerData.Entries;
 
         private static Image[] _itemImages;
         public static Image[] ItemImages => _itemImages ??= Resources.items_atlas.SplitHorizontal(16).ToArray();

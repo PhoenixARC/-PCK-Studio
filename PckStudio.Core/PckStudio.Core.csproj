@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- <Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 	<PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,14 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio.Core</RootNamespace>
     <AssemblyName>PckStudio.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
 		<LangVersion>12</LangVersion>
 		<FileAlignment>512</FileAlignment>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
     <Deterministic>true</Deterministic>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,9 +35,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -128,6 +130,12 @@
     <Compile Include="Skin\SkinMetaData.cs" />
     <Compile Include="Skin\SkinModel.cs" />
     <Compile Include="Skin\SkinPartOffset.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tiles.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
@@ -145,6 +153,78 @@
       <Project>{693aebc1-293d-4df0-bcae-26a1099fe7bb}</Project>
       <Name>OMI Filetype Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bannerData.json" />
+    <None Include="Resources\blockData.json" />
+    <None Include="Resources\Comparison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\entityBehavioursData.json" />
+    <None Include="Resources\entityMaterialsData.json" />
+    <None Include="Resources\entityModelsData.json" />
+    <None Include="Resources\experienceOrbData.json" />
+    <None Include="Resources\explosionData.json" />
+    <None Include="Resources\itemData.json" />
+    <None Include="Resources\mapIconData.json" />
+    <None Include="Resources\moonPhaseData.json" />
+    <None Include="Resources\paintingData.json" />
+    <None Include="Resources\particleData.json" />
+    <None Include="Resources\TexturePackIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\additional_mapicons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\banners.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\experience_orbs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_icons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moon_phases.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paintings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\particles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\terrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\additional_mapicons1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\banners1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Comparison1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\experience_orbs1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\items1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_icons1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\explosion.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

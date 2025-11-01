@@ -21,10 +21,10 @@ namespace PckStudio.Core.Json
         [JsonProperty("height")]
         public int TileHeight { get; set; } = 1;
 
-        [JsonProperty("hasColourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
-        public bool HasColourEntry { get; set; }
+        [JsonIgnore]
+        public bool HasColourEntry => ColourEntry != null;
 
-        [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public JsonColorEntry ColourEntry { get; set; }
 
         [JsonProperty("allowCustomColour", DefaultValueHandling = DefaultValueHandling.Populate)]
