@@ -32,22 +32,17 @@ using PckStudio.Core.Json;
 
 namespace PckStudio.Forms.Editor
 {
-    internal partial class TextureAtlasEditor : EditorForm<Image>
+    internal partial class TextureAtlasEditor : EditorForm<Atlas>
     {
         private readonly ITryGet<string, Animation> _tryGetAnimation;
         private readonly ITryGet<string, ISaveContext<Animation>> _tryGetAnimationSaveContext;
         private readonly ColorContainer _colourTable;
-        private readonly Size _tileAreaSize;
-        private readonly int _rowCount;
-        private readonly int _columnCount;
         private readonly ResourceCategory _resourceLocationCategory;
-        private readonly List<AtlasTile> _tiles;
+        private readonly Atlas _atlas;
 
         private AtlasTile _selectedTile;
-        // the "parent" tile for tiles that share name; i.e. parts of water_flow
-        private AtlasTile dataTile;
 
-        public TextureAtlasEditor(Image atlas, ISaveContext<Image> saveContext, ResourceLocation resourceLocation, ColorContainer colorContainer,
+        public TextureAtlasEditor(Atlas atlas, ISaveContext<Atlas> saveContext, ResourceLocation resourceLocation, ColorContainer colorContainer,
             ITryGet<string, Animation> tryGetAnimation, ITryGet<string, ISaveContext<Animation>> tryGetAnimationSaveContext)
             : base(atlas, saveContext)
         {
@@ -56,19 +51,16 @@ namespace PckStudio.Forms.Editor
             _ = atlas ?? throw new ArgumentNullException(nameof(atlas));
             _ = resourceLocation ?? throw new ArgumentNullException(nameof(resourceLocation));
 
-            originalPictureBox.Image = new Bitmap(atlas);
+            originalPictureBox.Image = atlas;
 
             _colourTable = colorContainer ?? new ColorContainer();
-            _tileAreaSize = resourceLocation.GetTileArea(atlas.Size);
             _tryGetAnimation = tryGetAnimation;
             _tryGetAnimationSaveContext = tryGetAnimationSaveContext;
-            _rowCount = atlas.Width / _tileAreaSize.Width;
-            _columnCount = atlas.Height / _tileAreaSize.Height;
+            _atlas = atlas;
             _resourceLocationCategory = resourceLocation.Category;
 
-            _tiles = new List<AtlasTile>(CreateAtlasTiles());
+            _atlas.AllowGroups = allowGroupsToolStripMenuItem.Checked;
             SelectedIndex = 0;
-
 
             animationButton.Enabled =
                 _resourceLocationCategory == ResourceCategory.BlockAtlas ||
@@ -85,85 +77,16 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private IEnumerable<AtlasTile> CreateAtlasTiles()
-        {
-            List<JsonTileInfo> tileInfos = _resourceLocationCategory switch
-            {
-                ResourceCategory.BlockAtlas => Tiles.BlockTileInfos,
-                ResourceCategory.ItemAtlas => Tiles.ItemTileInfos,
-                ResourceCategory.ParticleAtlas => Tiles.ParticleTileInfos,
-                ResourceCategory.MapIconAtlas => Tiles.MapIconTileInfos,
-                ResourceCategory.AdditionalMapIconsAtlas => Tiles.AdditionalMapIconTileInfos,
-                ResourceCategory.MoonPhaseAtlas => Tiles.MoonPhaseTileInfos,
-                ResourceCategory.ExperienceOrbAtlas => Tiles.ExperienceOrbTileInfos,
-                ResourceCategory.ExplosionAtlas => Tiles.ExplosionTileInfos,
-                ResourceCategory.PaintingAtlas => Tiles.PaintingTileInfos,
-                ResourceCategory.BannerAtlas => Tiles.BannerTileInfos,
-                _ => null,
-            };
-
-            IEnumerable<Image> images = EditorValue.Split(_tileAreaSize, _imageLayout);
-
-            AtlasTile MakeTile((int index, Image value) p)
-            {
-                int i = p.index;
-                JsonTileInfo tileInfo = tileInfos.IndexInRange(i) ? tileInfos[i] : null;
-
-                int tileWidth = tileInfo?.TileWidth ?? 1;
-                int tileHeight = tileInfo?.TileHeight ?? 1;
-
-                Rectangle atlasArea = GetAtlasArea(i, tileWidth, tileHeight, _rowCount, _columnCount, _tileAreaSize, _imageLayout);
-
-                // get texture for tiles that are not 1x1 tiles
-                Point selectedPoint = GetSelectedPoint(i, _rowCount, _columnCount, _imageLayout);
-
-                var textureLocation = new Point(selectedPoint.X * _tileAreaSize.Width, selectedPoint.Y * _tileAreaSize.Height);
-                var textureSize = new Size(tileWidth * _tileAreaSize.Width, tileHeight * _tileAreaSize.Height);
-                var textureArea = new Rectangle(textureLocation, textureSize);
-
-                Image texture = tileInfos.IndexInRange(i) ? EditorValue.GetArea(textureArea) : p.value;
-                return new AtlasTile(i, atlasArea, tileInfo, texture);
-            }
-
-            return images.enumerate().Select(MakeTile);
-        }
-
-        private sealed class AtlasTile
-        {
-            internal readonly int Index;
-            internal readonly Rectangle Area;
-            internal readonly JsonTileInfo Tile;
-            internal readonly Image Texture;
-
-            public AtlasTile(int index, Rectangle area, JsonTileInfo tile, Image texture)
-            {
-                Index = index;
-                Area = area;
-                Tile = tile;
-                Texture = texture;
-            }
-
-            public override bool Equals(object obj)
-            {
-                return obj is AtlasTile otherTile && Index == otherTile.Index && Area == otherTile.Area;
-            }
-
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
-            }
-        }
-
         private int SelectedIndex
         {
             set {
                 if (value < 0)
                 {
-                    value += _tiles.Count;
+                    value += _atlas.TileCount;
                 }
-                else if (value >= _tiles.Count)
+                else if (value >= _atlas.TileCount)
                 {
-                    value -= _tiles.Count;
+                    value -= _atlas.TileCount;
                 }
                 SetImageDisplayed(value);
             }
@@ -183,12 +106,12 @@ namespace PckStudio.Forms.Editor
             {
                 g.ApplyConfig(_graphicsConfig);
                 g.Clear(Color.Transparent);
-                g.DrawImage(EditorValue, 0, 0, EditorValue.Width, EditorValue.Height);
+                Image image = EditorValue;
+                g.DrawImage(image, 0, 0, image.Width, image.Height);
 
                 SolidBrush brush = new SolidBrush(Color.FromArgb(127, Color.White));
-                g.FillRectangle(brush, _selectedTile.Area);
+                g.FillRectangle(brush, _atlas.GetTileArea(_selectedTile));
             }
-
             originalPictureBox.Invalidate();
         }
 
@@ -210,46 +133,42 @@ namespace PckStudio.Forms.Editor
                 selectTilePictureBox.Stop();
             selectTilePictureBox.UseBlendColor = false;
             selectTilePictureBox.Image = null;
+            _selectedTile = _atlas[index];
 
-            if (_tiles is null || !_tiles.IndexInRange(index) || (_selectedTile = _tiles[index]) is null)
+            if (_selectedTile is null)
                 return;
 
             UpdateAtlasDisplay();
 
-            dataTile = _selectedTile;
-            if (string.IsNullOrEmpty(dataTile.Tile.DisplayName) && !string.IsNullOrEmpty(dataTile.Tile.InternalName))
-            {
-                dataTile = _tiles.Find(t => t.Tile.InternalName == _selectedTile.Tile.InternalName);
-            }
-
-            selectTilePictureBox.Image = dataTile.Texture;
+            selectTilePictureBox.Image = _selectedTile.Texture;
             selectTilePictureBox.BlendColor = GetBlendColor();
             selectTilePictureBox.UseBlendColor = applyColorMaskToolStripMenuItem.Checked;
 
-            tileNameLabel.Text = $"{dataTile.Tile.DisplayName}";
-            internalTileNameLabel.Text = $"{dataTile.Tile.InternalName}";
+            JsonTileInfo tileInfo = _selectedTile.GetUserDataOfType<JsonTileInfo>();
 
-            if (animationButton.Enabled)
+            tileNameLabel.Text = $"{tileInfo?.DisplayName}";
+            internalTileNameLabel.Text = $"{tileInfo?.InternalName}";
+            if (animationButton.Enabled && (_resourceLocationCategory == ResourceCategory.ItemAtlas || _resourceLocationCategory == ResourceCategory.BlockAtlas))
             {
                 ResourceCategory animationResourceCategory = _resourceLocationCategory == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
 
-                string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{dataTile.Tile.InternalName}";
+                string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
                 bool hasAnimation = _tryGetAnimation.TryGet(animationAssetPath, out Animation animation);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
                 if (playAnimationsToolStripMenuItem.Checked && hasAnimation)
                 {
-                    selectTilePictureBox.Image = animation.CreateAnimationImage();
+                    selectTilePictureBox.Image = animation.CreateAnimationImage(selectTilePictureBox.BlendColor);
                     selectTilePictureBox.Start();
                 }
             }
 
-            setColorButton.Enabled = dataTile.Tile.AllowCustomColour;
+            setColorButton.Enabled = tileInfo.AllowCustomColour;
 
-            variantComboBox.Enabled = variantComboBox.Visible = dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry?.Variants?.Length > 1;
+            variantComboBox.Enabled = variantComboBox.Visible = tileInfo.HasColourEntry && tileInfo.ColourEntry?.Variants?.Length > 1;
             if (variantComboBox.Enabled)
             {
-                if (dataTile.Tile.ColourEntry.IsWaterColour)
+                if (tileInfo.ColourEntry.IsWaterColour)
                 {
                     foreach (ColorContainer.WaterColor col in _colourTable.WaterColors)
                     {
@@ -259,11 +178,34 @@ namespace PckStudio.Forms.Editor
                 }
 
                 // TODO: only add variants that are available in the color table
-                variantComboBox.Items.AddRange(dataTile.Tile.ColourEntry.Variants);
+                variantComboBox.Items.AddRange(tileInfo.ColourEntry.Variants.Where(colorName => _colourTable.Colors.Any(c => c.Name == colorName) || _colourTable.WaterColors.Any(c => c.Name == colorName)).ToArray());
                 
                 if (variantComboBox.Items.Count > 0)
                     variantComboBox.SelectedIndex = 0;
             }
+
+            if (_selectedTile.IsPartOfGroup && allowGroupsToolStripMenuItem.Checked)
+            {
+                AtlasGroup group = _selectedTile.GetGroup();
+                tileNameLabel.Text = $"{group.Name}";
+                internalTileNameLabel.Text = string.Empty;
+                if (group.IsAnimation())
+                {
+                    animationButton.Enabled = true;
+                    animationButton.Text = "Edit as Animation";
+                    if (playAnimationsToolStripMenuItem.Checked)
+                    {
+                        selectTilePictureBox.UseBlendColor = false;
+                        selectTilePictureBox.Image = _atlas.GetAnimationFromGroup(group).CreateAnimationImage(selectTilePictureBox.BlendColor);
+                        selectTilePictureBox.Start();
+                        return;
+                    }
+                }
+                if (group.IsLargeTile())
+                {
+                    selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile);
+                }
+            }   
         }
         
         private static int GetSelectedImageIndex(
@@ -336,6 +278,7 @@ namespace PckStudio.Forms.Editor
                 default:
                     break;
             }
+            Debug.WriteLine(result);
             return GetSelectedIndex(result.X, result.Y, rowCount, columnCount, imageLayout);
         }
 
@@ -349,47 +292,22 @@ namespace PckStudio.Forms.Editor
             };
         }
 
-        private static Rectangle GetAtlasArea(int index, int tileWidth, int tileHeight, int rowCount, int columnCount, Size size, ImageLayoutDirection imageLayout)
-        {
-            Point p = GetSelectedPoint(index, rowCount, columnCount, imageLayout);
-            var ap = new Point(p.X * size.Width, p.Y * size.Height);
-            return new Rectangle(ap, new Size(size.Width * tileWidth, size.Height * tileHeight));
-        }
-
-        private static Point GetSelectedPoint(int index, int rowCount, int columnCount, ImageLayoutDirection imageLayout)
-        {
-            int y = Math.DivRem(index, rowCount, out int x);
-            if (imageLayout == ImageLayoutDirection.Vertical)
-                x = Math.DivRem(index, columnCount, out y);
-            return new Point(x, y);
-        }
-
         private void SetTile(Image texture)
         {
-            if (texture.Size != _tileAreaSize)
-                texture = texture.Resize(_tileAreaSize, _graphicsConfig);
+            if (texture.Size != _atlas.TileSize)
+                texture = texture.Resize(_atlas.TileSize, _graphicsConfig);
 
-            using (var g = Graphics.FromImage(EditorValue))
-            {
-                g.ApplyConfig(_graphicsConfig);
-                g.Fill(dataTile.Area, Color.Transparent);
-                g.DrawImage(texture, dataTile.Area);
-            }
-
-            AtlasTile tile = _selectedTile != dataTile ? dataTile : _selectedTile;
-            _tiles[tile.Index] = new AtlasTile(tile.Index, tile.Area, tile.Tile, texture);
+            _selectedTile.Texture = texture;
             selectTilePictureBox.Image = texture;
             UpdateAtlasDisplay();
         }
 
         private Color GetBlendColor()
         {
-            if (dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry is not null)
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && tileInfo.HasColourEntry)
             {
-                Color col = FindBlendColorByKey(dataTile.Tile.ColourEntry.DefaultName);
-                return col;
+                return FindBlendColorByKey(tileInfo.ColourEntry.DefaultName);
             }
-            
             return Color.White;
         }
 
@@ -405,7 +323,7 @@ namespace PckStudio.Forms.Editor
             var final_color = Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
 
             // Enchanted hits are modified critical hit particles
-            if (dataTile.Tile.InternalName == "enchanted_hit")
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && tileInfo.InternalName == "enchanted_hit")
             {
                 // This is directly based on Java's source code for handling enchanted hits
                 // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
@@ -420,10 +338,10 @@ namespace PckStudio.Forms.Editor
             if (colorKey == "experience_orb" || colorKey == "critical_hit") 
                 return GetSpecificBlendColor(colorKey);
 
-            if (dataTile.Tile.HasColourEntry && dataTile.Tile.ColourEntry is not null)
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && tileInfo.HasColourEntry)
             {
                 // basic way to check for classic water colors
-                if(!dataTile.Tile.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+                if(!tileInfo.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
                 {
                     if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
                     {
@@ -440,6 +358,7 @@ namespace PckStudio.Forms.Editor
             return Color.White;
         }
 
+        // TODO
         protected override bool ProcessDialogKey(Keys keyData)
         {
             switch (keyData)
@@ -455,10 +374,10 @@ namespace PckStudio.Forms.Editor
                     SelectedIndex = _selectedTile.Index + 1;
                     return true;
                 case Keys.Up:
-                    SelectedIndex = _selectedTile.Index - _rowCount;
+                    SelectedIndex = _selectedTile.Index - _atlas.Rows;
                     return true;
                 case Keys.Down:
-                    SelectedIndex = _selectedTile.Index + _rowCount;
+                    SelectedIndex = _selectedTile.Index + _atlas.Rows;
                     return true;
             }
 
@@ -474,8 +393,8 @@ namespace PckStudio.Forms.Editor
 
             int index = GetSelectedImageIndex(
                 originalPictureBox.Size,
-                EditorValue.Size,
-                _tileAreaSize,
+                ((Image)_atlas).Size,
+                _atlas.TileSize,
                 e.Location,
                 originalPictureBox.SizeMode,
                 _imageLayout);
@@ -509,14 +428,28 @@ namespace PckStudio.Forms.Editor
 
         private void animationButton_Click(object sender, EventArgs e)
         {
+            if (_selectedTile.IsPartOfGroup)
+            {
+                AtlasGroup group = _selectedTile.GetGroup();
+                Animation anim = _atlas.GetAnimationFromGroup(group);
+                ISaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(false, (animation) =>
+                {
+                    // TODO
+                    _atlas.SetGroupTilesFromAnimation(group, animation);
+                });
+                var aEditor = new AnimationEditor(anim, saveContext, group.Name, false);
+                aEditor.ShowDialog(this);
+                return;
+            }
+            JsonTileInfo tileInfo = _selectedTile.GetUserDataOfType<JsonTileInfo>();
             ResourceCategory animationResourceCategory = _resourceLocationCategory == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
-            string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{_selectedTile.Tile.InternalName}";
+            string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
             bool hasAnimation = _tryGetAnimation.TryGet(animationAssetPath, out Animation animation);
             bool isValidAnimationSaveContext = _tryGetAnimationSaveContext.TryGet(animationAssetPath, out ISaveContext<Animation> animationSaveContext);
 
             Debug.Assert(isValidAnimationSaveContext, "Couldn't get valid animation save context.");
 
-            var animationEditor = new AnimationEditor(hasAnimation ? animation : Animation.CreateEmpty(), animationSaveContext, _selectedTile.Tile.DisplayName);
+            var animationEditor = new AnimationEditor(hasAnimation ? animation : Animation.CreateEmpty(), animationSaveContext, tileInfo.DisplayName);
             if (animationEditor.ShowDialog(this) == DialogResult.OK)
             {
                 // so animations can automatically update upon saving
@@ -524,27 +457,34 @@ namespace PckStudio.Forms.Editor
             }
         }
 
+        // TODO
         private void extractTileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string filename = _selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) ? tileInfo.InternalName : "tile";
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Filter = "Tile Texture|*.png",
-                FileName = _selectedTile.Tile.InternalName
+                FileName = filename
             };
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                dataTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
+                _selectedTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
         private void variantComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (dataTile.Tile.ColourEntry is not null && variantComboBox.SelectedItem is not null)
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && variantComboBox.SelectedItem is not null)
             {
                 string colorKey = variantComboBox.SelectedItem.ToString();
-
-                selectTilePictureBox.BlendColor = FindBlendColorByKey(colorKey);
-                selectTilePictureBox.Image = dataTile.Texture;
+                Color blendColor = FindBlendColorByKey(colorKey);
+                if (_selectedTile.IsPartOfGroup && _selectedTile.GetGroup().IsAnimation())
+                {
+                    selectTilePictureBox.Image = _atlas.GetAnimationFromGroup(_selectedTile.GetGroup()).CreateAnimationImage(blendColor);
+                    selectTilePictureBox.Start();
+                    return;
+                }
+                selectTilePictureBox.BlendColor = blendColor;
             }
         }
 
@@ -571,13 +511,12 @@ namespace PckStudio.Forms.Editor
             colorPick.AnyColor = true;
             colorPick.SolidColorOnly = true;
 
-            colorPick.CustomColors = GameConstants.DyeColors.Select(c => c.ToBGR()).ToArray();
+            colorPick.CustomColors = GameConstants.DyeColors.Select(ColorExtensions.ToBGR).ToArray();
             
             if (colorPick.ShowDialog(this) != DialogResult.OK)
                 return;
 
             selectTilePictureBox.BlendColor = colorPick.Color;
-            selectTilePictureBox.Image = dataTile.Texture;
             variantComboBox.Enabled = false;
             clearColorButton.Enabled = true;
         }
@@ -594,7 +533,12 @@ namespace PckStudio.Forms.Editor
         private void colorSlider_ValueChanged(object sender, EventArgs e)
         {
             selectTilePictureBox.BlendColor = GetBlendColor();
-            selectTilePictureBox.Image = dataTile.Texture;
+        }
+
+        private void allowGroupsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            _atlas.AllowGroups = allowGroupsToolStripMenuItem.Checked;
+            SelectedIndex = _selectedTile.Index;
         }
     }
 }

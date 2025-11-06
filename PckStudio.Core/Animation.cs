@@ -41,11 +41,11 @@ namespace PckStudio.Core
 
 		private object _syncLock = new object();
 
-		public Animation(IEnumerable<Image> textures, bool initFramesFromTextures = false)
+		public Animation(IEnumerable<Image> textures, bool initFramesFromTextures = false, int frameTime = MinimumFrameTime)
 		{
 			_textures = new List<Image>(textures);
             if (initFramesFromTextures)
-                AddTexturesAsFrames(MinimumFrameTime);
+                AddTexturesAsFrames(frameTime);
         }
 
 		public class Frame

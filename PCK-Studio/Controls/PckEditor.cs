@@ -291,7 +291,7 @@ namespace PckStudio.Controls
                         asset.SetSerializedData(animation, AnimationSerializer.DefaultSerializer);
                     });
 
-                    using (AnimationEditor animationEditor = new AnimationEditor(animation, saveContext, displayname, internalName.ToLower().EqualsAny(specialTileNames)))
+                    using (AnimationEditor animationEditor = new AnimationEditor(animation, saveContext, displayname, !internalName.ToLower().EqualsAny(specialTileNames)))
                     {
                         if (animationEditor.ShowDialog(this) == DialogResult.OK)
                         {
@@ -300,17 +300,17 @@ namespace PckStudio.Controls
                         }
                     }
                     break;
+                case ResourceCategory.ParticleAtlas:
+                case ResourceCategory.MoonPhaseAtlas:
                 case ResourceCategory.ItemAtlas:
                 case ResourceCategory.BlockAtlas:
-                case ResourceCategory.ParticleAtlas:
                 case ResourceCategory.BannerAtlas:
                 case ResourceCategory.PaintingAtlas:
                 case ResourceCategory.ExplosionAtlas:
                 case ResourceCategory.ExperienceOrbAtlas:
-                case ResourceCategory.MoonPhaseAtlas:
                 case ResourceCategory.MapIconAtlas:
                 case ResourceCategory.AdditionalMapIconsAtlas:
-                    Image atlas = asset.GetTexture();
+                    Atlas atlas = asset.GetDeserializedData(new AtlasDeserializer(resourceLocation));
                     ColorContainer colorContainer = default;
                     if (EditorValue.File.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out PckAsset colAsset))
                         colorContainer = colAsset.GetData(new COLFileReader());
@@ -356,7 +356,7 @@ namespace PckStudio.Controls
                             return true;
                         });
 
-                    ISaveContext<Image> textureAtlasSaveContext = new DelegatedSaveContext<Image>(Settings.Default.AutoSaveChanges, asset.SetTexture);
+                    ISaveContext<Atlas> textureAtlasSaveContext = new DelegatedSaveContext<Atlas>(Settings.Default.AutoSaveChanges, atlas => asset.SetTexture(atlas));
 
                     var viewer = new TextureAtlasEditor(atlas, textureAtlasSaveContext, resourceLocation, colorContainer, tryGetAnimation, tryGetAnimationSaveContext);
                     if (viewer.ShowDialog(this) == DialogResult.OK)
@@ -1293,7 +1293,7 @@ namespace PckStudio.Controls
                 newAnimation = animation;
             });
 
-            using AnimationEditor animationEditor = new AnimationEditor(Animation.CreateEmpty(), saveContext, diag.SelectedTile.DisplayName, diag.SelectedTile.InternalName.EqualsAny("clock", "compass"));
+            using AnimationEditor animationEditor = new AnimationEditor(Animation.CreateEmpty(), saveContext, diag.SelectedTile.DisplayName, !diag.SelectedTile.InternalName.EqualsAny("clock", "compass"));
             if (animationEditor.ShowDialog() == DialogResult.OK && newAnimation is not null)
             {
                 _wasModified = true;

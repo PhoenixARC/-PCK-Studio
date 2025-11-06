@@ -4,7 +4,7 @@
 		{
 			"internalName": "base",
 			"displayName": "Base",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -30,7 +30,7 @@
 		{
 			"internalName": "border",
 			"displayName": "Bordure",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -56,7 +56,7 @@
 		{
 			"internalName": "bricks",
 			"displayName": "Field Masoned",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -82,7 +82,7 @@
 		{
 			"internalName": "circle",
 			"displayName": "Roundel",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -108,7 +108,7 @@
 		{
 			"internalName": "creeper",
 			"displayName": "Creeper Charge",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -134,7 +134,7 @@
 		{
 			"internalName": "cross",
 			"displayName": "Saltire",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -160,7 +160,7 @@
 		{
 			"internalName": "curly_border",
 			"displayName": "Bordure Indented",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -186,7 +186,7 @@
 		{
 			"internalName": "diagonal_left",
 			"displayName": "Per Bend Sinister",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -212,7 +212,7 @@
 		{
 			"internalName": "diagonal_right",
 			"displayName": "Per Bend",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -238,7 +238,7 @@
 		{
 			"internalName": "diagonal_up_left",
 			"displayName": "Per Bend Inverted",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -264,7 +264,7 @@
 		{
 			"internalName": "diagonal_up_right",
 			"displayName": "Per Bend Sinister Inverted",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -290,7 +290,7 @@
 		{
 			"internalName": "flower",
 			"displayName": "Flower Charge",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -316,7 +316,7 @@
 		{
 			"internalName": "gradient",
 			"displayName": "Gradient",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -342,7 +342,7 @@
 		{
 			"internalName": "gradient_up",
 			"displayName": "Base Gradient",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -368,7 +368,7 @@
 		{
 			"internalName": "half_horizontal",
 			"displayName": "Per Fess",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -394,7 +394,7 @@
 		{
 			"internalName": "half_horizontal_bottom",
 			"displayName": "Per Fess Inverted",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -420,7 +420,7 @@
 		{
 			"internalName": "half_vertical",
 			"displayName": "Per Pale",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -446,7 +446,7 @@
 		{
 			"internalName": "half_vertical_right",
 			"displayName": "Per Pale Inverted",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -472,7 +472,7 @@
 		{
 			"internalName": "mojang",
 			"displayName": "Thing",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -498,7 +498,7 @@
 		{
 			"internalName": "rhombus",
 			"displayName": "Lozenge",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -524,7 +524,7 @@
 		{
 			"internalName": "skull",
 			"displayName": "Skull Charge",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -550,7 +550,7 @@
 		{
 			"internalName": "small_stripes",
 			"displayName": "Paly",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -576,7 +576,7 @@
 		{
 			"internalName": "square_bottom_left",
 			"displayName": "Base Dexter Canton",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -602,7 +602,7 @@
 		{
 			"internalName": "square_bottom_right",
 			"displayName": "Base Sinister Canton",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -628,7 +628,7 @@
 		{
 			"internalName": "square_top_left",
 			"displayName": "Chief Dexter Canton",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -654,7 +654,7 @@
 		{
 			"internalName": "square_top_right",
 			"displayName": "Chief Sinister Canton",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -680,7 +680,7 @@
 		{
 			"internalName": "straight_cross",
 			"displayName": "Cross",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -706,7 +706,7 @@
 		{
 			"internalName": "stripe_bottom",
 			"displayName": "Base Fess",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -732,7 +732,7 @@
 		{
 			"internalName": "stripe_center",
 			"displayName": "Pale",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -758,7 +758,7 @@
 		{
 			"internalName": "strip_downleft",
 			"displayName": "Bend Sinister",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -784,7 +784,7 @@
 		{
 			"internalName": "stripe_downright",
 			"displayName": "Bend",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -810,7 +810,7 @@
 		{
 			"internalName": "stripe_left",
 			"displayName": "Pale Dexter",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -836,7 +836,7 @@
 		{
 			"internalName": "stripe_middle",
 			"displayName": "Fess",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -862,7 +862,7 @@
 		{
 			"internalName": "stripe_right",
 			"displayName": "Pale Sinister",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -888,7 +888,7 @@
 		{
 			"internalName": "stripe_top",
 			"displayName": "Chief Fess",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -914,7 +914,7 @@
 		{
 			"internalName": "triangle_bottom",
 			"displayName": "Chevron",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -940,7 +940,7 @@
 		{
 			"internalName": "triangle_top",
 			"displayName": "Inverted Chevron",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -966,7 +966,7 @@
 		{
 			"internalName": "triangles_bottom",
 			"displayName": "Base Indented",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -992,7 +992,7 @@
 		{
 			"internalName": "triangles_top",
 			"displayName": "Chief Indented",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [
@@ -1026,7 +1026,7 @@
 		{
 			"internalName": "globe",
 			"displayName": "Globe [PS4 ONLY]",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Banner_White",
 				"variants": [

@@ -5,7 +5,7 @@
 		{
 			"internalName": "grass_top",
 			"displayName": "Grass Block (Top)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -167,7 +167,7 @@
 		{
 			"internalName": "grass_side_overlay",
 			"displayName": "Grass Side (Overlay)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -181,7 +181,7 @@
 		{
 			"internalName": "tallgrass",
 			"displayName": "Tall Grass",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -243,7 +243,7 @@
 		{
 			"internalName": "leaves",
 			"displayName": "Oak Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -258,7 +258,7 @@
 		{
 			"internalName": "leaves_opaque",
 			"displayName": "Oak Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -281,7 +281,7 @@
 		{
 			"internalName": "fern",
 			"displayName": "Fern",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -371,7 +371,7 @@
 		{
 			"internalName": "waterlily",
 			"displayName": "Lily Pad",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Tile_WaterLily",
 				"variants": [ "Tile_WaterLily" ]
@@ -516,7 +516,7 @@
 		{
 			"internalName": "stem_straight",
 			"displayName": "Stem",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Tile_StemMin",
 				"variants": [
@@ -588,7 +588,7 @@
 		{
 			"internalName": "stem_bent",
 			"displayName": "Stem (Attached)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Tile_StemMin",
 				"variants": [
@@ -616,7 +616,7 @@
 		{
 			"internalName": "leaves_spruce",
 			"displayName": "Spruce Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
@@ -631,7 +631,7 @@
 		{
 			"internalName": "leaves_spruce_opaque",
 			"displayName": "Spruce Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Evergreen",
 				"variants": [
@@ -682,7 +682,7 @@
 		{
 			"internalName": "vine",
 			"displayName": "Vines",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -777,7 +777,7 @@
 		{
 			"internalName": "redstone_dust_cross",
 			"displayName": "Redstone Dust (Cross)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
@@ -791,7 +791,7 @@
 		{
 			"internalName": "redstone_dust_line",
 			"displayName": "Redstone Dust (Line)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Tile_RedstoneDust",
 				"variants": [
@@ -925,7 +925,7 @@
 		{
 			"internalName": "leaves_jungle",
 			"displayName": "Jungle Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -940,7 +940,7 @@
 		{
 			"internalName": "leaves_jungle_opaque",
 			"displayName": "Jungle Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -983,7 +983,7 @@
 		{
 			"internalName": "water",
 			"displayName": "Water",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"isWaterColour": true,
 				"defaultName": "Water_Plains",
@@ -1034,7 +1034,7 @@
 		{
 			"internalName": "water_flow",
 			"displayName": "Flowing Water",
-			"hasColourEntry": true,
+
 			"width": 2,
 			"height": 2,
 			"colourEntry": {
@@ -1541,7 +1541,7 @@
 		{
 			"internalName": "double_plant_fern_top",
 			"displayName": "Large Fern (Top)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -1555,7 +1555,7 @@
 		{
 			"internalName": "double_plant_grass_top",
 			"displayName": "Double Tall Grass (Top)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -1605,7 +1605,7 @@
 		{
 			"internalName": "leaves_acacia",
 			"displayName": "Acacia Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -1620,7 +1620,7 @@
 		{
 			"internalName": "leaves_acacia_fast",
 			"displayName": "Acacia Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -1647,7 +1647,7 @@
 		{
 			"internalName": "double_plant_fern_bottom",
 			"displayName": "Large Fern (Bottom)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -1661,7 +1661,7 @@
 		{
 			"internalName": "double_plant_grass_bottom",
 			"displayName": "Double Tall Grass (Bottom)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Grass_Common",
 				"variants": [
@@ -1711,7 +1711,7 @@
 		{
 			"internalName": "leaves_big_oak",
 			"displayName": "Dark Oak Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -1726,7 +1726,7 @@
 		{
 			"internalName": "leaves_big_oak_fast",
 			"displayName": "Dark Oak Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Default",
 				"variants": [
@@ -1797,7 +1797,7 @@
 		{
 			"internalName": "leaves_birch",
 			"displayName": "Birch Leaves",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Birch",
 				"variants": [
@@ -1812,7 +1812,7 @@
 		{
 			"internalName": "leaves_birch_fast",
 			"displayName": "Birch Leaves (Opaque)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Foliage_Birch",
 				"variants": [
@@ -2287,7 +2287,7 @@
 		{
 			"internalName": "shulker_top",
 			"displayName": "Shulker Box (Break Particles)",
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Shulker_Box_Purple",
 				"variants": [
@@ -2318,7 +2318,7 @@
 			"internalName": "cauldron_water",
 			"displayName": "Cauldron Water",
 			"allowCustomColour": true,
-			"hasColourEntry": true,
+
 			"colourEntry": {
 				"defaultName": "Cauldron_Water",
 				"variants": [

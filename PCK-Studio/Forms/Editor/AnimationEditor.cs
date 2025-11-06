@@ -40,16 +40,16 @@ namespace PckStudio.Forms.Editor
 {
     public partial class AnimationEditor : EditorForm<Animation>
 	{
-		private bool _isSpecialTile;
+		private bool _editable;
 
-		internal AnimationEditor(Animation animation, ISaveContext<Animation> saveContext, string displayName, bool isSpecialTile = false)
+		internal AnimationEditor(Animation animation, ISaveContext<Animation> saveContext, string displayName, bool editable = true)
 			: base(animation, saveContext)
 		{
             InitializeComponent();
 			saveToolStripMenuItem1.Available = !saveContext.AutoSave;
             toolStripSeparator1.Available = !saveContext.AutoSave;
             tileLabel.Text = displayName;
-            _isSpecialTile = isSpecialTile;
+            _editable = editable;
             animationPictureBox.Image = animation.CreateAnimationImage();
         }
 
@@ -62,10 +62,9 @@ namespace PckStudio.Forms.Editor
 
 		private void ValidateToolStrip()
         {
-			bulkAnimationSpeedToolStripMenuItem.Enabled =
-			importToolStripMenuItem.Enabled =
-			exportAsToolStripMenuItem.Enabled =
-			InterpolationCheckbox.Visible = !_isSpecialTile;
+            editToolStripMenuItem.Visible =
+			importToolStripMenuItem.Visible =
+			InterpolationCheckbox.Visible = _editable;
 		}
 
         private void AnimationEditor_Load(object sender, EventArgs e)
@@ -78,10 +77,10 @@ namespace PckStudio.Forms.Editor
         {
             if (EditorValue is null)
             {
-                AnimationStartStopBtn.Enabled = false;
+                AnimationStartStopBtn.Visible = false;
                 return;
             }
-            AnimationStartStopBtn.Enabled = true;
+            AnimationStartStopBtn.Visible = true;
             InterpolationCheckbox.Checked = EditorValue.Interpolate;
             TextureIcons.Images.Clear();
             TextureIcons.Images.AddRange(EditorValue.GetTextures().ToArray());
@@ -103,7 +102,7 @@ namespace PckStudio.Forms.Editor
                 .Select(frame =>
                 {
                     var imageIndex = EditorValue.GetTextureIndex(frame.Texture);
-                    return new TreeNode($"for {frame.Ticks} ticks", imageIndex, imageIndex);
+                    return new TreeNode($"for {frame.Ticks} tick(s)", imageIndex, imageIndex);
                 })
                 .ToArray()
                 );
@@ -159,7 +158,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!_isSpecialTile && EditorValue is not null && EditorValue.FrameCount > 0)
+			if (_editable && EditorValue is not null && EditorValue.FrameCount > 0)
 			{
 				Save();
 				DialogResult = DialogResult.OK;
@@ -271,7 +270,7 @@ namespace PckStudio.Forms.Editor
 			diag.SaveBtn.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-                EditorValue.AddFrame(diag.FrameTextureIndex, _isSpecialTile ? Animation.MinimumFrameTime : diag.FrameTime);
+                EditorValue.AddFrame(diag.FrameTextureIndex, _editable ? diag.FrameTime : Animation.MinimumFrameTime);
                 UpdateTreeView();
 			}
 		}

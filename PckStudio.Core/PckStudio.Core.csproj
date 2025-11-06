@@ -52,10 +52,17 @@
     <Compile Include="Animation.cs" />
     <Compile Include="App\SettingsManager.cs" />
     <Compile Include="App\Updater.cs" />
+    <Compile Include="Atlas.cs" />
+    <Compile Include="AtlasGroup.cs" />
+    <Compile Include="AtlasGroupAnimation.cs" />
+    <Compile Include="AtlasGroupLargeTile.cs" />
+    <Compile Include="AtlasGroupLargeTileAnimation.cs" />
+    <Compile Include="AtlasTile.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="DelegatedFileSaveContext.cs" />
     <Compile Include="DelegatedSaveContext.cs" />
     <Compile Include="Deserializer\AnimationDeserializer.cs" />
+    <Compile Include="Deserializer\AtlasDeserializer.cs" />
     <Compile Include="Deserializer\ImageDeserializer.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
@@ -120,6 +127,7 @@
     <Compile Include="ResourceCategory.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="Serializer\AnimationSerializer.cs" />
+    <Compile Include="Serializer\AtlasSerializer.cs" />
     <Compile Include="Serializer\ImageSerializer.cs" />
     <Compile Include="Skin\Skin.cs" />
     <Compile Include="Skin\SkinANIM.cs" />

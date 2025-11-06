@@ -16,14 +16,15 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Drawing;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Data.Common;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace PckStudio.Core.Extensions
@@ -71,12 +72,13 @@ namespace PckStudio.Core.Extensions
             int rowCount = source.Width / size.Width;
             int columnCount = source.Height / size.Height;
             Debug.WriteLine($"Image size: {source.Size}, Area size: {size}, col num: {columnCount}, row num: {rowCount}");
+            bool vertical = imageLayout == ImageLayoutDirection.Vertical;
             for (int i = 0; i < columnCount * rowCount; i++)
             {
-                int row = Math.DivRem(i, rowCount, out int column);
-                if (imageLayout == ImageLayoutDirection.Vertical)
-                    column = Math.DivRem(i, columnCount, out row);
-                Rectangle tileArea = new Rectangle(new Point(column * size.Width, row * size.Height), size);
+                int column = Math.DivRem(i, rowCount, out int row);
+                if (vertical)
+                    row = Math.DivRem(i, columnCount, out column);
+                Rectangle tileArea = new Rectangle(new Point(row * size.Width, column * size.Height), size);
                 yield return source.GetArea(tileArea);
             }
             yield break;
@@ -94,38 +96,48 @@ namespace PckStudio.Core.Extensions
 
         public static Image Combine(this IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
         {
-            Size imageSize = CalculateImageSize(sources, layoutDirection);
+            bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
+            int imgCount = sources.Count();
+            int rows = horizontal ? imgCount : 1;
+            int columns = horizontal ? 1 : imgCount;
+            return sources.Combine(rows, columns, layoutDirection);
+        }
+
+        public static Image Combine(this IEnumerable<Image> sources, int rows, int columns, ImageLayoutDirection layoutDirection)
+        {
+            Size imageSize = CalculateImageSize(sources, rows, columns);
             var image = new Bitmap(imageSize.Width, imageSize.Height);
+            bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
 
             using (var graphic = Graphics.FromImage(image))
             {
                 foreach ((int i, Image texture) in sources.enumerate())
                 {
-                    var info = new ImageSection(texture.Size, i, layoutDirection);
-                    graphic.DrawImage(texture, info.Point);
+                    int x = Math.DivRem(i, columns, out int y);
+                    if (horizontal)
+                        y = Math.DivRem(i, rows, out x);
+                    graphic.DrawImage(texture, new Point(x * texture.Width, y * texture.Height));
                 }
             }
             return image;
         }
 
-        private static Size CalculateImageSize(IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
+        private static Size CalculateImageSize(IEnumerable<Image> sources, int rows, int columns)
         {
-            Size size = sources.First().Size;
-            int count = sources.Count();
+            if (sources == null)
+                return Size.Empty;
+            Image[] imgs = sources.ToArray();
 
-            if (count < 2)
-                return count < 1 ? Size.Empty : size;
+            if (imgs.Length < rows * columns)
+                throw new ArgumentOutOfRangeException("Insufficent soure images provided.");
 
-            var horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
+            Size size = imgs[0].Size;
 
-            if (!sources.All(img => img.Size == size))
+            if (!imgs.All(img => img.Size == size))
                 throw new InvalidOperationException("Images must have the same width and height.");
 
-            if (horizontal)
-                size.Width *= count;
-            else
-                size.Height *= count;
-
+            size.Width *= rows;
+            size.Height *= columns;
             return size;
         }
 
