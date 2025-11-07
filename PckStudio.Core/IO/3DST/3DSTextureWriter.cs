@@ -27,7 +27,7 @@ namespace PckStudio.Core.IO._3DST
 
         public void WriteToStream(Stream stream)
         {
-            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian))
             {
                 writer.WriteString("3DST"); // 0
                 writer.Write(2); // 4 unknown

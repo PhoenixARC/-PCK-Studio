@@ -25,7 +25,7 @@ namespace PckStudio.ModelSupport.Internal.Format
 
         public PSMFile FromStream(Stream stream)
         {
-            using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian);
+            using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian);
             
             var magic = reader.ReadString(3);
             if (magic != PSMFile.HEADER_MAGIC)

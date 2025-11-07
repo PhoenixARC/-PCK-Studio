@@ -47,7 +47,7 @@ namespace PckStudio.Core.IO.TGA
 
         public TGAFileData FromStream(Stream stream)
         {
-            using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian);
+            using var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian);
             TGAHeader header = LoadHeader(reader);
             Image image = LoadImage(reader, header);
             TGAFooter footer = LoadFooter(reader);

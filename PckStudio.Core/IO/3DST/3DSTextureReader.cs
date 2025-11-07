@@ -29,7 +29,7 @@ namespace PckStudio.Core.IO._3DST
         public Image FromStream(Stream stream)
         {
             Image img = null;
-            using (var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            using (var reader = new EndiannessAwareBinaryReader(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian))
             {
                 if (reader.ReadString(4) == "3DST")
                 {

@@ -81,9 +81,9 @@ namespace PckStudio
             AddPage(caption, identifier, editor);
         }
 
-        private PckFile ReadPck(string filePath, OMI.Endianness endianness)
+        private PckFile ReadPck(string filePath, OMI.ByteOrder byteOrder)
         {
-            var pckReader = new PckFileReader(endianness);
+            var pckReader = new PckFileReader(byteOrder);
             return pckReader.FromFile(filePath);
         }
 
@@ -96,9 +96,9 @@ namespace PckStudio
             }
             try
             {
-                OMI.Endianness endianness = OMI.Endianness.BigEndian;
-                PckFile pckFile = ReadPck(filepath, endianness);
-                packInfo = PackInfo.Create(pckFile, endianness, true);
+                OMI.ByteOrder byteOrder = OMI.ByteOrder.BigEndian;
+                PckFile pckFile = ReadPck(filepath, byteOrder);
+                packInfo = PackInfo.Create(pckFile, byteOrder, true);
                 return packInfo.IsValid;
             }
             catch (OverflowException)
@@ -106,9 +106,9 @@ namespace PckStudio
                 try
                 {
                     // if failed, attempt again in the reverse. THEN throw an error if failed
-                    OMI.Endianness endianness = OMI.Endianness.LittleEndian;
-                    PckFile pckFile = ReadPck(filepath, endianness);
-                    packInfo = PackInfo.Create(pckFile, endianness, true);
+                    OMI.ByteOrder byteOrder = OMI.ByteOrder.LittleEndian;
+                    PckFile pckFile = ReadPck(filepath, byteOrder);
+                    packInfo = PackInfo.Create(pckFile, byteOrder, true);
                     return packInfo.IsValid;
                 }
                 catch (OverflowException ex)
@@ -341,7 +341,7 @@ namespace PckStudio
 			locFile.InitializeDefault(packName);
 			pack.CreateNewAsset("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
 
-			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true), OMI.Endianness.BigEndian));
+			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true), OMI.ByteOrder.BigEndian));
 
 			return pack;
 		}
@@ -355,16 +355,16 @@ namespace PckStudio
             pack.GetAsset("localisation.loc", PckAssetType.LocalisationFile).Filename = "languages.loc";
 
             PckAsset iconAsset = infoPCK.CreateNewAsset("icon.png", PckAssetType.TextureFile);
-			iconAsset.SetTexture(Resources.TexturePackIcon);
+			iconAsset.SetTexture(Core.Properties.Resources.TexturePackIcon);
 
             PckAsset comparisonAsset = infoPCK.CreateNewAsset("comparison.png", PckAssetType.TextureFile);
-			comparisonAsset.SetTexture(Resources.Comparison);
+			comparisonAsset.SetTexture(Core.Properties.Resources.Comparison);
 
             PckAsset texturepackInfoAsset = pack.CreateNewAsset($"{res}/{res}Info.pck", PckAssetType.TexturePackInfoFile);
 			texturepackInfoAsset.AddProperty("PACKID", "0");
 			texturepackInfoAsset.AddProperty("DATAPATH", $"{res}Data.pck");
 
-			texturepackInfoAsset.SetData(new PckFileWriter(infoPCK, OMI.Endianness.BigEndian));
+			texturepackInfoAsset.SetData(new PckFileWriter(infoPCK, OMI.ByteOrder.BigEndian));
 
 			return pack;
 		}
@@ -401,7 +401,7 @@ namespace PckStudio
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
                 PckFile skinPck = InitializePack(new Random().Next(8000, MAX_PACK_ID), 0, namePrompt.NewText, true);
-                PackInfo packInfo = PackInfo.Create(skinPck, OMI.Endianness.BigEndian, true);
+                PackInfo packInfo = PackInfo.Create(skinPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved skin pack", "Unsaved skin pack", packInfo);
             }
         }
@@ -412,7 +412,7 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
-                PackInfo packInfo = PackInfo.Create(texturePackPck, OMI.Endianness.BigEndian, true);
+                PackInfo packInfo = PackInfo.Create(texturePackPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved texture pack", "Unsaved texture pack", packInfo);
             }
         }
@@ -423,7 +423,7 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile mashUpPck = InitializeMashUpPack(new Random().Next(8000, MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
-                PackInfo packInfo = PackInfo.Create(mashUpPck, OMI.Endianness.BigEndian, true);
+                PackInfo packInfo = PackInfo.Create(mashUpPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved mash-up pack", "Unsaved mash-up pack", packInfo);
             }
         }
@@ -433,7 +433,7 @@ namespace PckStudio
             if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
             {
                 using AdvancedOptions advanced = new AdvancedOptions(editor.EditorValue.File);
-                advanced.IsLittleEndian = editor.EditorValue.Endianness == OMI.Endianness.LittleEndian;
+                advanced.IsLittleEndian = editor.EditorValue.Endianness == OMI.ByteOrder.LittleEndian;
                 if (advanced.ShowDialog() == DialogResult.OK)
                 {
                     editor.UpdateView();

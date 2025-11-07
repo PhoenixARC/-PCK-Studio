@@ -11,7 +11,7 @@ namespace PckStudio.Core.IO.PckAudio
     {
 
         private PckAudioFile _file;
-        private Endianness _endianness;
+        private ByteOrder _endianness;
         private static readonly List<string> LUT = new List<string>
         {
             "CUENAME",
@@ -19,7 +19,7 @@ namespace PckStudio.Core.IO.PckAudio
             "CREDITID"
         };
 
-        public PckAudioFileWriter(PckAudioFile file, Endianness endianness)
+        public PckAudioFileWriter(PckAudioFile file, ByteOrder endianness)
         {
             _file = file;
             _endianness = endianness;
@@ -36,7 +36,7 @@ namespace PckStudio.Core.IO.PckAudio
         public void WriteToStream(Stream stream)
         {
             using (var writer = new EndiannessAwareBinaryWriter(stream,
-                _endianness == Endianness.BigEndian
+                _endianness == ByteOrder.BigEndian
                 ? Encoding.BigEndianUnicode
                 : Encoding.Unicode,
                 leaveOpen: true, _endianness))

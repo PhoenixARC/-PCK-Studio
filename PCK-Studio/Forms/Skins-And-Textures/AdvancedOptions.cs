@@ -18,11 +18,11 @@ namespace PckStudio.Popups
         {
             set
             {
-                _endianness = value ? Endianness.LittleEndian : Endianness.BigEndian;
+                _endianness = value ? ByteOrder.LittleEndian : ByteOrder.BigEndian;
             }
         }
         private readonly PckFile _pckFile;
-        private Endianness _endianness;
+        private ByteOrder _endianness;
 
         public AdvancedOptions(PckFile pckFile)
         {

@@ -8,7 +8,7 @@ namespace PckStudio.Core
         public static readonly PackInfo Empty = new PackInfo(default, default, default);
         public bool IsValid { get; }
         public PckFile File { get; }
-        public OMI.Endianness Endianness { get; }
+        public OMI.ByteOrder Endianness { get; }
 
         
         //public enum PackType
@@ -23,12 +23,12 @@ namespace PckStudio.Core
 
         public bool AllowEndianSwap { get; }
 
-        public static PackInfo Create(PckFile file, OMI.Endianness endianness, bool allowEndianSwap)
+        public static PackInfo Create(PckFile file, OMI.ByteOrder endianness, bool allowEndianSwap)
         {
             return new PackInfo(file, endianness, allowEndianSwap);
         }
 
-        private PackInfo(PckFile file, OMI.Endianness endianness, bool allowEndianSwap)
+        private PackInfo(PckFile file, OMI.ByteOrder endianness, bool allowEndianSwap)
         {
             File = file;
             Endianness = endianness;

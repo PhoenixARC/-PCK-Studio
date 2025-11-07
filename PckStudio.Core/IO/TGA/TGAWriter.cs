@@ -120,7 +120,7 @@ namespace PckStudio.Core.IO.TGA
         public void WriteToStream(Stream stream, Image image)
         {
             _bitmap = new Bitmap(image);
-            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian))
             {
                 WriteHeader(writer);
                 WriteImage(writer);

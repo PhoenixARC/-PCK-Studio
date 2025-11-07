@@ -55,8 +55,8 @@ namespace PckStudio.Controls
 
         private string _location = string.Empty;
 
-        private readonly OMI.Endianness _originalEndianness;
-        private OMI.Endianness _currentEndianness;
+        private readonly OMI.ByteOrder _originalEndianness;
+        private OMI.ByteOrder _currentEndianness;
         private bool __modified = false;
         private bool _wasModified
         {
@@ -209,7 +209,7 @@ namespace PckStudio.Controls
 
         private void HandleTextureFile(PckAsset asset)
         {
-            _ = asset.IsMipmappedFile() && EditorValue.File.TryGetValue(asset.GetNormalPath(), PckAssetType.TextureFile, out asset);
+            _ = asset.IsMipmappedFile() && EditorValue.File.TryGetAsset(asset.GetNormalPath(), PckAssetType.TextureFile, out asset);
 
             if (asset.Size <= 0)
             {
@@ -734,7 +734,7 @@ namespace PckStudio.Controls
         private static PckAsset CreateNewAudioAsset(bool isLittle, PckAudioFile audioFile)
         {
             PckAsset newAsset = new PckAsset("audio.pck", PckAssetType.AudioFile);
-            newAsset.SetData(new PckAudioFileWriter(audioFile, isLittle ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+            newAsset.SetData(new PckAudioFileWriter(audioFile, isLittle ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
             return newAsset;
         }
 
@@ -1324,7 +1324,7 @@ namespace PckStudio.Controls
 
             ISaveContext<PckAudioFile> saveContext = new DelegatedSaveContext<PckAudioFile>(Settings.Default.AutoSaveChanges, (audioFile) =>
             {
-                newAudioAsset.SetData(new PckAudioFileWriter(audioFile, LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+                newAudioAsset.SetData(new PckAudioFileWriter(audioFile, LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
             });
 
             AudioEditor diag = new AudioEditor(newAudioFile, saveContext);
@@ -1357,7 +1357,7 @@ namespace PckStudio.Controls
             }
 
             EditorValue.File.CreateNewAsset("Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
-                    LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian));
+                    LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
 
             BuildMainTreeView();
         }
@@ -1541,11 +1541,11 @@ namespace PckStudio.Controls
             if (treeViewMain.SelectedNode.Tag is PckAsset asset)
             {
                 MessageBox.Show(
-                    "File path: " + asset.Filename +
-                    "\nAssigned File type: " + (int)asset.Type + " (" + asset.Type + ")" +
-                    "\nFile size: " + asset.Size +
-                    "\nProperties count: " + asset.PropertyCount
-                    , Path.GetFileName(asset.Filename) + " file info");
+                    $"Asset path: {asset.Filename}" +
+                    $"\nAsset type: {(int)asset.Type} ({asset.Type})" +
+                    $"\nAsset size: {asset.Size}" + 
+                    $"\nProperties count: {asset.PropertyCount}"
+                    , Path.GetFileName(asset.Filename) + " Asset info");
             }
         }
 
@@ -2095,14 +2095,14 @@ namespace PckStudio.Controls
             UpdateRichPresence();
         }
 
-        private void SetEndianess(OMI.Endianness endianness)
+        private void SetEndianess(OMI.ByteOrder endianness)
         {
-            LittleEndianCheckBox.Checked = endianness == OMI.Endianness.LittleEndian;
+            LittleEndianCheckBox.Checked = endianness == OMI.ByteOrder.LittleEndian;
         }
 
-        private OMI.Endianness GetEndianess()
+        private OMI.ByteOrder GetEndianess()
         {
-            return LittleEndianCheckBox.Checked ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian;
+            return LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian;
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
@@ -2110,15 +2110,15 @@ namespace PckStudio.Controls
             treeViewMain_DoubleClick(sender, e);
         }
 
-        private void SetPckEndianness(OMI.Endianness endianness)
+        private void SetPckEndianness(OMI.ByteOrder endianness)
         {
             try
             {
                 if (treeViewMain.SelectedNode.Tag is PckAsset asset && (asset.Type is PckAssetType.AudioFile || asset.Type is PckAssetType.SkinDataFile || asset.Type is PckAssetType.TexturePackInfoFile))
                 {
                     IDataFormatReader reader = asset.Type is PckAssetType.AudioFile
-                        ? new PckAudioFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian)
-                        : new PckFileReader(endianness == OMI.Endianness.BigEndian ? OMI.Endianness.LittleEndian : OMI.Endianness.BigEndian);
+                        ? new PckAudioFileReader(endianness == OMI.ByteOrder.BigEndian ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian)
+                        : new PckFileReader(endianness == OMI.ByteOrder.BigEndian ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian);
                     object pck = reader.FromStream(new MemoryStream(asset.Data));
 
                     IDataFormatWriter writer = asset.Type is PckAssetType.AudioFile
@@ -2126,12 +2126,12 @@ namespace PckStudio.Controls
                         : new PckFileWriter((PckFile)pck, endianness);
                     asset.SetData(writer);
                     _wasModified = true;
-                    MessageBox.Show($"\"{asset.Filename}\" successfully converted to {(endianness == OMI.Endianness.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
+                    MessageBox.Show($"\"{asset.Filename}\" successfully converted to {(endianness == OMI.ByteOrder.LittleEndian ? "little" : "big")} endian.", "Converted PCK file");
                 }
             }
             catch (OverflowException)
             {
-                MessageBox.Show(this, $"File was not a valid {(endianness != OMI.Endianness.LittleEndian ? "little" : "big")} endian PCK File.", "Not a valid PCK file");
+                MessageBox.Show(this, $"File was not a valid {(endianness != OMI.ByteOrder.LittleEndian ? "little" : "big")} endian PCK File.", "Not a valid PCK file");
                 return;
             }
             catch (Exception ex)
@@ -2141,9 +2141,9 @@ namespace PckStudio.Controls
             }
         }
 
-        private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.LittleEndian);
+        private void littleEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.ByteOrder.LittleEndian);
 
-        private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.Endianness.BigEndian);
+        private void bigEndianToolStripMenuItem_Click(object sender, EventArgs e) => SetPckEndianness(OMI.ByteOrder.BigEndian);
 
         private void SetModelVersion(int version)
         {

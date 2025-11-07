@@ -19,11 +19,11 @@ namespace PckStudio.Core.IO.PckAudio
     public class PckAudioFileReader : IDataFormatReader<PckAudioFile>, IDataFormatReader
     {
         private PckAudioFile _file;
-        private Endianness _endianness;
+        private ByteOrder _endianness;
         private List<string> LUT = new List<string>();
         private List<PckAudioFile.AudioCategory.EAudioType> _OriginalAudioTypeOrder = new List<PckAudioFile.AudioCategory.EAudioType>();
 
-        public PckAudioFileReader(Endianness endianness)
+        public PckAudioFileReader(ByteOrder endianness)
         {
             _endianness = endianness;
         }
@@ -45,7 +45,7 @@ namespace PckStudio.Core.IO.PckAudio
         public PckAudioFile FromStream(Stream stream)
         {
             using (var reader = new EndiannessAwareBinaryReader(stream,
-                _endianness == Endianness.BigEndian
+                _endianness == ByteOrder.BigEndian
                 ? Encoding.BigEndianUnicode
                 : Encoding.Unicode,
                 leaveOpen: true, _endianness))

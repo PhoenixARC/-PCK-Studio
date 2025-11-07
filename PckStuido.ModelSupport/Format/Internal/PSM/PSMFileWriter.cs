@@ -28,7 +28,7 @@ namespace PckStudio.ModelSupport.Internal.Format
 
         public void WriteToStream(Stream stream)
         {
-            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, Endianness.LittleEndian))
+            using (var writer = new EndiannessAwareBinaryWriter(stream, Encoding.ASCII, leaveOpen: true, ByteOrder.LittleEndian))
             {
                 writer.WriteString(PSMFile.HEADER_MAGIC);
                 writer.Write(_PSM.Version);
