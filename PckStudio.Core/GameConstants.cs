@@ -12,6 +12,8 @@ namespace PckStudio.Core
 {
     public static class GameConstants
     {
+        // 16777215 being the uint24 max value
+        public const int MAX_PACK_ID = 0xffffff;
 
         public static readonly Vector3 SkinHeadTranslation = Vector3.Zero;
         public static readonly Vector3 SkinHeadPivot = Vector3.Zero;

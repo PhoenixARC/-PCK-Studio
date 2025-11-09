@@ -34,9 +34,6 @@ namespace PckStudio
 
         private Dictionary<string, TabPage> openTabPages = new Dictionary<string, TabPage>();
 
-        // 16777215 being the uint24 max value
-        private const int MAX_PACK_ID = 16777215;
-
         public MainForm()
 		{
 			InitializeComponent();
@@ -400,7 +397,7 @@ namespace PckStudio
             namePrompt.OKButtonText = "Ok";
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
-                PckFile skinPck = InitializePack(new Random().Next(8000, MAX_PACK_ID), 0, namePrompt.NewText, true);
+                PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText, true);
                 PackInfo packInfo = PackInfo.Create(skinPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved skin pack", "Unsaved skin pack", packInfo);
             }
@@ -411,7 +408,7 @@ namespace PckStudio
             var packPrompt = new CreateTexturePackPrompt();
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
-                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
+                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
                 PackInfo packInfo = PackInfo.Create(texturePackPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved texture pack", "Unsaved texture pack", packInfo);
             }
@@ -422,7 +419,7 @@ namespace PckStudio
             var packPrompt = new CreateTexturePackPrompt();
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
-                PckFile mashUpPck = InitializeMashUpPack(new Random().Next(8000, MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
+                PckFile mashUpPck = InitializeMashUpPack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
                 PackInfo packInfo = PackInfo.Create(mashUpPck, OMI.ByteOrder.BigEndian, true);
                 AddEditorPage("Unsaved mash-up pack", "Unsaved mash-up pack", packInfo);
             }
