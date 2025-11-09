@@ -34,7 +34,7 @@ namespace PckStudio.Core
             Endianness = endianness;
             AllowEndianSwap = allowEndianSwap;
             //Type = GetPackType();
-            IsValid = file is not null && Enum.IsDefined(typeof(OMI.Endianness), endianness); // && Type != PackType.Unknown;
+            IsValid = file is not null && Enum.IsDefined(typeof(OMI.ByteOrder), endianness); // && Type != PackType.Unknown;
         }
 
         //private PackType GetPackType()
