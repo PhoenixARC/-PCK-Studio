@@ -349,29 +349,36 @@ namespace PckStudio.Forms.Editor
             if (colorKey == "experience_orb" || colorKey == "critical_hit") 
                 return GetSpecificBlendColor(colorKey);
 
-            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && tileInfo.HasColourEntry)
+            if (!_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) || !tileInfo.HasColourEntry)
             {
-                // basic way to check for classic water colors
-                if(!tileInfo.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+                Debug.WriteLine("Could not find: " + colorKey);
+                return Color.White;
+            }
+
+            // basic way to check for classic water colors
+            if (!tileInfo.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+            {
+                if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
                 {
-                    if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
-                    {
-                        return color.ColorPallette;
-                    }
+                    return color.ColorPallette;
                 }
-                else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
-                {
-                    return waterColor.SurfaceColor;
-                }
+            }
+            else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
+            {
+                return waterColor.SurfaceColor;
             }
 
             Debug.WriteLine("Could not find: " + colorKey);
             return Color.White;
         }
 
-        // TODO
+        // TODO(null): check for large tile and get skip length
         protected override bool ProcessDialogKey(Keys keyData)
         {
+            int up = -_atlas.Rows;
+            int down = _atlas.Rows;
+            int left = -1;
+            int right = 1;
             switch (keyData)
             {
                 case Keys.R:
@@ -379,16 +386,16 @@ namespace PckStudio.Forms.Editor
                     SelectedIndex = _selectedTile.Index;
                     return true;
                 case Keys.Left:
-                    SelectedIndex = _selectedTile.Index - 1;
+                    SelectedIndex = _selectedTile.Index + left;
                     return true;
                 case Keys.Right:
-                    SelectedIndex = _selectedTile.Index + 1;
+                    SelectedIndex = _selectedTile.Index + right;
                     return true;
                 case Keys.Up:
-                    SelectedIndex = _selectedTile.Index - _atlas.Rows;
+                    SelectedIndex = _selectedTile.Index + up;
                     return true;
                 case Keys.Down:
-                    SelectedIndex = _selectedTile.Index + _atlas.Rows;
+                    SelectedIndex = _selectedTile.Index + down;
                     return true;
             }
 
@@ -445,7 +452,7 @@ namespace PckStudio.Forms.Editor
                 Animation anim = _atlas.GetAnimationFromGroup(group);
                 ISaveContext<Animation> saveContext = new DelegatedSaveContext<Animation>(false, (animation) =>
                 {
-                    // TODO
+                    //! TODO(null): Test for functionallity
                     _atlas.SetGroupTilesFromAnimation(group, animation);
                 });
                 var aEditor = new AnimationEditor(anim, saveContext, group.Name, false);
@@ -479,6 +486,7 @@ namespace PckStudio.Forms.Editor
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 _atlas.GetTileTexture(_selectedTile).Save(saveFileDialog.FileName, ImageFormat.Png);
+                //Process.Start("explorer.exe", $"{saveFileDialog.FileName}");
             }
         }
 
@@ -528,13 +536,14 @@ namespace PckStudio.Forms.Editor
 
         private void setColorButton_Click(object sender, EventArgs e)
         {
-            ColorDialog colorPick = new ColorDialog();
-            colorPick.AllowFullOpen = true;
-            colorPick.AnyColor = true;
-            colorPick.SolidColorOnly = true;
+            ColorDialog colorPick = new ColorDialog
+            {
+                AllowFullOpen = true,
+                AnyColor = true,
+                SolidColorOnly = true,
+                CustomColors = GameConstants.DyeColors.Select(ColorExtensions.ToBGR).ToArray()
+            };
 
-            colorPick.CustomColors = GameConstants.DyeColors.Select(ColorExtensions.ToBGR).ToArray();
-            
             if (colorPick.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -559,7 +568,6 @@ namespace PckStudio.Forms.Editor
 
         private void allowGroupsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            _atlas.AllowGroups = allowGroupsToolStripMenuItem.Checked;
             SelectedIndex = _selectedTile.Index;
         }
     }
