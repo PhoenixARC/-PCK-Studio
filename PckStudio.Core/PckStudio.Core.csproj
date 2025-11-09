@@ -68,6 +68,7 @@
     <Compile Include="DLCBattlePackage.cs" />
     <Compile Include="DLCManager.cs" />
     <Compile Include="DLCMashUpPackage.cs" />
+    <Compile Include="DLCMiniGamePackage.cs" />
     <Compile Include="DLCPackage.cs" />
     <Compile Include="DLCSkinPackage.cs" />
     <Compile Include="DLCTexturePackage.cs" />

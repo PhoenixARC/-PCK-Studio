@@ -8,21 +8,12 @@ using PckStudio.Core.Interfaces;
 
 namespace PckStudio.Core
 {
-    internal sealed class DLCBattlePackage : DLCPackage
+    internal sealed class DLCBattlePackage : DLCMiniGamePackage
     {
-
-        private List<MapData> _maps = new List<MapData>();
-
-        public DLCBattlePackage(string name, int identifier, IDLCPackageLocationInfo packageInfo = null, IDLCPackage parentPackage = null)
-            : base(name, identifier, packageInfo, parentPackage)
+        public DLCBattlePackage(string name, int identifier)
+            : base(name, identifier, DLCPackageType.MG01, MiniGameId.Battle)
         {
         }
 
-        public void AddMap(string name, Image thumbnail, MapSize mapSize, NamedData<byte[]> world)
-        {
-            _maps.Add(new MapData(name, thumbnail, MiniGameId.Battle, mapSize, world));
-        }
-
-        public override DLCPackageType GetDLCPackageType() => DLCPackageType.MG01;
     }
 }
