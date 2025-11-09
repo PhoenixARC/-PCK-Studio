@@ -99,6 +99,14 @@
     <Compile Include="FileDialogFilter.cs" />
     <Compile Include="FileFormats\PckAudioFile.cs" />
     <Compile Include="GameConstants.cs" />
+    <Compile Include="GameRule\AbstractGameRule.cs" />
+    <Compile Include="GameRule\DistributeItems.cs" />
+    <Compile Include="GameRule\NamedArea.cs" />
+    <Compile Include="GameRule\OnGameStartSpawnPositions.cs" />
+    <Compile Include="GameRule\OnInitialiseWorld.cs" />
+    <Compile Include="GameRule\SpawnPositionSet.cs" />
+    <Compile Include="GameRule\UpdatePlayer.cs" />
+    <Compile Include="GameRule\WorldPosition.cs" />
     <Compile Include="Interfaces\IDLCPackage.cs" />
     <Compile Include="Interfaces\IDLCPackageLocationInfo.cs" />
     <Compile Include="Interfaces\IEditor.cs" />
