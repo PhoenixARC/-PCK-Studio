@@ -18,11 +18,12 @@ namespace PckStudio.Core
         Huge
     }
 
-    public class MapData
+    public sealed class MapData
     {
         public string Name { get; }
         public Image Thumbnail { get; }
         public GameRuleFile Grf { get; }
+        public GameRuleFile.GameRule LevelRules { get; }
         public NamedData<byte[]> World { get; }
 
         public MapData(string name, Image thumbnail, MiniGameId miniGame, MapSize mapSize, NamedData<byte[]> world)
@@ -39,7 +40,7 @@ namespace PckStudio.Core
                 new GameRuleFile.IntParameter("mapSize", (int)mapSize),
                 new GameRuleFile.IntParameter("themeId", 0)
                 );
-            Grf.AddRule("LevelRules", [new GameRuleFile.IntParameter("ruleType", (int)miniGame)]);
+            LevelRules = Grf.AddRule("LevelRules", [new GameRuleFile.IntParameter("ruleType", (int)miniGame)]);
 
             World = world;
         }
