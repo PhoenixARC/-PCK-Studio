@@ -525,7 +525,7 @@ namespace PckStudio.Forms.Editor
         {
             variantComboBox.Enabled = true;
 
-            variantComboBox_SelectedIndexChanged(sender, e);
+            selectTilePictureBox.BlendColor = Color.White;
 
             clearColorButton.Enabled = false;
         }
