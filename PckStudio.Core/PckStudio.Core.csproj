@@ -214,24 +214,6 @@
     <None Include="Resources\terrain.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\additional_mapicons1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\banners1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Comparison1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\experience_orbs1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\items1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\map_icons1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\explosion.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
