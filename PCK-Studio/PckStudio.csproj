@@ -171,6 +171,7 @@
       <DependentUpon>ModelEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ApplicationScope.cs" />
+    <Compile Include="Internal\AppResourceManager.cs" />
     <Compile Include="Internal\CommitInfo.cs" />
     <Compile Include="Internal\Entities.cs" />
     <Compile Include="Internal\RichPresenceClient.cs" />

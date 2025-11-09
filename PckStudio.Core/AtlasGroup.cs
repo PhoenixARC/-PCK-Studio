@@ -42,7 +42,7 @@ namespace PckStudio.Core
         public bool IsAnimation() => isAnimation;
         public bool IsLargeTile() => isLargeTile;
 
-        internal abstract Size GetSize(Size tileSize);
+        public abstract Size GetSize(Size tileSize);
 
     }
 }

@@ -29,7 +29,7 @@ namespace PckStudio.Core
 
         protected override bool isLargeTile => false;
 
-        internal override Size GetSize(Size tileSize) => new Size(tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? Count : 1), tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? Count : 1));
+        public override Size GetSize(Size tileSize) => new Size(tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? Count : 1), tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? Count : 1));
 
         public AtlasGroupAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MinimumFrameTime)
             : base(name, row, column)

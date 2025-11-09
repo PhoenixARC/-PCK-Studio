@@ -15,6 +15,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
 **/
+using System;
 using System.Drawing;
 
 namespace PckStudio.Core
@@ -47,6 +48,8 @@ namespace PckStudio.Core
         }
 
         public AtlasGroup GetGroup() => _group;
+        
+        public Rectangle GetArea(Size tileSize) => new Rectangle(new Point(Row * tileSize.Width, Column * tileSize.Height), tileSize);
 
         public static implicit operator Image(AtlasTile tile) => tile.Texture;
 

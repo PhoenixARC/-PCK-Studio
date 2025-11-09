@@ -16,19 +16,22 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Linq;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
+using System.Drawing;
 using System.Drawing.Drawing2D;
-
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Windows.Forms;
+using OMI.Formats.Color;
+using OMI.Workers.Color;
+using PckStudio.Controls;
 using PckStudio.Core;
 using PckStudio.Core.Extensions;
-using PckStudio.Interfaces;
-using PckStudio.Controls;
-using OMI.Formats.Color;
 using PckStudio.Core.Json;
+using PckStudio.Interfaces;
+using PckStudio.Internal;
+using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
@@ -50,16 +53,15 @@ namespace PckStudio.Forms.Editor
 
             _ = atlas ?? throw new ArgumentNullException(nameof(atlas));
             _ = resourceLocation ?? throw new ArgumentNullException(nameof(resourceLocation));
-
+            _atlas = atlas;
+            Text = _atlas.Name;
             originalPictureBox.Image = atlas;
 
-            _colourTable = colorContainer ?? new ColorContainer();
+            _colourTable = colorContainer ?? AppResourceManager.Default.GetData(Resources.tu69colours, new COLFileReader());
             _tryGetAnimation = tryGetAnimation;
             _tryGetAnimationSaveContext = tryGetAnimationSaveContext;
-            _atlas = atlas;
             _resourceLocationCategory = resourceLocation.Category;
 
-            _atlas.AllowGroups = allowGroupsToolStripMenuItem.Checked;
             SelectedIndex = 0;
 
             animationButton.Enabled =
@@ -110,7 +112,7 @@ namespace PckStudio.Forms.Editor
                 g.DrawImage(image, 0, 0, image.Width, image.Height);
 
                 SolidBrush brush = new SolidBrush(Color.FromArgb(127, Color.White));
-                g.FillRectangle(brush, _atlas.GetTileArea(_selectedTile));
+                g.FillRectangle(brush, allowGroupsToolStripMenuItem.Checked ? _atlas.GetTileArea(_selectedTile) : _selectedTile.GetArea(_atlas.TileSize));
             }
             originalPictureBox.Invalidate();
         }
@@ -294,6 +296,15 @@ namespace PckStudio.Forms.Editor
 
         private void SetTile(Image texture)
         {
+            if (_selectedTile.IsPartOfGroup)
+            {
+                AtlasGroup group = _selectedTile.GetGroup();
+                _atlas.SetGroup(group, texture);
+                selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile);
+                UpdateAtlasDisplay();
+                return;
+            }
+
             if (texture.Size != _atlas.TileSize)
                 texture = texture.Resize(_atlas.TileSize, _graphicsConfig);
 
@@ -415,7 +426,7 @@ namespace PckStudio.Forms.Editor
 
             if (fileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                var img = Image.FromFile(fileDialog.FileName);
+                Image img = Image.FromFile(fileDialog.FileName).ReleaseFromFile();
                 SetTile(img);
             }
         }
@@ -457,10 +468,9 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        // TODO
         private void extractTileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filename = _selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) ? tileInfo.InternalName : "tile";
+            string filename = GetSanitizedFilename();
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Filter = "Tile Texture|*.png",
@@ -468,8 +478,20 @@ namespace PckStudio.Forms.Editor
             };
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                _selectedTile.Texture.Save(saveFileDialog.FileName, ImageFormat.Png);
+                _atlas.GetTileTexture(_selectedTile).Save(saveFileDialog.FileName, ImageFormat.Png);
             }
+        }
+
+        private string GetSanitizedFilename()
+        {
+            if (_selectedTile.IsPartOfGroup)
+            {
+                AtlasGroup group = _selectedTile.GetGroup();
+                return group.Name.Replace(' ', '_').Trim().ToLower();
+            }
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && !string.IsNullOrWhiteSpace(tileInfo.InternalName))
+                return tileInfo.InternalName;
+            return "tile";
         }
 
         private void variantComboBox_SelectedIndexChanged(object sender, EventArgs e)

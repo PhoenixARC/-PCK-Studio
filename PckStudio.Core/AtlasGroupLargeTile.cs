@@ -31,7 +31,7 @@ namespace PckStudio.Core
 
         protected override bool isLargeTile => true;
 
-        internal override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width, ColumnSpan * tileSize.Height);
+        public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width, ColumnSpan * tileSize.Height);
 
         public AtlasGroupLargeTile(string name, int row, int column, int rowSpan, int columnSpan)
             : base(name, row, column)

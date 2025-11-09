@@ -32,8 +32,6 @@ namespace PckStudio.Core
         public Size TileSize { get; }
         public int TileCount => _tiles.Length;
 
-        public bool AllowGroups { get; set; } = default;
-
         private readonly AtlasTile[] _tiles;
         private readonly ImageLayoutDirection _layoutDirection;
         private readonly List<AtlasGroup> _groups;
@@ -122,22 +120,19 @@ namespace PckStudio.Core
             yield break;
         }
 
-        private void SetRange(int row, int col, int count, IEnumerable<Image> tiles)
+        private void SetRange(int row, int col, int count, ImageLayoutDirection direction, IEnumerable<Image> tiles)
+            => SetRange(row, col, direction == ImageLayoutDirection.Horizontal ? count : 1, direction == ImageLayoutDirection.Vertical ? count : 1, tiles);
+        private void SetRange(int row, int col, int rowCount, int columnCount, IEnumerable<Image> tiles)
         {
             Image[] atlasTiles = tiles.ToArray();
-            if (atlasTiles.Length < count)
-                return;
-            count = count < atlasTiles.Length ? count : atlasTiles.Length;
-            for (int i = 0; i < count; i++)
+            for (int j = 0; j < columnCount; j++)
             {
-                if (row < Rows)
+                for (int i = 0; i < rowCount; i++)
                 {
-                    this[row++, col].Texture = atlasTiles[i];
-                }
-                else
-                {
-                    row %= Rows;
-                    this[row, col++].Texture = atlasTiles[i];
+                    if ((row + i) < Rows && (col + j) < Columns)
+                    {
+                        this[row + i, col + j].Texture = atlasTiles[(j * rowCount) + i];
+                    }
                 }
             }
         }
@@ -179,7 +174,7 @@ namespace PckStudio.Core
 
         public void SetGroupTilesFromAnimation(AtlasGroup group, Animation animation)
         {
-            SetRange(group.Row, group.Column, group.Count, animation.GetFrames().Select(f => f.Texture));
+            SetRange(group.Row, group.Column, group.Count, group.Direction, animation.GetFrames().Select(f => f.Texture));
         }
 
         private IEnumerable<AtlasTile> GetLargeTile(AtlasGroupLargeTile group) => GetRange(group.Row, group.Column, group.RowSpan, group.ColumnSpan);
@@ -218,10 +213,19 @@ namespace PckStudio.Core
 
         public Rectangle GetTileArea(AtlasTile tile)
         {
-            if (!tile.IsPartOfGroup || !AllowGroups)
-                return new Rectangle(new Point(tile.Row * TileSize.Width, tile.Column * TileSize.Height), TileSize);
+            if (!tile.IsPartOfGroup)
+                return tile.GetArea(TileSize);
             AtlasGroup group = tile.GetGroup();
             return new Rectangle(new Point(group.Row * TileSize.Width, group.Column * TileSize.Height), group.GetSize(TileSize));
+        }
+
+        public void SetGroup(AtlasGroup group, Image texture)
+        {
+            IEnumerable<Image> images = texture.Split(TileSize, group.Direction);
+            if (!images.All(img => img.Size == TileSize))
+                return;
+            Size s = group.GetSize(new Size(1, 1));
+            SetRange(group.Row, group.Column, s.Width, s.Height, images);
         }
     }
 }
