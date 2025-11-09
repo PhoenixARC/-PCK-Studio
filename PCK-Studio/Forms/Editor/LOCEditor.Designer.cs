@@ -34,6 +34,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteDisplayIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GridContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.addLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,10 +44,10 @@
             this.locSort = new System.Windows.Forms.TableLayoutPanel();
             this.buttonReplaceAll = new System.Windows.Forms.Button();
             this.dataGridViewLocEntryData = new System.Windows.Forms.DataGridView();
-            this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
-            this.treeViewLocKeys = new System.Windows.Forms.TreeView();
             this.Language = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBoxReplaceAll = new System.Windows.Forms.TextBox();
+            this.treeViewLocKeys = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1.SuspendLayout();
             this.GridContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -58,7 +59,8 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addDisplayIDToolStripMenuItem,
-            this.deleteDisplayIDToolStripMenuItem});
+            this.deleteDisplayIDToolStripMenuItem,
+            this.copyIDToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
@@ -73,6 +75,12 @@
             this.deleteDisplayIDToolStripMenuItem.Name = "deleteDisplayIDToolStripMenuItem";
             resources.ApplyResources(this.deleteDisplayIDToolStripMenuItem, "deleteDisplayIDToolStripMenuItem");
             this.deleteDisplayIDToolStripMenuItem.Click += new System.EventHandler(this.deleteDisplayIDToolStripMenuItem_Click);
+            // 
+            // copyIDToolStripMenuItem
+            // 
+            this.copyIDToolStripMenuItem.Name = "copyIDToolStripMenuItem";
+            resources.ApplyResources(this.copyIDToolStripMenuItem, "copyIDToolStripMenuItem");
+            this.copyIDToolStripMenuItem.Click += new System.EventHandler(this.copyIDToolStripMenuItem_Click);
             // 
             // GridContextMenu
             // 
@@ -162,6 +170,18 @@
             this.dataGridViewLocEntryData.RowHeadersVisible = false;
             this.dataGridViewLocEntryData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
+            // Language
+            // 
+            this.Language.FillWeight = 15F;
+            resources.ApplyResources(this.Language, "Language");
+            this.Language.Name = "Language";
+            this.Language.ReadOnly = true;
+            // 
+            // DisplayName
+            // 
+            resources.ApplyResources(this.DisplayName, "DisplayName");
+            this.DisplayName.Name = "DisplayName";
+            // 
             // textBoxReplaceAll
             // 
             resources.ApplyResources(this.textBoxReplaceAll, "textBoxReplaceAll");
@@ -179,18 +199,6 @@
             this.locSort.SetRowSpan(this.treeViewLocKeys, 2);
             this.treeViewLocKeys.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLocKeys_AfterSelect);
             this.treeViewLocKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            // 
-            // Language
-            // 
-            this.Language.FillWeight = 15F;
-            resources.ApplyResources(this.Language, "Language");
-            this.Language.Name = "Language";
-            this.Language.ReadOnly = true;
-            // 
-            // DisplayName
-            // 
-            resources.ApplyResources(this.DisplayName, "DisplayName");
-            this.DisplayName.Name = "DisplayName";
             // 
             // LOCEditor
             // 
@@ -230,5 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Language;
         private System.Windows.Forms.DataGridViewTextBoxColumn DisplayName;
+        private System.Windows.Forms.ToolStripMenuItem copyIDToolStripMenuItem;
     }
 }

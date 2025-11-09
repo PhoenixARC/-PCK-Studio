@@ -129,5 +129,10 @@ namespace PckStudio.Forms.Editor
 			Save();
 			DialogResult = DialogResult.OK;
         }
+
+        private void copyIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			Clipboard.SetText(treeViewLocKeys.SelectedNode.Text);
+        }
     }
 }
