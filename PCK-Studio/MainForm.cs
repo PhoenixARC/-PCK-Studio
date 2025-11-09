@@ -37,8 +37,10 @@ namespace PckStudio
         public MainForm()
 		{
 			InitializeComponent();
-
-			Text = Application.ProductName;
+#if DEBUG
+            DLCManager.Default.Platform = ConsolePlatform.WiiU;
+#endif
+            Text = Application.ProductName;
 			
 			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
 
@@ -57,6 +59,8 @@ namespace PckStudio
 
         public void LoadPckFromFile(string filepath)
         {
+            Core.Interfaces.IDLCPackage dlcPackage = DLCManager.Default.OpenDLCPackage(filepath);
+            Debug.WriteLine(dlcPackage?.GetDLCPackageType());
             AddEditorPage(filepath);
         }
 

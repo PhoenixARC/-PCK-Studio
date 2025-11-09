@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Core;
 
 namespace PckStudio
 {
@@ -16,6 +17,7 @@ namespace PckStudio
 		public CreateTexturePackPrompt()
 		{
 			InitializeComponent();
+            resolutionComboBox.Items.AddRange(Enum.GetNames(typeof(DLCTexturePackage.TextureResolution)));
 		}
 
         private void OKBtn_Click(object sender, EventArgs e)

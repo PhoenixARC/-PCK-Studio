@@ -86,16 +86,6 @@
             // 
             this.resolutionComboBox.FormattingEnabled = true;
             resources.ApplyResources(this.resolutionComboBox, "resolutionComboBox");
-            this.resolutionComboBox.Items.AddRange(new object[] {
-            resources.GetString("resolutionComboBox.Items"),
-            resources.GetString("resolutionComboBox.Items1"),
-            resources.GetString("resolutionComboBox.Items2"),
-            resources.GetString("resolutionComboBox.Items3"),
-            resources.GetString("resolutionComboBox.Items4"),
-            resources.GetString("resolutionComboBox.Items5"),
-            resources.GetString("resolutionComboBox.Items6"),
-            resources.GetString("resolutionComboBox.Items7"),
-            resources.GetString("resolutionComboBox.Items8")});
             this.resolutionComboBox.Name = "resolutionComboBox";
             this.resolutionComboBox.Style = MetroFramework.MetroColorStyle.Silver;
             this.resolutionComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;

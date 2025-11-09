@@ -121,27 +121,7 @@ namespace PckStudio.Core
             ["misc/additionalmapicons.png"] = new ResourceLocation("misc/additionalmapicons.png", ResourceCategory.AdditionalMapIconsAtlas, 4, tilesInfo: Tiles.AdditionalMapIconTileInfos),
         };
 
-        public static string GetPathFromCategory(ResourceCategory category)
-        {
-            return category switch
-            {
-                ResourceCategory.ItemAnimation => _categoryLookUp["textures/items"].ToString(),
-                ResourceCategory.BlockAnimation => _categoryLookUp["textures/blocks"].ToString(),
-                ResourceCategory.MobEntityTextures => _categoryLookUp["mob"].ToString(),
-                ResourceCategory.ItemEntityTextures => _categoryLookUp["item"].ToString(),
-                ResourceCategory.BlockAtlas => _categoryLookUp["terrain.png"].ToString(),
-                ResourceCategory.ItemAtlas => _categoryLookUp["items.png"].ToString(),
-                ResourceCategory.ParticleAtlas => _categoryLookUp["particles.png"].ToString(),
-                ResourceCategory.BannerAtlas => _categoryLookUp["item/banner/Banner_Atlas.png"].ToString(),
-                ResourceCategory.PaintingAtlas => _categoryLookUp["art/kz.png"].ToString(),
-                ResourceCategory.ExplosionAtlas => _categoryLookUp["misc/explosion.png"].ToString(),
-                ResourceCategory.ExperienceOrbAtlas => _categoryLookUp["item/xporb.png"].ToString(),
-                ResourceCategory.MoonPhaseAtlas => _categoryLookUp["terrain/moon_phases.png"].ToString(),
-                ResourceCategory.MapIconAtlas => _categoryLookUp["misc/mapicons.png"].ToString(),
-                ResourceCategory.AdditionalMapIconsAtlas => _categoryLookUp["misc/additionalmapicons.png"].ToString(),
-                _ => string.Empty
-            };
-        }
+        public static string GetPathFromCategory(ResourceCategory category) => GetFromCategory(category).ToString();
 
         public static ResourceCategory GetCategoryFromPath(string path) => GetFromPath(path).Category;
 
@@ -203,6 +183,28 @@ namespace PckStudio.Core
         public override string ToString()
         {
             return "res/" + Path;
+        }
+
+        internal static ResourceLocation GetFromCategory(ResourceCategory category)
+        {
+            return category switch
+            {
+                ResourceCategory.ItemAnimation => _categoryLookUp["textures/items"],
+                ResourceCategory.BlockAnimation => _categoryLookUp["textures/blocks"],
+                ResourceCategory.MobEntityTextures => _categoryLookUp["mob"],
+                ResourceCategory.ItemEntityTextures => _categoryLookUp["item"],
+                ResourceCategory.BlockAtlas => _categoryLookUp["terrain.png"],
+                ResourceCategory.ItemAtlas => _categoryLookUp["items.png"],
+                ResourceCategory.ParticleAtlas => _categoryLookUp["particles.png"],
+                ResourceCategory.BannerAtlas => _categoryLookUp["item/banner/Banner_Atlas.png"],
+                ResourceCategory.PaintingAtlas => _categoryLookUp["art/kz.png"],
+                ResourceCategory.ExplosionAtlas => _categoryLookUp["misc/explosion.png"],
+                ResourceCategory.ExperienceOrbAtlas => _categoryLookUp["item/xporb.png"],
+                ResourceCategory.MoonPhaseAtlas => _categoryLookUp["terrain/moon_phases.png"],
+                ResourceCategory.MapIconAtlas => _categoryLookUp["misc/mapicons.png"],
+                ResourceCategory.AdditionalMapIconsAtlas => _categoryLookUp["misc/additionalmapicons.png"],
+                _ => Unknown
+            };
         }
     }
 }

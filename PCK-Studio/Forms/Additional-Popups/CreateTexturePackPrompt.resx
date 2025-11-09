@@ -213,33 +213,6 @@
   <data name="resolutionComboBox.ItemHeight" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
-  <data name="resolutionComboBox.Items" xml:space="preserve">
-    <value>x8</value>
-  </data>
-  <data name="resolutionComboBox.Items1" xml:space="preserve">
-    <value>x16</value>
-  </data>
-  <data name="resolutionComboBox.Items2" xml:space="preserve">
-    <value>x32</value>
-  </data>
-  <data name="resolutionComboBox.Items3" xml:space="preserve">
-    <value>x48</value>
-  </data>
-  <data name="resolutionComboBox.Items4" xml:space="preserve">
-    <value>x64</value>
-  </data>
-  <data name="resolutionComboBox.Items5" xml:space="preserve">
-    <value>x80</value>
-  </data>
-  <data name="resolutionComboBox.Items6" xml:space="preserve">
-    <value>x96</value>
-  </data>
-  <data name="resolutionComboBox.Items7" xml:space="preserve">
-    <value>x112</value>
-  </data>
-  <data name="resolutionComboBox.Items8" xml:space="preserve">
-    <value>x128</value>
-  </data>
   <data name="resolutionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>76, 40</value>
   </data>

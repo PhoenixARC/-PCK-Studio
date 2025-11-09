@@ -722,9 +722,9 @@ namespace PckStudio.Controls
             if (EditorValue is not null &&
                 TryGetLocFile(out LOCFile locfile) &&
                 locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-                locfile.Languages.Contains("en-EN"))
+                locfile.Languages.Contains(DLCManager.Default.PreferredLanguage))
             {
-                RPC.SetPresence("Editing a Pack:", $" > {locfile.GetLocEntry("IDS_DISPLAY_NAME", "en-EN")}");
+                RPC.SetPresence("Editing a Pack:", $" > {locfile.GetLocEntry("IDS_DISPLAY_NAME", DLCManager.Default.PreferredLanguage)}");
                 return;
             }
             // default

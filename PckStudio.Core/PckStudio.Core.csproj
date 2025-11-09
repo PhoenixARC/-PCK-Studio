@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	<PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{345EABED-F0D1-4D04-B409-BABDEF747352}</ProjectGuid>
@@ -12,8 +12,8 @@
     <AssemblyName>PckStudio.Core</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-		<LangVersion>12</LangVersion>
-		<FileAlignment>512</FileAlignment>
+    <LangVersion>12</LangVersion>
+    <FileAlignment>512</FileAlignment>
     <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
     <Deterministic>true</Deterministic>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -59,11 +59,18 @@
     <Compile Include="AtlasGroupLargeTileAnimation.cs" />
     <Compile Include="AtlasTile.cs" />
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="ConsolePlatform.cs" />
     <Compile Include="DelegatedFileSaveContext.cs" />
     <Compile Include="DelegatedSaveContext.cs" />
     <Compile Include="Deserializer\AnimationDeserializer.cs" />
     <Compile Include="Deserializer\AtlasDeserializer.cs" />
     <Compile Include="Deserializer\ImageDeserializer.cs" />
+    <Compile Include="DLCBattlePackage.cs" />
+    <Compile Include="DLCManager.cs" />
+    <Compile Include="DLCMashUpPackage.cs" />
+    <Compile Include="DLCPackage.cs" />
+    <Compile Include="DLCSkinPackage.cs" />
+    <Compile Include="DLCTexturePackage.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\BoundingBoxExtensions.cs" />
@@ -91,12 +98,15 @@
     <Compile Include="FileDialogFilter.cs" />
     <Compile Include="FileFormats\PckAudioFile.cs" />
     <Compile Include="GameConstants.cs" />
+    <Compile Include="Interfaces\IDLCPackage.cs" />
+    <Compile Include="Interfaces\IDLCPackageLocationInfo.cs" />
     <Compile Include="Interfaces\IEditor.cs" />
     <Compile Include="Interfaces\IModelImportProvider.cs" />
     <Compile Include="Interfaces\IPckAssetDeserializer.cs" />
     <Compile Include="Interfaces\IPckAssetSerializer.cs" />
     <Compile Include="Interfaces\ISaveContext.cs" />
     <Compile Include="Interfaces\ITryGetSet.cs" />
+    <Compile Include="InvalidDLCPackage.cs" />
     <Compile Include="IO\3DST\3DSTextureReader.cs" />
     <Compile Include="IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="IO\3DST\TextureCodec.cs" />
@@ -120,10 +130,12 @@
     <Compile Include="Json\EntityInfo.cs" />
     <Compile Include="Json\TileInfo.cs" />
     <Compile Include="Json\UpdateInformation.cs" />
+    <Compile Include="MapData.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
     <Compile Include="NamedData.cs" />
     <Compile Include="PackInfo.cs" />
+    <Compile Include="DLCPackageType.cs" />
     <Compile Include="ResourceCategory.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="Serializer\AnimationSerializer.cs" />
@@ -151,10 +163,10 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
-	  <PackageReference Include="Autoupdater.NET.Official">
-		  <Version>1.9.2</Version>
-	  </PackageReference>
-	  <PackageReference Include="OpenTK" Version="3.3.3" />
+    <PackageReference Include="Autoupdater.NET.Official">
+      <Version>1.9.2</Version>
+    </PackageReference>
+    <PackageReference Include="OpenTK" Version="3.3.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
