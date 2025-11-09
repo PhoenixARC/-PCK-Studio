@@ -45,7 +45,7 @@ namespace PckStudio.Forms.Editor
 
         private void LoadGameRuleTree(TreeNodeCollection root, GameRuleFile.GameRule parentRule)
         {
-            foreach (GameRuleFile.GameRule rule in parentRule.ChildRules)
+            foreach (GameRuleFile.GameRule rule in parentRule.GetRules())
             {
                 TreeNode node = new TreeNode(rule.Name);
                 node.Tag = rule;
@@ -93,7 +93,7 @@ namespace PckStudio.Forms.Editor
         {
             GrfParametersTreeView.Nodes.Clear();
             if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule)
-            foreach (KeyValuePair<string, string> param in rule.Parameters)
+            foreach (KeyValuePair<string, string> param in rule.GetParameters())
             {
                 GrfParametersTreeView.Nodes.Add(new TreeNode($"{param.Key}: {param.Value}") { Tag = param});
             }
@@ -107,12 +107,12 @@ namespace PckStudio.Forms.Editor
             AddParameter prompt = new AddParameter();
             if (prompt.ShowDialog(this) == DialogResult.OK)
             {
-                if (grfTag.Parameters.ContainsKey(prompt.ParameterName))
+                if (grfTag.ContainsParameter(prompt.ParameterName))
                 {
                     MessageBox.Show(this, "Can't add detail that already exists.", "Error");
                     return;
                 }
-                grfTag.Parameters.Add(prompt.ParameterName, prompt.ParameterValue);
+                grfTag.AddParameter(new GameRuleFile.GameRuleParameter(prompt.ParameterName, prompt.ParameterValue));
                 ReloadParameterTreeView();
             }
         }
@@ -121,7 +121,7 @@ namespace PckStudio.Forms.Editor
         {
             if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule &&
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> pair &&
-                rule.Parameters.ContainsKey(pair.Key) && rule.Parameters.Remove(pair.Key))
+                rule.ContainsParameter(pair.Key) && rule.RemoveParameter(pair.Key))
             {
                 ReloadParameterTreeView(); 
                 return;
@@ -143,7 +143,7 @@ namespace PckStudio.Forms.Editor
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
                 if (prompt.ShowDialog(this) == DialogResult.OK)
                 {
-                    rule.Parameters[prompt.ParameterName] = prompt.ParameterValue;
+                    rule.SetParameter(prompt.ParameterName, prompt.ParameterValue);
                     ReloadParameterTreeView();
                 }
             }
@@ -185,9 +185,9 @@ namespace PckStudio.Forms.Editor
         private bool RemoveTag(GameRuleFile.GameRule rule)
         {
             _ = rule.Parent ?? throw new ArgumentNullException(nameof(rule.Parent));
-            foreach (GameRuleFile.GameRule subTag in rule.ChildRules.ToList())
+            foreach (GameRuleFile.GameRule subTag in rule.GetRules())
                 return RemoveTag(subTag);
-            return rule.Parent.ChildRules.Remove(rule);
+            return rule.Parent.RemoveRule(rule);
         }
 
         private void GrfTreeView_KeyDown(object sender, KeyEventArgs e)
