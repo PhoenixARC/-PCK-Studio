@@ -1,4 +1,4 @@
-﻿namespace PckStudio.Core
+﻿namespace PckStudio.Core.DLC
 {
     public enum DLCPackageType
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Core.Interfaces;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     internal class DLCMiniGamePackage : DLCPackage
     {
@@ -14,7 +14,7 @@ namespace PckStudio.Core
         private readonly DLCPackageType _packageType;
         private readonly MiniGameId _miniGameId;
 
-        public DLCMiniGamePackage(string name, int identifier, DLCPackageType packageType, MiniGameId miniGameId, IDLCPackageLocationInfo packageInfo = null, IDLCPackage parentPackage = null)
+        public DLCMiniGamePackage(string name, int identifier, DLCPackageType packageType, MiniGameId miniGameId, IDLCPackageSerialization packageInfo = null, IDLCPackage parentPackage = null)
             : base(name, identifier, packageInfo, parentPackage)
         {
             _packageType = packageType;

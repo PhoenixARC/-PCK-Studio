@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Core.Interfaces
 {
-    public interface IDLCPackageLocationInfo
+    public interface IDLCPackageSerialization
     {
 
     }

@@ -17,7 +17,7 @@ using PckStudio.Core.Deserializer;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     public sealed class DLCManager
     {
@@ -60,8 +60,8 @@ namespace PckStudio.Core
                 DLCPackageType.MashUpPack  => new DLCMashUpPackage(name, "", identifier),
                 //! TODO: implemnt minigame dlc packages -null
                 DLCPackageType.MG01        => new DLCBattlePackage(name, identifier),
-                DLCPackageType.MG02        => throw new NotImplementedException(),
-                DLCPackageType.MG03        => throw new NotImplementedException(),
+                DLCPackageType.MG02        => new DLCMiniGamePackage(name, identifier, packageType, MiniGameId.Tumble),
+                DLCPackageType.MG03        => new DLCMiniGamePackage(name, identifier, packageType, MiniGameId.Glide),
                 DLCPackageType.Invalid     => InvalidDLCPackage.Instance,
                 _ => throw new ArgumentException("Unable to create DLC Package of 'Unknown' type."),
             };
@@ -88,13 +88,17 @@ namespace PckStudio.Core
 
             PckFile pckFile = fileReader.FromStream(stream);
 
-            Debug.Assert(pckFile.TryGetAsset("0", PckAssetType.InfoFile, out PckAsset zeroAsset), "Could not find asset named:'0'.");
+            if (!pckFile.TryGetAsset("0", PckAssetType.InfoFile, out PckAsset zeroAsset))
+            {
+                Trace.TraceError("Could not find asset named:'0'.");
+                return new UnknownDLCPackage(fileInfo.Name, pckFile);
+            }
 
             int identifier = (zeroAsset?.HasProperty("PACKID") ?? default) ? zeroAsset.GetProperty("PACKID", int.Parse) : -1;
             if (identifier <= 0 || identifier > GameConstants.MAX_PACK_ID)
             {
                 Trace.TraceError($"{nameof(identifier)}({identifier}) was out of range!");
-                return InvalidDLCPackage.Instance;
+                return new UnknownDLCPackage(fileInfo.Name, pckFile);
             }
 
             if (_openPackages.ContainsKey(identifier))
@@ -102,7 +106,7 @@ namespace PckStudio.Core
 
             LOCFile localisation = pckFile.GetAssetsByType(PckAssetType.LocalisationFile).FirstOrDefault()?.GetData(new LOCFileReader());
             if (localisation is null)
-                return InvalidDLCPackage.Instance;
+                return new UnknownDLCPackage(fileInfo.Name, pckFile);
             _localisationFiles.Add(identifier, localisation);
 
             IDLCPackage package = ScanForPackageType(fileInfo, identifier, pckFile, localisation, fileReader);
@@ -217,9 +221,10 @@ namespace PckStudio.Core
             Image iconImg = iconnAsset.GetTexture();
             DLCTexturePackage.MetaData metaData = new DLCTexturePackage.MetaData(comparisonImg, iconImg);
 
-
-            bool a = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.BlockAtlas, out Atlas terrainAtlas);
-            bool b = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.ItemAtlas, out Atlas itemAtlas);
+            bool hasTerrainAtlas  = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.BlockAtlas, out Atlas terrainAtlas);
+            bool hasItemAtlas     = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.ItemAtlas, out Atlas itemAtlas);
+            bool hasParticleAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.ParticleAtlas, out Atlas particleAtlas);
+            bool hasPaintingAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.PaintingAtlas, out Atlas paintingAtlas);
 
             string itemAnimationResourcePath = ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation);
             if (dataPck != null &&

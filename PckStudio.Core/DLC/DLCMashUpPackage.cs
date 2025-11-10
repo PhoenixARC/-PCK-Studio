@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OMI.Formats.GameRule;
 using PckStudio.Core.Interfaces;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     public sealed class DLCMashUpPackage : DLCPackage
     {
@@ -19,7 +19,7 @@ namespace PckStudio.Core
         private IList<NamedData<byte[]>> _audioData;
         private NamedData<byte[]> _savegameData;
 
-        internal DLCMashUpPackage(string name, string description, int identifier, IDLCPackageLocationInfo packageInfo, GameRuleFile gameRule, IDLCPackage parentPackage, IDLCPackage skinPackage = null, IDLCPackage texturePackage = null)
+        internal DLCMashUpPackage(string name, string description, int identifier, IDLCPackageSerialization packageInfo, GameRuleFile gameRule, IDLCPackage parentPackage, IDLCPackage skinPackage = null, IDLCPackage texturePackage = null)
             : base(name, identifier, packageInfo, parentPackage)
         {
             Description = description;

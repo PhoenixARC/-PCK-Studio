@@ -5,7 +5,7 @@ using System.Linq;
 using PckStudio.Core.Interfaces;
 using PckStudio.Core.Skin;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     public enum DLCSkinPackageOrder
     {
@@ -20,7 +20,7 @@ namespace PckStudio.Core
 
         private readonly Dictionary<SkinIdentifier, Skin.Skin> _skins;
 
-        internal DLCSkinPackage(string name, int identifier, IEnumerable<Skin.Skin> skins, IDLCPackageLocationInfo packageInfo, IDLCPackage parentPackage)
+        internal DLCSkinPackage(string name, int identifier, IEnumerable<Skin.Skin> skins, IDLCPackageSerialization packageInfo, IDLCPackage parentPackage)
             : base(name, identifier, packageInfo, parentPackage)
         {
             _skins = skins.ToDictionary(skin => skin.Identifier);

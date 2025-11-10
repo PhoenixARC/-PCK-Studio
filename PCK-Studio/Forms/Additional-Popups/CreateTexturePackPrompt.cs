@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using PckStudio.Core;
+using PckStudio.Core.DLC;
 
 namespace PckStudio
 {

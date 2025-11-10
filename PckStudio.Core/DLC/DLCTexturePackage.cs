@@ -14,7 +14,7 @@ using OMI.Workers.Color;
 using PckStudio.Core.Interfaces;
 using PckStudio.Core.Properties;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     public sealed class DLCTexturePackage : DLCPackage
     {
@@ -85,7 +85,7 @@ namespace PckStudio.Core
             Image[] blockEntityBreakImages,
             IDictionary<string, Animation> itemAnimations,
             IDictionary<string, Animation> blockAnimations,
-            IDLCPackageLocationInfo packageInfo,
+            IDLCPackageSerialization packageInfo,
             IDLCPackage parentPackage
             )
             : base(name, identifier, packageInfo, parentPackage)

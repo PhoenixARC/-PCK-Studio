@@ -8,9 +8,9 @@
 
         bool IsRootPackage { get; }
 
-        IDLCPackageLocationInfo PackageInfo { get; }
+        IDLCPackageSerialization PackageInfo { get; }
 
-        DLCPackageType GetDLCPackageType();
+        DLC.DLCPackageType GetDLCPackageType();
 
         IDLCPackage ParentPackage { get; }
     }

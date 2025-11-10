@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Core.Interfaces;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     internal sealed class DLCBattlePackage : DLCMiniGamePackage
     {

@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using PckStudio.Core.Interfaces;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.DLC
 {
     public abstract class DLCPackage : IDLCPackage
     {
-        protected DLCPackage(string name, int identifier, IDLCPackageLocationInfo packageInfo, IDLCPackage parentPackage)
+        protected DLCPackage(string name, int identifier, IDLCPackageSerialization packageInfo, IDLCPackage parentPackage)
         {
             Name = name;
             Identifier = identifier;
@@ -20,7 +20,7 @@ namespace PckStudio.Core
 
         public int Identifier { get; }
 
-        public IDLCPackageLocationInfo PackageInfo { get; }
+        public IDLCPackageSerialization PackageInfo { get; }
 
         public string Name { get; } = string.Empty;
 
