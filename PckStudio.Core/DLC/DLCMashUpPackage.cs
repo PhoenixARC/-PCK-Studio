@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.GameRule;
+using PckStudio.Core.GameRule;
 using PckStudio.Core.Interfaces;
 
 namespace PckStudio.Core.DLC
@@ -42,14 +43,7 @@ namespace PckStudio.Core.DLC
                 new GameRuleFile.BoolParameter("flatworld", false),
                 new GameRuleFile.IntParameter("texturePackId", Identifier)
                 );
-            _gameRule.AddRule("LevelRules")
-                .AddRule("UpdatePlayer",
-                new GameRuleFile.FloatParameter("yRot", 0f),
-                new GameRuleFile.FloatParameter("xRot", 0f),
-                new GameRuleFile.IntParameter("spawnX", 0),
-                new GameRuleFile.IntParameter("spawnY", 0),
-                new GameRuleFile.IntParameter("spawnZ", 0)  
-                );
+            _gameRule.AddRule(LevelRules.Default);
         }
 
         public IDLCPackage GetSkinPackage() => _skinPackage;

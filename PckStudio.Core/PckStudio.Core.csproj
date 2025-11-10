@@ -102,6 +102,7 @@
     <Compile Include="GameConstants.cs" />
     <Compile Include="GameRule\AbstractGameRule.cs" />
     <Compile Include="GameRule\DistributeItems.cs" />
+    <Compile Include="GameRule\LevelRules.cs" />
     <Compile Include="GameRule\NamedArea.cs" />
     <Compile Include="GameRule\OnGameStartSpawnPositions.cs" />
     <Compile Include="GameRule\OnInitialiseWorld.cs" />

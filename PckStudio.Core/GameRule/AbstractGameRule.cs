@@ -11,6 +11,7 @@ namespace PckStudio.Core.GameRule
     {
         private List<AbstractGameRule> _gameRules = new List<AbstractGameRule>();
         protected void AddRule(AbstractGameRule gameRule) => _gameRules.Add(gameRule);
+        protected void AddRules(IEnumerable<AbstractGameRule> gameRules) => _gameRules.AddRange(gameRules);
 
         protected abstract GameRuleFile.GameRule GetGameRule();
         public static implicit operator GameRuleFile.GameRule(AbstractGameRule abstractGameRule)
