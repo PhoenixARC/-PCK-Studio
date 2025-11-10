@@ -146,11 +146,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\PageClosingEventArgs.cs" />
-    <Compile Include="Controls\PckEditor.cs">
+    <Compile Include="Controls\PckAssetBrowserEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PckEditor.Designer.cs">
-      <DependentUpon>PckEditor.cs</DependentUpon>
+    <Compile Include="Controls\PckAssetBrowserEditor.Designer.cs">
+      <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
       <SubType>Form</SubType>
@@ -395,8 +395,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\PckEditor.resx">
-      <DependentUpon>PckEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PckAssetBrowserEditor.resx">
+      <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\FilterPrompt.resx">
       <DependentUpon>FilterPrompt.cs</DependentUpon>

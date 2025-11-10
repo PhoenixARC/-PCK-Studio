@@ -2,7 +2,7 @@
 
 namespace PckStudio.Controls
 {
-    partial class PckEditor
+    partial class PckAssetBrowserEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace PckStudio.Controls
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.PictureBox logoPictureBox;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckAssetBrowserEditor));
             this.pckFileLabel = new MetroFramework.Controls.MetroLabel();
             this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();

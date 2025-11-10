@@ -11,20 +11,21 @@ using OMI.Formats.Languages;
 using OMI.Workers.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-using PckStudio.Properties;
-using PckStudio.Forms;
-using PckStudio.Forms.Additional_Popups;
-using PckStudio.Core.Misc;
-using PckStudio.Forms.Features;
-using PckStudio.Core.Extensions;
-using PckStudio.Popups;
-using PckStudio.External.API.Miles;
-using PckStudio.Internal.App;
-using PckStudio.Interfaces;
 using PckStudio.Controls;
+using PckStudio.External.API.Miles;
+using PckStudio.Forms;
+using PckStudio.Forms.Features;
+using PckStudio.Forms.Additional_Popups;
+using PckStudio.Interfaces;
 using PckStudio.Internal;
+using PckStudio.Internal.App;
+using PckStudio.Popups;
+using PckStudio.Properties;
 using PckStudio.Core;
 using PckStudio.Core.App;
+using PckStudio.Core.DLC;
+using PckStudio.Core.Extensions;
+using PckStudio.Core.Interfaces;
 
 namespace PckStudio
 {
@@ -59,9 +60,13 @@ namespace PckStudio
 
         public void LoadPckFromFile(string filepath)
         {
-            Core.Interfaces.IDLCPackage dlcPackage = DLCManager.Default.OpenDLCPackage(filepath);
+            IDLCPackage dlcPackage = DLCManager.Default.OpenDLCPackage(filepath);
             Debug.WriteLine(dlcPackage?.GetDLCPackageType());
-            AddEditorPage(filepath);
+            if (dlcPackage is null)
+                return;
+            SaveToRecentFiles(filepath);
+            if (dlcPackage.GetDLCPackageType() == DLCPackageType.Unknown)
+                AddEditorPage(dlcPackage);
         }
 
 		internal void OpenNewPckTab(string caption, string identifier, PackInfo packInfo, ISaveContext<PackInfo> saveContext)
@@ -71,92 +76,28 @@ namespace PckStudio
                 tabControl.SelectTab(openTabPages[identifier]);
                 return;
             }
-            var editor = new PckEditor(packInfo, saveContext);
+            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
             AddPage(caption, identifier, editor);
         }
 
         private void AddEditorPage(string caption, string identifier, PackInfo packInfo, ISaveContext<PackInfo> saveContext = null)
         {
             saveContext ??= GetDefaultSaveContext("./new.pck", "PCK (Minecraft Console Package)");
-            var editor = new PckEditor(packInfo, saveContext);
+            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
             AddPage(caption, identifier, editor);
         }
 
-        private PckFile ReadPck(string filePath, OMI.ByteOrder byteOrder)
+        private void AddEditorPage(IDLCPackage dlcPackage)
         {
-            var pckReader = new PckFileReader(byteOrder);
-            return pckReader.FromFile(filePath);
-        }
-
-        private bool TryOpenPck(string filepath, out PackInfo packInfo)
-        {
-            if (!File.Exists(filepath) || !filepath.EndsWith(".pck"))
-            {
-                packInfo = PackInfo.Empty;
-                return false;
+            PackInfo packInfo = PackInfo.Create((dlcPackage as UnknownDLCPackage).PckFile, default, false);
+            ISaveContext<PackInfo> saveContext = GetDefaultSaveContext("", "PCK (Minecraft Console Package)");
+            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
+            TabPage page = AddPage(dlcPackage.Name, dlcPackage.Name, editor);
             }
-            try
-            {
-                OMI.ByteOrder byteOrder = OMI.ByteOrder.BigEndian;
-                PckFile pckFile = ReadPck(filepath, byteOrder);
-                packInfo = PackInfo.Create(pckFile, byteOrder, true);
-                return packInfo.IsValid;
-            }
-            catch (OverflowException)
-            {
-                try
-                {
-                    // if failed, attempt again in the reverse. THEN throw an error if failed
-                    OMI.ByteOrder byteOrder = OMI.ByteOrder.LittleEndian;
-                    PckFile pckFile = ReadPck(filepath, byteOrder);
-                    packInfo = PackInfo.Create(pckFile, byteOrder, true);
-                    return packInfo.IsValid;
-                }
-                catch (OverflowException ex)
-                {
-                    MessageBox.Show(this, "Failed to open pck", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Debug.WriteLine(ex.Message);
-                }
-            }
-            catch
-            {
-                MessageBox.Show(this, "Failed to open pck. There's two common reasons for this:\n" +
-                    "1. The file is audio/music cues PCK file. Please use the specialized editor while inside of a pck file.\n" +
-                    "2. We're aware of an issue where a pck file might fail to load because it contains multiple entries with the same path.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            packInfo = PackInfo.Empty;
-            return false;
-        }
-
-        private void AddEditorPage(string filepath)
-        {
-            if (!File.Exists(filepath) && !filepath.EndsWith(".pck"))
-            {
-                Trace.TraceError($"[{nameof(AddEditorPage)}] Invalid filepath({filepath})");
-                return;
-            }
-
-            if (openTabPages.ContainsKey(filepath))
-            {
-                tabControl.SelectTab(openTabPages[filepath]);
-                return;
-            }
-            SaveToRecentFiles(filepath);
-
-            if (TryOpenPck(filepath, out PackInfo packInfo))
-            {
-                ISaveContext<PackInfo> saveContext = GetDefaultSaveContext(filepath, "PCK (Minecraft Console Package)");
-                var editor = new PckEditor(packInfo, saveContext);
-                TabPage page = AddPage(Path.GetFileName(filepath), filepath, editor);
-                return;
-            }
-            MessageBox.Show(string.Format("Failed to load {0}", Path.GetFileName(filepath)), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
 
         private static ISaveContext<PackInfo> GetDefaultSaveContext(string filepath, string description)
         {
-            return new DelegatedFileSaveContext<PackInfo>(filepath, false, new FileDialogFilter(description, "*"+Path.GetExtension(filepath)),(packInfo, stream) => new PckFileWriter(packInfo.File, packInfo.Endianness).WriteToStream(stream));
+            return new DelegatedFileSaveContext<PackInfo>(filepath, false, new FileDialogFilter(description, "*"+Path.GetExtension(filepath)),(packInfo, stream) => new PckFileWriter(packInfo.File, packInfo.ByteOrder).WriteToStream(stream));
         }
 
         private TabPage AddPage(string caption, string identifier, Control control)
@@ -434,7 +375,7 @@ namespace PckStudio
             if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
             {
                 using AdvancedOptions advanced = new AdvancedOptions(editor.EditorValue.File);
-                advanced.IsLittleEndian = editor.EditorValue.Endianness == OMI.ByteOrder.LittleEndian;
+                advanced.IsLittleEndian = editor.EditorValue.ByteOrder == OMI.ByteOrder.LittleEndian;
                 if (advanced.ShowDialog() == DialogResult.OK)
                 {
                     editor.UpdateView();

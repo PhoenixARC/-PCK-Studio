@@ -8,38 +8,21 @@ namespace PckStudio.Core
         public static readonly PackInfo Empty = new PackInfo(default, default, default);
         public bool IsValid { get; }
         public PckFile File { get; }
-        public OMI.ByteOrder Endianness { get; }
+        public OMI.ByteOrder ByteOrder { get; }
 
-        
-        //public enum PackType
-        //{
-        //    Unknown = -1,
-        //    SkinPack,
-        //    TexturePack,
-        //    MashUpPack
-        //}
+        public bool AllowByteOrderSwap { get; }
 
-        //public PackType Type { get; }
-
-        public bool AllowEndianSwap { get; }
-
-        public static PackInfo Create(PckFile file, OMI.ByteOrder endianness, bool allowEndianSwap)
+        public static PackInfo Create(PckFile file, OMI.ByteOrder byteOrder, bool allowByteOrderSwap)
         {
-            return new PackInfo(file, endianness, allowEndianSwap);
+            return new PackInfo(file, byteOrder, allowByteOrderSwap);
         }
 
-        private PackInfo(PckFile file, OMI.ByteOrder endianness, bool allowEndianSwap)
+        private PackInfo(PckFile file, OMI.ByteOrder byteOrder, bool allowByteOrderSwap)
         {
             File = file;
-            Endianness = endianness;
-            AllowEndianSwap = allowEndianSwap;
-            //Type = GetPackType();
-            IsValid = file is not null && Enum.IsDefined(typeof(OMI.ByteOrder), endianness); // && Type != PackType.Unknown;
+            ByteOrder = byteOrder;
+            AllowByteOrderSwap = allowByteOrderSwap;
+            IsValid = file is not null && Enum.IsDefined(typeof(OMI.ByteOrder), byteOrder);
         }
-
-        //private PackType GetPackType()
-        //{
-        //    return PackType.SkinPack;
-        //}
     }
 }

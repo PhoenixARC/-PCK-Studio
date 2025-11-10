@@ -35,24 +35,24 @@ using PckStudio.Internal;
 using PckStudio.Popups;
 using PckStudio.Properties;
 
+using PckStudio.Json;
+using PckStudio.Rendering;
+using PckStudio.ModelSupport;
+using PckStudio.Core;
+using PckStudio.Core.Json;
+using PckStudio.Core.Skin;
 using PckStudio.Core.Deserializer;
 using PckStudio.Core.Serializer;
-using PckStudio.Core.Json;
 using PckStudio.Core.FileFormats;
-using PckStudio.Core.Skin;
-using PckStudio.Rendering;
-using PckStudio.Core;
-using PckStudio.ModelSupport;
-using PckStudio.Json;
 using PckStudio.Core.IO.PckAudio;
 using PckStudio.Core.IO._3DST;
 using PckStudio.Core.Misc;
+using PckStudio.Core.DLC;
 
 namespace PckStudio.Controls
 {
-    internal partial class PckEditor : EditorControl<PackInfo>
+    internal partial class PckAssetBrowserEditor : EditorControl<PackInfo>
     {
-
         private string _location = string.Empty;
 
         private readonly OMI.ByteOrder _originalEndianness;
@@ -78,15 +78,15 @@ namespace PckStudio.Controls
 
         private readonly Dictionary<PckAssetType, Action<PckAsset>> _pckAssetTypeHandler;
 
-        public PckEditor(PackInfo packInfo, ISaveContext<PackInfo> saveContext)
+        public PckAssetBrowserEditor(PackInfo packInfo, ISaveContext<PackInfo> saveContext)
             : base(packInfo, saveContext)
         {
             InitializeComponent();
             _onModifiedChangeDelegate = OnModify;
-            _originalEndianness = packInfo.Endianness;
-            _currentEndianness = packInfo.Endianness;
+            _originalEndianness = packInfo.ByteOrder;
+            _currentEndianness = packInfo.ByteOrder;
 
-            LittleEndianCheckBox.Visible = packInfo.AllowEndianSwap;
+            LittleEndianCheckBox.Visible = packInfo.AllowByteOrderSwap;
 
             treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
 
@@ -213,7 +213,7 @@ namespace PckStudio.Controls
 
             if (asset.Size <= 0)
             {
-                Trace.TraceInformation($"[{nameof(PckEditor)}:{nameof(HandleTextureFile)}] '{asset.Filename}' size is 0.");
+                Trace.TraceInformation($"[{nameof(PckAssetBrowserEditor)}:{nameof(HandleTextureFile)}] '{asset.Filename}' size is 0.");
                 return;
             }
 
