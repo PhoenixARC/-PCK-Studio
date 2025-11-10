@@ -7,6 +7,8 @@ using System.Linq;
 using PckStudio.Internal;
 using PckStudio.Core.App;
 using PckStudio.Properties;
+using PckStudio.Core.DLC;
+using PckStudio.Forms.Additional_Popups;
 
 
 namespace PckStudio
@@ -30,8 +32,16 @@ namespace PckStudio
         static void Main(string[] args)
         {
             Updater.Initialize(RawProjectUrl, Settings.Default.AutoUpdate);
+            if (Settings.Default.Platform == Core.ConsolePlatform.Unknown)
+            {
+                MessageBox.Show("Please choose on which console you're playing on.", "Select Platform", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                var platformChooser = new ItemSelectionPopUp(Enum.GetNames(typeof(Core.ConsolePlatform)));
+                if (platformChooser.ShowDialog() == DialogResult.OK && Enum.IsDefined(typeof(Core.ConsolePlatform), platformChooser.SelectedItem))
+                    Settings.Default.Platform = (Core.ConsolePlatform)Enum.Parse(typeof(Core.ConsolePlatform), platformChooser.SelectedItem);
+            }
 
             ApplicationScope.Initialize();
+            DLCManager.Default.Platform = Settings.Default.Platform;
             Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();

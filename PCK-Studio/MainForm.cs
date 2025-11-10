@@ -38,9 +38,7 @@ namespace PckStudio
         public MainForm()
 		{
 			InitializeComponent();
-#if DEBUG
-            DLCManager.Default.Platform = ConsolePlatform.WiiU;
-#endif
+
             Text = Application.ProductName;
 			
 			labelVersion.Text = $"{Application.ProductName}: {ApplicationScope.CurrentVersion}";
