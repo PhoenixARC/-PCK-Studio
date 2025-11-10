@@ -593,7 +593,7 @@ namespace PckStudio.Forms.Editor
 
 				EditorValue.RemoveCategory(category.AudioType);
 
-				EditorValue.AddCategory(category.parameterType, GetCategoryId(add.SelectedItem), category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "");
+				EditorValue.AddCategory(category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "", GetCategoryId(add.SelectedItem), category.ParameterType);
 
                 PckAudioFile.AudioCategory newCategory = EditorValue.GetCategory(GetCategoryId(add.SelectedItem));
 

@@ -41,7 +41,7 @@ namespace PckStudio.Core.IO.PckAudio
                 : Encoding.Unicode,
                 leaveOpen: true, _endianness))
             {
-                writer.Write(_file.type);
+                writer.Write(_file.Type);
                 WriteLookUpTable(writer);
                 WriteCategories(writer);
                 WriteCategorySongs(writer);
@@ -70,7 +70,7 @@ namespace PckStudio.Core.IO.PckAudio
             writer.Write(_file.Categories.Length);
             foreach (PckAudioFile.AudioCategory category in _file.Categories)
             {
-                writer.Write((int)category.parameterType);
+                writer.Write((int)category.ParameterType);
                 writer.Write((int)category.AudioType);
                 WriteString(writer, category.Name);
             }

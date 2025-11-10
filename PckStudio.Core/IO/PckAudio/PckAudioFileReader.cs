@@ -9,12 +9,7 @@ using System.Text;
 
 namespace PckStudio.Core.IO.PckAudio
 {
-
-    public class InvalidAudioPckException : Exception
-    {
-        public InvalidAudioPckException(string message) : base(message)
-        { }
-    }
+    public class InvalidAudioPckException(string message) : Exception(message) { }
 
     public class PckAudioFileReader : IDataFormatReader<PckAudioFile>, IDataFormatReader
     {
@@ -86,7 +81,7 @@ namespace PckStudio.Core.IO.PckAudio
                 // AddCategory puts the file's categories out of order and causes some songs to be put in the wrong categories
                 // This is my simple fix for the issue.
                 _OriginalAudioTypeOrder.Add(audioType);
-                _file.AddCategory(parameterType, audioType, name);
+                _file.AddCategory(name, audioType, parameterType);
             }
         }
 
