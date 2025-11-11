@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
-using MetroFramework.Controls;
-using System.Xml.Linq;
-using MetroFramework.Forms;
-using PckStudio.Extensions;
-using PckStudio.Internal;
-using PckStudio.Internal.App;
-using PckStudio.Internal.Json;
+using PckStudio.Core;
+using PckStudio.Core.Json;
+using PckStudio.Json;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -32,10 +28,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void InitializeTreeviews()
 		{
-            Profiler.Start();
             GetTileDataToView(ResourceCategory.BlockAnimation);
             GetTileDataToView(ResourceCategory.ItemAnimation);
-            Profiler.Stop();
         }
 
 		public DialogResult ShowDialog(IWin32Window owner)

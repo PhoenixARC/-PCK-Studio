@@ -33,7 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddSkinPrompt));
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
-            this.textTheme = new System.Windows.Forms.TextBox();
             this.contextMenuSkin = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuCape = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -80,11 +79,6 @@
             resources.ApplyResources(label1, "label1");
             label1.ForeColor = System.Drawing.Color.White;
             label1.Name = "label1";
-            // 
-            // textTheme
-            // 
-            resources.ApplyResources(this.textTheme, "textTheme");
-            this.textTheme.Name = "textTheme";
             // 
             // contextMenuSkin
             // 
@@ -289,6 +283,7 @@
             // capePictureBox
             // 
             resources.ApplyResources(this.capePictureBox, "capePictureBox");
+            this.capePictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.capePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.capePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.capePictureBox.Name = "capePictureBox";
@@ -298,6 +293,7 @@
             // skinPictureBox
             // 
             resources.ApplyResources(this.skinPictureBox, "skinPictureBox");
+            this.skinPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.skinPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.skinPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.skinPictureBox.Name = "skinPictureBox";
@@ -343,7 +339,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textTheme;
         private System.Windows.Forms.ContextMenuStrip contextMenuSkin;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuCape;

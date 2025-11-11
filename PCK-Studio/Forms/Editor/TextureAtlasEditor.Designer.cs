@@ -36,6 +36,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyColorMaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allowGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.originalPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
             this.selectTilePictureBox = new PckStudio.ToolboxItems.AnimationPictureBox();
@@ -102,7 +103,8 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.applyColorMaskToolStripMenuItem,
-            this.playAnimationsToolStripMenuItem});
+            this.playAnimationsToolStripMenuItem,
+            this.allowGroupsToolStripMenuItem});
             this.viewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -114,7 +116,7 @@
             this.applyColorMaskToolStripMenuItem.CheckOnClick = true;
             this.applyColorMaskToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyColorMaskToolStripMenuItem.Name = "applyColorMaskToolStripMenuItem";
-            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.applyColorMaskToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.applyColorMaskToolStripMenuItem.Text = "Apply Color Mask";
             this.applyColorMaskToolStripMenuItem.CheckedChanged += new System.EventHandler(this.applyColorMaskToolStripMenuItem_CheckedChanged);
             // 
@@ -124,9 +126,19 @@
             this.playAnimationsToolStripMenuItem.CheckOnClick = true;
             this.playAnimationsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.playAnimationsToolStripMenuItem.Name = "playAnimationsToolStripMenuItem";
-            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.playAnimationsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.playAnimationsToolStripMenuItem.Text = "Play Animations";
             this.playAnimationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.playAnimationsToolStripMenuItem_CheckedChanged);
+            // 
+            // allowGroupsToolStripMenuItem
+            // 
+            this.allowGroupsToolStripMenuItem.Checked = true;
+            this.allowGroupsToolStripMenuItem.CheckOnClick = true;
+            this.allowGroupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allowGroupsToolStripMenuItem.Name = "allowGroupsToolStripMenuItem";
+            this.allowGroupsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.allowGroupsToolStripMenuItem.Text = "Allow Groups";
+            this.allowGroupsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.allowGroupsToolStripMenuItem_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -171,6 +183,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.originalPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.originalPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.originalPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.originalPictureBox.Location = new System.Drawing.Point(217, 3);
             this.originalPictureBox.Name = "originalPictureBox";
@@ -187,8 +200,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.selectTilePictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.selectTilePictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.selectTilePictureBox.BlendColor = System.Drawing.Color.White;
-            this.selectTilePictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
+            this.selectTilePictureBox.BlendMode = PckStudio.Core.Extensions.BlendMode.Multiply;
             this.tableLayoutPanel1.SetColumnSpan(this.selectTilePictureBox, 2);
             this.selectTilePictureBox.Image = null;
             this.selectTilePictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -384,5 +398,6 @@
         private MetroFramework.Controls.MetroTrackBar colorSlider;
         private MetroFramework.Controls.MetroLabel colorSliderLabel;
         private MetroFramework.Controls.MetroButton extractButton;
+        private System.Windows.Forms.ToolStripMenuItem allowGroupsToolStripMenuItem;
     }
 }

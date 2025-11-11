@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.ToolboxItems
 {
@@ -24,8 +20,13 @@ namespace PckStudio.ToolboxItems
         public Color BlendColor
         {
             get => _blendColor;
-            set => _blendColor = value;
+            set
+            {
+                _blendColor = value;
+                Image = _image;
+            }
         }
+        
 
         [DefaultValue(typeof(BlendMode), "BlendMode.Add")]
         [Category("Blending")]
@@ -37,6 +38,7 @@ namespace PckStudio.ToolboxItems
 
         private bool _useBlendColor = false;
         private Color _blendColor = Color.White;
+        private Image _image;
         private BlendMode _blendMode = BlendMode.Add;
 
         public new Image Image
@@ -45,7 +47,9 @@ namespace PckStudio.ToolboxItems
             set {
                 if (value is null)
                     return;
-                base.Image = UseBlendColor && BlendColor != Color.White ? value.Blend(BlendColor, BlendMode) : value;
+                _image = value;
+                base.Image = UseBlendColor && BlendColor != Color.White ? _image.Blend(BlendColor, BlendMode) : _image;
+                Invalidate();
             }
         }
     }

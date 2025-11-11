@@ -319,7 +319,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.animationPictureBox.BlendColor = System.Drawing.Color.White;
-            this.animationPictureBox.BlendMode = PckStudio.Extensions.BlendMode.Multiply;
+            this.animationPictureBox.BlendMode = PckStudio.Core.Extensions.BlendMode.Multiply;
             this.animationPictureBox.Image = null;
             this.animationPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.animationPictureBox.Location = new System.Drawing.Point(157, 88);

@@ -20,28 +20,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using PckStudio.Forms.Additional_Popups.Grf;
-using PckStudio.Internal.Misc;
 using OMI.Formats.GameRule;
-using PckStudio.Properties;
 using PckStudio.ToolboxItems;
+using PckStudio.Controls;
+using PckStudio.Interfaces;
+using PckStudio.Internal;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class GameRuleFileEditor : MetroFramework.Forms.MetroForm
+    public partial class GameRuleFileEditor : EditorForm<GameRuleFile>
     {
-        private GameRuleFile _file;
-
-        public GameRuleFile Result => _file;
-
-        private GameRuleFileEditor()
+        public GameRuleFileEditor(GameRuleFile gameRuleFile, ISaveContext<GameRuleFile> saveContext)
+            : base(gameRuleFile, saveContext)
         {
             InitializeComponent();
-            saveToolStripMenuItem.Visible = !Settings.Default.AutoSaveChanges;
-        }
-
-        public GameRuleFileEditor(GameRuleFile gameRuleFile) : this()
-        {
-            _file = gameRuleFile;
+            saveToolStripMenuItem.Visible = !saveContext.AutoSave;
         }
 
         private void OnLoad(object sender, EventArgs e)
@@ -52,7 +45,7 @@ namespace PckStudio.Forms.Editor
 
         private void LoadGameRuleTree(TreeNodeCollection root, GameRuleFile.GameRule parentRule)
         {
-            foreach (GameRuleFile.GameRule rule in parentRule.ChildRules)
+            foreach (GameRuleFile.GameRule rule in parentRule.GetRules())
             {
                 TreeNode node = new TreeNode(rule.Name);
                 node.Tag = rule;
@@ -64,16 +57,16 @@ namespace PckStudio.Forms.Editor
         private void ReloadGameRuleTree()
         {
             GrfTreeView.Nodes.Clear();
-            if (_file is not null)
+            if (EditorValue is not null)
             {
                 SetCompressionLevel();
-                LoadGameRuleTree(GrfTreeView.Nodes, _file.Root);
+                LoadGameRuleTree(GrfTreeView.Nodes, EditorValue.Root);
             }
         }
 
         private void SetCompressionLevel()
         {
-            switch (_file.Header.CompressionLevel)
+            switch (EditorValue.Header.CompressionLevel)
             {
                 case GameRuleFile.CompressionLevel.None:
                     noneToolStripMenuItem.Checked = true;
@@ -100,7 +93,7 @@ namespace PckStudio.Forms.Editor
         {
             GrfParametersTreeView.Nodes.Clear();
             if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule)
-            foreach (KeyValuePair<string, string> param in rule.Parameters)
+            foreach (KeyValuePair<string, string> param in rule.GetParameters())
             {
                 GrfParametersTreeView.Nodes.Add(new TreeNode($"{param.Key}: {param.Value}") { Tag = param});
             }
@@ -114,12 +107,12 @@ namespace PckStudio.Forms.Editor
             AddParameter prompt = new AddParameter();
             if (prompt.ShowDialog(this) == DialogResult.OK)
             {
-                if (grfTag.Parameters.ContainsKey(prompt.ParameterName))
+                if (grfTag.ContainsParameter(prompt.ParameterName))
                 {
                     MessageBox.Show(this, "Can't add detail that already exists.", "Error");
                     return;
                 }
-                grfTag.Parameters.Add(prompt.ParameterName, prompt.ParameterValue);
+                grfTag.AddParameter(prompt.ParameterName, prompt.ParameterValue);
                 ReloadParameterTreeView();
             }
         }
@@ -128,7 +121,7 @@ namespace PckStudio.Forms.Editor
         {
             if (GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule rule &&
                 GrfParametersTreeView.SelectedNode is TreeNode paramNode && paramNode.Tag is KeyValuePair<string, string> pair &&
-                rule.Parameters.ContainsKey(pair.Key) && rule.Parameters.Remove(pair.Key))
+                rule.ContainsParameter(pair.Key) && rule.RemoveParameter(pair.Key))
             {
                 ReloadParameterTreeView(); 
                 return;
@@ -150,7 +143,7 @@ namespace PckStudio.Forms.Editor
                 AddParameter prompt = new AddParameter(param.Key, param.Value, false);
                 if (prompt.ShowDialog(this) == DialogResult.OK)
                 {
-                    rule.Parameters[prompt.ParameterName] = prompt.ParameterValue;
+                    rule.SetParameter(prompt.ParameterName, prompt.ParameterValue);
                     ReloadParameterTreeView();
                 }
             }
@@ -161,7 +154,7 @@ namespace PckStudio.Forms.Editor
             bool isValidNode = GrfTreeView.SelectedNode is TreeNode t && t.Tag is GameRuleFile.GameRule;
             GameRuleFile.GameRule parentRule = isValidNode
                ? GrfTreeView.SelectedNode.Tag as GameRuleFile.GameRule
-               : _file.Root;
+               : EditorValue.Root;
 
             TreeNodeCollection root = isValidNode
                 ? GrfTreeView.SelectedNode.Nodes
@@ -192,9 +185,9 @@ namespace PckStudio.Forms.Editor
         private bool RemoveTag(GameRuleFile.GameRule rule)
         {
             _ = rule.Parent ?? throw new ArgumentNullException(nameof(rule.Parent));
-            foreach (GameRuleFile.GameRule subTag in rule.ChildRules.ToList())
+            foreach (GameRuleFile.GameRule subTag in rule.GetRules().ToList())
                 return RemoveTag(subTag);
-            return rule.Parent.ChildRules.Remove(rule);
+            return rule.Parent.RemoveRule(rule);
         }
 
         private void GrfTreeView_KeyDown(object sender, KeyEventArgs e)
@@ -205,11 +198,12 @@ namespace PckStudio.Forms.Editor
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_file.Header.unknownData[3] != 0)
+            if (EditorValue.Header.unknownData[3] != 0)
             {
                 MessageBox.Show(this, "World grf saving is currently unsupported");
                 return;
             }
+            Save();
             DialogResult = DialogResult.OK;
             MessageBox.Show("Saved!");
         }
@@ -222,51 +216,43 @@ namespace PckStudio.Forms.Editor
         private void noneToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.None;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.None;
         }
 
         private void compressedToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.Compressed;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.Compressed;
         }
 
         private void compressedRLEToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRle;
         }
 
         private void compressedRLECRCToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
+                EditorValue.Header.CompressionLevel = GameRuleFile.CompressionLevel.CompressedRleCrc;
         }
 
         private void wiiUPSVitaToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.Zlib;
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.Zlib;
         }
 
         private void pS3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.Deflate;
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.Deflate;
         }
 
         private void xbox360ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             if (sender is ToolStripRadioButtonMenuItem radioButton && radioButton.Checked)
-                _file.Header.CompressionType = GameRuleFile.CompressionType.XMem;
-        }
-
-        private void GameRuleFileEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (Settings.Default.AutoSaveChanges)
-            {
-                saveToolStripMenuItem_Click(sender, EventArgs.Empty);
-            }
+                EditorValue.Header.CompressionType = GameRuleFile.CompressionType.XMem;
         }
     }
 }

@@ -16,14 +16,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Xml;
 using System.IO;
+using System.Xml;
 using System.Linq;
-using System.Windows.Forms;
-using PckStudio.Extensions;
-using PckStudio.Internal.Misc;
 using System.Diagnostics;
+using System.Windows.Forms;
+using PckStudio.Core.Misc;
 using PckStudio.Properties;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Forms.Features
 {

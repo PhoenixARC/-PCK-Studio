@@ -1,92 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using MetroFramework.Forms;
-using Newtonsoft.Json.Linq;
-using OMI.Formats.Pck;
 using OMI.Formats.Material;
-using OMI.Workers.Material;
-using PckStudio.Internal;
-using PckStudio.Extensions;
-using PckStudio.Internal.Json;
+using PckStudio.Controls;
+using PckStudio.Core.Extensions;
+using PckStudio.Core.Json;
 using PckStudio.Internal.App;
+using PckStudio.Interfaces;
+using PckStudio.Json;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class MaterialsEditor : MetroForm
+	// Materials File Format research by PhoenixARC
+	public partial class MaterialsEditor : EditorForm<MaterialContainer>
 	{
-		// Materials File Format research by PhoenixARC
-		private readonly PckAsset _asset;
-		MaterialContainer _materialFile;
-
 		private readonly List<EntityInfo> MaterialData = Entities.BehaviourInfos;
 
-		private bool showInvalidEntries;
+		private bool ShowInvalidEntries;
 
-		//Holds invalid entries so they can be added back to the material file on save should the user decide to hide them
-		List<MaterialContainer.Material> hiddenInvalidEntries = new List<MaterialContainer.Material>();
+		public MaterialsEditor(MaterialContainer materials, ISaveContext<MaterialContainer> saveContext)
+			: base(materials, saveContext)
+		{
+			InitializeComponent();
+            if (EditorValue.HasInvalidEntries())
+            {
+                DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
 
-		void SetUpTree()
+                ShowInvalidEntries = dr == DialogResult.Yes;
+            }
+
+            treeView1.ImageList = new ImageList();
+            ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
+            treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            UpdateTreeview();
+        }
+
+		void UpdateTreeview()
 		{
 			treeView1.BeginUpdate();
 			treeView1.Nodes.Clear();
-			foreach (MaterialContainer.Material entry in _materialFile)
+			foreach (MaterialContainer.Material entry in EditorValue)
 			{
-				TreeNode EntryNode = new TreeNode(entry.Name);
+				TreeNode entryNode = new TreeNode(entry.Name);
+				// index for invalid entry
+				entryNode.ImageIndex = 127;
+				entryNode.SelectedImageIndex = 127;
+				entryNode.Tag = entry;
 
                 EntityInfo material = MaterialData.Find(m => m.InternalName == entry.Name);
-				if(material != null)
-                {
-					EntryNode.Text = material.DisplayName;
-					EntryNode.ImageIndex = MaterialData.IndexOf(material);
-					EntryNode.Tag = entry;
-				}
+				
 				// check for invalid material entry
-				else
+				if (material is null)
                 {
-					EntryNode.ImageIndex = 127; // icon for invalid entry
-					EntryNode.Text += " (Invalid)";
-
-					if (!showInvalidEntries)
-                    {
-						hiddenInvalidEntries.Add(entry);
+					entryNode.Text += " (Invalid)";
+					if (!ShowInvalidEntries)
 						continue;
-					}
-                }
-
-				EntryNode.SelectedImageIndex = EntryNode.ImageIndex;
-
-				treeView1.Nodes.Add(EntryNode);
+				}
+				else
+				{
+					entryNode.Text = material.DisplayName;
+                    entryNode.SelectedImageIndex = entryNode.ImageIndex = MaterialData.IndexOf(material);
+				}
+				treeView1.Nodes.Add(entryNode);
 			}
 			treeView1.EndUpdate();
-		}
-
-		public MaterialsEditor(PckAsset asset)
-		{
-			InitializeComponent();
-			_asset = asset;
-
-			using (var stream = new MemoryStream(asset.Data))
-			{
-				var reader = new MaterialFileReader();
-				_materialFile = reader.FromStream(stream);
-
-				if (_materialFile.HasInvalidEntries())
-                {
-					DialogResult dr = MessageBox.Show(this, "Unsupported entities were found in this file. Would you like to display them?", "Invalid data found", MessageBoxButtons.YesNo);
-
-					showInvalidEntries = dr == DialogResult.Yes;
-				}
-
-				treeView1.ImageList = new ImageList();
-				ApplicationScope.EntityImages.ToList().ForEach(treeView1.ImageList.Images.Add);
-				treeView1.ImageList.ColorDepth = ColorDepth.Depth32Bit;
-				SetUpTree();
-			}
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -106,10 +84,11 @@ namespace PckStudio.Forms.Editor
 		}
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (treeView1.SelectedNode == null)
-				return;
-
-			treeView1.SelectedNode.Remove();
+			if (treeView1?.SelectedNode?.Tag is MaterialContainer.Material material)
+			{
+				EditorValue.Remove(material);
+				UpdateTreeview();
+			}
 		}
 
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -125,23 +104,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			_materialFile = new MaterialContainer();
-
-			foreach (TreeNode node in treeView1.Nodes)
-			{
-				if(node.Tag is MaterialContainer.Material entry)
-				{
-					_materialFile.Add(entry);
-				}
-			}
-
-			foreach (MaterialContainer.Material mat in hiddenInvalidEntries)
-			{
-				_materialFile.Add(mat);
-			}
-
-			_asset.SetData(new MaterialFileWriter(_materialFile));
-			
+			Save();
 			DialogResult = DialogResult.OK;
 		}
 
@@ -153,21 +116,15 @@ namespace PckStudio.Forms.Editor
 			{
 				if (string.IsNullOrEmpty(diag.SelectedEntity))
 					return;
-				if (_materialFile.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
+				if (EditorValue.FindAll(mat => mat.Name == diag.SelectedEntity).Count() > 0)
 				{
-					MessageBox.Show(this, "You cannot have two entries for one entity. Please use the \"Add New Position Override\" tool to add multiple overrides for entities", "Error", MessageBoxButtons.OK);
+					MessageBox.Show(this, "You cannot have two entries for one entity.", "Error", MessageBoxButtons.OK);
 					return;
 				}
 				var newEntry = new MaterialContainer.Material(diag.SelectedEntity, "entity_alphatest");
 
-				TreeNode newEntryNode = new TreeNode(newEntry.Name);
-				newEntryNode.Tag = newEntry;
-
-                EntityInfo material = MaterialData.Find(m => m.InternalName == newEntry.Name);
-				newEntryNode.Text = material.DisplayName;
-				newEntryNode.ImageIndex = MaterialData.IndexOf(material);
-                newEntryNode.SelectedImageIndex = newEntryNode.ImageIndex;
-				treeView1.Nodes.Add(newEntryNode);
+				EditorValue.Add(newEntry);
+				UpdateTreeview();
 			}
 		}
 

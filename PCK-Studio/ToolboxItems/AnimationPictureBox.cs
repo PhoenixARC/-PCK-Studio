@@ -16,14 +16,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
-using System.Runtime.CompilerServices;
 
-using PckStudio.Extensions;
-using PckStudio.Internal;
+using PckStudio.Core.Extensions;
 using System.Drawing;
-using AnimatedGif;
 using System.Drawing.Imaging;
 
 namespace PckStudio.ToolboxItems
@@ -39,10 +35,10 @@ namespace PckStudio.ToolboxItems
             get => base.Image;
             set
             {
-                base.Image = value;
-                this.Animate(false);
                 if (value is null)
                     return;
+                this.Animate(false);
+                base.Image = value;
                 value.SelectActiveFrame(new FrameDimension(value.FrameDimensionsList[0]), 0);
             }
         }

@@ -130,6 +130,12 @@
   <data name="NoImageFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoImageFound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="skyboxVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\skyboxVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="ProjectLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\ProjectLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="HamburgerMenuIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HamburgerMenuIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,12 +144,6 @@
   </data>
   <data name="tu51colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu51colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="banners_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\banners.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="file_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\file_copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZZFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ZZFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,11 +154,8 @@
   <data name="TEXTURE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\TEXTURE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tu32colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fileTemplates\tu32colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="moonPhaseData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\moonPhaseData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="file_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons\file_copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PCK_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\PCK ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,8 +163,11 @@
   <data name="changeTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\changeTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tu46colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fileTemplates\tu46colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="framebufferVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\framebufferVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="tu32colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu32colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="BEHAVIOURS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\BEHAVIOURS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,9 +178,6 @@
   <data name="ARROW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\ARROW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="items_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tu31colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu31colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -190,32 +187,32 @@
   <data name="Discord" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external\Discord.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="moon_phases_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\moon_phases.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tu13colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu13colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="file_paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\file_paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="blockData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\blockData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="tu19colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fileTemplates\tu19colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="SKIN_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\SKIN ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pckClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pckClosed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="texturedCubeVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="file_export" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tu53colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu53colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="skyboxFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\skyboxFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="plainColorVertexShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\plainColorVertexShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="slim_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\anim_editor\slim_template.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COL_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\COL ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,41 +232,29 @@
   <data name="file_import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="paintingData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\paintingData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ENTITY_MATERIALS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconImageList\ENTITY MATERIALS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="entityMaterialsData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\entityMaterialsData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons\Replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="IMAGE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\IMAGE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BINKA_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\BINKA ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="plainColorFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\plainColorFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
   <data name="trello" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external\trello.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="terrain_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bannerData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\bannerData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="LOC_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\LOC ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GRF_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\GRF ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="experience_orbs_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\experience_orbs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="entityBehavioursData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\entityBehavioursData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="mss32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\binka\mss32.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -280,14 +265,8 @@
   <data name="ranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\ranch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="explosions_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\explosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="WiiU" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external\WiiU.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ENTITY_MATERIALS_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\ENTITY MATERIALS ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CAPE_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\CAPE ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -295,14 +274,11 @@
   <data name="PS3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external\PS3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="experienceOrbData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\experienceOrbData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="file_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pckOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pckOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tu19colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu19colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_1_91_colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\1.91_colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -313,17 +289,14 @@
   <data name="INFO_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconImageList\INFO ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="explosionData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\explosionData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="file_paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons\file_paste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="armor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\armor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="binkawin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\binka\binkawin.asi;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="texturedCubeGeometryShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeGeometryShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="file_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -331,14 +304,11 @@
   <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="additional_map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\additional_mapicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="texturedCubeFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\texturedCubeFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="TexturePackIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TexturePackIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProjectLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\ProjectLogo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="binkawin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\binka\binkawin.asi;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="pack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -346,14 +316,11 @@
   <data name="tu43colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu43colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="paintings_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\paintings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="CHANGELOG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\CHANGELOG.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SKIN_ICON" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconImageList\SKIN ICON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tu46colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fileTemplates\tu46colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="binka_encode" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\binka\binka_encode.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -361,14 +328,8 @@
   <data name="tu12colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu12colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\itemData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="tu14colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu14colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="entityModelsData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atlases\entityModelsData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="tu69colours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fileTemplates\tu69colours.col;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -376,16 +337,28 @@
   <data name="Youtube" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\external\Youtube.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\Replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="slim_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\anim_editor\slim_template.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Comparison" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Comparison.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="file_restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons\file_restore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DefaultSkyTexture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\skybox_texture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="framebufferFragmentShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shader\framebufferFragmentShader.glsl;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="pckOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pckOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="entityBehavioursData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\entityBehavioursData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="entityMaterialsData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\entityMaterialsData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="entityModelsData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\entityModelsData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
 </root>

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using PckStudio.Internal;
 using PckStudio.Internal.App;
 using SharpMSS;

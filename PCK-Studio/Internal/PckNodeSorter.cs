@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using OMI.Formats.Pck;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Internal
 {

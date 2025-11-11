@@ -133,8 +133,14 @@
   <data name="deleteDisplayIDToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Display ID</value>
   </data>
+  <data name="copyIDToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 22</value>
+  </data>
+  <data name="copyIDToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy ID</value>
+  </data>
   <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 48</value>
+    <value>163, 70</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
     <value>contextMenuStrip1</value>
@@ -2890,6 +2896,12 @@
   <data name="&gt;&gt;deleteDisplayIDToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;copyIDToolStripMenuItem.Name" xml:space="preserve">
+    <value>copyIDToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;copyIDToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;addLanguageToolStripMenuItem.Name" xml:space="preserve">
     <value>addLanguageToolStripMenuItem</value>
   </data>
@@ -2930,6 +2942,6 @@
     <value>LOCEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.Controls.EditorForm`1[[OMI.Formats.Languages.LOCFile, OMI Filetypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

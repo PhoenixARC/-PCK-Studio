@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
-using PckStudio.Internal;
+using PckStudio.Core.Skin;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
 	public partial class BoxEditor : MetroFramework.Forms.MetroForm
 	{
-		public string Result;
+		private SkinBOX result;
+		public SkinBOX Result => result;
 
-		public BoxEditor(string box, bool hasInflation)
-			: this(SkinBOX.FromString(box), hasInflation)
+        public BoxEditor(string formattedBoxString, bool hasInflation)
+			: this(SkinBOX.FromString(formattedBoxString), hasInflation)
 		{
 		}
 
@@ -43,14 +44,14 @@ namespace PckStudio.Forms.Editor
 
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-			Result =
+			result = SkinBOX.FromString(
 				$"{parentComboBox.SelectedItem} " +
 				$"{PosXUpDown.Value} {PosYUpDown.Value} {PosZUpDown.Value} " +
 				$"{SizeXUpDown.Value} {SizeYUpDown.Value} {SizeZUpDown.Value} " +
 				$"{uvXUpDown.Value} {uvYUpDown.Value} " +
 				$"{Convert.ToInt32(armorCheckBox.Checked)} " +
 				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
-				$"{inflationUpDown.Value}";
+				$"{inflationUpDown.Value}");
 			DialogResult = DialogResult.OK;
 		}
 

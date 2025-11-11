@@ -2,8 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using PckStudio.Internal.Misc;
 using PckStudio.Internal.App;
+using System.Linq;
+using PckStudio.Internal;
+using PckStudio.Core.App;
+using PckStudio.Properties;
 
 
 namespace PckStudio
@@ -26,15 +29,17 @@ namespace PckStudio
         [STAThread]
         static void Main(string[] args)
         {
-            Updater.Initialize(RawProjectUrl);
+            Updater.Initialize(RawProjectUrl, Settings.Default.AutoUpdate);
 
             ApplicationScope.Initialize();
             Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
             Updater.SetOwner(MainInstance);
-            if (args.Length > 0 && File.Exists(args[0]) && args[0].EndsWith(".pck"))
-                MainInstance.InitPckFromFile(args[0]);
+            if (args.Length > 0)
+            {
+                MainInstance.LoadPckFromFile(args.Where(arg => File.Exists(arg) && arg.EndsWith(".pck")));
+            }
             Application.ApplicationExit += (sender, e) => { RPC.Deinitialize(); };
             MainInstance.FocusMe();
             Application.Run(MainInstance);

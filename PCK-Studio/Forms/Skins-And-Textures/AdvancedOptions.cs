@@ -2,13 +2,11 @@
 using OMI;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
-using PckStudio.Extensions;
+using PckStudio.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -20,11 +18,11 @@ namespace PckStudio.Popups
         {
             set
             {
-                _endianness = value ? Endianness.LittleEndian : Endianness.BigEndian;
+                _endianness = value ? ByteOrder.LittleEndian : ByteOrder.BigEndian;
             }
         }
         private readonly PckFile _pckFile;
-        private Endianness _endianness;
+        private ByteOrder _endianness;
 
         public AdvancedOptions(PckFile pckFile)
         {
@@ -54,9 +52,7 @@ namespace PckStudio.Popups
                 {
                     try
                     {
-                        var reader = new PckFileReader(_endianness);
-                        using var ms = new MemoryStream(asset.Data);
-                        PckFile subPCK = reader.FromStream(ms);
+                        PckFile subPCK = asset.GetData(new PckFileReader(_endianness));
                         applyBulkProperties(subPCK.GetAssets(), index);
                         asset.SetData(new PckFileWriter(subPCK, _endianness));
                     }
