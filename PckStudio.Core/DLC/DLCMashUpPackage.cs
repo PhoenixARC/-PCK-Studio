@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using OMI.Formats.GameRule;
+using PckStudio.Core.FileFormats;
 using PckStudio.Core.GameRule;
 using PckStudio.Core.Interfaces;
 
@@ -16,11 +18,12 @@ namespace PckStudio.Core.DLC
 
         private IDLCPackage _skinPackage;
         private IDLCPackage _texturePackage;
-        private GameRuleFile _gameRule;
-        private IList<NamedData<byte[]>> _audioData;
+        private AbstractGameRule _gameRule;
+        private IDictionary<string, byte[]> _audioData;
+        private PckAudioFile _pckAudio;
         private NamedData<byte[]> _savegameData;
 
-        internal DLCMashUpPackage(string name, string description, int identifier, IDLCPackageSerialization packageInfo, GameRuleFile gameRule, IDLCPackage parentPackage, IDLCPackage skinPackage = null, IDLCPackage texturePackage = null)
+        internal DLCMashUpPackage(string name, string description, int identifier, IDLCPackageSerialization packageInfo, AbstractGameRule gameRule, IDLCPackage parentPackage, IDLCPackage skinPackage = null, IDLCPackage texturePackage = null)
             : base(name, identifier, packageInfo, parentPackage)
         {
             Description = description;
@@ -30,18 +33,20 @@ namespace PckStudio.Core.DLC
         }
 
         internal DLCMashUpPackage(string name, string description, int identifier)
-            : this(name, description, identifier, null, new GameRuleFile(), null)
+            : this(name, description, identifier, null, new RootGameRule(), null)
         {
             _skinPackage = DLCSkinPackage.CreateEmpty(this);
             _texturePackage = DLCTexturePackage.CreateDefaultPackage(this);
             _savegameData = new NamedData<byte[]>("world.mcs", Array.Empty<byte>());
-            _audioData = new List<NamedData<byte[]>>();
+            _audioData = new Dictionary<string, byte[]>();
+            _pckAudio = new PckAudioFile();
 
-            _gameRule.AddRule("MapOptions",
+            //! TODO(null): only create grf when adding savefile ?...
+            _gameRule.AddRule(new NamedRule("MapOptions",
                 new GameRuleFile.IntParameter("seed", 0),
                 new GameRuleFile.GameRuleParameter("baseSaveName", _savegameData.Name),
                 new GameRuleFile.BoolParameter("flatworld", false),
-                new GameRuleFile.IntParameter("texturePackId", Identifier)
+                new GameRuleFile.IntParameter("texturePackId", Identifier))
                 );
             _gameRule.AddRule(LevelRules.GetDefault(pos: Vector3.Zero, rot: Vector2.Zero));
         }
