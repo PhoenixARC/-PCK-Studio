@@ -104,8 +104,10 @@
     <Compile Include="GameRule\DistributeItems.cs" />
     <Compile Include="GameRule\LevelRules.cs" />
     <Compile Include="GameRule\NamedArea.cs" />
+    <Compile Include="GameRule\NamedRule.cs" />
     <Compile Include="GameRule\OnGameStartSpawnPositions.cs" />
     <Compile Include="GameRule\OnInitialiseWorld.cs" />
+    <Compile Include="GameRule\RootGameRule.cs" />
     <Compile Include="GameRule\SpawnPositionSet.cs" />
     <Compile Include="GameRule\UpdatePlayer.cs" />
     <Compile Include="GameRule\WorldPosition.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Json\TileInfo.cs" />
     <Compile Include="Json\UpdateInformation.cs" />
     <Compile Include="MapData.cs" />
+    <Compile Include="MapReader.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
     <Compile Include="NamedData.cs" />
@@ -170,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
+    <PackageReference Include="Cyotek.Data.Nbt">
+      <Version>3.1.1</Version>
+    </PackageReference>
     <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
