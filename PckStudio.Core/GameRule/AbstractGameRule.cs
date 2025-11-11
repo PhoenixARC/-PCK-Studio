@@ -7,11 +7,11 @@ using OMI.Formats.GameRule;
 
 namespace PckStudio.Core.GameRule
 {
-    internal abstract class AbstractGameRule
+    public abstract class AbstractGameRule
     {
         private List<AbstractGameRule> _gameRules = new List<AbstractGameRule>();
-        protected void AddRule(AbstractGameRule gameRule) => _gameRules.Add(gameRule);
-        protected void AddRules(IEnumerable<AbstractGameRule> gameRules) => _gameRules.AddRange(gameRules);
+        internal void AddRule(AbstractGameRule gameRule) => _gameRules.Add(gameRule);
+        internal void AddRules(IEnumerable<AbstractGameRule> gameRules) => _gameRules.AddRange(gameRules);
 
         protected abstract GameRuleFile.GameRule GetGameRule();
         public static implicit operator GameRuleFile.GameRule(AbstractGameRule abstractGameRule)
