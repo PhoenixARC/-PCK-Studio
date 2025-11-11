@@ -43,7 +43,7 @@ namespace PckStudio.Core.DLC
                 new GameRuleFile.BoolParameter("flatworld", false),
                 new GameRuleFile.IntParameter("texturePackId", Identifier)
                 );
-            _gameRule.AddRule(LevelRules.Default);
+            _gameRule.AddRule(LevelRules.GetDefault(pos: Vector3.Zero, rot: Vector2.Zero));
         }
 
         public IDLCPackage GetSkinPackage() => _skinPackage;

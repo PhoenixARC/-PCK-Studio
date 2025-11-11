@@ -40,7 +40,9 @@ namespace PckStudio.Core
                 new GameRuleFile.IntParameter("mapSize", (int)mapSize),
                 new GameRuleFile.IntParameter("themeId", 0)
                 );
-            LevelRules = Grf.AddRule(GameRule.LevelRules.GetLevelRules(miniGame));
+
+            LevelRules = GameRule.LevelRules.GetMiniGameLevelRules(miniGame);
+            Grf.AddRule(LevelRules);
 
             World = world;
         }

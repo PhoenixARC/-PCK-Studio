@@ -12,8 +12,8 @@ namespace PckStudio.Core.GameRule
     {
         private readonly GameRuleFile.GameRuleParameter[] _parameters;
 
-        public static LevelRules Default { get; } = new LevelRules([new UpdatePlayer(Vector3.Zero, Vector2.Zero)]);
-        public static LevelRules GetLevelRules(MiniGameId miniGame) => new LevelRules(Enumerable.Empty<AbstractGameRule>(), new GameRuleFile.IntParameter("ruleType", (int)miniGame));
+        public static LevelRules GetDefault(Vector3 pos, Vector2 rot) => new LevelRules([new UpdatePlayer(pos, rot)]);
+        public static LevelRules GetMiniGameLevelRules(MiniGameId miniGame) => new LevelRules(Enumerable.Empty<AbstractGameRule>(), new GameRuleFile.IntParameter("ruleType", (int)miniGame));
 
         public LevelRules(IEnumerable<AbstractGameRule> gameRules, params GameRuleFile.GameRuleParameter[] parameters)
         {
