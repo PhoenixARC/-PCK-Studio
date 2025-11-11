@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using Cyotek.Data.Nbt;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
@@ -22,6 +24,10 @@ namespace PckStudio.Core.DLC
     public sealed class DLCManager
     {
         public static DLCManager Default { get; } = new DLCManager(default, default, AvailableLanguages.English);
+
+        internal const string cDEFAULTTEXTUREPACKFILENAME = "TexturePack.pck";
+        internal const string cDEFAULTMINIGAMEPACKFILENAME = "WorldPack.pck";
+        internal const string cDATADIRECTORYNAME = "Data";
 
         public OMI.ByteOrder ByteOrder { get; set; }
 
@@ -79,6 +85,9 @@ namespace PckStudio.Core.DLC
 
         public IDLCPackage OpenDLCPackage(FileInfo fileInfo)
         {
+            if (Platform == ConsolePlatform.Unknown)
+                throw new Exception($"{nameof(Platform)} is Unknown.");
+
             if (!IsValidPckFile(fileInfo))
                 return InvalidDLCPackage.Instance;
 
@@ -107,10 +116,13 @@ namespace PckStudio.Core.DLC
             LOCFile localisation = pckFile.GetAssetsByType(PckAssetType.LocalisationFile).FirstOrDefault()?.GetData(new LOCFileReader());
             if (localisation is null)
                 return new UnknownDLCPackage(fileInfo.Name, pckFile);
-            _localisationFiles.Add(identifier, localisation);
 
             IDLCPackage package = ScanForPackageType(fileInfo, identifier, pckFile, localisation, fileReader);
-            _openPackages.Add(identifier, package);
+            if (package.GetDLCPackageType() != DLCPackageType.Invalid)
+            {
+                _localisationFiles.Add(identifier, localisation);
+                _openPackages.Add(identifier, package);
+            }
             return package;
         }
 
@@ -121,6 +133,9 @@ namespace PckStudio.Core.DLC
 
         private bool IsValidPckFile(FileInfo fileInfo)
         {
+            if (fileInfo is null)
+                throw new ArgumentNullException(nameof(fileInfo));
+
             if (!fileInfo.Exists)
                 throw new FileNotFoundException(fileInfo.FullName);
 
@@ -139,7 +154,8 @@ namespace PckStudio.Core.DLC
             string description = hasLanguage && (localisation?.HasLocEntry(DLCTexturePackage.TexturePackDescriptionId) ?? default)
                 ? localisation.GetLocEntry(DLCTexturePackage.TexturePackDescriptionId, PreferredLanguage) : string.Empty;
 
-            bool couldBeTexturePack = fileInfo.Name == "TexturePack.pck";
+            bool couldBeTexturePack = fileInfo.Name == cDEFAULTTEXTUREPACKFILENAME;
+            bool couldBeMiniGamePack = fileInfo.Name == cDEFAULTMINIGAMEPACKFILENAME;
 
             bool hasSkins = pckFile.Contains(PckAssetType.SkinFile) || pckFile.Contains(PckAssetType.SkinDataFile);
 
@@ -150,10 +166,13 @@ namespace PckStudio.Core.DLC
             PckAsset texturePackInfo = pckFile.GetAssetsByType(PckAssetType.TexturePackInfoFile).FirstOrDefault();
             string dataPath = texturePackInfo is not null ? texturePackInfo.GetProperty("DATAPATH") : string.Empty;
 
-            DirectoryInfo dataDirectoryInfo = fileInfo.Directory.EnumerateDirectories().Where(dirInfo => dirInfo.Name == "Data").FirstOrDefault();
-            bool hasDataFolder = dataDirectoryInfo is not null;
+            DirectoryInfo dataDirectoryInfo = fileInfo.Directory.EnumerateDirectories().Where(dirInfo => dirInfo.Name == cDATADIRECTORYNAME).FirstOrDefault();
+            if (dataDirectoryInfo is null)
+            {
+                return skinPackage;
+            }
 
-            if (hasDataFolder && !string.IsNullOrWhiteSpace(dataPath))
+            if (!string.IsNullOrWhiteSpace(dataPath))
             {
                 PckFile infoPck = texturePackInfo.GetData(fileReader);
                 FileInfo texturePackFileInfo = dataDirectoryInfo.EnumerateFiles().Where(fileInfo => fileInfo.Name == dataPath).FirstOrDefault();
@@ -164,21 +183,35 @@ namespace PckStudio.Core.DLC
                     IDLCPackage texturePackage = GetTexturePackageFromPckFile(infoPck, texturePackPck);
                     dlcPackageType = DLCPackageType.TexturePack;
                 }
-
-                bool hasSavefile = dataDirectoryInfo.EnumerateFiles("*.mcs").Any();
-                PckAsset gameRuleAsset = null;
-                if (Platform == ConsolePlatform.Unknown)
-                    throw new Exception($"{nameof(Platform)} is Unknown.");
-                bool hasGameRuleFile = pckFile.Contains("GameRules.grf", PckAssetType.GameRulesFile) && pckFile.TryGetAsset("GameRules.grf", PckAssetType.GameRulesFile, out gameRuleAsset);
-
-                if (hasSavefile && hasGameRuleFile)
-                {
-                    GameRuleFile gameRuleFile = gameRuleAsset.GetData(new GameRuleFileReader(GetPlatformCompressionType()));
-                    dlcPackageType = DLCPackageType.MashUpPack;
-                }
             }
+
+            IEnumerable<FileInfo> audioFiles = dataDirectoryInfo.EnumerateFiles("*.binka");
+            IDictionary<string, byte[]> audios = new Dictionary<string, byte[]>();
+            foreach (FileInfo audioFile in audioFiles)
+            {
+                MemoryStream dataStream = new MemoryStream();
+                using (Stream audioStream = audioFile.OpenRead())
+                {
+                    audioStream.CopyTo(dataStream);
+                }
+                audios.Add(audioFile.Name, dataStream.ToArray());
+            }
+
+            IDictionary<string, IDictionary<string, byte[]>> saves = new Dictionary<string, IDictionary<string, byte[]>>();
+            foreach (FileInfo worldFile in dataDirectoryInfo.EnumerateFiles("*.mcs"))
+            {
+                IDictionary<string, byte[]> save = MapReader.OpenSave(worldFile.OpenRead());
+                saves.Add(worldFile.Name, save);
+            }
+
+            if (pckFile.Contains("GameRules.grf", PckAssetType.GameRulesFile) && pckFile.TryGetAsset("GameRules.grf", PckAssetType.GameRulesFile, out PckAsset gameRuleAsset))
+            {
+                GameRuleFile gameRuleFile = gameRuleAsset.GetData(new GameRuleFileReader(GetPlatformCompressionType()));
+                dlcPackageType = DLCPackageType.MashUpPack;
+            }
+
             Debug.WriteLine(dlcPackageType);
-            return InvalidDLCPackage.Instance;
+            return new UnknownDLCPackage(name, pckFile);
         }
 
         private GameRuleFile.CompressionType GetPlatformCompressionType()
