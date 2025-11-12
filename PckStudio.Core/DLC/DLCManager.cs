@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-using Cyotek.Data.Nbt;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
@@ -23,11 +23,12 @@ namespace PckStudio.Core.DLC
 {
     public sealed class DLCManager
     {
-        public static DLCManager Default { get; } = new DLCManager(default, default, AvailableLanguages.English);
-
+        public static DLCManager Default { get; } = new DLCManager(default, default, AppLanguage.SystemDefault);
+       
         internal const string cDEFAULTTEXTUREPACKFILENAME = "TexturePack.pck";
         internal const string cDEFAULTMINIGAMEPACKFILENAME = "WorldPack.pck";
         internal const string cDATADIRECTORYNAME = "Data";
+        internal const string cPACKAGEDISPLAYNAMEID = "IDS_DISPLAY_NAME";
 
         public OMI.ByteOrder ByteOrder { get; set; }
 
@@ -38,7 +39,6 @@ namespace PckStudio.Core.DLC
         /// </summary>
         public string PreferredLanguage { get; set; }
 
-        private const string PackageDisplayNameId = "IDS_DISPLAY_NAME";
         private readonly IDictionary<int, IDLCPackage> _openPackages = new Dictionary<int, IDLCPackage>();
         private readonly IDictionary<int, LOCFile> _localisationFiles = new Dictionary<int, LOCFile>();
         private readonly Random _rng = new Random();
@@ -49,11 +49,11 @@ namespace PckStudio.Core.DLC
         /// <param name="byteOrder"></param>
         /// <param name="platform"></param>
         /// <param name="preferredLanguage">See <see cref="AvailableLanguages"/> for details.</param>
-        public DLCManager(OMI.ByteOrder byteOrder, ConsolePlatform platform, string preferredLanguage)
+        public DLCManager(OMI.ByteOrder byteOrder, ConsolePlatform platform, AppLanguage preferredLanguage)
         {
             ByteOrder = byteOrder;
             Platform = platform;
-            PreferredLanguage = preferredLanguage;
+            PreferredLanguage = GetPreferredLanguage(preferredLanguage);
         }
 
         public IDLCPackage CreateNewPackage(string name, DLCPackageType packageType)
@@ -74,7 +74,7 @@ namespace PckStudio.Core.DLC
 
             LOCFile localisation = new LOCFile();
             localisation.AddLanguage(PreferredLanguage);
-            localisation.AddLocKey(PackageDisplayNameId, name);
+            localisation.AddLocKey(cPACKAGEDISPLAYNAMEID, name);
             _localisationFiles.Add(identifier, localisation);
             _openPackages.Add(identifier, package);
             
@@ -148,8 +148,8 @@ namespace PckStudio.Core.DLC
         {
             bool hasLanguage = localisation?.Languages?.Contains(PreferredLanguage) ?? default;
 
-            string name = hasLanguage && (localisation?.HasLocEntry(PackageDisplayNameId) ?? default)
-                ? localisation.GetLocEntry(PackageDisplayNameId, PreferredLanguage) : fileInfo.Name;
+            string name = hasLanguage && (localisation?.HasLocEntry(cPACKAGEDISPLAYNAMEID) ?? default)
+                ? localisation.GetLocEntry(cPACKAGEDISPLAYNAMEID, PreferredLanguage) : fileInfo.Name;
 
             string description = hasLanguage && (localisation?.HasLocEntry(DLCTexturePackage.TexturePackDescriptionId) ?? default)
                 ? localisation.GetLocEntry(DLCTexturePackage.TexturePackDescriptionId, PreferredLanguage) : string.Empty;
@@ -302,5 +302,55 @@ namespace PckStudio.Core.DLC
 
             return new DLCSkinPackage(name, identifier, skins, null, parentPackage);
         }
+
+        private static string GetPreferredLanguage(AppLanguage appLanguage)
+        {
+            return appLanguage switch
+            {
+                AppLanguage.SystemDefault => LOCFile.ValidLanguages.Contains(CultureInfo.CurrentUICulture.Name) ? CultureInfo.CurrentUICulture.Name : AvailableLanguages.English,
+                AppLanguage.CzechCzechia => AvailableLanguages.CzechCzechia,
+                AppLanguage.Czechia => AvailableLanguages.Czechia,
+                AppLanguage.Danish => AvailableLanguages.Danish,
+                AppLanguage.DenmarkDanish => AvailableLanguages.DenmarkDanish,
+                AppLanguage.GermanAustria => AvailableLanguages.GermanAustria,
+                AppLanguage.German => AvailableLanguages.German,
+                AppLanguage.GreekGreece => AvailableLanguages.GreekGreece,
+                AppLanguage.Greece => AvailableLanguages.Greece,
+                AppLanguage.EnglishAustralia => AvailableLanguages.EnglishAustralia,
+                AppLanguage.EnglishCanada => AvailableLanguages.EnglishCanada,
+                AppLanguage.English => AvailableLanguages.English,
+                AppLanguage.EnglishUnitedKingdom => AvailableLanguages.EnglishUnitedKingdom,
+                AppLanguage.EnglishIreland => AvailableLanguages.EnglishIreland,
+                AppLanguage.EnglishNewZealand => AvailableLanguages.EnglishNewZealand,
+                AppLanguage.EnglishUnitedStatesOfAmerica => AvailableLanguages.EnglishUnitedStatesOfAmerica,
+                AppLanguage.SpanishSpain => AvailableLanguages.SpanishSpain,
+                AppLanguage.SpanishMexico => AvailableLanguages.SpanishMexico,
+                AppLanguage.FinnishFinland => AvailableLanguages.FinnishFinland,
+                AppLanguage.FrenchFrance => AvailableLanguages.FrenchFrance,
+                AppLanguage.FrenchCanada => AvailableLanguages.FrenchCanada,
+                AppLanguage.ItalianItaly => AvailableLanguages.ItalianItaly,
+                AppLanguage.JapaneseJapan => AvailableLanguages.JapaneseJapan,
+                AppLanguage.KoreanSouthKorea => AvailableLanguages.KoreanSouthKorea,
+                AppLanguage.Latin => AvailableLanguages.Latin,
+                AppLanguage.NorwegianNorway => AvailableLanguages.NorwegianNorway,
+                AppLanguage.NorwegianBokmålNorway => AvailableLanguages.NorwegianBokmålNorway,
+                AppLanguage.DutchNetherlands => AvailableLanguages.DutchNetherlands,
+                AppLanguage.DutchBelgium => AvailableLanguages.DutchBelgium,
+                AppLanguage.PolishPoland => AvailableLanguages.PolishPoland,
+                AppLanguage.PortugueseBrazil => AvailableLanguages.PortugueseBrazil,
+                AppLanguage.PortuguesePortugal => AvailableLanguages.PortuguesePortugal,
+                AppLanguage.RussianRussia => AvailableLanguages.RussianRussia,
+                AppLanguage.SlovakSlovakia => AvailableLanguages.SlovakSlovakia,
+                AppLanguage.SwedishSweden => AvailableLanguages.SwedishSweden,
+                AppLanguage.TurkishTurkey => AvailableLanguages.TurkishTurkey,
+                AppLanguage.ChineseChina => AvailableLanguages.ChineseChina,
+                AppLanguage.ChineseHongKong => AvailableLanguages.ChineseHongKong,
+                AppLanguage.ChineseSingapore => AvailableLanguages.ChineseSingapore,
+                AppLanguage.ChineseTaiwan => AvailableLanguages.ChineseTaiwan,
+                _ => AvailableLanguages.English,
+            };
+        }
+
+        public void SetPreferredLanguage(AppLanguage lang) => PreferredLanguage = GetPreferredLanguage(lang);
     }
 }
