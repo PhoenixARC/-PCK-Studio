@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="AppLanguage.cs" />
     <Compile Include="App\SettingsManager.cs" />
     <Compile Include="App\Updater.cs" />
     <Compile Include="Atlas.cs" />
