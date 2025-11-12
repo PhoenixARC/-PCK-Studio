@@ -25,10 +25,10 @@ namespace PckStudio.Core.DLC
     {
         public static DLCManager Default { get; } = new DLCManager(default, default, AppLanguage.SystemDefault);
        
-        internal const string cDEFAULTTEXTUREPACKFILENAME = "TexturePack.pck";
-        internal const string cDEFAULTMINIGAMEPACKFILENAME = "WorldPack.pck";
-        internal const string cDATADIRECTORYNAME = "Data";
-        internal const string cPACKAGEDISPLAYNAMEID = "IDS_DISPLAY_NAME";
+        internal const string DEFAULTTEXTUREPACKFILENAME = "TexturePack.pck";
+        internal const string DEFAULTMINIGAMEPACKFILENAME = "WorldPack.pck";
+        internal const string DATADIRECTORYNAME = "Data";
+        internal const string PACKAGEDISPLAYNAMEID = "IDS_DISPLAY_NAME";
 
         public OMI.ByteOrder ByteOrder { get; set; }
 
@@ -74,7 +74,7 @@ namespace PckStudio.Core.DLC
 
             LOCFile localisation = new LOCFile();
             localisation.AddLanguage(PreferredLanguage);
-            localisation.AddLocKey(cPACKAGEDISPLAYNAMEID, name);
+            localisation.AddLocKey(PACKAGEDISPLAYNAMEID, name);
             _localisationFiles.Add(identifier, localisation);
             _openPackages.Add(identifier, package);
             
@@ -148,14 +148,14 @@ namespace PckStudio.Core.DLC
         {
             bool hasLanguage = localisation?.Languages?.Contains(PreferredLanguage) ?? default;
 
-            string name = hasLanguage && (localisation?.HasLocEntry(cPACKAGEDISPLAYNAMEID) ?? default)
-                ? localisation.GetLocEntry(cPACKAGEDISPLAYNAMEID, PreferredLanguage) : fileInfo.Name;
+            string name = hasLanguage && (localisation?.HasLocEntry(PACKAGEDISPLAYNAMEID) ?? default)
+                ? localisation.GetLocEntry(PACKAGEDISPLAYNAMEID, PreferredLanguage) : fileInfo.Name;
 
             string description = hasLanguage && (localisation?.HasLocEntry(DLCTexturePackage.TexturePackDescriptionId) ?? default)
                 ? localisation.GetLocEntry(DLCTexturePackage.TexturePackDescriptionId, PreferredLanguage) : string.Empty;
 
-            bool couldBeTexturePack = fileInfo.Name == cDEFAULTTEXTUREPACKFILENAME;
-            bool couldBeMiniGamePack = fileInfo.Name == cDEFAULTMINIGAMEPACKFILENAME;
+            bool couldBeTexturePack = fileInfo.Name == DEFAULTTEXTUREPACKFILENAME;
+            bool couldBeMiniGamePack = fileInfo.Name == DEFAULTMINIGAMEPACKFILENAME;
 
             bool hasSkins = pckFile.Contains(PckAssetType.SkinFile) || pckFile.Contains(PckAssetType.SkinDataFile);
 
@@ -166,7 +166,7 @@ namespace PckStudio.Core.DLC
             PckAsset texturePackInfo = pckFile.GetAssetsByType(PckAssetType.TexturePackInfoFile).FirstOrDefault();
             string dataPath = texturePackInfo is not null ? texturePackInfo.GetProperty("DATAPATH") : string.Empty;
 
-            DirectoryInfo dataDirectoryInfo = fileInfo.Directory.EnumerateDirectories().Where(dirInfo => dirInfo.Name == cDATADIRECTORYNAME).FirstOrDefault();
+            DirectoryInfo dataDirectoryInfo = fileInfo.Directory.EnumerateDirectories().Where(dirInfo => dirInfo.Name == DATADIRECTORYNAME).FirstOrDefault();
             if (dataDirectoryInfo is null)
             {
                 return skinPackage;
