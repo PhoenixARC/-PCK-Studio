@@ -32,5 +32,8 @@
     <Setting Name="Platform" Type="PckStudio.Core.ConsolePlatform" Scope="User">
       <Value Profile="(Default)">Unknown</Value>
     </Setting>
+    <Setting Name="UserLanguage" Type="PckStudio.Core.AppLanguage" Scope="User">
+      <Value Profile="(Default)">SystemDefault</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
