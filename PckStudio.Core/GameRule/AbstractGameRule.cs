@@ -10,15 +10,20 @@ namespace PckStudio.Core.GameRule
     public abstract class AbstractGameRule
     {
         private List<AbstractGameRule> _gameRules = new List<AbstractGameRule>();
-        internal void AddRule(AbstractGameRule gameRule) => _gameRules.Add(gameRule);
-        internal void AddRules(IEnumerable<AbstractGameRule> gameRules) => _gameRules.AddRange(gameRules);
+        public void AddRule(AbstractGameRule gameRule) => _gameRules.Add(gameRule);
+        public void AddRules(IEnumerable<AbstractGameRule> gameRules) => _gameRules.AddRange(gameRules);
 
         protected abstract GameRuleFile.GameRule GetGameRule();
+        private GameRuleFile.GameRule InternalGetGameRule()
+        {
+            IEnumerable<GameRuleFile.GameRule> a = _gameRules.Select(agr => agr.InternalGetGameRule());
+            GameRuleFile.GameRule gameRule = GetGameRule();
+            gameRule.AddRules(a);
+            return gameRule;
+        }
         public static implicit operator GameRuleFile.GameRule(AbstractGameRule abstractGameRule)
         {
-            GameRuleFile.GameRule gameRule = abstractGameRule.GetGameRule();
-            gameRule.AddRules(abstractGameRule._gameRules.Select(agr => agr.GetGameRule()));
-            return gameRule;
+            return abstractGameRule.InternalGetGameRule();
         }
     }
 }
