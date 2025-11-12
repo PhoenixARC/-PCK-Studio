@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
-using System.Windows.Forms;
-using PckStudio.Internal.App;
 using System.Linq;
-using PckStudio.Internal;
+using System.Windows.Forms;
+using OMI.Formats.Languages;
+using PckStudio.Core;
 using PckStudio.Core.App;
-using PckStudio.Properties;
 using PckStudio.Core.DLC;
 using PckStudio.Forms.Additional_Popups;
+using PckStudio.Internal;
+using PckStudio.Internal.App;
+using PckStudio.Properties;
 
 
 namespace PckStudio
@@ -36,8 +39,8 @@ namespace PckStudio
             {
                 MessageBox.Show("Please choose on which console you're playing on.", "Select Platform", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 var platformChooser = new ItemSelectionPopUp(Enum.GetNames(typeof(Core.ConsolePlatform)));
-                if (platformChooser.ShowDialog() == DialogResult.OK && Enum.IsDefined(typeof(Core.ConsolePlatform), platformChooser.SelectedItem))
-                    Settings.Default.Platform = (Core.ConsolePlatform)Enum.Parse(typeof(Core.ConsolePlatform), platformChooser.SelectedItem);
+                if (platformChooser.ShowDialog() == DialogResult.OK && Enum.IsDefined(typeof(ConsolePlatform), platformChooser.SelectedItem))
+                    Settings.Default.Platform = (Core.ConsolePlatform)Enum.Parse(typeof(ConsolePlatform), platformChooser.SelectedItem);
             }
 
             ApplicationScope.Initialize();
@@ -45,6 +48,7 @@ namespace PckStudio
             Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
+            Internal.SettingsManager.Default.RegisterPropertyChangedCallback<AppLanguage>(nameof(Settings.Default.UserLanguage), DLCManager.Default.SetPreferredLanguage);
             Updater.SetOwner(MainInstance);
             if (args.Length > 0)
             {
