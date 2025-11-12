@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
+using PckStudio.Core;
 using PckStudio.Core.App;
 using PckStudio.Internal.App;
 using PckStudio.Properties;
@@ -75,11 +76,42 @@ namespace PckStudio.Forms
             return control;
         }
 
+        static Control CreateEnumComboBox(SettingsPropertyValue propertyValue, SettingsBase settings)
+        {
+            Type type = propertyValue.PropertyValue.GetType();
+            var control = new MetroComboBox
+            {
+                Name = ContextTryGetKeyToString(settings.Context, propertyValue.Name, out string name) ? name : propertyValue.Name,
+                Tag = propertyValue.Name,
+
+                AutoSize = false,
+                Theme = MetroFramework.MetroThemeStyle.Dark,
+                Style = MetroFramework.MetroColorStyle.Silver,
+            };
+            object[] values = Enum.GetNames(type);
+            control.Items.AddRange(values);
+            control.Text = propertyValue.PropertyValue.ToString();
+            control.SelectedItem = propertyValue.PropertyValue;
+
+            void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                if (sender is ComboBox comboBox && comboBox.Tag is string settingsKey && settings[settingsKey].GetType() == type)
+                {
+                    settings[settingsKey] = Enum.Parse(type, (string)comboBox.SelectedItem, true);
+                }
+            }
+
+            control.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
+            return control;
+        }
+
         delegate Control ControlCreateDelegate(SettingsPropertyValue propertyValue, SettingsBase settings);
 
         Dictionary<Type, ControlCreateDelegate> _typeToControl = new Dictionary<Type, ControlCreateDelegate>()
         {
             [typeof(bool)] = CreateCheckBox,
+            [typeof(ConsolePlatform)] = CreateEnumComboBox,
+            [typeof(AppLanguage)] = CreateEnumComboBox,
         };
 
         private void LoadSettings()
