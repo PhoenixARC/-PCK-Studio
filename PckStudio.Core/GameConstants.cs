@@ -15,6 +15,8 @@ namespace PckStudio.Core
         // 16777215 being the uint24 max value
         public const int MAX_PACK_ID = 0xffffff;
 
+        public const int GAMETICK_IN_MILLISECONDS = 50;
+
         public static readonly Vector3 SkinHeadTranslation = Vector3.Zero;
         public static readonly Vector3 SkinHeadPivot = Vector3.Zero;
 
@@ -55,7 +57,6 @@ namespace PckStudio.Core
 
         public static Vector3 GetSkinPartTranslation(string partName) => GetPositioningInfo(partName).Translation;
 
-        public const int GameTickInMilliseconds = 50;
 
         // See: https://minecraft.fandom.com/wiki/Dye#Color_values for more information.
         public static readonly Color[] DyeColors = [
