@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using OMI;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
@@ -23,37 +24,47 @@ namespace PckStudio.Core.DLC
 {
     public sealed class DLCManager
     {
-        public static DLCManager Default { get; } = new DLCManager(default, default, AppLanguage.SystemDefault);
+        public static DLCManager Default { get; } = new DLCManager(default, AppLanguage.SystemDefault);
        
         internal const string DEFAULTTEXTUREPACKFILENAME = "TexturePack.pck";
         internal const string DEFAULTMINIGAMEPACKFILENAME = "WorldPack.pck";
         internal const string DATADIRECTORYNAME = "Data";
         internal const string PACKAGEDISPLAYNAMEID = "IDS_DISPLAY_NAME";
 
-        public OMI.ByteOrder ByteOrder { get; set; }
+        public ByteOrder ByteOrder => _byteOrder;
 
-        public ConsolePlatform Platform { get; set; }
+        public ConsolePlatform Platform => _platform;
 
         /// <summary>
         /// See <see cref="AvailableLanguages"/> for details.
         /// </summary>
-        public string PreferredLanguage { get; set; }
+        public string PreferredLanguage { get; private set; }
 
         private readonly IDictionary<int, IDLCPackage> _openPackages = new Dictionary<int, IDLCPackage>();
         private readonly IDictionary<int, LOCFile> _localisationFiles = new Dictionary<int, LOCFile>();
         private readonly Random _rng = new Random();
+        private ByteOrder _byteOrder;
+        private ConsolePlatform _platform;
 
-        /// <summary>
-        /// 
-        /// </summary>
+
         /// <param name="byteOrder"></param>
         /// <param name="platform"></param>
         /// <param name="preferredLanguage">See <see cref="AvailableLanguages"/> for details.</param>
-        public DLCManager(OMI.ByteOrder byteOrder, ConsolePlatform platform, AppLanguage preferredLanguage)
+        public DLCManager(ConsolePlatform platform, AppLanguage preferredLanguage)
         {
-            ByteOrder = byteOrder;
-            Platform = platform;
+            _platform = platform;
+            _byteOrder = GetByteOrderForPlatform(Platform);
             PreferredLanguage = GetPreferredLanguage(preferredLanguage);
+        }
+
+        private static ByteOrder GetByteOrderForPlatform(ConsolePlatform platform)
+        {
+            return platform switch
+            {
+                ConsolePlatform.Switch => ByteOrder.LittleEndian,
+                ConsolePlatform.PS4 => ByteOrder.LittleEndian,
+                _ => ByteOrder.BigEndian
+            };
         }
 
         public IDLCPackage CreateNewPackage(string name, DLCPackageType packageType)
@@ -352,5 +363,11 @@ namespace PckStudio.Core.DLC
         }
 
         public void SetPreferredLanguage(AppLanguage lang) => PreferredLanguage = GetPreferredLanguage(lang);
+
+        public void SetPlatform(ConsolePlatform platform)
+        {
+            _platform = platform;
+            _byteOrder = GetByteOrderForPlatform(platform);
+        }
     }
 }

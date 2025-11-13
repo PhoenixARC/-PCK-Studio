@@ -44,11 +44,12 @@ namespace PckStudio
             }
 
             ApplicationScope.Initialize();
-            DLCManager.Default.Platform = Settings.Default.Platform;
+            DLCManager.Default.SetPlatform(Settings.Default.Platform);
             Trace.TraceInformation("Startup");
             RPC.Initialize();
             MainInstance = new MainForm();
             Internal.SettingsManager.Default.RegisterPropertyChangedCallback<AppLanguage>(nameof(Settings.Default.UserLanguage), DLCManager.Default.SetPreferredLanguage);
+            Internal.SettingsManager.Default.RegisterPropertyChangedCallback<ConsolePlatform>(nameof(Settings.Default.Platform), DLCManager.Default.SetPlatform);
             Updater.SetOwner(MainInstance);
             if (args.Length > 0)
             {
