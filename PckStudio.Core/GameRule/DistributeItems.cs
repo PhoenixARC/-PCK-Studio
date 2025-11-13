@@ -7,9 +7,9 @@ using OMI.Formats.GameRule;
 
 namespace PckStudio.Core.GameRule
 {
-    internal sealed class DistributeItems : AbstractGameRule
+    public sealed class DistributeItems : AbstractGameRule
     {
-        private static string[] _strings =
+        private static string[] _idStrings =
         {
             "StartItems",
             "OuterItems",
@@ -24,9 +24,9 @@ namespace PckStudio.Core.GameRule
         }
         private DistributeItemsId _id;
 
-        internal void AddPosition(int x, int y, int z) => AddRule(new WorldPosition(x, y, z));
+        public void AddPosition(int x, int y, int z) => AddRule(new WorldPosition(x, y, z));
 
-        public DistributeItems(DistributeItemsId id)
+        internal DistributeItems(DistributeItemsId id)
         {
             _id = id;
         }
@@ -34,7 +34,7 @@ namespace PckStudio.Core.GameRule
         protected override GameRuleFile.GameRule GetGameRule()
         {
             var gameRule = new GameRuleFile.GameRule("DistributeItems");
-            gameRule.AddParameter(new GameRuleFile.GameRuleParameter("id", _strings[(int)_id]));
+            gameRule.AddParameter(new GameRuleFile.GameRuleParameter("id", _idStrings[(int)_id]));
             return gameRule;
         }
     }

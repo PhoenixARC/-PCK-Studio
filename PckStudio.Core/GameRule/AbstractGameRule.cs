@@ -21,9 +21,17 @@ namespace PckStudio.Core.GameRule
             gameRule.AddRules(a);
             return gameRule;
         }
+
         public static implicit operator GameRuleFile.GameRule(AbstractGameRule abstractGameRule)
         {
             return abstractGameRule.InternalGetGameRule();
+        }
+
+        public static implicit operator GameRuleFile(AbstractGameRule abstractGameRule)
+        {
+            var grf = new GameRuleFile();
+            grf.AddGameRules(abstractGameRule._gameRules.Select(agr => agr.InternalGetGameRule()));
+            return grf;
         }
     }
 }

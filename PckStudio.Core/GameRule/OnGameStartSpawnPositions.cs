@@ -8,7 +8,7 @@ using OMI.Formats.GameRule;
 
 namespace PckStudio.Core.GameRule
 {
-    internal sealed class OnGameStartSpawnPositions : AbstractGameRule
+    public sealed class OnGameStartSpawnPositions : AbstractGameRule
     {
         public SpawnPositionSet OnStart { get; } = new SpawnPositionSet(SpawnPositionSet.SpanPositionMethod.OnStart);
         public SpawnPositionSet OnRespawn { get; } = new SpawnPositionSet(SpawnPositionSet.SpanPositionMethod.OnRespawn);

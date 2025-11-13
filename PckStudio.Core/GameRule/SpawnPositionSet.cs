@@ -8,7 +8,7 @@ using OMI.Formats.GameRule;
 
 namespace PckStudio.Core.GameRule
 {
-    internal sealed class SpawnPositionSet : AbstractGameRule
+    public sealed class SpawnPositionSet : AbstractGameRule
     {
         internal enum SpanPositionMethod
         {
@@ -20,6 +20,7 @@ namespace PckStudio.Core.GameRule
         internal SpawnPositionSet(SpanPositionMethod method) => _method = method;
 
         public void AddSpawnPosition(int x, int y, int z, int xRot, int yRot) => AddRule(new UpdatePlayer(new Vector3(x, y, z), new Vector2(xRot, yRot)));
+        public void AddSpawnPosition(int x, int y, int z) => AddSpawnPosition(x, y, z, 0, 0);
 
         protected override GameRuleFile.GameRule GetGameRule()
         {

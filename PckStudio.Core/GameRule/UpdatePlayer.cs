@@ -23,11 +23,11 @@ namespace PckStudio.Core.GameRule
         {
             var gameRule = new GameRuleFile.GameRule("UpdatePlayer");
             gameRule.AddParameters(
-                new GameRuleFile.IntParameter("x", (int)_spawn.X),
-                new GameRuleFile.IntParameter("y", (int)_spawn.Y),
-                new GameRuleFile.IntParameter("z", (int)_spawn.Z),
-                new GameRuleFile.IntParameter("xRot", (int)_rot.X),
-                new GameRuleFile.IntParameter("yRot", (int)_rot.Y)
+                new GameRuleFile.FloatParameter("x", _spawn.X),
+                new GameRuleFile.FloatParameter("y", _spawn.Y),
+                new GameRuleFile.FloatParameter("z", _spawn.Z),
+                new GameRuleFile.FloatParameter("xRot", _rot.X),
+                new GameRuleFile.FloatParameter("yRot", _rot.Y)
                 );
             return gameRule;
         }

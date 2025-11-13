@@ -7,7 +7,7 @@ using OMI.Formats.GameRule;
 
 namespace PckStudio.Core.GameRule
 {
-    internal sealed class OnInitialiseWorld : AbstractGameRule
+    public sealed class OnInitialiseWorld : AbstractGameRule
     {
         public DistributeItems StartItems { get; } = new DistributeItems(DistributeItems.DistributeItemsId.StartItems);
         public DistributeItems OuterItems { get; } = new DistributeItems(DistributeItems.DistributeItemsId.OuterItems);
