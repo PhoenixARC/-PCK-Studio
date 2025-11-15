@@ -40,8 +40,7 @@ namespace PckStudio.Core.DLC
         /// </summary>
         public string PreferredLanguage { get; private set; }
 
-        private readonly IDictionary<int, IDLCPackage> _openPackages = new Dictionary<int, IDLCPackage>();
-        private readonly IDictionary<int, LOCFile> _localisationFiles = new Dictionary<int, LOCFile>();
+        private readonly DLCPackageRegistry _packageRegistry = new DLCPackageRegistry();
         private readonly Random _rng = new Random();
         private ByteOrder _byteOrder;
         private ConsolePlatform _platform;
@@ -86,8 +85,7 @@ namespace PckStudio.Core.DLC
             LOCFile localisation = new LOCFile();
             localisation.AddLanguage(PreferredLanguage);
             localisation.AddLocKey(PACKAGE_DISPLAYNAME_ID, name);
-            _localisationFiles.Add(identifier, localisation);
-            _openPackages.Add(identifier, package);
+            _packageRegistry.RegisterPackage(identifier, package, localisation);
             
             return package;
         }
@@ -121,8 +119,8 @@ namespace PckStudio.Core.DLC
                 return new UnknownDLCPackage(fileInfo.Name, pckFile);
             }
 
-            if (_openPackages.ContainsKey(identifier))
-                return _openPackages[identifier];
+            if (_packageRegistry.ContainsPackage(identifier))
+                return _packageRegistry[identifier];
 
             LOCFile localisation = pckFile.GetAssetsByType(PckAssetType.LocalisationFile).FirstOrDefault()?.GetData(new LOCFileReader());
             if (localisation is null)
@@ -131,15 +129,14 @@ namespace PckStudio.Core.DLC
             IDLCPackage package = ScanForPackageType(fileInfo, identifier, pckFile, localisation, fileReader);
             if (package.GetDLCPackageType() != DLCPackageType.Invalid)
             {
-                _localisationFiles.Add(identifier, localisation);
-                _openPackages.Add(identifier, package);
+                _packageRegistry.RegisterPackage(identifier, package, localisation);
             }
             return package;
         }
 
         internal LOCFile GetLocalisation(int identifier)
         {
-            return _localisationFiles.ContainsKey(identifier) ? _localisationFiles[identifier] : default;
+            return _packageRegistry.ContainsPackage(identifier) ? _packageRegistry.GetLocalisation(identifier) : default;
         }
 
         private bool IsValidPckFile(FileInfo fileInfo)

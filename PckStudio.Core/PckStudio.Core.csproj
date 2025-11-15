@@ -71,6 +71,7 @@
     <Compile Include="DLC\DLCMashUpPackage.cs" />
     <Compile Include="DLC\DLCMiniGamePackage.cs" />
     <Compile Include="DLC\DLCPackage.cs" />
+    <Compile Include="DLC\DLCPackageRegistry.cs" />
     <Compile Include="DLC\DLCSkinPackage.cs" />
     <Compile Include="DLC\DLCTexturePackage.cs" />
     <Compile Include="DLC\UnknownDLCPackage.cs" />
