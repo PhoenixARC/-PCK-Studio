@@ -32,7 +32,7 @@ namespace PckStudio.Core.DLC
         }
 
         public override string Description { get; }
-        internal const string TexturePackDescriptionId = "IDS_TP_DESCRIPTION";
+        internal const string TEXTUREPACK_DESCRIPTION_ID = "IDS_TP_DESCRIPTION";
 
         private TextureResolution _resolution;
 
