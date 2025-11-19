@@ -23,7 +23,7 @@ namespace PckStudio.Core.DLC
 
         public void AddMap(string name, Image thumbnail, MapSize mapSize, NamedData<byte[]> world)
         {
-            _maps.Add(new MapData(name, thumbnail, _miniGameId, mapSize, world));
+            _maps.Add(new MapData(name, thumbnail, world, _miniGameId, mapSize));
         }
 
         public override DLCPackageType GetDLCPackageType() => _packageType;

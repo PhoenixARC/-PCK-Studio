@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Numerics;
 using Cyotek.Data.Nbt;
-using OMI.Formats.GameRule;
+using PckStudio.Core.Extensions;
 using PckStudio.Core.GameRule;
 
 namespace PckStudio.Core
@@ -24,41 +24,45 @@ namespace PckStudio.Core
         Huge
     }
 
+#nullable enable
     public sealed class MapData
     {
         public string Name { get; }
-        public Image Thumbnail { get; }
+        public Image? Thumbnail { get; }
         public AbstractGameRule LevelRules { get; }
         internal AbstractGameRule Grf { get; }
         internal NamedData<byte[]> World { get; }
-
-        public MapData(string name, Image thumbnail, MiniGameId miniGame, MapSize mapSize, NamedData<byte[]> world)
+        
+        public MapData(string name, Image? thumbnail, NamedData<byte[]> world, MiniGameId miniGame = MiniGameId.None, MapSize mapSize = default)
         {
             Name = name;
             Thumbnail = thumbnail;
-            Grf = new RootGameRule();
+            World = world;
 
             var levelData = MapReader.OpenSave(new MemoryStream(world.Value))["level.dat"];
-            TagCompound levelDat = NbtDocument.LoadDocument(new MemoryStream(levelData)).DocumentRoot["Data"] as TagCompound;
-            Vector3 spawn = Vector3.Zero;
-            if (levelDat is not null)
-                spawn = new Vector3((int)levelDat["SpawnX"].GetValue(), (int)levelDat["SpawnX"].GetValue(), (int)levelDat["SpawnY"].GetValue());
-            
-            Grf.AddRule(new NamedRule("MapOptions",
-                new GameRuleFile.GameRuleParameter("seed", levelDat["RandomSeed"].GetValue().ToString()),
-                new GameRuleFile.FloatParameter("spawnX", spawn.X),
-                new GameRuleFile.FloatParameter("spawnY", spawn.Y),
-                new GameRuleFile.FloatParameter("spawnZ", spawn.Z),
-                new GameRuleFile.BoolParameter("flatworld", false),
-                new GameRuleFile.GameRuleParameter("baseSaveName", world.Name),
-                new GameRuleFile.IntParameter("mapSize", (int)mapSize),
-                new GameRuleFile.IntParameter("themeId", 0))
-                );
+            TagCompound? levelDat = NbtDocument.LoadDocument(new MemoryStream(levelData))!.DocumentRoot?["Data"] as TagCompound;
+            _ = levelDat ?? throw new NullReferenceException(nameof(levelDat));
+            Vector3 spawn = levelDat.GetVector3("Spawn");
 
-            LevelRules = GameRule.LevelRules.GetMiniGameLevelRules(miniGame);
+            var mapOptions = new NamedRule("MapOptions");
+            mapOptions.AddParameter("seed", levelDat["RandomSeed"].GetValue());
+            mapOptions.AddParameter(spawn, prefix: "spawn");
+            mapOptions.AddParameter("flatworld", false);
+            mapOptions.AddParameter("baseSaveName", world.Name);
+            if (miniGame > MiniGameId.None)
+            {
+                mapOptions.AddParameter("mapSize", (int)mapSize);
+                mapOptions.AddParameter("themeId", 0);
+            }
+
+            Grf = new RootGameRule();
+
+            Grf.AddRule(mapOptions);
+
+            LevelRules = miniGame > MiniGameId.None ? GameRule.LevelRules.GetMiniGameLevelRules(miniGame) : GameRule.LevelRules.GetDefault(spawn, Vector2.Zero);
             Grf.AddRule(LevelRules);
 
-            World = world;
         }
+#nullable disable
     }
 }
