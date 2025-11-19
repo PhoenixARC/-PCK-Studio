@@ -3,30 +3,20 @@ using System.Drawing.Drawing2D;
 
 namespace PckStudio.Core.Extensions
 {
-    public struct GraphicsConfig
+    public readonly struct GraphicsConfig(InterpolationMode interpolationMode, SmoothingMode smoothingMode, PixelOffsetMode pixelOffsetMode)
     {
-        public GraphicsConfig()
-        {
-            CompositingQuality = default;
-            InterpolationMode = default;
-            SmoothingMode = default;
-            PixelOffsetMode = default;
-            CompositingMode = default;
-        }
+        public InterpolationMode InterpolationMode { get; } = interpolationMode;
+        public SmoothingMode SmoothingMode { get; } = smoothingMode;
+        public PixelOffsetMode PixelOffsetMode { get; } = pixelOffsetMode;
 
-        public CompositingMode CompositingMode { get; set; }
-        public CompositingQuality CompositingQuality { get; set; }
-        public InterpolationMode InterpolationMode { get; set; }
-        public SmoothingMode SmoothingMode { get; set; }
-        public PixelOffsetMode PixelOffsetMode { get; set; }
+        public static GraphicsConfig PixelPerfect()
+            => new GraphicsConfig(InterpolationMode.NearestNeighbor, SmoothingMode.None, PixelOffsetMode.HighQuality);
     }
 
     public static class GraphicsExtensions
     {
         public static void ApplyConfig(this Graphics graphics, GraphicsConfig config)
         {
-            graphics.CompositingMode = config.CompositingMode;
-            graphics.CompositingQuality = config.CompositingQuality;
             graphics.InterpolationMode = config.InterpolationMode;
             graphics.SmoothingMode = config.SmoothingMode;
             graphics.PixelOffsetMode = config.PixelOffsetMode;

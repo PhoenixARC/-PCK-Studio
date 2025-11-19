@@ -81,7 +81,8 @@ namespace PckStudio.Forms.Editor
 
         private int SelectedIndex
         {
-            set {
+            set
+            {
                 if (value < 0)
                 {
                     value += _atlas.TileCount;
@@ -94,13 +95,9 @@ namespace PckStudio.Forms.Editor
             }
         }
 
-        private const ImageLayoutDirection _imageLayout = ImageLayoutDirection.Horizontal;
+        private readonly ImageLayoutDirection _imageLayout = ImageLayoutDirection.Horizontal;
 
-        private readonly GraphicsConfig _graphicsConfig = new GraphicsConfig()
-        {
-            InterpolationMode = InterpolationMode.NearestNeighbor,
-            PixelOffsetMode = PixelOffsetMode.HighQuality
-        };
+        private readonly GraphicsConfig _graphicsConfig = GraphicsConfig.PixelPerfect();
 
         private void UpdateAtlasDisplay()
         {

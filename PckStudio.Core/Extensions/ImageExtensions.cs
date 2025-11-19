@@ -40,15 +40,13 @@ namespace PckStudio.Core.Extensions
 
         public static Image GetArea(this Image source, Rectangle area)
         {
-            Image tileImage = new Bitmap(area.Width, area.Height);
-            using (Graphics gfx = Graphics.FromImage(tileImage))
+            Image result = new Bitmap(area.Width, area.Height);
+            using (Graphics gfx = Graphics.FromImage(result))
             {
-                gfx.SmoothingMode = SmoothingMode.None;
-                gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                gfx.ApplyConfig(GraphicsConfig.PixelPerfect());
                 gfx.DrawImage(source, new Rectangle(Point.Empty, area.Size), area, GraphicsUnit.Pixel);
             }
-            return tileImage;
+            return result;
         }
 
         /// <summary>

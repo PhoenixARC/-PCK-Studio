@@ -518,11 +518,7 @@ namespace PckStudio.ModelSupport
             areasToFix = areasToFix.Where(rect => rect.Size.Width > 0 && rect.Size.Height > 0);
             Image result = new Bitmap(texture);
             using var g = Graphics.FromImage(result);
-            g.ApplyConfig(new GraphicsConfig()
-            {
-                InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor,
-                PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
-            });
+            g.ApplyConfig(GraphicsConfig.PixelPerfect());
             foreach (Rectangle area in areasToFix)
             {
                 Image targetAreaImage = texture.GetArea(area);

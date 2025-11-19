@@ -32,11 +32,7 @@ namespace PckStudio.Forms.Editor
 
         private Core.App.SettingsManager _settingsManager;
 
-        private static GraphicsConfig _graphicsConfig = new GraphicsConfig()
-        {
-            InterpolationMode = InterpolationMode.NearestNeighbor,
-            PixelOffsetMode = PixelOffsetMode.HighQuality,
-        };
+        private static GraphicsConfig _graphicsConfig = GraphicsConfig.PixelPerfect();
 
         private CustomSkinEditor() : this(null, null)
         { }
