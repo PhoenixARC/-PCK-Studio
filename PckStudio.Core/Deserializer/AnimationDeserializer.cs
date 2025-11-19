@@ -48,7 +48,7 @@ namespace PckStudio.Core.Deserializer
                 return false;
             }
 
-            int lastFrameTime = Animation.MinimumFrameTime;
+            int lastFrameTime = Animation.MINIMUM_FRAME_TIME;
             foreach (string frameInfo in animData)
             {
                 string[] frameData = frameInfo.Split('*');
@@ -74,7 +74,7 @@ namespace PckStudio.Core.Deserializer
             if (jsonObject["animation"] is not JToken animation)
                 return result;
 
-            int frameTime = Animation.MinimumFrameTime;
+            int frameTime = Animation.MINIMUM_FRAME_TIME;
 
             if (animation["frametime"] is JToken frametime_token && frametime_token.Type == JTokenType.Integer)
                 frameTime = (int)frametime_token;

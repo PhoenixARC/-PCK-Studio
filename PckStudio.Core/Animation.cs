@@ -27,7 +27,7 @@ namespace PckStudio.Core
 {
     public sealed class Animation
 	{
-		public const int MinimumFrameTime = 1;
+		public const int MINIMUM_FRAME_TIME = 1;
 
 		public int FrameCount => _frames.Count;
 
@@ -41,7 +41,7 @@ namespace PckStudio.Core
 
 		private object _syncLock = new object();
 
-		public Animation(IEnumerable<Image> textures, bool initFramesFromTextures = false, int frameTime = MinimumFrameTime)
+		public Animation(IEnumerable<Image> textures, bool initFramesFromTextures = false, int frameTime = MINIMUM_FRAME_TIME)
 		{
 			_textures = new List<Image>(textures);
             if (initFramesFromTextures)
@@ -69,7 +69,7 @@ namespace PckStudio.Core
 			private int _ticks;
 			private object _syncObject = new object();
 
-			public Frame(Image texture) : this(texture, MinimumFrameTime)
+			public Frame(Image texture) : this(texture, MINIMUM_FRAME_TIME)
 			{ }
 
 			public Frame(Image texture, int frameTime)
@@ -160,7 +160,7 @@ namespace PckStudio.Core
 			}
         }
 
-		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MinimumFrameTime)
+		public void SetFrame(int frameIndex, int textureIndex, int frameTime = MINIMUM_FRAME_TIME)
 		{
 			CheckTextureIndex(textureIndex);
 			SetFrame(frameIndex, new Frame(_textures[textureIndex], frameTime));

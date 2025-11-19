@@ -31,7 +31,7 @@ namespace PckStudio.Core
 
         public override Size GetSize(Size tileSize) => new Size(tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? Count : 1), tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? Count : 1));
 
-        public AtlasGroupAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MinimumFrameTime)
+        public AtlasGroupAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME)
             : base(name, row, column)
         {
             Count = frameCount;

@@ -270,7 +270,7 @@ namespace PckStudio.Forms.Editor
 			diag.SaveBtn.Text = "Add";
 			if (diag.ShowDialog(this) == DialogResult.OK)
 			{
-                EditorValue.AddFrame(diag.FrameTextureIndex, _editable ? diag.FrameTime : Animation.MinimumFrameTime);
+                EditorValue.AddFrame(diag.FrameTextureIndex, _editable ? diag.FrameTime : Animation.MINIMUM_FRAME_TIME);
                 UpdateTreeView();
 			}
 		}
