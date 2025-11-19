@@ -164,6 +164,9 @@ namespace PckStudio.Core.Extensions
         }
 
         public static Image Blend(this Image image, Color overlayColor, BlendMode mode)
+            => image.Blend(new BlendOption(overlayColor, mode));
+
+        public static Image Blend(this Image image, BlendOption blendOption)
         {
             if (image is not Bitmap baseImage)
                 return image;
@@ -187,9 +190,9 @@ namespace PckStudio.Core.Extensions
                         Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), 0);
                         return;
                     }
-                    var b = ColorExtensions.BlendValues((byte)(color >> 0 & 0xff), overlayColor.B, mode);
-                    var g = ColorExtensions.BlendValues((byte)(color >> 8 & 0xff), overlayColor.G, mode);
-                    var r = ColorExtensions.BlendValues((byte)(color >> 16 & 0xff), overlayColor.R, mode);
+                    var b = ColorExtensions.BlendValues((byte)(color >> 0 & 0xff), blendOption.Color.B, blendOption.BlendMode);
+                    var g = ColorExtensions.BlendValues((byte)(color >> 8 & 0xff), blendOption.Color.G, blendOption.BlendMode);
+                    var r = ColorExtensions.BlendValues((byte)(color >> 16 & 0xff), blendOption.Color.R, blendOption.BlendMode);
                     int blendedValue = a << 24 | r << 16 | g << 8 | b;
                     Unsafe.Write((resultImageData.Scan0 + k).ToPointer(), blendedValue);
                 }
@@ -237,12 +240,12 @@ namespace PckStudio.Core.Extensions
             return bitmapResult;
         }
 
-        public static Image Interpolate(this Image image1, Image image2, double delta)
+        public static Image Interpolate(this Image source, Image target, double delta)
         {
             delta = MathExtensions.Clamp(delta, 0.0, 1.0);
-            if (image1 is not Bitmap baseImage || image2 is not Bitmap overlayImage ||
-                image1.Width != image2.Width || image1.Height != image2.Height)
-                return image1;
+            if (source is not Bitmap baseImage || target is not Bitmap overlayImage ||
+                source.Width != target.Width || source.Height != target.Height)
+                return source;
 
             BitmapData baseImageData = baseImage.LockBits(new Rectangle(Point.Empty, baseImage.Size),
                 ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
