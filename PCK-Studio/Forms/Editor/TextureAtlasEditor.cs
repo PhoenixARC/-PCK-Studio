@@ -21,13 +21,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Toolkit.Uwp.Notifications;
 using OMI.Formats.Color;
 using OMI.Workers.Color;
 using PckStudio.Controls;
 using PckStudio.Core;
 using PckStudio.Core.Extensions;
+using PckStudio.Core.IO;
 using PckStudio.Core.Json;
 using PckStudio.Interfaces;
 using PckStudio.Internal;
@@ -44,6 +47,7 @@ namespace PckStudio.Forms.Editor
         private readonly Atlas _atlas;
 
         private AtlasTile _selectedTile;
+        private readonly FileObserver _fileObserver = new FileObserver();
 
         public TextureAtlasEditor(Atlas atlas, ISaveContext<Atlas> saveContext, ResourceLocation resourceLocation, ColorContainer colorContainer,
             ITryGet<string, Animation> tryGetAnimation, ITryGet<string, ISaveContext<Animation>> tryGetAnimationSaveContext)
@@ -171,14 +175,14 @@ namespace PckStudio.Forms.Editor
                 {
                     foreach (ColorContainer.WaterColor col in _colourTable.WaterColors)
                     {
-                        if(!variantComboBox.Items.Contains(col.Name))
+                        if (!variantComboBox.Items.Contains(col.Name))
                             variantComboBox.Items.Add(col.Name);
                     }
                 }
 
                 // TODO: only add variants that are available in the color table
                 variantComboBox.Items.AddRange(tileInfo.ColourEntry.Variants.Where(colorName => _colourTable.Colors.Any(c => c.Name == colorName) || _colourTable.WaterColors.Any(c => c.Name == colorName)).ToArray());
-                
+
                 if (variantComboBox.Items.Count > 0)
                     variantComboBox.SelectedIndex = 0;
             }
@@ -204,9 +208,9 @@ namespace PckStudio.Forms.Editor
                 {
                     selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile);
                 }
-            }   
+            }
         }
-        
+
         private static int GetSelectedImageIndex(
             Size pictureBoxSize,
             Size imageSize,
@@ -222,58 +226,58 @@ namespace PckStudio.Forms.Editor
             {
                 case PictureBoxSizeMode.Normal:
                 case PictureBoxSizeMode.AutoSize:
-                    {
-                        var imageArea = new Rectangle(Point.Empty, imageSize);
-                        if (!imageArea.Contains(clickLocation))
-                            return -1;
-                        result.X = clickLocation.X / areaSize.Width;
-                        result.Y = clickLocation.Y / areaSize.Height;
-                        break;
-                    }
-                case PictureBoxSizeMode.StretchImage:
-                    {
-                        float widthDiff = (float)pictureBoxSize.Width / imageSize.Width;
-                        float heightDiff = (float)pictureBoxSize.Height / imageSize.Height;
-                        Size scaledArea = Size.Round(new SizeF(areaSize.Width * widthDiff, areaSize.Height * heightDiff));
-
-                        result.X = clickLocation.X / scaledArea.Width;
-                        result.Y = clickLocation.Y / scaledArea.Height;
-                        break;
-                    }
-                case PictureBoxSizeMode.CenterImage:
-                    {
-                        Rectangle imageArea = new Rectangle(Point.Empty, imageSize);
-                        imageArea.X = (pictureBoxSize.Width - imageArea.Width) / 2;
-                        imageArea.Y = (pictureBoxSize.Height - imageArea.Height) / 2;
-
-                        if (!imageArea.Contains(clickLocation))
-                            return -1;
-
-                        result.X = (clickLocation.X - imageArea.X) / (clickLocation.X * areaSize.Width);
-                        result.Y = (clickLocation.Y - imageArea.Y) / (clickLocation.Y * areaSize.Height);
-                        break;
-                    }
-                case PictureBoxSizeMode.Zoom:
-                    {
-                        Rectangle imageArea = new Rectangle();
-                        float widthDiff = (float)pictureBoxSize.Width / imageSize.Width;
-                        float heightDiff = (float)pictureBoxSize.Height / imageSize.Height;
-                        float scale = Math.Min(widthDiff, heightDiff);
-
-                        imageArea.Width = (int)(imageSize.Width * scale);
-                        imageArea.Height = (int)(imageSize.Height * scale);
-                        imageArea.X = (pictureBoxSize.Width - imageArea.Width) / 2;
-                        imageArea.Y = (pictureBoxSize.Height - imageArea.Height) / 2;
-
-                        if (!imageArea.Contains(clickLocation))
-                            return -1;
-
-                        var scaledArea = new SizeF(areaSize.Width * scale, areaSize.Height * scale);
-                        result.X = (int)((clickLocation.X - imageArea.X) / scaledArea.Width);
-                        result.Y = (int)((clickLocation.Y - imageArea.Y) / scaledArea.Height);
-                    }
+                {
+                    var imageArea = new Rectangle(Point.Empty, imageSize);
+                    if (!imageArea.Contains(clickLocation))
+                        return -1;
+                    result.X = clickLocation.X / areaSize.Width;
+                    result.Y = clickLocation.Y / areaSize.Height;
                     break;
-                
+                }
+                case PictureBoxSizeMode.StretchImage:
+                {
+                    float widthDiff = (float)pictureBoxSize.Width / imageSize.Width;
+                    float heightDiff = (float)pictureBoxSize.Height / imageSize.Height;
+                    Size scaledArea = Size.Round(new SizeF(areaSize.Width * widthDiff, areaSize.Height * heightDiff));
+
+                    result.X = clickLocation.X / scaledArea.Width;
+                    result.Y = clickLocation.Y / scaledArea.Height;
+                    break;
+                }
+                case PictureBoxSizeMode.CenterImage:
+                {
+                    Rectangle imageArea = new Rectangle(Point.Empty, imageSize);
+                    imageArea.X = (pictureBoxSize.Width - imageArea.Width) / 2;
+                    imageArea.Y = (pictureBoxSize.Height - imageArea.Height) / 2;
+
+                    if (!imageArea.Contains(clickLocation))
+                        return -1;
+
+                    result.X = (clickLocation.X - imageArea.X) / (clickLocation.X * areaSize.Width);
+                    result.Y = (clickLocation.Y - imageArea.Y) / (clickLocation.Y * areaSize.Height);
+                    break;
+                }
+                case PictureBoxSizeMode.Zoom:
+                {
+                    Rectangle imageArea = new Rectangle();
+                    float widthDiff = (float)pictureBoxSize.Width / imageSize.Width;
+                    float heightDiff = (float)pictureBoxSize.Height / imageSize.Height;
+                    float scale = Math.Min(widthDiff, heightDiff);
+
+                    imageArea.Width = (int)(imageSize.Width * scale);
+                    imageArea.Height = (int)(imageSize.Height * scale);
+                    imageArea.X = (pictureBoxSize.Width - imageArea.Width) / 2;
+                    imageArea.Y = (pictureBoxSize.Height - imageArea.Height) / 2;
+
+                    if (!imageArea.Contains(clickLocation))
+                        return -1;
+
+                    var scaledArea = new SizeF(areaSize.Width * scale, areaSize.Height * scale);
+                    result.X = (int)((clickLocation.X - imageArea.X) / scaledArea.Width);
+                    result.Y = (int)((clickLocation.Y - imageArea.Y) / scaledArea.Height);
+                }
+                break;
+
                 default:
                     break;
             }
@@ -286,7 +290,7 @@ namespace PckStudio.Forms.Editor
             return imageLayout switch
             {
                 ImageLayoutDirection.Horizontal => x + y * rowCount,
-                ImageLayoutDirection.Vertical   => y + x * columnCount,
+                ImageLayoutDirection.Vertical => y + x * columnCount,
                 _ => throw new ArgumentOutOfRangeException(nameof(imageLayout)),
             };
         }
@@ -343,7 +347,7 @@ namespace PckStudio.Forms.Editor
         private Color FindBlendColorByKey(string colorKey)
         {
             // The following tiles are hardcoded within a range and do not have color table entries
-            if (colorKey == "experience_orb" || colorKey == "critical_hit") 
+            if (colorKey == "experience_orb" || colorKey == "critical_hit")
                 return GetSpecificBlendColor(colorKey);
 
             if (!_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) || !tileInfo.HasColourEntry)
@@ -483,12 +487,31 @@ namespace PckStudio.Forms.Editor
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 _atlas.GetTileTexture(_selectedTile).Save(saveFileDialog.FileName, ImageFormat.Png);
-                //Process.Start("explorer.exe", $"{saveFileDialog.FileName}");
+                Action<AtlasTile, FileInfo> onChange = new Action<AtlasTile, FileInfo>((tile, fileInfo) =>
+                {
+                    Image img = Image.FromFile(fileInfo.FullName).ReleaseFromFile();
+                    bool success = _atlas.SetTile(tile, img);
+                    if (!success)
+                    {
+                        Size s = _atlas.GetTileArea(tile).Size;
+                        new ToastContentBuilder()
+                            .AddText("Invalid Image Dimensions")
+                            .AddText($"Required: {s.Width}x{s.Height} Recived: {img.Width}x{img.Height}")
+                            .AddInlineImage(new Uri(fileInfo.FullName))
+                            .Show();
+                        return;
+                    }
+                    UpdateAtlasDisplay();
+                });
+                _fileObserver.AddFileWatcher(saveFileDialog.FileName, onChange, _selectedTile);
             }
         }
 
         private string GetSanitizedFilename()
         {
+            if (_selectedTile is null)
+                return "tile";
+
             if (_selectedTile.IsPartOfGroup)
             {
                 AtlasGroup group = _selectedTile.GetGroup();
@@ -527,6 +550,7 @@ namespace PckStudio.Forms.Editor
 
         private void TextureAtlasEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _fileObserver.Dispose();
             if (selectTilePictureBox.IsPlaying)
                 selectTilePictureBox.Stop();
         }

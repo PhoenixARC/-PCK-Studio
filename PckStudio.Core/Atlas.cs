@@ -221,13 +221,24 @@ namespace PckStudio.Core
             return new Rectangle(new Point(group.Row * TileSize.Width, group.Column * TileSize.Height), group.GetSize(TileSize));
         }
 
-        public void SetGroup(AtlasGroup group, Image texture)
+        public bool SetGroup(AtlasGroup group, Image texture)
         {
-            IEnumerable<Image> images = texture.Split(TileSize, group.Direction);
+            Image[] images = texture.Split(TileSize, _layoutDirection).ToArray();
             if (!images.All(img => img.Size == TileSize))
-                return;
+                return false;
+            if (images.Length != group.Count)
+                return false;
             Size s = group.GetSize(new Size(1, 1));
             SetRange(group.Row, group.Column, s.Width, s.Height, images);
+            return true;
+        }
+
+        public bool SetTile(AtlasTile tile, Image image)
+        {
+            if (tile.IsPartOfGroup)
+                return SetGroup(tile.GetGroup(), image);
+            tile.Texture = image;
+            return true;
         }
     }
 }
