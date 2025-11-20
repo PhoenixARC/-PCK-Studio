@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using PckStudio.Core.Extensions;
@@ -120,9 +121,7 @@ namespace PckStudio.Core.Skin
             
             bool hideWithArmor = arguments.IndexInRange(9) && arguments[9] == "1";    
             bool mirror = arguments.IndexInRange(10) && arguments[10] == "1";
-            float scale = default;
-            if (arguments.IndexInRange(11))
-                float.TryParse(arguments[11], out scale);
+            float scale = arguments.IndexInRange(11) && float.TryParse(arguments[11], out scale) ? scale : default;
             return new SkinBOX(type, pos, size, uv, hideWithArmor, mirror, scale);
         }
 
@@ -143,11 +142,19 @@ namespace PckStudio.Core.Skin
 			return new KeyValuePair<string, string>("BOX", ToString());
 		}
 
+        private static string InvariantFormat(params object[] values)
+        {
+            const string sep = " ";
+            string fstr = Enumerable.Range(0, values.Length)
+                .Select(i => string.Concat("{", i, "}"))
+                .Aggregate((sum, next) => string.IsNullOrWhiteSpace(next) ? sum : sum + sep + next)
+                .ToString();
+            return string.Format(CultureInfo.InvariantCulture, fstr, values);
+        }
+
         public override string ToString()
         {
-			return
-                $"{Type} {Pos.X} {Pos.Y} {Pos.Z} {Size.X} {Size.Y} {Size.Z} {UV.X} {UV.Y} {Convert.ToInt32(HideWithArmor)} {Convert.ToInt32(Mirror)} {Scale}"
-                .Replace(',', '.');
+            return InvariantFormat(Type, Pos.X, Pos.Y, Pos.Z, Size.X, Size.Y, Size.Z, UV.X, UV.Y, Convert.ToInt32(HideWithArmor), Convert.ToInt32(Mirror), Scale);
         }
 
         private static Vector2 TryGetVector2(string[] arguments, int startIndex)
