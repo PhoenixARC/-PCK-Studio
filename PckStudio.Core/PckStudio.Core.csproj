@@ -53,6 +53,7 @@
     <Compile Include="AppLanguage.cs" />
     <Compile Include="App\SettingsManager.cs" />
     <Compile Include="App\Updater.cs" />
+    <Compile Include="ArmorPieceDescription.cs" />
     <Compile Include="Atlas.cs" />
     <Compile Include="AtlasGroup.cs" />
     <Compile Include="AtlasGroupAnimation.cs" />
