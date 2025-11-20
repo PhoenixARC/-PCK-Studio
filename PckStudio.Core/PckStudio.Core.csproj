@@ -128,6 +128,7 @@
     <Compile Include="IO\3DST\3DSTextureReader.cs" />
     <Compile Include="IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="IO\3DST\TextureCodec.cs" />
+    <Compile Include="IO\FileObserver.cs" />
     <Compile Include="IO\PckAudio\PckAudioFileReader.cs" />
     <Compile Include="IO\PckAudio\PckAudioFileWriter.cs" />
     <Compile Include="IO\TGA\TGADataTypeCode.cs" />
