@@ -615,5 +615,69 @@
           ]
         }
       ]
-    }
+    },
+  "wood": {
+    "textureSize": { "X": 64, "Y": 64 },
+    "parts": [
+      {
+        "name": "head",
+        "boxes": [
+          { "pos": { "X": -1, "Y": -7, "Z": -1 }, "size": { "X": 2, "Y": 7, "Z": 2 }, "uv": { "X": 0, "Y": 0 } }
+        ]
+      },
+      {
+        "name": "body",
+        "boxes": [
+          { "pos": { "X": -6, "Y": 0, "Z": -1.5 }, "size": { "X": 12, "Y": 3, "Z": 3 }, "uv": { "X": 0, "Y": 26 } }
+        ]
+      },
+      {
+        "name": "rightArm",
+        "translation": { "X": -5, "Y": 2, "Z": 0 },
+        "boxes": [
+          { "pos": { "X": -2, "Y": -2, "Z": -1 }, "size": { "X": 2, "Y": 12, "Z": 2 }, "uv": { "X": 24, "Y": 0 } }
+        ]
+      },
+      {
+        "name": "leftArm",
+        "translation": { "X": 5, "Y": 2, "Z": 0 },
+        "boxes": [
+          { "pos": { "X": 0, "Y": -2, "Z": -1 }, "size": { "X": 2, "Y": 12, "Z": 2 }, "uv": { "X": 32, "Y": 16 } }
+        ]
+      },
+      {
+        "name": "rightLeg",
+        "translation": { "X": -1.9, "Y": 12, "Z": 0 },
+        "boxes": [
+          { "pos": { "X": -1, "Y": 0, "Z": -1 }, "size": { "X": 2, "Y": 11, "Z": 2 }, "uv": { "X": 8, "Y": 0 } }
+        ]
+      },
+      {
+        "name": "leftLeg",
+        "translation": { "X": 1.9, "Y": 12, "Z": 0 },
+        "boxes": [
+          { "pos": { "X": -1, "Y": 0, "Z": -1 }, "size": { "X": 2, "Y": 11, "Z": 2 }, "uv": { "X": 40, "Y": 16 }, "mirror": true }
+        ]
+      },
+      {
+        "name": "rightItem",
+        "translation": { "X": -5, "Y": 2, "Z": 0 },
+        "boxes": []
+      },
+      {
+        "name": "leftItem",
+        "translation": { "X": 5, "Y": 2, "Z": 0 },
+        "boxes": []
+      },
+      {
+        "name": "base_plate",
+        "boxes": [
+          { "pos": { "X": -3, "Y": 3, "Z": -1 }, "size": { "X": 2, "Y": 7, "Z": 2 }, "uv": { "X": 16, "Y": 0 }, "mirror": true },
+          { "pos": { "X": 1, "Y": 3, "Z": -1 }, "size": { "X": 2, "Y": 7, "Z": 2 }, "uv": { "X": 48, "Y": 16 } },
+          { "pos": { "X": -4, "Y": 10, "Z": -1 }, "size": { "X": 8, "Y": 2, "Z": 2 }, "uv": { "X": 0, "Y": 48 } },
+          { "pos": { "X": -6, "Y": 23, "Z": -6 }, "size": { "X": 12, "Y": 1, "Z": 12 }, "uv": { "X": 0, "Y": 32 } }
+        ]
+      }
+    ]
+  }
 }

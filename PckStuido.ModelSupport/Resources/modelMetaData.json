@@ -735,5 +735,30 @@
       "res/mob/panda/panda_sneezy",
       "res/mob/panda/panda_worried"
     ]
+  },
+
+  "wood": {
+    "textureLocations": [ "res/item/armorstand/wood" ],
+    "parts": [
+      { "name": "head" },
+      { "name": "body" },
+      {
+        "name": "rightArm",
+        "children": [{ "name": "rightItem" }]
+      },
+      {
+        "name": "leftArm",
+        "children": [{ "name": "leftItem" }]
+      },
+      {
+        "name": "rightLeg"
+      },
+      {
+        "name": "leftLeg"
+      },
+      {
+        "name": "base_plate"
+      }
+    ]
   }
 }
