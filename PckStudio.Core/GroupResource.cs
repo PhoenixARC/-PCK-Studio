@@ -22,7 +22,7 @@ namespace PckStudio.Core
     public sealed class GroupResource : ResourceLocation
     {
         public GroupResource(string path, ResourceCategory category)
-            : base(path, category, Size.Empty, default, true)
+            : base(path, category, true)
         {
         }
     }

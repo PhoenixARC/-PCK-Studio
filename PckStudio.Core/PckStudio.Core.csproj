@@ -158,6 +158,7 @@
     <Compile Include="DLC\DLCPackageType.cs" />
     <Compile Include="ResourceCategory.cs" />
     <Compile Include="ResourceLocation.cs" />
+    <Compile Include="ResourceLocations.cs" />
     <Compile Include="Serializer\AnimationSerializer.cs" />
     <Compile Include="Serializer\AtlasSerializer.cs" />
     <Compile Include="Serializer\ImageSerializer.cs" />
