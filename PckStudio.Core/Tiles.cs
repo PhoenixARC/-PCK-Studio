@@ -14,34 +14,27 @@ namespace PckStudio.Json
     {
         [JsonProperty("entries")]
         public List<JsonTileInfo> Entries { get; set; }
-
-        [JsonProperty("additional_entries")]
-        public List<JsonTileInfo> AdditionalEntries { get; set; }
     }
 
     public static class Tiles
     {
-        private static JsonTiles
-            _jsonBlockData, _jsonItemData,
-            _jsonParticleData, _jsonMoonPhaseData,
-            _jsonMapIconData, _jsonExplosionData,
-            _jsonExperienceOrbData, _jsonPaintingData, _jsonBannerData;
-        public static JsonTiles JsonBlockData => _jsonBlockData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
-        public static JsonTiles JsonItemData => _jsonItemData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
-        public static JsonTiles JsonParticleData => _jsonParticleData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
-        public static JsonTiles JsonMoonPhaseData => _jsonMoonPhaseData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.moonPhaseData);
-        public static JsonTiles JsonMapIconData => _jsonMapIconData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.mapIconData);
-        public static JsonTiles JsonExplosionData => _jsonExplosionData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
-        public static JsonTiles JsonExperienceOrbData => _jsonExperienceOrbData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
-        public static JsonTiles JsonPaintingData => _jsonPaintingData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
-        public static JsonTiles JsonBannerData => _jsonBannerData ??= JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
+        public static JsonTiles JsonBlockData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.blockData);
+        public static JsonTiles JsonItemData { get; } =  JsonConvert.DeserializeObject<JsonTiles>(Resources.itemData);
+        public static JsonTiles JsonParticleData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.particleData);
+        public static JsonTiles JsonMoonPhaseData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.moonPhaseData);
+        public static JsonTiles JsonMapIconData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.mapIconData);
+        public static JsonTiles JsonAdditionalMapIconData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.additionalMapiconsData);
+        public static JsonTiles JsonExplosionData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.explosionData);
+        public static JsonTiles JsonExperienceOrbData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.experienceOrbData);
+        public static JsonTiles JsonPaintingData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
+        public static JsonTiles JsonBannerData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
 
         public static List<JsonTileInfo> ItemTileInfos => JsonItemData.Entries;
         public static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Entries;
         public static List<JsonTileInfo> ParticleTileInfos => JsonParticleData.Entries;
         public static List<JsonTileInfo> MoonPhaseTileInfos => JsonMoonPhaseData.Entries;
         public static List<JsonTileInfo> MapIconTileInfos => JsonMapIconData.Entries;
-        public static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonMapIconData.AdditionalEntries;
+        public static List<JsonTileInfo> AdditionalMapIconTileInfos => JsonAdditionalMapIconData.Entries;
         public static List<JsonTileInfo> ExperienceOrbTileInfos => JsonExperienceOrbData.Entries;
         public static List<JsonTileInfo> ExplosionTileInfos => JsonExplosionData.Entries;
         public static List<JsonTileInfo> PaintingTileInfos => JsonPaintingData.Entries;

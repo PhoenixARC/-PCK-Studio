@@ -201,6 +201,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\additionalMapiconsData.json" />
     <None Include="Resources\bannerData.json" />
     <None Include="Resources\blockData.json" />
     <None Include="Resources\Comparison.png" />

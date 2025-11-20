@@ -73,11 +73,44 @@ namespace PckStudio.Core.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///  &quot;entries&quot;: [
+        ///		{
+        ///			&quot;internalName&quot;: &quot;player_1_off_map&quot;,
+        ///			&quot;displayName&quot;: &quot;Player 1 (Off Map)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;player_2_off_map&quot;,
+        ///			&quot;displayName&quot;: &quot;Player 2 (Off Map)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;player_3_off_map&quot;,
+        ///			&quot;displayName&quot;: &quot;Player 3 (Off Map)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;player_4_off_map&quot;,
+        ///			&quot;displayName&quot;: &quot;Player 4 (Off Map)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;treasure&quot;,
+        ///			&quot;displayName&quot;: &quot;Buried Treasure&quot;
+        ///		},
+        ///		{
+        ///			&quot;interna [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string additionalMapiconsData {
+            get {
+                return ResourceManager.GetString("additionalMapiconsData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
         ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;base&quot;,
         ///			&quot;displayName&quot;: &quot;Base&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
+        ///
         ///			&quot;colourEntry&quot;: {
         ///				&quot;defaultName&quot;: &quot;Banner_White&quot;,
         ///				&quot;variants&quot;: [
@@ -94,7 +127,8 @@ namespace PckStudio.Core.Properties {
         ///					&quot;Banner_Pink&quot;,
         ///					&quot;Banner_Purple&quot;,
         ///					&quot;Banner_Red&quot;,
-        ///					&quot;Ban [rest of string was truncated]&quot;;.
+        ///					&quot;Banner_Silver&quot;,
+        ///					&quot;Banner [rest of string was truncated]&quot;;.
         /// </summary>
         public static string bannerData {
             get {
@@ -120,7 +154,7 @@ namespace PckStudio.Core.Properties {
         ///		{
         ///			&quot;internalName&quot;: &quot;grass_top&quot;,
         ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
+        ///
         ///			&quot;colourEntry&quot;: {
         ///				&quot;defaultName&quot;: &quot;Grass_Common&quot;,
         ///				&quot;variants&quot;: [
@@ -136,7 +170,8 @@ namespace PckStudio.Core.Properties {
         ///			&quot;displayName&quot;: &quot;Stone&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;: [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;: &quot;dirt&quot;,
+        ///			&quot;displayName&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string blockData {
             get {
@@ -407,29 +442,26 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;entries&quot;: [
-        ///		{
-        ///			&quot;internalName&quot;: &quot;generic_0&quot;,
-        ///			&quot;displayName&quot;: &quot;Generic (Stage 1)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;None&quot;,
-        ///				&quot;variants&quot;: [
-        ///					&quot;None&quot;,
-        ///					&quot;Particle_Smoke&quot;,
-        ///					&quot;Particle_NetherPortal&quot;,
-        ///					&quot;Particle_EnderPortal&quot;,
-        ///					&quot;Particle_Ender&quot;,
-        ///					&quot;Particle_DragonBreathMin&quot;,
-        ///					&quot;Particle_DragonBreathMax&quot;
-        ///				]
-        ///			}
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;generic_1&quot;,
-        ///			&quot;displayName&quot;: &quot;Generic (Stage 2)&quot;,
-        /// [rest of string was truncated]&quot;;.
+        ///  &quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///  &quot;entries&quot;: [
+        ///    {
+        ///      &quot;internalName&quot;: &quot;generic_0&quot;,
+        ///      &quot;displayName&quot;: &quot;Generic (Stage 1)&quot;,
+        ///      &quot;colourEntry&quot;: {
+        ///        &quot;defaultName&quot;: &quot;None&quot;,
+        ///        &quot;variants&quot;: [
+        ///          &quot;None&quot;,
+        ///          &quot;Particle_Smoke&quot;,
+        ///          &quot;Particle_NetherPortal&quot;,
+        ///          &quot;Particle_EnderPortal&quot;,
+        ///          &quot;Particle_Ender&quot;,
+        ///          &quot;Particle_DragonBreathMin&quot;,
+        ///          &quot;Particle_DragonBreathMax&quot;
+        ///        ]
+        ///      }
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;generic_1&quot;, [rest of string was truncated]&quot;;.
         /// </summary>
         public static string particleData {
             get {
