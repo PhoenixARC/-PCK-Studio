@@ -217,7 +217,7 @@ namespace PckStudio.Controls
                 return;
             }
 
-            ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
+            ResourceLocation resourceLocation = ResourceLocations.GetFromPath(asset.Filename);
             Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
 
             switch (resourceLocation.Category)
@@ -942,7 +942,7 @@ namespace PckStudio.Controls
                     if (asset.Type != PckAssetType.TextureFile)
                         break;
 
-                    ResourceLocation resourceLocation = ResourceLocation.GetFromPath(asset.Filename);
+                    ResourceLocation resourceLocation = ResourceLocations.GetFromPath(asset.Filename);
                     if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
                         break;
 
@@ -1279,7 +1279,7 @@ namespace PckStudio.Controls
             if (diag.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            string animationFilepath = $"{ResourceLocation.GetPathFromCategory(diag.Category)}/{diag.SelectedTile.InternalName}.png";
+            string animationFilepath = $"{ResourceLocations.GetPathFromCategory(diag.Category)}/{diag.SelectedTile.InternalName}.png";
 
             if (EditorValue.File.Contains(animationFilepath, PckAssetType.TextureFile))
             {
@@ -1771,7 +1771,7 @@ namespace PckStudio.Controls
         /// <returns>True if the remove should be canceled, otherwise False</returns>
         private bool BeforeFileRemove(PckAsset asset)
         {
-            string itemPath = ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation);
+            string itemPath = ResourceLocations.GetPathFromCategory(ResourceCategory.ItemAnimation);
 
             // warn the user about deleting compass.png and clock.png
             if (asset.Type == PckAssetType.TextureFile &&

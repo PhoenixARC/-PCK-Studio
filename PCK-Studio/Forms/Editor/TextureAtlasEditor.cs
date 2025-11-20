@@ -151,7 +151,7 @@ namespace PckStudio.Forms.Editor
             {
                 ResourceCategory animationResourceCategory = _resourceLocationCategory == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
 
-                string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
+                string animationAssetPath = $"{ResourceLocations.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
                 bool hasAnimation = _tryGetAnimation.TryGet(animationAssetPath, out Animation animation);
                 animationButton.Text = hasAnimation ? "Edit Animation" : "Create Animation";
 
@@ -458,7 +458,7 @@ namespace PckStudio.Forms.Editor
             }
             JsonTileInfo tileInfo = _selectedTile.GetUserDataOfType<JsonTileInfo>();
             ResourceCategory animationResourceCategory = _resourceLocationCategory == ResourceCategory.ItemAtlas ? ResourceCategory.ItemAnimation : ResourceCategory.BlockAnimation;
-            string animationAssetPath = $"{ResourceLocation.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
+            string animationAssetPath = $"{ResourceLocations.GetPathFromCategory(animationResourceCategory)}/{tileInfo.InternalName}";
             bool hasAnimation = _tryGetAnimation.TryGet(animationAssetPath, out Animation animation);
             bool isValidAnimationSaveContext = _tryGetAnimationSaveContext.TryGet(animationAssetPath, out ISaveContext<Animation> animationSaveContext);
 

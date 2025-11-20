@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using PckStudio.Core.Extensions;
 
@@ -57,13 +58,14 @@ namespace PckStudio.Core
 
         public static Atlas FromResourceLocation(Image source, ResourceLocation resourceLocation, ImageLayoutDirection imageLayout = default)
         {
-            Json.JsonTileInfo[] tilesInfo = resourceLocation.TilesInfo.ToArray();
-            Size tileArea = resourceLocation.GetTileArea(source.Size);
+            AtlasResource atlasResource = resourceLocation as AtlasResource ?? throw new InvalidDataException(nameof(resourceLocation));
+            Json.JsonTileInfo[] tilesInfo = atlasResource.TilesInfo.ToArray();
+            Size tileArea = atlasResource.GetTileArea(source.Size);
             int rows = source.Width / tileArea.Width;
             int columns = source.Height / tileArea.Height;
             IEnumerable<AtlasTile> tiles = source.Split(tileArea, imageLayout).enumerate().Select(((int index, Image img) data) => new AtlasTile(data.img, GetSelectedPoint(data.index, out int col, rows, columns, imageLayout), col, index: data.index, userData: tilesInfo.IndexInRange(data.index) ? tilesInfo[data.index] : default));
-            var atlas = new Atlas(resourceLocation.Path, rows, columns, tiles, tileArea, imageLayout);
-            atlas.AddGroups(resourceLocation.AtlasGroups);
+            var atlas = new Atlas(atlasResource.Path, rows, columns, tiles, tileArea, imageLayout);
+            atlas.AddGroups(atlasResource.AtlasGroups);
             return atlas;
         }
 

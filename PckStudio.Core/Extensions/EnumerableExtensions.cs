@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PckStudio.Core.Extensions
 {
@@ -13,6 +15,17 @@ namespace PckStudio.Core.Extensions
                 yield return (i++, item);
             }
             yield break;
+        }
+
+        public static ImageList ToImageList(this Image[] images)
+        {
+            ImageList imageList = new ImageList
+            {
+                ColorDepth = ColorDepth.Depth32Bit
+            };
+            imageList.Images.AddRange(images);
+
+            return imageList;
         }
 
         public static bool EqualsAny<T>(this T type, params T[] items)

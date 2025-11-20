@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,11 @@ namespace PckStudio.Core.Deserializer
 {
     public sealed class AtlasDeserializer : IPckAssetDeserializer<Atlas>
     {
-        private readonly ResourceLocation _resourceLocation;
+        private readonly AtlasResource _resourceLocation;
 
         public AtlasDeserializer(ResourceLocation resourceLocation)
         {
-            _resourceLocation = resourceLocation;
+            _resourceLocation = resourceLocation as AtlasResource ?? throw new InvalidDataException(nameof(resourceLocation));
         }
 
         public Atlas Deserialize(PckAsset asset) => Atlas.FromResourceLocation(asset.GetTexture(), _resourceLocation);

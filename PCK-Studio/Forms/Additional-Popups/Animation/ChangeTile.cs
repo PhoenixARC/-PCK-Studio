@@ -5,6 +5,8 @@ using PckStudio.Core;
 using PckStudio.Core.Json;
 using PckStudio.Json;
 using PckStudio.Core.Extensions;
+using System.Drawing;
+using System.Linq;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -48,14 +50,14 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void GetTileDataToView(ResourceCategory key)
 		{
-			(List<JsonTileInfo> textureInfos, ImageList imgList, string name) = key switch
+			(List<JsonTileInfo> textureInfos, Image[] images, string name) = key switch
 			{
-                ResourceCategory.BlockAnimation => (Tiles.BlockTileInfos, Tiles.BlockImageList, "Blocks"),
-                ResourceCategory.ItemAnimation => (Tiles.ItemTileInfos, Tiles.ItemImageList, "Items"),
+                ResourceCategory.BlockAnimation => (Tiles.BlockTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(ResourceCategory.BlockAtlas)).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Blocks"),
+                ResourceCategory.ItemAnimation => (Tiles.ItemTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(ResourceCategory.ItemAtlas)).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Items"),
 				_ => throw new InvalidOperationException(nameof(key))
 			};
             TreeView view = filterPrompt.AddFilterPage(name, null, filterPredicate);
-			view.ImageList = imgList;
+			view.ImageList = images.ToImageList();
 			foreach ((int i, JsonTileInfo tileData) in textureInfos?.enumerate())
 			{
 				if (string.IsNullOrEmpty(tileData.InternalName) || view.Nodes.ContainsKey(tileData.InternalName))

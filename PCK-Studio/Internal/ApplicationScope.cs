@@ -36,14 +36,6 @@ namespace PckStudio.Internal.App
             _ = Tiles.JsonMapIconData;
             _ = Tiles.JsonExperienceOrbData;
             _ = Tiles.JsonPaintingData;
-            _ = Tiles.BlockImageList;
-            _ = Tiles.ItemImageList;
-            _ = Tiles.ParticleImageList;
-            _ = Tiles.ExplosionImageList;
-            _ = Tiles.MapIconImageList;
-            _ = Tiles.ExperienceOrbImageList;
-            _ = Tiles.MoonPhaseImageList;
-            _ = Tiles.PaintingImageList;
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             Task.Run(GetContributors);
         }

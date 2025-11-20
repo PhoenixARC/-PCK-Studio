@@ -17,19 +17,47 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using PckStudio.Core.Json;
+using PckStudio.Core.Properties;
 using PckStudio.Json;
+using static PckStudio.Core.ResourceLocation;
 
 namespace PckStudio.Core
 {
-    public sealed class ResourceLocation
+    public static class ResourceLocations
     {
-        private static List<ResourceLocation> ResourceGroups = new List<ResourceLocation>();
-        private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown, -1);
+        static ResourceLocations()
+        {
+            _all = new ResourceLocation[] {
+                    new GroupResource("textures/items", ResourceCategory.ItemAnimation),
+                    new GroupResource("textures/blocks", ResourceCategory.BlockAnimation),
+                    new GroupResource("mob", ResourceCategory.MobEntityTextures),
+                    new GroupResource("item", ResourceCategory.ItemEntityTextures),
+                    new GroupResource("armor", ResourceCategory.ArmorTextures),
+                    new AtlasResource("terrain.png", ResourceCategory.BlockAtlas, 16, Resources.terrain_atlas, tilesInfo: Tiles.BlockTileInfos, atlasGroups: _terrainAtlasGroups),
+                    new AtlasResource("items.png", ResourceCategory.ItemAtlas, 16, Resources.items_atlas, tilesInfo: Tiles.ItemTileInfos, atlasGroups: _itemsAtlasGroups),
+                    new AtlasResource("particles.png", ResourceCategory.ParticleAtlas, 16, Resources.particles_atlas, tilesInfo: Tiles.ParticleTileInfos, atlasGroups: _particaleAtlasGroups),
+                    new AtlasResource("item/banner/Banner_Atlas.png", ResourceCategory.BannerAtlas, new Size(6, 7), Resources.banners_atlas, TillingMode.WidthAndHeight, tilesInfo: Tiles.BannerTileInfos),
+                    new AtlasResource("art/kz.png", ResourceCategory.PaintingAtlas, 16, Resources.paintings_atlas, tilesInfo: Tiles.PaintingTileInfos, atlasGroups: _paintingAtlasGroups),
+                    new AtlasResource("misc/explosion.png", ResourceCategory.ExplosionAtlas, 16, Resources.explosions_atlas, tilesInfo: Tiles.ExplosionTileInfos),
+                    new AtlasResource("item/xporb.png", ResourceCategory.ExperienceOrbAtlas, 4, Resources.experience_orbs_atlas, tilesInfo: Tiles.ExperienceOrbTileInfos),
+                    new AtlasResource("terrain/moon_phases.png", ResourceCategory.MoonPhaseAtlas, 4, Resources.moon_phases_atlas, tilesInfo: Tiles.MoonPhaseTileInfos),
+                    new AtlasResource("misc/mapicons.png", ResourceCategory.MapIconAtlas, 4, Resources.map_icons_atlas, tilesInfo: Tiles.MapIconTileInfos),
+                    new AtlasResource("misc/additionalmapicons.png", ResourceCategory.AdditionalMapIconsAtlas, 4, Resources.additional_map_icons_atlas, tilesInfo: Tiles.AdditionalMapIconTileInfos),
+                };
+        }
 
-        private static AtlasGroup[] _particaleAtlasGroups =
+        public static ResourceLocation GetFromCategory(ResourceCategory category) => ResourceLocation.GetFromCategory(category);
+        public static ResourceLocation GetFromPath(string path) => ResourceLocation.GetFromPath(path);
+        public static ResourceCategory GetCategoryFromPath(string path) => ResourceLocation.GetCategoryFromPath(path);
+        public static string GetPathFromCategory(ResourceCategory category) => ResourceLocation.GetPathFromCategory(category);
+
+
+        private static readonly AtlasGroup[] _particaleAtlasGroups =
         {
             new AtlasGroupAnimation("generic"            , row: 0, column:  0, frameCount:  8, ImageLayoutDirection.Horizontal, 2),
             new AtlasGroupAnimation("splash"             , row: 3, column:  1, frameCount:  4, ImageLayoutDirection.Horizontal, 2),
@@ -43,7 +71,7 @@ namespace PckStudio.Core
             new AtlasGroupLargeTileAnimation("bubble_pop", row: 6, column:  6, rowSpan: 2, columnSpan: 2, frameCount: 5, ImageLayoutDirection.Horizontal, 2),
         };
 
-        private static AtlasGroup[] _terrainAtlasGroups =
+        private static readonly AtlasGroup[] _terrainAtlasGroups =
         {
              new AtlasGroupLargeTile("Oak Door"     , row: 1, column:  5, rowSpan: 1, columnSpan: 2),
              new AtlasGroupLargeTile("Iron Door"    , row: 2, column:  5, rowSpan: 1, columnSpan: 2),
@@ -67,12 +95,12 @@ namespace PckStudio.Core
              new AtlasGroupAnimation("Destroy"    , row: 0, column: 15, frameCount: 10, ImageLayoutDirection.Horizontal, 3),
         };
 
-        private static AtlasGroup[] _itemsAtlasGroups =
+        private static readonly AtlasGroup[] _itemsAtlasGroups =
         {
             new AtlasGroupAnimation("Bow Pulling", row: 5, column: 6, frameCount: 3, ImageLayoutDirection.Vertical, 6),
         };
 
-        private static AtlasGroup[] _paintingAtlasGroups =
+        private static readonly AtlasGroup[] _paintingAtlasGroups =
         {
             new AtlasGroupLargeTile("The Pool"                , row:  0, column: 2, rowSpan: 2, columnSpan: 1),
             new AtlasGroupLargeTile("Bonjour Monsiuer Courbet", row:  2, column: 2, rowSpan: 2, columnSpan: 1),
@@ -82,7 +110,7 @@ namespace PckStudio.Core
 
             new AtlasGroupLargeTile("Wanderer"                , row:  0, column: 4, rowSpan: 1, columnSpan: 2),
             new AtlasGroupLargeTile("Graham"                  , row:  1, column: 4, rowSpan: 1, columnSpan: 2),
-            
+
             new AtlasGroupLargeTile("Fighters"                , row:  0, column: 6, rowSpan: 4, columnSpan: 2),
 
             new AtlasGroupLargeTile("Match"                   , row:  0, column: 8, rowSpan: 2, columnSpan: 2),
@@ -101,39 +129,16 @@ namespace PckStudio.Core
             new AtlasGroupLargeTile("Skull On Fire"           , row:  8, column: 12, rowSpan: 4, columnSpan: 4),
         };
 
-        private static readonly Dictionary<string, ResourceLocation> _categoryLookUp = new Dictionary<string, ResourceLocation>()
-        {
-            ["textures/items"] = new ResourceLocation("textures/items", ResourceCategory.ItemAnimation, 16, isGroup: true),
-            ["textures/blocks"] = new ResourceLocation("textures/blocks", ResourceCategory.BlockAnimation, 16, isGroup: true),
-            ["mob"] = new ResourceLocation("mob", ResourceCategory.MobEntityTextures, 1, isGroup: true),
-            ["item"] = new ResourceLocation("item", ResourceCategory.ItemEntityTextures, 1, isGroup: true),
-            ["terrain.png"] = new ResourceLocation("terrain.png", ResourceCategory.BlockAtlas, 16, tilesInfo: Tiles.BlockTileInfos, atlasGroups: _terrainAtlasGroups),
-            ["items.png"] = new ResourceLocation("items.png", ResourceCategory.ItemAtlas, 16, tilesInfo: Tiles.ItemTileInfos, atlasGroups: _itemsAtlasGroups),
-            ["particles.png"] = new ResourceLocation("particles.png", ResourceCategory.ParticleAtlas, 16, tilesInfo: Tiles.ParticleTileInfos, atlasGroups: _particaleAtlasGroups),
-            //============ TODO ============//
-            ["item/banner/Banner_Atlas.png"] = new ResourceLocation("item/banner/Banner_Atlas.png", ResourceCategory.BannerAtlas, new Size(6, 7), TillingMode.WidthAndHeight, tilesInfo: Tiles.BannerTileInfos),
-            //==============================//
-            ["art/kz.png"] = new ResourceLocation("art/kz.png", ResourceCategory.PaintingAtlas, 16, tilesInfo: Tiles.PaintingTileInfos, atlasGroups: _paintingAtlasGroups),
-            ["misc/explosion.png"] = new ResourceLocation("misc/explosion.png", ResourceCategory.ExplosionAtlas, 16, tilesInfo: Tiles.ExplosionTileInfos),
-            ["item/xporb.png"] = new ResourceLocation("item/xporb.png", ResourceCategory.ExperienceOrbAtlas, 4, tilesInfo: Tiles.ExperienceOrbTileInfos),
-            ["terrain/moon_phases.png"] = new ResourceLocation("terrain/moon_phases.png", ResourceCategory.MoonPhaseAtlas, 4, tilesInfo: Tiles.MoonPhaseTileInfos),
-            ["misc/mapicons.png"] = new ResourceLocation("misc/mapicons.png", ResourceCategory.MapIconAtlas, 4, tilesInfo: Tiles.MapIconTileInfos),
-            ["misc/additionalmapicons.png"] = new ResourceLocation("misc/additionalmapicons.png", ResourceCategory.AdditionalMapIconsAtlas, 4, tilesInfo: Tiles.AdditionalMapIconTileInfos),
-        };
+        private static readonly ResourceLocation[] _all;
+    }
 
-        public static string GetPathFromCategory(ResourceCategory category) => GetFromCategory(category).ToString();
-
-        public static ResourceCategory GetCategoryFromPath(string path) => GetFromPath(path).Category;
-
-        public static ResourceLocation GetFromPath(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("res/"))
-                return Unknown;
-            string categoryPath = path.Substring("res/".Length);
-            if (_categoryLookUp.ContainsKey(categoryPath))
-                return _categoryLookUp[categoryPath];
-            return ResourceGroups.Where(group => categoryPath.StartsWith(group.Path)).FirstOrDefault() ?? Unknown;
-        }
+    public class ResourceLocation
+    {
+        internal const string RESOURCE_PATH_PREFIX = "res/";
+        private static List<ResourceLocation> ResourceGroups = new List<ResourceLocation>();
+        private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown, -1);
+        private static readonly Dictionary<string, ResourceLocation> _pathLookUp = new Dictionary<string, ResourceLocation>();
+        private static readonly Dictionary<ResourceCategory, ResourceLocation> _categoryLookUp = new Dictionary<ResourceCategory, ResourceLocation>();
 
         public enum TillingMode
         {
@@ -143,12 +148,11 @@ namespace PckStudio.Core
         }
 
         public string Path { get; }
+        public string FullPath => System.IO.Path.Combine(RESOURCE_PATH_PREFIX, Path);
         public ResourceCategory Category { get; }
         public Size TillingFactor { get; }
         public TillingMode Tilling { get; }
         public bool IsGroup { get; }
-        public IEnumerable<JsonTileInfo> TilesInfo { get; }
-        public IEnumerable<AtlasGroup> AtlasGroups { get; }
 
         public Size GetTileArea(Size imgSize)
         {
@@ -161,50 +165,47 @@ namespace PckStudio.Core
             };
         }
 
-        private ResourceLocation(string path, ResourceCategory category, int tillingFactor, TillingMode tilling = TillingMode.Width, bool isGroup = false, IEnumerable<JsonTileInfo> tilesInfo = default, IEnumerable<AtlasGroup> atlasGroups = default)
-            : this(path, category, new Size(tillingFactor, tillingFactor), tilling, isGroup, tilesInfo, atlasGroups)
+        protected ResourceLocation(string path, ResourceCategory category, int tillingFactor, TillingMode tilling = default, bool isGroup = false)
+            : this(path, category, new Size(tillingFactor, tillingFactor), tilling, isGroup)
         {
         }
 
 
-        private ResourceLocation(string path, ResourceCategory category, Size tillingFactor, TillingMode tilling = TillingMode.Width, bool isGroup = false, IEnumerable<JsonTileInfo> tilesInfo = default, IEnumerable<AtlasGroup> atlasGroups = default)
+        protected ResourceLocation(string path, ResourceCategory category, Size tillingFactor, TillingMode tilling = default, bool isGroup = false)
         {
             Path = path;
             Category = category;
             TillingFactor = new Size(Math.Max(1, tillingFactor.Width), Math.Max(1, tillingFactor.Height));
-            Tilling = tilling;
+            Tilling = Enum.IsDefined(typeof(TillingMode), tilling) ? tilling : default;
             IsGroup = isGroup;
-            TilesInfo = tilesInfo ?? Enumerable.Empty<JsonTileInfo>();
-            AtlasGroups = atlasGroups ?? Enumerable.Empty<AtlasGroup>();
-            if (isGroup)
+         
+            if (IsGroup)
                 ResourceGroups.Add(this);
-        }
 
-        public override string ToString()
-        {
-            return "res/" + Path;
-        }
-
-        internal static ResourceLocation GetFromCategory(ResourceCategory category)
-        {
-            return category switch
+            if (Category != ResourceCategory.Unknown && !string.IsNullOrWhiteSpace(Path))
             {
-                ResourceCategory.ItemAnimation => _categoryLookUp["textures/items"],
-                ResourceCategory.BlockAnimation => _categoryLookUp["textures/blocks"],
-                ResourceCategory.MobEntityTextures => _categoryLookUp["mob"],
-                ResourceCategory.ItemEntityTextures => _categoryLookUp["item"],
-                ResourceCategory.BlockAtlas => _categoryLookUp["terrain.png"],
-                ResourceCategory.ItemAtlas => _categoryLookUp["items.png"],
-                ResourceCategory.ParticleAtlas => _categoryLookUp["particles.png"],
-                ResourceCategory.BannerAtlas => _categoryLookUp["item/banner/Banner_Atlas.png"],
-                ResourceCategory.PaintingAtlas => _categoryLookUp["art/kz.png"],
-                ResourceCategory.ExplosionAtlas => _categoryLookUp["misc/explosion.png"],
-                ResourceCategory.ExperienceOrbAtlas => _categoryLookUp["item/xporb.png"],
-                ResourceCategory.MoonPhaseAtlas => _categoryLookUp["terrain/moon_phases.png"],
-                ResourceCategory.MapIconAtlas => _categoryLookUp["misc/mapicons.png"],
-                ResourceCategory.AdditionalMapIconsAtlas => _categoryLookUp["misc/additionalmapicons.png"],
-                _ => Unknown
-            };
+                _categoryLookUp.Add(Category, this);
+                _pathLookUp.Add(Path, this);
+                Debug.WriteLine($"Add ResourceLocation: {Path}({Category}).");
+            }
+        }
+
+        public override string ToString() => FullPath;
+
+        internal static ResourceLocation GetFromCategory(ResourceCategory category) => _categoryLookUp.ContainsKey(category) ? _categoryLookUp[category] : Unknown;
+
+        internal static string GetPathFromCategory(ResourceCategory category) => GetFromCategory(category).ToString();
+
+        internal static ResourceCategory GetCategoryFromPath(string path) => GetFromPath(path).Category;
+
+        internal static ResourceLocation GetFromPath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !path.StartsWith(RESOURCE_PATH_PREFIX))
+                return Unknown;
+            string categoryPath = path.Substring(RESOURCE_PATH_PREFIX.Length);
+            if (_pathLookUp.ContainsKey(categoryPath))
+                return _pathLookUp[categoryPath];
+            return ResourceGroups.Where(group => categoryPath.StartsWith(group.Path)).FirstOrDefault() ?? Unknown;
         }
     }
 }

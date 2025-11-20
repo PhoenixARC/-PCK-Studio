@@ -58,6 +58,7 @@
     <Compile Include="AtlasGroupAnimation.cs" />
     <Compile Include="AtlasGroupLargeTile.cs" />
     <Compile Include="AtlasGroupLargeTileAnimation.cs" />
+    <Compile Include="AtlasResource.cs" />
     <Compile Include="AtlasTile.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="ConsolePlatform.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="DLC\UnknownDLCPackage.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
+    <Compile Include="Extensions\BlendOption.cs" />
     <Compile Include="Extensions\BoundingBoxExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\CursorExtensions.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="GameRule\SpawnPositionSet.cs" />
     <Compile Include="GameRule\UpdatePlayer.cs" />
     <Compile Include="GameRule\WorldPosition.cs" />
+    <Compile Include="GroupResource.cs" />
     <Compile Include="Interfaces\IDLCPackage.cs" />
     <Compile Include="Interfaces\IDLCPackageSerialization.cs" />
     <Compile Include="Interfaces\IEditor.cs" />
