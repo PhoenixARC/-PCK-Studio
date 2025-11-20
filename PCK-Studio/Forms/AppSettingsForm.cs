@@ -21,7 +21,6 @@ namespace PckStudio.Forms
             {
                 ["ShowRichPresence"] = "Show Rich Presence",
                 ["AutoSaveChanges"] = "Auto Save",
-                ["UseLittleEndianAsDefault"] = "Open as Little Endian",
                 ["AutoUpdate"] = "Auto Update",
                 ["LoadSubPcks"] = "Load Sub Pcks",
                 ["UsePrerelease"] = "Use Prerelease",

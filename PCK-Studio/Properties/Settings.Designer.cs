@@ -47,18 +47,6 @@ namespace PckStudio.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseLittleEndianAsDefault {
-            get {
-                return ((bool)(this["UseLittleEndianAsDefault"]));
-            }
-            set {
-                this["UseLittleEndianAsDefault"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool LoadSubPcks {
             get {
                 return ((bool)(this["LoadSubPcks"]));
