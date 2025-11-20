@@ -26,7 +26,7 @@ namespace PckStudio.Core.App
     {
         public bool IsReadOnly => _isReadOnly;
 
-        public const string KeyToStringContextKeyConst = "keyToString";
+        public const string KEY_FOR_CONTEXT = "keyToString";
 
         private Dictionary<string, Action<object>> _registery = new Dictionary<string, Action<object>>();
 
@@ -97,14 +97,14 @@ namespace PckStudio.Core.App
             if (_isReadOnly)
                 throw new SettingsPropertyIsReadOnlyException("Can't add setting. Underlying SettingsBase is readonly.");
 
-            if (!_settings.Context.ContainsKey(KeyToStringContextKeyConst))
-                _settings.Context.Add(KeyToStringContextKeyConst, new Dictionary<string, string>());
+            if (!_settings.Context.ContainsKey(KEY_FOR_CONTEXT))
+                _settings.Context.Add(KEY_FOR_CONTEXT, new Dictionary<string, string>());
             
             var settingsProperty = new SettingsProperty(
                 name, typeof(T), null, false, default(T), SettingsSerializeAs.String, null, false, false);
             _settings.Properties.Add(settingsProperty);
             _settings.PropertyValues.Add(new SettingsPropertyValue(settingsProperty) { PropertyValue = initialValue });
-            if (_settings.Context[KeyToStringContextKeyConst] is Dictionary<string, string> dict)
+            if (_settings.Context[KEY_FOR_CONTEXT] is Dictionary<string, string> dict)
                 dict.Add(name, description);
             callback(initialValue);
             return RegisterPropertyChangedCallback(name, callback);

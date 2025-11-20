@@ -15,7 +15,6 @@ namespace PckStudio.Forms
     public partial class AppSettingsForm : MetroForm
     {
         private ApplicationSettingsBase _applicationSettings;
-        internal const string keyToStringContextKey = "keyToString";
 
         public AppSettingsForm()
             : this("Application Settings", Settings.Default, new Dictionary<string, string>()
@@ -36,8 +35,8 @@ namespace PckStudio.Forms
             InitializeComponent();
             Text = title;
             _applicationSettings = applicationSettings;
-            if (keyToStringMap is not null && !_applicationSettings.Context.ContainsKey(SettingsManager.KeyToStringContextKeyConst))
-                _applicationSettings.Context.Add(SettingsManager.KeyToStringContextKeyConst, keyToStringMap);
+            if (keyToStringMap is not null && !_applicationSettings.Context.ContainsKey(SettingsManager.KEY_FOR_CONTEXT))
+                _applicationSettings.Context.Add(SettingsManager.KEY_FOR_CONTEXT, keyToStringMap);
             LoadSettings();
         }
 
@@ -45,8 +44,8 @@ namespace PckStudio.Forms
         {
             value = default;
             return
-                context.ContainsKey(SettingsManager.KeyToStringContextKeyConst) &&
-                context[SettingsManager.KeyToStringContextKeyConst] is Dictionary<string, string> keyToString &&
+                context.ContainsKey(SettingsManager.KEY_FOR_CONTEXT) &&
+                context[SettingsManager.KEY_FOR_CONTEXT] is Dictionary<string, string> keyToString &&
                 keyToString.TryGetValue(key, out value);
         }
 
@@ -110,6 +109,7 @@ namespace PckStudio.Forms
         Dictionary<Type, ControlCreateDelegate> _typeToControl = new Dictionary<Type, ControlCreateDelegate>()
         {
             [typeof(bool)] = CreateCheckBox,
+            //! TODO(null): remove ConsolePlatform.Unknown from selection
             [typeof(ConsolePlatform)] = CreateEnumComboBox,
             [typeof(AppLanguage)] = CreateEnumComboBox,
         };
