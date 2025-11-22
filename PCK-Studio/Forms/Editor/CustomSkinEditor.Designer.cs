@@ -391,8 +391,6 @@
             this.Controls.Add(this.importSkinButton);
             this.Controls.Add(this.buttonDone);
             this.Name = "CustomSkinEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomSkinEditor_FormClosing);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

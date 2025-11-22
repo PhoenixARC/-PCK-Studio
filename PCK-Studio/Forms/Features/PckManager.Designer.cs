@@ -109,9 +109,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(419, 640);
             this.Name = "PckManager";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Pck Manager";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.ResumeLayout(false);

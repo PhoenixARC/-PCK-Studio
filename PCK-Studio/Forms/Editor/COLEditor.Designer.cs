@@ -545,8 +545,6 @@ namespace PckStudio.Forms.Editor
             this.Controls.Add(this.metroPanel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "COLEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).EndInit();

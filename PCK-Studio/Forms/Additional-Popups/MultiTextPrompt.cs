@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class MultiTextPrompt : MetroFramework.Forms.MetroForm
+    public partial class MultiTextPrompt : ImmersiveForm
     {
-        public IEnumerable<string> TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : Array.Empty<string>();
+        public string[] TextOutput => DialogResult == DialogResult.OK ? PromptTextBox.Lines : Array.Empty<string>();
         
         public MultiTextPrompt(IEnumerable<string> textLines)
         {

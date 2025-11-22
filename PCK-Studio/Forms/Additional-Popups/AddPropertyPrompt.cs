@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class AddPropertyPrompt : MetroFramework.Forms.MetroForm
+    public partial class AddPropertyPrompt : ImmersiveForm
     {
         public KeyValuePair<string, string> Property => new KeyValuePair<string, string>(keyTextBox.Text, valueTextBox.Text);
 

@@ -58,7 +58,8 @@ namespace PckStudio.Forms.Editor
             _ = atlas ?? throw new ArgumentNullException(nameof(atlas));
             _ = resourceLocation ?? throw new ArgumentNullException(nameof(resourceLocation));
             _atlas = atlas;
-            Text = _atlas.Name;
+            Text += " - ";
+            Text += _atlas.Name;
             originalPictureBox.Image = atlas;
 
             _colourTable = colorContainer ?? AppResourceManager.Default.GetData(Resources.tu69colours, new COLFileReader());

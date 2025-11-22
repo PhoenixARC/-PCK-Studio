@@ -1,18 +1,18 @@
-﻿using DiscordRPC;
-using OMI;
-using OMI.Formats.Pck;
-using OMI.Workers.Pck;
-using PckStudio.Core.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using OMI;
+using OMI.Formats.Pck;
+using OMI.Workers.Pck;
+using PckStudio.Controls;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Popups
 {
-    public partial class AdvancedOptions : MetroFramework.Forms.MetroForm
+    public partial class AdvancedOptions : ImmersiveForm
     {
         public bool IsLittleEndian
         {

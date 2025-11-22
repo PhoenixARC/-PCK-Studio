@@ -17,10 +17,11 @@
 **/
 using System;
 using System.Windows.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Features
 {
-    public partial class PckManager : MetroFramework.Forms.MetroForm
+    public partial class PckManager : ImmersiveForm
     {
         private Control _currentlyShowingControl;
         private string _currentlyShowingControlName;

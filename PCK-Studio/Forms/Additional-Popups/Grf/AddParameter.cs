@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using OMI.Formats.GameRule;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups.Grf
 {
-    public partial class AddParameter : MetroFramework.Forms.MetroForm
+    public partial class AddParameter : ImmersiveForm
     {
         public string ParameterName => NameTextBox.Text;
         public string ParameterValue => ValueTextBox.Text;

@@ -1,35 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using OMI.Formats.Pck;
+using System.Windows.Forms;
+using MetroFramework.Forms;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
-using OMI.Workers.Pck;
+using OMI.Formats.Pck;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
+using OMI.Workers.Pck;
 using PckStudio.Controls;
-using PckStudio.External.API.Miles;
-using PckStudio.Forms;
-using PckStudio.Forms.Features;
-using PckStudio.Forms.Additional_Popups;
-using PckStudio.Interfaces;
-using PckStudio.Internal;
-using PckStudio.Internal.App;
-using PckStudio.Popups;
-using PckStudio.Properties;
 using PckStudio.Core;
 using PckStudio.Core.App;
 using PckStudio.Core.DLC;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
+using PckStudio.External.API.Miles;
+using PckStudio.Forms;
+using PckStudio.Forms.Additional_Popups;
+using PckStudio.Forms.Features;
+using PckStudio.Interfaces;
+using PckStudio.Internal;
+using PckStudio.Internal.App;
+using PckStudio.Popups;
+using PckStudio.Properties;
 
 namespace PckStudio
 {
-	public partial class MainForm : MetroFramework.Forms.MetroForm
+	public partial class MainForm : ImmersiveForm
 	{
 		private PckManager PckManager = null;
 
@@ -560,5 +562,5 @@ namespace PckStudio
 			PckManager?.Close();
             Application.Exit();
         }
-	}
+    }
 }

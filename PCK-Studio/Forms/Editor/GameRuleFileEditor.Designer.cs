@@ -323,10 +323,8 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "GameRuleFileEditor";
-            this.Padding = new System.Windows.Forms.Padding(25, 60, 25, 25);
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "GRF Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.Padding = new System.Windows.Forms.Padding(25, 60, 25, 25);
             this.Load += new System.EventHandler(this.OnLoad);
             this.MessageContextMenu.ResumeLayout(false);
             this.DetailContextMenu.ResumeLayout(false);

@@ -70,10 +70,7 @@
             this.MinimumSize = new System.Drawing.Size(289, 140);
             this.Name = "AddLanguage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Add Language";
-            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
 
         }

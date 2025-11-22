@@ -727,10 +727,8 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 554);
             this.Name = "ANIMEditor";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "ANIM Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ANIMEditor_FormClosing);
             this.effectsGroup.ResumeLayout(false);
             this.effectsGroup.PerformLayout();

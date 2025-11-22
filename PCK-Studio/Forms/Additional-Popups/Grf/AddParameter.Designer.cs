@@ -164,9 +164,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddParameter";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 

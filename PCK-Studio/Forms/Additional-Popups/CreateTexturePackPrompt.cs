@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Controls;
 using PckStudio.Core.DLC;
 
 namespace PckStudio
 {
-    public partial class CreateTexturePackPrompt : MetroForm
+    public partial class CreateTexturePackPrompt : ImmersiveForm
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>

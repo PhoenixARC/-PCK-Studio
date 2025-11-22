@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-	public partial class ItemSelectionPopUp : MetroFramework.Forms.MetroForm
+	public partial class ItemSelectionPopUp : ImmersiveForm
 	{
 		public string SelectedItem => DialogResult == DialogResult.OK ? ComboBox.Text : string.Empty;
 		public int SelectedIndex => DialogResult == DialogResult.OK ? ComboBox.SelectedIndex : -1;

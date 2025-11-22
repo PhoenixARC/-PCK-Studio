@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio
 {
-    public partial class TextPrompt : MetroForm
+    public partial class TextPrompt : ImmersiveForm
 	{
 		/// <summary>
 		/// Text entered <c>only access when DialogResult == DialogResult.OK</c>

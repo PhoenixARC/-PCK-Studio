@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups.Loc
 {
-    public partial class AddLanguage : MetroFramework.Forms.MetroForm
+    public partial class AddLanguage : ImmersiveForm
     {
         public string SelectedLanguage => LanguageComboBox.Text;
         public AddLanguage(string[] avalibleLanguages)

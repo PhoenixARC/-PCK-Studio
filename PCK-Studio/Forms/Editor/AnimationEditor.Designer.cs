@@ -318,6 +318,7 @@
             this.animationPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.animationPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.animationPictureBox.BlendColor = System.Drawing.Color.White;
             this.animationPictureBox.BlendMode = PckStudio.Core.Extensions.BlendMode.Multiply;
             this.animationPictureBox.Image = null;
@@ -343,9 +344,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(412, 362);
             this.Name = "AnimationEditor";
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Animation Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationEditor_FormClosing);
             this.Load += new System.EventHandler(this.AnimationEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);

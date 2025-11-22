@@ -4,15 +4,14 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MetroFramework.Controls;
-using MetroFramework.Forms;
+using PckStudio.Controls;
 using PckStudio.Core;
 using PckStudio.Core.App;
-using PckStudio.Internal.App;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms
 {
-    public partial class AppSettingsForm : MetroForm
+    public partial class AppSettingsForm : ImmersiveForm
     {
         private ApplicationSettingsBase _applicationSettings;
 

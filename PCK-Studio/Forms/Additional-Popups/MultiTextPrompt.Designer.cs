@@ -108,8 +108,6 @@
             this.MinimumSize = new System.Drawing.Size(270, 335);
             this.Name = "MultiTextPrompt";
             this.Padding = new System.Windows.Forms.Padding(20, 60, 20, 40);
-            this.Style = MetroFramework.MetroColorStyle.Black;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
 
         }

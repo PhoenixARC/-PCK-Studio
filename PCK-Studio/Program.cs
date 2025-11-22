@@ -56,7 +56,7 @@ namespace PckStudio
                 MainInstance.LoadPckFromFile(args.Where(arg => File.Exists(arg) && arg.EndsWith(".pck")));
             }
             Application.ApplicationExit += (sender, e) => { RPC.Deinitialize(); };
-            MainInstance.FocusMe();
+            MainInstance.Focus();
             Application.Run(MainInstance);
         }
     }

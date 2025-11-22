@@ -17,10 +17,11 @@ using System.Diagnostics;
 using PckStudio.Core.Skin;
 using PckStudio.Interfaces;
 using PckStudio.Core;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups
 {
-    public partial class AddSkinPrompt : MetroFramework.Forms.MetroForm
+    public partial class AddSkinPrompt : ImmersiveForm
     {
         public Skin NewSkin => newSkin;
 

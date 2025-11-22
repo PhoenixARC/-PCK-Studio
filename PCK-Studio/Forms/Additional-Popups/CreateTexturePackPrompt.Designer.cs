@@ -121,10 +121,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateTexturePackPrompt";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using MetroFramework.Forms;
 using OMI.Formats.Pck;
+using PckStudio.Controls;
 
 namespace PckStudio.Popups
 {
-    public partial class AddFilePrompt : MetroForm
+    public partial class AddFilePrompt : ImmersiveForm
 	{
         /// <summary>
         /// Text entered only valid when <see cref="DialogResult"/> == <see cref="DialogResult.OK"/>,

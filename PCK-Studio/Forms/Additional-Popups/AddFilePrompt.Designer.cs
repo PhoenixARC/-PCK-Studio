@@ -124,10 +124,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddFilePrompt";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.ResumeLayout(false);
             this.PerformLayout();
 

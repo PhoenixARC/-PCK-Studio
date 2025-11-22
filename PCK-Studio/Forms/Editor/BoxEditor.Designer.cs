@@ -432,11 +432,8 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(630, 220);
             this.Name = "BoxEditor";
-            this.Resizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "BOX Editor";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BoxEditor_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).EndInit();

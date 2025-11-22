@@ -9,7 +9,7 @@ using PckStudio.Interfaces;
 
 namespace PckStudio.Controls
 {
-    public class EditorForm<T> : MetroForm where T : class
+    public class EditorForm<T> : ImmersiveForm where T : class
     {
         protected T EditorValue;
         private readonly ISaveContext<T> SaveContext;

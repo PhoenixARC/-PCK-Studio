@@ -100,10 +100,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TextPrompt";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.RenamePrompt_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

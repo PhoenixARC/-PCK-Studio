@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using PckStudio.Controls;
 
 namespace PckStudio
 {
-    public partial class NumericPrompt : MetroForm
+    public partial class NumericPrompt : ImmersiveForm
 	{
 		public decimal SelectedValue => ValueUpDown.Value;
 		

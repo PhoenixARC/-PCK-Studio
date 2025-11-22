@@ -112,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 500);
+            this.ClientSize = new System.Drawing.Size(714, 461);
             this.Controls.Add(this.contributorsLayoutPanel);
             this.Controls.Add(this.buildLabel);
             this.Controls.Add(metroLabel6);
@@ -120,17 +120,15 @@
             this.Controls.Add(metroLabel5);
             this.Controls.Add(metroLabel2);
             this.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(730, 500);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(730, 500);
             this.Name = "ContributorsForm";
-            this.Resizable = false;
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Contributors";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.ResumeLayout(false);
             this.PerformLayout();
 

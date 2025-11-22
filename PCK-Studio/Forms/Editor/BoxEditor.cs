@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
+using PckStudio.Controls;
 using PckStudio.Core.Skin;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
 {
-	public partial class BoxEditor : MetroFramework.Forms.MetroForm
+	public partial class BoxEditor : ImmersiveForm
 	{
 		private SkinBOX result;
 		public SkinBOX Result => result;

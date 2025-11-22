@@ -9,10 +9,11 @@ using PckStudio.Internal;
 using PckStudio.Forms.Additional_Popups;
 using PckStudio.Properties;
 using PckStudio.Core.Skin;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class ANIMEditor : MetroFramework.Forms.MetroForm
+    public partial class ANIMEditor : ImmersiveForm
     {
         public SkinANIM ResultAnim => ruleset.Value;
 

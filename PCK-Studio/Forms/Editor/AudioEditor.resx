@@ -172,7 +172,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACK
-        NAAAAk1TRnQBSQFMAgEBCQEAAeABAAHgAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        NAAAAk1TRnQBSQFMAgEBCQEAAegBAAHoAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEgBgABMBIAATkBXgFzAf8BOQFeAXMB/wE5AV4BcwH/AT4BYgF8Af8BMwFUAWkB/wEz
         AVQBaQH/AT4BYgF8Af8BMwFUAWkB/wE5AV4BcwH/ATkBXgFzAf8BOQFeAXMB/wEzAVQBaQH/ASYBPQFM
         Af8BMwFUAWkB/wEzAVQBaQH/ATkBXgFzAf/AAAFiAZgBvAH/AWIBmAG8Af8BTQGEAZ8B/wFNAYQBnwH/
@@ -521,10 +521,10 @@
     <value>Help</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 60</value>
+    <value>0, 0</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>410, 24</value>
+    <value>450, 24</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -3217,6 +3217,9 @@
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>450, 330</value>
   </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Music Editor</value>
   </data>
@@ -3350,6 +3353,6 @@
     <value>AudioEditor</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>MetroFramework.Forms.MetroForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.Controls.EditorForm`1[[PckStudio.Core.FileFormats.PckAudioFile, PckStudio.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

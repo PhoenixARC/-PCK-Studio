@@ -324,9 +324,6 @@
             this.Controls.Add(label1);
             this.MaximizeBox = false;
             this.Name = "AddNewSkin";
-            this.Resizable = false;
-            this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.Load += new System.EventHandler(this.AddNewSkin_Load);
             this.contextMenuSkin.ResumeLayout(false);
             this.contextMenuCape.ResumeLayout(false);
