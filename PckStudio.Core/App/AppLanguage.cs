@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PckStudio.Core
+namespace PckStudio.Core.App
 {
     public enum AppLanguage : int
     {
