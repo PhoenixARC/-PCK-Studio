@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio.Rendering", "PckS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio.Core", "PckStudio.Core\PckStudio.Core.csproj", "{345EABED-F0D1-4D04-B409-BABDEF747352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStuido.ModelSupport", "PckStuido.ModelSupport\PckStuido.ModelSupport.csproj", "{43BCACD7-5405-4499-9B45-E1435AC03C26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PckStudio.ModelSupport", "PckStudio.ModelSupport\PckStudio.ModelSupport.csproj", "{43BCACD7-5405-4499-9B45-E1435AC03C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

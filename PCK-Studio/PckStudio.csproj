@@ -716,9 +716,9 @@
       <Project>{b1e19d0f-6dd5-4d91-9b45-9818759ca8ef}</Project>
       <Name>PckStudio.Rendering</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PckStuido.ModelSupport\PckStuido.ModelSupport.csproj">
+    <ProjectReference Include="..\PckStudio.ModelSupport\PckStudio.ModelSupport.csproj">
       <Project>{43bcacd7-5405-4499-9b45-e1435ac03c26}</Project>
-      <Name>PckStuido.ModelSupport</Name>
+      <Name>PckStudio.ModelSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vendor\OMI-Lib\OMI Filetypes Library\OMI Filetype Library.csproj">
       <Project>{693AEBC1-293D-4DF0-BCAE-26A1099FE7BB}</Project>

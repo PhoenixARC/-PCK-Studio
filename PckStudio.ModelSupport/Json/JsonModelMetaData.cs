@@ -2,7 +2,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.Core.Json
+namespace PckStudio.ModelSupport
 {
     public class ModelMetaDataPart
     {
