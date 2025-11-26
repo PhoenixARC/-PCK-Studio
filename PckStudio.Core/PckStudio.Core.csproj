@@ -98,6 +98,7 @@
     <Compile Include="Extensions\ModelBoxExtension.cs" />
     <Compile Include="Extensions\OpenTKExtensions.cs" />
     <Compile Include="Extensions\PckAssetExtensions.cs" />
+    <Compile Include="Extensions\PckFileExtensions.cs" />
     <Compile Include="Extensions\PictureBoxExtensions.cs" />
     <Compile Include="Extensions\SkinBOXExtensions.cs" />
     <Compile Include="Extensions\SkinExtensions.cs" />
