@@ -80,6 +80,7 @@ namespace PckStudio.Rendering
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool LockMousePosition { get; set; } = false;
+        public bool AllowCameraMovement { get; set; } = false;
 
         public float MouseSensetivity { get; set; } = 0.01f;
         private Point PreviousMouseLocation;
@@ -467,6 +468,7 @@ namespace PckStudio.Rendering
                     Camera.Rotate(deltaX, deltaY);
                     goto default;
                 case MouseButtons.Right:
+                    if (AllowCameraMovement)
                     Camera.Pan(deltaX, deltaY);
                     goto default;
                 default:
