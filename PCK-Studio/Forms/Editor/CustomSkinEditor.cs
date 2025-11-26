@@ -91,23 +91,7 @@ namespace PckStudio.Forms.Editor
 
         private void LoadModelData()
         {
-            SkinModel modelInfo = EditorValue.Model;
-
-            List<SkinBOX> boxProperties = modelInfo.AdditionalBoxes;
-            List<SkinPartOffset> offsetProperties = modelInfo.PartOffsets;
-            
-            renderer3D1.ANIM = EditorValue.Anim;
-
-            renderer3D1.ModelData.Clear();
-            foreach (SkinBOX box in boxProperties)
-            {
-                renderer3D1.ModelData.Add(box);
-            }
-            renderer3D1.ResetOffsets();
-            foreach (SkinPartOffset offset in offsetProperties)
-            {
-                renderer3D1.SetPartOffset(offset);
-            }
+            renderer3D1?.LoadSkin(EditorValue);
 
             if (EditorValue.Texture is not null)
             {

@@ -178,6 +178,18 @@ namespace PckStudio.Rendering
             return bmp;
         }
 
+        public void LoadSkin(Skin skin, Image cape = default)
+        {
+            ResetOffsets();
+            ModelData.Clear();
+            ANIM = skin.Anim;
+            Texture = skin.Texture;
+            CapeTexture = cape;
+
+            skin.Model.PartOffsets.ForEach(SetPartOffset);
+            skin.Model.AdditionalBoxes.ForEach(ModelData.Add);
+        }
+
         private enum GuidelineMode
         {
             None = -1,
