@@ -159,6 +159,11 @@
     <Compile Include="NamedData.cs" />
     <Compile Include="PackInfo.cs" />
     <Compile Include="DLC\DLCPackageType.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResourceCategory.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceLocations.cs" />
@@ -174,11 +179,6 @@
     <Compile Include="Skin\SkinMetaData.cs" />
     <Compile Include="Skin\SkinModel.cs" />
     <Compile Include="Skin\SkinPartOffset.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Extensions\TagCompoundExtensions.cs" />
     <Compile Include="Tiles.cs" />
   </ItemGroup>
@@ -205,57 +205,74 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\additionalMapiconsData.json" />
-    <None Include="Resources\bannerData.json" />
-    <None Include="Resources\blockData.json" />
+    <None Include="Resources\atlas\additionalMapiconsData.json" />
+    <None Include="Resources\atlas\bannerData.json" />
+    <None Include="Resources\atlas\blockData.json" />
+    <None Include="Resources\atlas\experienceOrbData.json" />
+    <None Include="Resources\atlas\explosionData.json" />
+    <None Include="Resources\atlas\itemData.json" />
+    <None Include="Resources\atlas\mapIconData.json" />
+    <None Include="Resources\atlas\moonPhaseData.json" />
+    <None Include="Resources\atlas\paintingData.json" />
+    <None Include="Resources\atlas\particleData.json" />
     <None Include="Resources\Comparison.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\entityBehavioursData.json" />
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
-    <None Include="Resources\experienceOrbData.json" />
-    <None Include="Resources\explosionData.json" />
-    <None Include="Resources\itemData.json" />
-    <None Include="Resources\mapIconData.json" />
-    <None Include="Resources\moonPhaseData.json" />
-    <None Include="Resources\paintingData.json" />
-    <None Include="Resources\particleData.json" />
     <None Include="Resources\TexturePackIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\additional_mapicons.png" />
+    <None Include="Resources\armor\chain.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\banners.png" />
+    <None Include="Resources\armor\cloth.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\experience_orbs.png" />
+    <None Include="Resources\armor\cloth_b.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\items.png" />
+    <None Include="Resources\armor\diamond.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\map_icons.png" />
+    <None Include="Resources\armor\gold.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\moon_phases.png" />
+    <None Include="Resources\armor\iron.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\paintings.png" />
+    <None Include="Resources\armor\turtle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\particles.png" />
+    <None Include="Resources\clock.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\terrain.png" />
+    <None Include="Resources\compass.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\explosion.png" />
+    <None Include="Resources\fire_layer_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fire_layer_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\atlas\additional_mapicons.png" />
+    <Content Include="Resources\atlas\banners.png" />
+    <Content Include="Resources\atlas\experience_orbs.png" />
+    <Content Include="Resources\atlas\explosion.png" />
+    <Content Include="Resources\atlas\items.png" />
+    <Content Include="Resources\atlas\map_icons.png" />
+    <Content Include="Resources\atlas\moon_phases.png" />
+    <Content Include="Resources\atlas\paintings.png" />
+    <Content Include="Resources\atlas\particles.png" />
+    <Content Include="Resources\atlas\terrain.png" />
+    <None Include="Resources\unknown_pack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
