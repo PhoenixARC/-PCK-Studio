@@ -1514,18 +1514,7 @@ namespace PckStudio.Controls
                         PckAsset mipMappedAsset = new PckAsset(mippedPath, PckAssetType.TextureFile);
 
                         Image originalTexture = asset.GetTexture();
-                        int newWidth = Math.Max(originalTexture.Width / (int)Math.Pow(2, i - 1), 1);
-                        int newHeight = Math.Max(originalTexture.Height / (int)Math.Pow(2, i - 1), 1);
-
-                        Rectangle tileArea = new Rectangle(0, 0, newWidth, newHeight);
-                        Image mippedTexture = new Bitmap(newWidth, newHeight);
-                        using (Graphics gfx = Graphics.FromImage(mippedTexture))
-                        {
-                            gfx.SmoothingMode = SmoothingMode.None;
-                            gfx.InterpolationMode = InterpolationMode.NearestNeighbor;
-                            gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                            gfx.DrawImage(originalTexture, tileArea);
-                        }
+                        Image mippedTexture = originalTexture.CreateMipMap(i);
 
                         mipMappedAsset.SetTexture(mippedTexture);
 

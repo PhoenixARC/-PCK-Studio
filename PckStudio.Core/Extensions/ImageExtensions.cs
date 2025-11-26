@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -47,6 +48,29 @@ namespace PckStudio.Core.Extensions
                 gfx.DrawImage(source, new Rectangle(Point.Empty, area.Size), area, GraphicsUnit.Pixel);
             }
             return result;
+        }
+
+        public static byte[] GetImageData(this Image source, ImageFormat format = default)
+        {
+            format ??= ImageFormat.Png;
+            var stream = new MemoryStream();
+            source.Save(stream, format);
+            return stream.ToArray();
+        }
+
+        public static Image CreateMipMap(this Image image, int level)
+        {
+            int factor = (int)Math.Pow(2, level - 1);
+            int newWidth = Math.Max(image.Width / factor, 1);
+            int newHeight = Math.Max(image.Height / factor, 1);
+
+            Image mippedTexture = new Bitmap(newWidth, newHeight);
+            using (Graphics gfx = Graphics.FromImage(mippedTexture))
+            {
+                gfx.ApplyConfig(GraphicsConfig.PixelPerfect());
+                gfx.DrawImage(image, new Rectangle(0, 0, newWidth, newHeight));
+            }
+            return mippedTexture;
         }
 
         /// <summary>
@@ -90,6 +114,15 @@ namespace PckStudio.Core.Extensions
                 yield return source.GetArea(locationInfo.Area);
             }
             yield break;
+        }
+
+        public static Image Combine(this Image first, Image second, ImageLayoutDirection layoutDirection)
+        {
+            bool horizontal = layoutDirection == ImageLayoutDirection.Horizontal;
+            int imgCount = 2;
+            int rows = horizontal ? imgCount : 1;
+            int columns = horizontal ? 1 : imgCount;
+            return new Image[] {first, second }.Combine(rows, columns, layoutDirection);
         }
 
         public static Image Combine(this IEnumerable<Image> sources, ImageLayoutDirection layoutDirection)
