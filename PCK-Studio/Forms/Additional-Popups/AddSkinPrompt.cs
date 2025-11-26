@@ -24,6 +24,9 @@ namespace PckStudio.Forms.Additional_Popups
     public partial class AddSkinPrompt : ImmersiveForm
     {
         public Skin NewSkin => newSkin;
+        public Image CapeTexture => _capeTexture;
+        public bool HasCape => _capeTexture is not null;
+        private Image _capeTexture;
 
         private Skin newSkin;
         private Random rng = new Random();
@@ -191,7 +194,7 @@ namespace PckStudio.Forms.Additional_Popups
                         MessageBox.Show(this, "Not a Valid Cape File");
                         return;
                     }
-                    newSkin.CapeTexture = capePictureBox.Image = img;
+                    _capeTexture = capePictureBox.Image = img;
                     contextMenuCape.Items[0].Text = "Replace";
                     capeLabel.Visible = false;
                     contextMenuCape.Visible = true;
@@ -229,7 +232,7 @@ namespace PckStudio.Forms.Additional_Popups
 
             ISaveContext<Skin> saveContext = new DelegatedSaveContext<Skin>(Settings.Default.AutoSaveChanges, (customSkin) => newSkin = customSkin);
 
-            using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin, saveContext);
+            using CustomSkinEditor customSkinEditor = new CustomSkinEditor(newSkin, default, saveContext);
 
             if (customSkinEditor.ShowDialog() == DialogResult.OK)
             {

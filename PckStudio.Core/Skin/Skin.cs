@@ -18,10 +18,10 @@ namespace PckStudio.Core.Skin
         public SkinModel Model { get; set; }
         
         public Image Texture { get; set; }
-        
-        public Image CapeTexture { get; set; }
 
-        public bool HasCape => CapeTexture is not null;
+        public int CapeId { get; set; } = -1;
+
+        public bool HasCape => CapeId != -1;
     
         public Skin(string name, Image texture)
         {
@@ -30,10 +30,10 @@ namespace PckStudio.Core.Skin
             Model = new SkinModel();
         }
         
-        public Skin(string name, Image texture, Image capeTexture)
+        public Skin(string name, Image texture, int capeId)
             : this(name, texture)
         {
-            CapeTexture = capeTexture;
+            CapeId = capeId;
         }    
 
         public Skin(string name, SkinANIM anim, Image texture, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)

@@ -24,6 +24,7 @@ namespace PckStudio.Forms.Editor
     {
         private const float MAX_OFFSET = 100_000f;
         private Random _rng;
+        private readonly Image _cape;
         private bool _inflateOverlayParts;
         private bool _allowInflate;
 
@@ -34,10 +35,10 @@ namespace PckStudio.Forms.Editor
 
         private static GraphicsConfig _graphicsConfig = GraphicsConfig.PixelPerfect();
 
-        private CustomSkinEditor() : this(null, null)
+        private CustomSkinEditor() : this(null, null, null)
         { }
 
-        public CustomSkinEditor(Skin skin, ISaveContext<Skin> saveContext, bool inflateOverlayParts = false, bool allowInflate = false)
+        public CustomSkinEditor(Skin skin, Image cape, ISaveContext<Skin> saveContext, bool inflateOverlayParts = false, bool allowInflate = false)
             : base(skin, saveContext)
         {
             InitializeComponent();
@@ -47,6 +48,7 @@ namespace PckStudio.Forms.Editor
             skinPartListBox.DataSource = _skinPartListBindingSource;
             skinPartListBox.DisplayMember = "Type";
             _allowInflate = allowInflate;
+            _cape = cape;
             _inflateOverlayParts = inflateOverlayParts;
         }
 
@@ -62,11 +64,13 @@ namespace PckStudio.Forms.Editor
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            if (DesignMode)
+                return;
             renderer3D1.Initialize(_inflateOverlayParts);
             renderer3D1.GuideLineColor = Color.LightCoral;
             skinNameLabel.Text = EditorValue.MetaData.Name;
             if (EditorValue.HasCape)
-                renderer3D1.CapeTexture = EditorValue.CapeTexture;
+                renderer3D1.CapeTexture = _cape;
             LoadModelData();
         }
 

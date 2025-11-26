@@ -474,12 +474,14 @@ namespace PckStudio.Controls
         private void HandleSkinFile(PckAsset asset)
         {
             Skin skin = asset.GetSkin();
+            Image cape = null;
             if (asset.HasProperty("CAPEPATH"))
             {
                 string capeAssetPath = asset.GetProperty("CAPEPATH");
                 if (EditorValue.File.TryGetAsset(capeAssetPath, PckAssetType.CapeFile, out PckAsset capeAsset))
                 {
-                    skin.CapeTexture = capeAsset.GetTexture();
+                    skin.CapeId = capeAsset.GetId();
+                    cape = capeAsset.GetTexture();
                 }
             }
 
@@ -490,7 +492,7 @@ namespace PckStudio.Controls
                 asset.SetSkin(customSkin, locFile);
             });
 
-            using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, saveContext, EditorValue.File.HasVerionString);
+            using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, cape, saveContext, EditorValue.File.HasVerionString);
             if (skinEditor.ShowDialog() == DialogResult.OK)
             {
                 entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
@@ -1276,9 +1278,9 @@ namespace PckStudio.Controls
                         skinAsset.Filename = skinAsset.Filename.Insert(0, "Skins/"); // Then Skins folder
                     EditorValue.File.AddAsset(skinAsset);
 
-                    if (addNewSkinDialog.NewSkin.HasCape)
+                    if (addNewSkinDialog.HasCape)
                     {
-                        PckAsset capeFile = addNewSkinDialog.NewSkin.CreateCapeFile();
+                        PckAsset capeFile = addNewSkinDialog.NewSkin.CreateCapeFile(addNewSkinDialog.CapeTexture);
                         if (hasSkinsFolder)
                             capeFile.Filename = capeFile.Filename.Insert(0, "Skins/"); // Then Skins folder
                         EditorValue.File.AddAsset(capeFile);

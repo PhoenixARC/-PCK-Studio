@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
@@ -58,13 +59,13 @@ namespace PckStudio.Core.Extensions
             return skinFile;
         }
 
-        public static PckAsset CreateCapeFile(this Skin.Skin skin)
+        public static PckAsset CreateCapeFile(this Skin.Skin skin, Image capeTexture)
         {
             if (!skin.HasCape)
                 throw new InvalidOperationException("Skin does not contain a cape.");
             string skinId = skin.Identifier.ToString("d08");
-            PckAsset capeFile = new PckAsset($"dlccape{skinId}.png", PckAssetType.CapeFile);
-            capeFile.SetTexture(skin.CapeTexture);
+            PckAsset capeFile = new PckAsset($"dlccape{skin.CapeId}.png", PckAssetType.CapeFile);
+            capeFile.SetTexture(capeTexture);
             return capeFile;
         }
     }

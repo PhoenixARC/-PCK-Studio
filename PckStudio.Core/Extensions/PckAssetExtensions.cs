@@ -52,28 +52,28 @@ namespace PckStudio.Core.Extensions
         /// Tries to get the skin id of the skin <paramref name="asset"/>
         /// </summary>
         /// <param name="asset"></param>
-        /// <returns>Non-zero base number on success, otherwise 0</returns>
+        /// <returns>Positive number on success, otherwise -1</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static int GetSkinId(this PckAsset asset)
+        public static int GetId(this PckAsset asset)
         {
-            if (asset.Type != PckAssetType.SkinFile)
-                throw new InvalidOperationException("Asset is not a skin.");
+            if (asset.Type != PckAssetType.SkinFile && asset.Type != PckAssetType.CapeFile)
+                throw new InvalidOperationException("Asset has no id.");
 
-            const string skinAssetnamePrefix = "dlcskin";
+            string assetnamePrefix = asset.Type == PckAssetType.SkinFile ? "dlcskin" : "dlccpae";
 
             string assetPath = Path.GetFileNameWithoutExtension(asset.Filename);
-            if (!assetPath.StartsWith(skinAssetnamePrefix))
+            if (!assetPath.StartsWith(assetnamePrefix))
             {
-                Trace.TraceWarning($"[{nameof(GetSkinId)}] Asset name does not start with '{skinAssetnamePrefix}'");
-                return 0;
+                Trace.TraceWarning($"[{nameof(GetId)}] Asset name does not start with '{assetnamePrefix}'");
+                return -1;
             }
 
-            int skinId = 0;
-            if (!int.TryParse(assetPath.Substring(skinAssetnamePrefix.Length), out skinId))
+            int id = 0;
+            if (!int.TryParse(assetPath.Substring(assetnamePrefix.Length), out id))
             {
-                Trace.TraceWarning($"[{nameof(GetSkinId)}] Failed to parse Skin Id");
+                Trace.TraceWarning($"[{nameof(GetId)}] Failed to parse Id");
             }
-            return skinId;
+            return id;
         }
 
         public static Skin.Skin GetSkin(this PckAsset asset)
@@ -81,7 +81,7 @@ namespace PckStudio.Core.Extensions
             if (asset.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("Asset is not a skin.");
 
-            int skinId = asset.GetSkinId();
+            int skinId = asset.GetId();
 
             string name = asset.GetProperty("DISPLAYNAME");
             Image texture = asset.GetTexture();
@@ -91,7 +91,7 @@ namespace PckStudio.Core.Extensions
             return new Skin.Skin(name, skinId, texture, anim, boxes, offsets);
         }
 
-        public static void SetSkin(this PckAsset asset, Skin.Skin skin, LOCFile localizationFile)
+        public static void SetSkin(this PckAsset asset, Skin.Skin skin, LOCFile localisation)
         {
             if (asset.Type != PckAssetType.SkinFile)
                 throw new InvalidOperationException("Asset is not a skin file");
@@ -105,22 +105,24 @@ namespace PckStudio.Core.Extensions
 
             asset.SetProperty("DISPLAYNAME", skin.MetaData.Name);
 
-            if (localizationFile is not null)
+            bool canLocalize = localisation is not null;
+
+            if (canLocalize)
             {
                 string skinLocKey = $"IDS_dlcskin{skinId}_DISPLAYNAME";
                 asset.SetProperty("DISPLAYNAMEID", skinLocKey);
-                localizationFile.SetLocEntry(skinLocKey, skin.MetaData.Name);
+                localisation.SetLocEntry(skinLocKey, skin.MetaData.Name);
             }
 
             if (!string.IsNullOrEmpty(skin.MetaData.Theme))
             {
                 asset.SetProperty("THEMENAME", skin.MetaData.Theme);
 
-                if (localizationFile is not null)
+                if (canLocalize)
                 {
                     string skinThemeLocKey = $"IDS_dlcskin{skinId}_THEMENAME";
                     asset.SetProperty("THEMENAMEID", skinThemeLocKey);
-                    localizationFile.SetLocEntry(skinThemeLocKey, skin.MetaData.Theme);
+                    localisation.SetLocEntry(skinThemeLocKey, skin.MetaData.Theme);
                 }
             }
 
