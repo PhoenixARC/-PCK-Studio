@@ -155,6 +155,16 @@ namespace PckStudio.Rendering
                 InitializeInternal();
             }
         }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (DesignMode)
+                return;
+            if (!Visible)
+                _timer.Stop();
+            if (Visible)
+                _timer.Start();
         }
 
         private void InitializeInternal()
