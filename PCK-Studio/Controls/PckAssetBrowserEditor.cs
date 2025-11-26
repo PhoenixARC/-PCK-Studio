@@ -365,6 +365,23 @@ namespace PckStudio.Controls
                         BuildMainTreeView();
                     }
                     break;
+                case ResourceCategory.ArmorTextures:
+                    string assetName = Path.GetFileNameWithoutExtension(asset.Filename);
+                    ArmorSetDescription armorSetDescription = ArmorSetDescription.GetFromAssetName(assetName);
+                    Debug.WriteLineIf(!armorSetDescription.IsEmpty, armorSetDescription.Name);
+                    ITryGet<string, Image> tryGet = TryGet<string, Image>.FromDelegate((string path, out Image img) =>
+                    {
+                        img = null;
+                        if (EditorValue.File.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset armorAsset))
+                        {
+                            img = armorAsset.GetTexture();
+                            Debug.WriteLine($"Got texture for: {path}");
+                            return true;
+                        }
+                        return false;
+                    });
+                    ArmorSet armorSet = armorSetDescription.GetArmorSet(tryGetTexture: tryGet);
+                    break;
                 default:
                     Debug.WriteLine($"Unhandled Resource Category: {resourceLocation.Category}");
                     break;

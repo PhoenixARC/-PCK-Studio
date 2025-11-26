@@ -15,12 +15,20 @@ namespace PckStudio.Core
         private static readonly Dictionary<string, ArmorSetDescription> _pathLookUp = new Dictionary<string, ArmorSetDescription>();
         private static readonly string _resourcePath = ResourceLocations.GetFromCategory(ResourceCategory.ArmorTextures).FullPath;
         public static ArmorSetDescription Empty = new ArmorSetDescription(string.Empty, 0, 0);
-        public static ArmorSetDescription Leather = new ArmorSetDescription("cloth", layerCount: 1);
-        public static ArmorSetDescription Chain = new ArmorSetDescription("chain");
-        public static ArmorSetDescription Iron = new ArmorSetDescription("iron");
-        public static ArmorSetDescription Gold = new ArmorSetDescription("gold");
-        public static ArmorSetDescription Diamond = new ArmorSetDescription("diamond");
-        public static ArmorSetDescription Turtle = new ArmorSetDescription("turtle", textureCount: 1);
+
+        public const string CLOTH = "cloth";
+        public const string CHAIN = "chain";
+        public const string IRON = "iron";
+        public const string GOLD = "gold";
+        public const string DIAMOND = "diamond";
+        public const string TURTLE = "turtle";
+
+        public static ArmorSetDescription Leather = new ArmorSetDescription(CLOTH, layerCount: 1);
+        public static ArmorSetDescription Chain = new ArmorSetDescription(CHAIN);
+        public static ArmorSetDescription Iron = new ArmorSetDescription(IRON);
+        public static ArmorSetDescription Gold = new ArmorSetDescription(GOLD);
+        public static ArmorSetDescription Diamond = new ArmorSetDescription(DIAMOND);
+        public static ArmorSetDescription Turtle = new ArmorSetDescription(TURTLE, textureCount: 1);
 
 
         public string Name { get; }

@@ -16,25 +16,33 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 
+using System;
+
 namespace PckStudio.Core
 {
-    public enum ResourceCategory
+    [Flags]
+    public enum ResourceCategory : int
     {
-        Unknown = -1,
-        ItemAnimation,
-        BlockAnimation,
-        MobEntityTextures,
-        ItemEntityTextures,
-        ArmorTextures,
-        ItemAtlas,
-        BlockAtlas,
-        ParticleAtlas,
-        BannerAtlas,
-        PaintingAtlas,
-        ExplosionAtlas,
-        ExperienceOrbAtlas,
-        MoonPhaseAtlas,
-        MapIconAtlas,
-        AdditionalMapIconsAtlas,
+        Unknown                 = -1,
+        Animation               = 0x01,
+        ItemAnimation           = 0x02    | Animation,
+        BlockAnimation          = 0x04    | Animation,
+
+        Atlas                   = 0x08,   
+        ItemAtlas               = 0x10    | Atlas,
+        BlockAtlas              = 0x20    | Atlas,
+        ParticleAtlas           = 0x40    | Atlas,
+        BannerAtlas             = 0x80    | Atlas,
+        PaintingAtlas           = 0x100   | Atlas,
+        ExplosionAtlas          = 0x200   | Atlas,
+        ExperienceOrbAtlas      = 0x400   | Atlas,
+        MoonPhaseAtlas          = 0x800   | Atlas,
+        MapIconAtlas            = 0x1000  | Atlas,
+        AdditionalMapIconsAtlas = 0x2000  | Atlas,
+
+        Textures                = 0x4000,
+        MobEntityTextures       = 0x8000  | Textures,
+        ItemEntityTextures      = 0x10000 | Textures,
+        ArmorTextures           = 0x20000 | Textures,
     }
 }
