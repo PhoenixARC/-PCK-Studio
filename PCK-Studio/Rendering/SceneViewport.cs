@@ -55,7 +55,8 @@ namespace PckStudio.Rendering
             set
             {
                 _refreshRate = Math.Max(value, 1);
-                _timer.Interval = TimeSpan.FromSeconds(1d / _refreshRate).Milliseconds;
+                if (!DesignMode)
+                    _timer?.Interval = TimeSpan.FromSeconds(1d / _refreshRate).Milliseconds;
             }
         }
 
@@ -66,11 +67,9 @@ namespace PckStudio.Rendering
             {
                 base.BackColor = value;
                 if (!DesignMode)
-                {
                     Renderer.SetClearColor(value);
                 }
             }
-        }
 
         protected new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
@@ -143,19 +142,19 @@ namespace PckStudio.Rendering
 #endif
         {
             VSync = true;
-            _timer = new Timer();
-            _timer.Tick += TimerTick;
+            _initialized = false;
 
-            RefreshRate = _refreshRate;
             Camera = new PerspectiveCamera(fov, camareaPosition);
             _shaderLibrary = new ShaderLibrary();
 
             if (!DesignMode)
             {
+                _timer = new Timer();
+                _timer.Tick += TimerTick;
                 _timer.Start();
                 InitializeInternal();
             }
-            _initialized = false;
+        }
         }
 
         private void InitializeInternal()
