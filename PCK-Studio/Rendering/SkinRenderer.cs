@@ -114,6 +114,7 @@ namespace PckStudio.Rendering
         }
 
         public bool CenterOnSelect { get; set; } = false;
+        public bool RenderSkyBox { get; set; } = true;
         public bool ShowBoundingBox { get; set; }
         public bool ShowArmor { get; set; } = false;
         public bool Animate { get; set; } = true;
@@ -824,7 +825,7 @@ namespace PckStudio.Rendering
             GL.Enable(EnableCap.LineSmooth);
             Matrix4 viewProjection = Camera.GetViewProjection();
 
-            // Render Skybox
+            if (RenderSkyBox)
             {
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.DepthMask(false);
