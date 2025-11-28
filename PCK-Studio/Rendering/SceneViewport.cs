@@ -66,10 +66,12 @@ namespace PckStudio.Rendering
             set
             {
                 base.BackColor = value;
-                if (!DesignMode)
+                if (!DesignMode && Context.IsCurrent)
                     Renderer.SetClearColor(value);
-                }
             }
+        }
+
+        public bool IsInitialized => _initialized;
 
         protected new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
@@ -147,7 +149,13 @@ namespace PckStudio.Rendering
 
             Camera = new PerspectiveCamera(fov, camareaPosition);
             _shaderLibrary = new ShaderLibrary();
+        }
 
+        protected virtual void Initialize() { }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
             if (!DesignMode)
             {
                 _timer = new Timer();
@@ -168,6 +176,12 @@ namespace PckStudio.Rendering
                 _timer.Start();
         }
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            GetContext();
+            base.OnGotFocus(e);
+        }
+
         private void InitializeInternal()
         {
             if (_initialized)
@@ -175,7 +189,7 @@ namespace PckStudio.Rendering
                 Debug.Fail("Already Initialized.");
                 return;
             }
-            MakeCurrent();
+            GetContext();
             Trace.TraceInformation(GL.GetString(StringName.Version));
             GL.DebugMessageCallback(DebugProc, this.Handle);
             AddShader("Internal_colorShader", Resources.plainColorVertexShader, Resources.plainColorFragmentShader);
@@ -206,6 +220,7 @@ namespace PckStudio.Rendering
 #endif
             InitializeDebugComponents();
             InitializeDebugShaders();
+            Initialize();
             _initialized = true;
         }
 
@@ -280,6 +295,7 @@ namespace PckStudio.Rendering
 
         protected void DrawBoundingBox(Matrix4 transform, Core.BoundingBox boundingBox, Color color)
         {
+            GetContext();
             ShaderProgram colorShader = _shaderLibrary.GetShader("Internal_colorShader");
             colorShader.Bind();
             Matrix4 viewProjection = Camera.GetViewProjection();
@@ -304,6 +320,7 @@ namespace PckStudio.Rendering
         {
             string dbgMessage = Marshal.PtrToStringAnsi(message, length);
             Debug.WriteLine($"{source}:{id} {type} {severity}: {dbgMessage}");
+            Debugger.Break();
         }
 
         [Conditional("DEBUG")]
@@ -432,6 +449,7 @@ namespace PckStudio.Rendering
             base.OnPaint(e);
             if (DesignMode)
                 return;
+            GetContext();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest); // Enable correct Z Drawings
         }
@@ -441,11 +459,15 @@ namespace PckStudio.Rendering
             base.OnSizeChanged(e);
             if (DesignMode)
                 return;
-            if (Camera is not null)
-            {
-                Camera.ViewportSize = ClientSize;
-            }
+            GetContext();
+            Camera?.ViewportSize = ClientSize;
             Renderer.SetViewportSize(Camera.ViewportSize);
+        }
+
+        private void GetContext()
+        {
+            if (!Context.IsCurrent)
+                MakeCurrent();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -469,7 +491,7 @@ namespace PckStudio.Rendering
                     goto default;
                 case MouseButtons.Right:
                     if (AllowCameraMovement)
-                    Camera.Pan(deltaX, deltaY);
+                        Camera.Pan(deltaX, deltaY);
                     goto default;
                 default:
                     if (LockMousePosition)
@@ -549,6 +571,7 @@ namespace PckStudio.Rendering
         {
 #if DEBUG
             d_debugLabel.Text = Camera.ToString();
+            GetContext();
             GL.Disable(EnableCap.Blend);
             GL.DepthMask(false);
             GL.DepthFunc(DepthFunction.Always);
@@ -601,7 +624,7 @@ namespace PckStudio.Rendering
             // 
             // contextMenuStrip1
             // 
-            debugContextMenuStrip1.Items.AddRange(new ToolStripItem[] {});
+            debugContextMenuStrip1.Items.AddRange(new ToolStripItem[] { });
             debugContextMenuStrip1.Name = "contextMenuStrip1";
             debugContextMenuStrip1.Size = new Size(159, 48);
             // 
@@ -648,4 +671,4 @@ namespace PckStudio.Rendering
 #endif
 
     }
-}  
+}

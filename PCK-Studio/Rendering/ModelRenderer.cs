@@ -58,6 +58,10 @@ namespace PckStudio.Rendering
         private Image _modelTexture;
         private Texture2D _modelRenderTexture;
         private List<GenericMesh<TextureVertex>> _rootCollection;
+        private HighlightInfo _highlightingInfo;
+
+        private readonly Vector3 modelOffset = Vector3.UnitY * 24f;
+        
         private struct HighlightInfo
         {
             public static readonly HighlightInfo Empty = new HighlightInfo(Vector3.Zero, Vector3.Zero, BoundingBox.Empty);
@@ -78,24 +82,16 @@ namespace PckStudio.Rendering
                 BoundingBox = boundingBox;
             }
         }
-        private HighlightInfo _highlightingInfo;
-
-        private readonly Vector3 modelOffset = Vector3.UnitY * 24f;
 
         public ModelRenderer() : base(fov: 60f)
         {
             InitializeComponent();
             _rootCollection = new List<GenericMesh<TextureVertex>>(5);
-            if (!DesignMode)
-            {
-                InitializeShaders();
-            }
+
         }
 
-        private void InitializeShaders()
+        protected override void Initialize()
         {
-            Debug.Assert(Context.IsCurrent);
-
             // render texture
             {
                 _modelRenderTexture = new Texture2D();
@@ -172,6 +168,7 @@ namespace PckStudio.Rendering
                 GL.Disable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactor.One, BlendingFactor.Zero);
             }
+            ResetCamera();
             _currentModelName = model.Name;
         }
 

@@ -87,8 +87,6 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public Color HighlightlingColor { get; set; } = Color.Aqua;
 
-        public bool IsInitialized => initialized;
-
         public int SelectedIndex
         {
             get => selectedIndices.Length > 0 ? selectedIndices[0] : -1;
@@ -262,8 +260,6 @@ namespace PckStudio.Rendering
             new Vector3(-1.0f,  1.0f, -1.0f)
         };
 
-        private bool initialized = false;
-
         public SkinRenderer() : base(fov: 60f)
         {
             InitializeSkinData();
@@ -294,15 +290,11 @@ namespace PckStudio.Rendering
             ModelData.CollectionChanged += ModelData_CollectionChanged;
         }
 
-        public void Initialize(bool inflateOverlayParts)
+        protected override void Initialize()
         {
-            if (initialized)
-                Debug.Fail("Already Initialized!");
-            autoInflateOverlayParts = inflateOverlayParts;
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
             GLErrorCheck();
-            initialized = true;
         }
 
         private const float DefaultCameraDistance = 64f;
