@@ -253,7 +253,7 @@ namespace PckStudio.Rendering
         private Dictionary<string, CubeMeshCollection> meshStorage;
         private Dictionary<string, CubeMeshCollection> offsetSpecificMeshStorage;
         
-        private CubeMesh cape;
+        private CubeMeshCollection cape;
         
         private CubeMeshCollection head;
         private CubeMeshCollection body;
@@ -364,7 +364,8 @@ namespace PckStudio.Rendering
 
         private void InitializeCapeData()
         {
-            cape ??= new CubeMesh(new Cube(new(-5, 0, -3), new(10, 16, 1), new(0, 0), 0f, false, false));
+            cape ??= new CubeMeshCollection("", new Vector3(-5, 0, 3), new Vector3(0, 0, -3), new Vector3(0, 180, 0));
+            cape.Add(new(0, 0, 0), new(10, 16, 1), new(0, 0), 0f, false);
         }
 
         private void InitializeArmorData()
@@ -951,14 +952,14 @@ namespace PckStudio.Rendering
                     cubeShader.SetUniform2("TexSize", new Vector2(64, 32));
                     capeTexture.Bind();
                     // Defines minimum Angle(in Degrees) of the cape
-                    float capeMinimumRotationAngle = 7.5f;
+                    float capeMinimumRotationAngle = -7.5f;
                     // Controls how much of an angle is applied
                     float capeRotationFactor = 0.4f;
                     // Low value = slow movement
                     float capeRotationSpeed = 0.02f;
                     float capeRotation = ((float)MathHelper.RadiansToDegrees(Math.Sin(Math.Abs(animationCurrentRotationAngle) * capeRotationSpeed) * capeRotationFactor)) + capeMinimumRotationAngle;
+                    //Debug.WriteLine(capeRotation);
                     Matrix4 partMatrix = 
-                        Matrix4.CreateRotationY(MathHelper.DegreesToRadians(180f)) *
                         Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
                     RenderPart(cubeShader, cape, partMatrix, renderTransform);
                 }
