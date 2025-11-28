@@ -23,29 +23,34 @@ namespace PckStudio.Core.Skin
 
         public bool HasCape => CapeId != -1;
     
-        public Skin(string name, Image texture)
+        public Skin(string name, Image texture) : this(name, "", texture) { }
+
+        public Skin(string name, string theme, Image texture, SkinANIM anim = default)
         {
-            MetaData = new SkinMetaData(name, string.Empty);
+            MetaData = new SkinMetaData(name, theme);
             Texture = texture;
             Model = new SkinModel();
+            Anim = anim ?? new SkinANIM(0);
         }
         
-        public Skin(string name, Image texture, int capeId)
-            : this(name, texture)
+        public Skin(string name, Image texture, int capeId) : this(name, "", texture, capeId) { }
+        public Skin(string name, string theme, Image texture, int capeId) : this(name, theme, texture)
         {
             CapeId = capeId;
         }    
 
         public Skin(string name, SkinANIM anim, Image texture, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
-            : this(name, texture)
+            : this(name, "", anim, texture, additionalBoxes, partOffsets) { }
+
+        public Skin(string name, string theme, SkinANIM anim, Image texture, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
+            : this(name, theme, texture, anim)
         {
             Model.AdditionalBoxes.AddRange(additionalBoxes);
             Model.PartOffsets.AddRange(partOffsets);
-            Anim = anim;
         }
 
-        public Skin(string name, int id, Image texture, SkinANIM anim, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
-            : this(name, anim, texture, additionalBoxes, partOffsets)
+        public Skin(string name, string theme, int id, Image texture, SkinANIM anim, IEnumerable<SkinBOX> additionalBoxes, IEnumerable<SkinPartOffset> partOffsets)
+            : this(name, theme, anim, texture, additionalBoxes, partOffsets)
         {
             Identifier = new(id);
         }

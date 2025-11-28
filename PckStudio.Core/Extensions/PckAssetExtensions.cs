@@ -68,11 +68,12 @@ namespace PckStudio.Core.Extensions
             int skinId = asset.GetId();
 
             string name = asset.GetProperty("DISPLAYNAME");
+            string theme = asset.GetProperty("THEMENAME");
             Image texture = asset.GetTexture();
             SkinANIM anim = asset.GetProperty("ANIM", SkinANIM.FromString);
-            IEnumerable<SkinBOX> boxes = asset.GetMultipleProperties("BOX").Select(kv => SkinBOX.FromString(kv.Value));
-            IEnumerable<SkinPartOffset> offsets = asset.GetMultipleProperties("OFFSET").Select(kv => SkinPartOffset.FromString(kv.Value));
-            return new Skin.Skin(name, skinId, texture, anim, boxes, offsets);
+            IEnumerable<SkinBOX> boxes = asset.GetPropertyValues("BOX").Select(SkinBOX.FromString);
+            IEnumerable<SkinPartOffset> offsets = asset.GetPropertyValues("OFFSET").Select(SkinPartOffset.FromString);
+            return new Skin.Skin(name, theme, skinId, texture, anim, boxes, offsets);
         }
 
         public static void SetSkin(this PckAsset asset, Skin.Skin skin, LOCFile localisation)
