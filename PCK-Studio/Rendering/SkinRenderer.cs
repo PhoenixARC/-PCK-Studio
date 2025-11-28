@@ -87,6 +87,8 @@ namespace PckStudio.Rendering
         [Category("Appearance")]
         public Color HighlightlingColor { get; set; } = Color.Aqua;
 
+        public bool IsInitialized => initialized;
+
         public int SelectedIndex
         {
             get => selectedIndices.Length > 0 ? selectedIndices[0] : -1;
