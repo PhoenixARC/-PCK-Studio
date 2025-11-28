@@ -130,6 +130,7 @@ namespace PckStudio.Rendering
 
         public bool CenterOnSelect { get; set; } = false;
         public bool RenderSkyBox { get; set; } = true;
+        public bool RenderGroundPlane { get; set; } = true;
         public bool ShowBoundingBox { get; set; }
         public bool ShowArmor { get; set; } = false;
         public bool Animate { get; set; } = true;
@@ -1065,19 +1066,22 @@ namespace PckStudio.Rendering
             }
 
             // Ground plane
+            if (RenderGroundPlane)
             {
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.AlphaTest); // Enable transparent
                 GL.AlphaFunc(AlphaFunction.Always, 0.0f);
-                GL.BlendFunc(BlendingFactor.DstAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.SrcAlpha);
                 lineShader.Bind();
                 lineShader.SetUniformMat4("ViewProjection", ref viewProjection);
                 lineShader.SetUniform1("Intensity", 0.5f);
-                lineShader.SetUniform4("BlendColor", Color.AntiqueWhite);
+                lineShader.SetUniform4("BlendColor", Color.Red);
                 Matrix4 transform = Matrix4.CreateScale(25f) * Matrix4.CreateTranslation(new Vector3(0f, -24.1f, 0f));
                 lineShader.SetUniformMat4("Transform", ref transform);
                 Renderer.Draw(lineShader, _groundDrawContext);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
             }
 
             FramebufferEnd();
