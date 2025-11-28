@@ -231,7 +231,7 @@ namespace PckStudio.Rendering
 
         public Size TextureSize { get; private set; } = new Size(64, 64);
         public Vector2 TillingFactor => new Vector2(1f / TextureSize.Width, 1f / TextureSize.Height);
-        private const float OverlayScale = 0.25f;
+        private const float OVERLAY_SCALE = 0.25f;
 
         private VertexBufferLayout plainColorVertexBufferLayout;
 
@@ -269,10 +269,11 @@ namespace PckStudio.Rendering
         private bool showWireFrame = false;
         private bool autoInflateOverlayParts;
 
-        private const float defaultArmRotation = 5f;
+        private const float DEFAULT_ARM_ROTATION = 5f;
 
-        private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(defaultArmRotation));
-        private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-defaultArmRotation));
+        private Matrix4 RightArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(DEFAULT_ARM_ROTATION));
+        private Matrix4 LeftArmMatrix => Matrix4.CreateFromAxisAngle(Vector3.UnitZ, MathHelper.DegreesToRadians(-DEFAULT_ARM_ROTATION));
+
 
         private static Vector3[] cubeVertices = new Vector3[]
         {
@@ -325,10 +326,10 @@ namespace PckStudio.Rendering
             GLErrorCheck();
         }
 
-        private const float DefaultCameraDistance = 64f;
+        private const float DEFAULT_CAMERA_DISTANCE = 64f;
         private void InitializeCamera()
         {
-            Camera.Distance = DefaultCameraDistance;
+            Camera.Distance = DEFAULT_CAMERA_DISTANCE;
             Camera.FocalPoint = head.GetCenter(0);
         }
 
@@ -339,27 +340,27 @@ namespace PckStudio.Rendering
                 FlipZMapping = true
             };
             head.AddNamed("DefaultHead", new(-4, -8, -4), new(8, 8, 8), new(0, 0));
-            head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OverlayScale * 2);
+            head.AddNamed("DefaultHeadOverlay", new(-4, -8, -4), new(8, 8, 8), new(32, 0), OVERLAY_SCALE * 2);
             
             body ??= new CubeMeshCollection("Body", GameConstants.SkinBodyTranslation.ToOpenTKVector(), GameConstants.SkinBodyPivot.ToOpenTKVector());
             body.AddNamed("DefaultBody",new(-4, 0, -2), new(8, 12, 4), new(16, 16));
-            body.AddNamed("DefaultBodyOverlay", new(-4, 0, -2), new(8, 12, 4), new(16, 32), OverlayScale);
+            body.AddNamed("DefaultBodyOverlay", new(-4, 0, -2), new(8, 12, 4), new(16, 32), OVERLAY_SCALE);
 
             rightArm ??= new CubeMeshCollection("Right Arm", GameConstants.SkinRightArmTranslation.ToOpenTKVector(), GameConstants.SkinRightArmPivot.ToOpenTKVector());
             rightArm.AddNamed("DefaultRightArm",new(-3, -2, -2), new(4, 12, 4), new(40, 16));
-            rightArm.AddNamed("DefaultRightArmOverlay", new(-3, -2, -2), new(4, 12, 4), new(40, 32), OverlayScale);
+            rightArm.AddNamed("DefaultRightArmOverlay", new(-3, -2, -2), new(4, 12, 4), new(40, 32), OVERLAY_SCALE);
 
             leftArm ??= new CubeMeshCollection("Left Arm", GameConstants.SkinLeftArmTranslation.ToOpenTKVector(), GameConstants.SkinLeftArmPivot.ToOpenTKVector());
             leftArm.AddNamed("DefaultLeftArm",new(-1, -2, -2), new(4, 12, 4), new(32, 48));
-            leftArm.AddNamed("DefaultLeftArmOverlay", new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OverlayScale);
+            leftArm.AddNamed("DefaultLeftArmOverlay", new(-1, -2, -2), new(4, 12, 4), new(48, 48), inflate: OVERLAY_SCALE);
 
             rightLeg ??= new CubeMeshCollection("Right Leg", GameConstants.SkinRightLegTranslation.ToOpenTKVector(), GameConstants.SkinRightLegPivot.ToOpenTKVector());
             rightLeg.AddNamed("DefaultRightLeg",new(-2, 0, -2), new(4, 12, 4), new(0, 16));
-            rightLeg.AddNamed("DefaultRightLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 32), OverlayScale);
+            rightLeg.AddNamed("DefaultRightLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 32), OVERLAY_SCALE);
 
             leftLeg ??= new CubeMeshCollection("Left Leg", GameConstants.SkinLeftLegTranslation.ToOpenTKVector(), GameConstants.SkinLeftLegPivot.ToOpenTKVector());
             leftLeg.AddNamed("DefaultLeftLeg",new(-2, 0, -2), new(4, 12, 4), new(16, 48));
-            leftLeg.AddNamed("DefaultLeftLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 48), OverlayScale);
+            leftLeg.AddNamed("DefaultLeftLegOverlay", new(-2, 0, -2), new(4, 12, 4), new(0, 48), OVERLAY_SCALE);
         }
 
         private void InitializeCapeData()
@@ -373,10 +374,10 @@ namespace PckStudio.Rendering
             const float armorInflation = 0.75f;
 
             var helmet = new CubeMeshCollection("HELMET");
-            helmet.Add(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation);
+            helmet.Add(new(-4, -8, -4), new(8, 8, 8), new(0, 0), inflate: armorInflation + armorInflation /3);
 
             var chest = new CubeMeshCollection("CHEST");
-            chest.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + 0.01f);
+            chest.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 16), inflate: armorInflation + armorInflation / 5);
 
             var shoulder0 = new CubeMeshCollection("SHOULDER0", rightArm.Translation, rightArm.Pivot);
             shoulder0.Add(new(-3, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation);
@@ -385,7 +386,7 @@ namespace PckStudio.Rendering
             shoulder1.Add(new(-1, -2, -2), new(4, 12, 4), new(40, 16), inflate: armorInflation, mirrorTexture: true);
             
             var waist = new CubeMeshCollection("WAIST");
-            waist.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation);
+            waist.Add(new(-4, 0, -2), new(8, 12, 4), new(16, 48), inflate: armorInflation + armorInflation / 7);
 
             var pants0 = new CubeMeshCollection("PANTS0", rightLeg.Translation, rightLeg.Pivot);
             pants0.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation);
@@ -394,10 +395,10 @@ namespace PckStudio.Rendering
             pants1.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 48), inflate: armorInflation, mirrorTexture: true);
 
             var boot0     = new CubeMeshCollection("BOOT0", rightLeg.Translation, rightLeg.Pivot);
-            boot0.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f);
+            boot0.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + armorInflation / 3);
             
             var boot1     = new CubeMeshCollection("BOOT1", leftLeg.Translation, leftLeg.Pivot);
-            boot1.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + 0.25f, mirrorTexture: true);
+            boot1.Add(new(-2, 0, -2), new(4, 12, 4), new(0, 16), inflate: armorInflation + armorInflation / 3, mirrorTexture: true);
 
             offsetSpecificMeshStorage = new Dictionary<string, CubeMeshCollection>
             {
@@ -749,7 +750,7 @@ namespace PckStudio.Rendering
             }
 
             CubeMeshCollection cubeMesh = meshStorage[skinBox.Type];
-            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f);
+            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f);
         }
 
         private void OnANIMUpdate()
@@ -777,10 +778,10 @@ namespace PckStudio.Rendering
 
                 int slimValue = slim ? 3 : 4;
                 rightArm.ReplaceCube(0, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 16));
-                rightArm.ReplaceCube(1, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32), inflate: OverlayScale);
+                rightArm.ReplaceCube(1, new(slim ? -2 : -3, -2, -2), new(slimValue, 12, 4), new(40, 32), inflate: OVERLAY_SCALE);
 
                 leftArm.ReplaceCube(0, new(-1, -2, -2), new(slimValue, 12, 4), new(32, 48));
-                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), inflate: OverlayScale);
+                leftArm.ReplaceCube(1, new(-1, -2, -2), new(slimValue, 12, 4), new(48, 48), inflate: OVERLAY_SCALE);
 
                 rightLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(0, 16));
                 leftLeg.ReplaceCube(0, new(-2, 0, -2), new(4, 12, 4), new(16, 48));
@@ -824,7 +825,7 @@ namespace PckStudio.Rendering
         public override void ResetCamera(Vector3 defaultPosition)
         {
             base.ResetCamera(defaultPosition);
-            Camera.Distance = DefaultCameraDistance;
+            Camera.Distance = DEFAULT_CAMERA_DISTANCE;
         }
 
         internal void CenterSelectedObject()
@@ -959,7 +960,7 @@ namespace PckStudio.Rendering
                     float capeRotationSpeed = 0.02f;
                     float capeRotation = ((float)MathHelper.RadiansToDegrees(Math.Sin(Math.Abs(animationCurrentRotationAngle) * capeRotationSpeed) * capeRotationFactor)) + capeMinimumRotationAngle;
                     //Debug.WriteLine(capeRotation);
-                    Matrix4 partMatrix = 
+                    Matrix4 partMatrix =
                         Matrix4.CreateRotationX(MathHelper.DegreesToRadians(capeRotation));
                     RenderPart(cubeShader, cape, partMatrix, renderTransform);
                 }
@@ -1102,7 +1103,7 @@ namespace PckStudio.Rendering
                     if (!meshStorage.ContainsKey(box.Type))
                         continue;
 
-                    float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OverlayScale * 2 : OverlayScale : 0f;
+                    float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f;
                     Cube cube = box.ToCube(inflate);
                     CubeMeshCollection cubeMesh = meshStorage[box.Type];
                     yield return cube.GetBoundingBox(cubeMesh.GetTransform());
