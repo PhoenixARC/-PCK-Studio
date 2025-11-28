@@ -42,7 +42,6 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentlyOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.packSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fullBoxSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,12 +98,12 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripSeparator3
             // 
@@ -157,7 +156,7 @@
             this.mashUpPackToolStripMenuItem});
             this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // skinPackToolStripMenuItem
@@ -186,7 +185,7 @@
             this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -194,25 +193,16 @@
             // 
             this.recentlyOpenToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("recentlyOpenToolStripMenuItem.Image")));
             this.recentlyOpenToolStripMenuItem.Name = "recentlyOpenToolStripMenuItem";
-            this.recentlyOpenToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.recentlyOpenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recentlyOpenToolStripMenuItem.Text = "Recently open";
             // 
             // packSettingsToolStripMenuItem
             // 
-            this.packSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fullBoxSupportToolStripMenuItem});
             this.packSettingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
             this.packSettingsToolStripMenuItem.Name = "packSettingsToolStripMenuItem";
-            this.packSettingsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.packSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.packSettingsToolStripMenuItem.Text = "Pack Settings";
-            // 
-            // fullBoxSupportToolStripMenuItem
-            // 
-            this.fullBoxSupportToolStripMenuItem.CheckOnClick = true;
-            this.fullBoxSupportToolStripMenuItem.Name = "fullBoxSupportToolStripMenuItem";
-            this.fullBoxSupportToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.fullBoxSupportToolStripMenuItem.Text = "Full box support";
-            this.fullBoxSupportToolStripMenuItem.CheckedChanged += new System.EventHandler(this.fullBoxSupportToolStripMenuItem_CheckedChanged);
+            this.packSettingsToolStripMenuItem.Visible = false;
             // 
             // saveToolStripMenuItem
             // 
@@ -220,7 +210,7 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Visible = false;
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -229,7 +219,7 @@
             // 
             this.saveAsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.Save;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Visible = false;
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
@@ -238,7 +228,7 @@
             // 
             this.closeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("closeToolStripMenuItem.Image")));
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Visible = false;
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
@@ -246,14 +236,14 @@
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeAllToolStripMenuItem.Text = "Close all";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -672,7 +662,6 @@
 		private System.Windows.Forms.ToolStripMenuItem binkaWavToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem packSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fullBoxSupportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videosToolStripMenuItem;
