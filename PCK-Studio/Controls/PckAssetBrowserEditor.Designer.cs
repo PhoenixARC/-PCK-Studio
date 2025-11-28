@@ -34,16 +34,9 @@ namespace PckStudio.Controls
             System.Windows.Forms.PictureBox logoPictureBox;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckAssetBrowserEditor));
             this.pckFileLabel = new MetroFramework.Controls.MetroLabel();
-            this.labelImageSize = new MetroFramework.Controls.MetroLabel();
             this.fileEntryCountLabel = new MetroFramework.Controls.MetroLabel();
-            this.PropertiesTabControl = new MetroFramework.Controls.MetroTabControl();
-            this.MetaTab = new MetroFramework.Controls.MetroTabPage();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.entryTypeTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.entryDataTextBox = new MetroFramework.Controls.MetroTextBox();
-            this.buttonEdit = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.treeMeta = new System.Windows.Forms.TreeView();
             this.contextMenuMetaTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEntryToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +46,6 @@ namespace PckStudio.Controls
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAllEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label11 = new MetroFramework.Controls.MetroLabel();
-            this.treeViewMain = new System.Windows.Forms.TreeView();
             this.contextMenuPCKEntries = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,15 +96,12 @@ namespace PckStudio.Controls
             this.deleteFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.addMultipleEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LittleEndianCheckBox = new MetroFramework.Controls.MetroCheckBox();
-            this.previewPictureBox = new PckStudio.ToolboxItems.InterpolationPictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).BeginInit();
-            this.PropertiesTabControl.SuspendLayout();
-            this.MetaTab.SuspendLayout();
-            this.contextMenuMetaTree.SuspendLayout();
             this.contextMenuPCKEntries.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // logoPictureBox
@@ -128,46 +117,11 @@ namespace PckStudio.Controls
             this.pckFileLabel.Name = "pckFileLabel";
             this.pckFileLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // labelImageSize
-            // 
-            resources.ApplyResources(this.labelImageSize, "labelImageSize");
-            this.labelImageSize.Name = "labelImageSize";
-            this.labelImageSize.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
             // fileEntryCountLabel
             // 
             resources.ApplyResources(this.fileEntryCountLabel, "fileEntryCountLabel");
             this.fileEntryCountLabel.Name = "fileEntryCountLabel";
             this.fileEntryCountLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
-            // 
-            // PropertiesTabControl
-            // 
-            this.PropertiesTabControl.Controls.Add(this.MetaTab);
-            resources.ApplyResources(this.PropertiesTabControl, "PropertiesTabControl");
-            this.PropertiesTabControl.Name = "PropertiesTabControl";
-            this.PropertiesTabControl.SelectedIndex = 0;
-            this.PropertiesTabControl.Style = MetroFramework.MetroColorStyle.Silver;
-            this.PropertiesTabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.PropertiesTabControl.UseSelectable = true;
-            // 
-            // MetaTab
-            // 
-            this.MetaTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.MetaTab.Controls.Add(this.metroLabel2);
-            this.MetaTab.Controls.Add(this.entryTypeTextBox);
-            this.MetaTab.Controls.Add(this.entryDataTextBox);
-            this.MetaTab.Controls.Add(this.buttonEdit);
-            this.MetaTab.Controls.Add(this.metroLabel1);
-            this.MetaTab.Controls.Add(this.treeMeta);
-            this.MetaTab.HorizontalScrollbarBarColor = true;
-            this.MetaTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.MetaTab.HorizontalScrollbarSize = 10;
-            resources.ApplyResources(this.MetaTab, "MetaTab");
-            this.MetaTab.Name = "MetaTab";
-            this.MetaTab.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.MetaTab.VerticalScrollbarBarColor = true;
-            this.MetaTab.VerticalScrollbarHighlightOnWheel = false;
-            this.MetaTab.VerticalScrollbarSize = 10;
             // 
             // metroLabel2
             // 
@@ -175,175 +129,57 @@ namespace PckStudio.Controls
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // entryTypeTextBox
-            // 
-            resources.ApplyResources(this.entryTypeTextBox, "entryTypeTextBox");
-            // 
-            // 
-            // 
-            this.entryTypeTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.entryTypeTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-            this.entryTypeTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.entryTypeTextBox.CustomButton.Name = "";
-            this.entryTypeTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-            this.entryTypeTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryTypeTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.entryTypeTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.entryTypeTextBox.CustomButton.UseSelectable = true;
-            this.entryTypeTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.entryTypeTextBox.Lines = new string[0];
-            this.entryTypeTextBox.MaxLength = 32767;
-            this.entryTypeTextBox.Name = "entryTypeTextBox";
-            this.entryTypeTextBox.PasswordChar = '\0';
-            this.entryTypeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.entryTypeTextBox.SelectedText = "";
-            this.entryTypeTextBox.SelectionLength = 0;
-            this.entryTypeTextBox.SelectionStart = 0;
-            this.entryTypeTextBox.ShortcutsEnabled = true;
-            this.entryTypeTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.entryTypeTextBox.UseSelectable = true;
-            this.entryTypeTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.entryTypeTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // entryDataTextBox
-            // 
-            resources.ApplyResources(this.entryDataTextBox, "entryDataTextBox");
-            // 
-            // 
-            // 
-            this.entryDataTextBox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
-            this.entryDataTextBox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode1")));
-            this.entryDataTextBox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
-            this.entryDataTextBox.CustomButton.Name = "";
-            this.entryDataTextBox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
-            this.entryDataTextBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.entryDataTextBox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
-            this.entryDataTextBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.entryDataTextBox.CustomButton.UseSelectable = true;
-            this.entryDataTextBox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
-            this.entryDataTextBox.Lines = new string[0];
-            this.entryDataTextBox.MaxLength = 32767;
-            this.entryDataTextBox.Name = "entryDataTextBox";
-            this.entryDataTextBox.PasswordChar = '\0';
-            this.entryDataTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.entryDataTextBox.SelectedText = "";
-            this.entryDataTextBox.SelectionLength = 0;
-            this.entryDataTextBox.SelectionStart = 0;
-            this.entryDataTextBox.ShortcutsEnabled = true;
-            this.entryDataTextBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.entryDataTextBox.UseSelectable = true;
-            this.entryDataTextBox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.entryDataTextBox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // buttonEdit
-            // 
-            resources.ApplyResources(this.buttonEdit, "buttonEdit");
-            this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.buttonEdit.UseSelectable = true;
-            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
-            // 
             // metroLabel1
             // 
             resources.ApplyResources(this.metroLabel1, "metroLabel1");
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // treeMeta
-            // 
-            this.treeMeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.treeMeta.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeMeta.ContextMenuStrip = this.contextMenuMetaTree;
-            resources.ApplyResources(this.treeMeta, "treeMeta");
-            this.treeMeta.ForeColor = System.Drawing.SystemColors.Window;
-            this.treeMeta.Name = "treeMeta";
-            this.treeMeta.PathSeparator = "/";
-            this.treeMeta.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMeta_AfterSelect);
-            this.treeMeta.DoubleClick += new System.EventHandler(this.treeMeta_DoubleClick);
-            this.treeMeta.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeMeta_KeyDown);
-            // 
             // contextMenuMetaTree
             // 
-            this.contextMenuMetaTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addEntryToolStripMenuItem,
-            this.addMultipleEntriesToolStripMenuItem1,
-            this.deleteEntryToolStripMenuItem,
-            this.editAllEntriesToolStripMenuItem});
-            this.contextMenuMetaTree.Name = "contextMenuStrip1";
+            this.contextMenuMetaTree.Name = "contextMenuMetaTree";
             resources.ApplyResources(this.contextMenuMetaTree, "contextMenuMetaTree");
             // 
             // addEntryToolStripMenuItem
             // 
-            this.addEntryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addEntryToolStripMenuItem1,
-            this.addBOXEntryToolStripMenuItem1,
-            this.addANIMEntryToolStripMenuItem1});
-            resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
             this.addEntryToolStripMenuItem.Name = "addEntryToolStripMenuItem";
+            resources.ApplyResources(this.addEntryToolStripMenuItem, "addEntryToolStripMenuItem");
             // 
             // addEntryToolStripMenuItem1
             // 
             this.addEntryToolStripMenuItem1.Name = "addEntryToolStripMenuItem1";
             resources.ApplyResources(this.addEntryToolStripMenuItem1, "addEntryToolStripMenuItem1");
-            this.addEntryToolStripMenuItem1.Click += new System.EventHandler(this.addEntryToolStripMenuItem_Click);
             // 
             // addBOXEntryToolStripMenuItem1
             // 
             this.addBOXEntryToolStripMenuItem1.Name = "addBOXEntryToolStripMenuItem1";
             resources.ApplyResources(this.addBOXEntryToolStripMenuItem1, "addBOXEntryToolStripMenuItem1");
-            this.addBOXEntryToolStripMenuItem1.Click += new System.EventHandler(this.addBOXEntryToolStripMenuItem1_Click);
             // 
             // addANIMEntryToolStripMenuItem1
             // 
             this.addANIMEntryToolStripMenuItem1.Name = "addANIMEntryToolStripMenuItem1";
             resources.ApplyResources(this.addANIMEntryToolStripMenuItem1, "addANIMEntryToolStripMenuItem1");
-            this.addANIMEntryToolStripMenuItem1.Click += new System.EventHandler(this.addANIMEntryToolStripMenuItem1_Click);
             // 
             // addMultipleEntriesToolStripMenuItem1
             // 
             this.addMultipleEntriesToolStripMenuItem1.Name = "addMultipleEntriesToolStripMenuItem1";
             resources.ApplyResources(this.addMultipleEntriesToolStripMenuItem1, "addMultipleEntriesToolStripMenuItem1");
-            this.addMultipleEntriesToolStripMenuItem1.Click += new System.EventHandler(this.addMultipleEntriesToolStripMenuItem1_Click);
             // 
             // deleteEntryToolStripMenuItem
             // 
             this.deleteEntryToolStripMenuItem.Image = global::PckStudio.Properties.Resources.file_delete;
             this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
             resources.ApplyResources(this.deleteEntryToolStripMenuItem, "deleteEntryToolStripMenuItem");
-            this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
             // editAllEntriesToolStripMenuItem
             // 
             this.editAllEntriesToolStripMenuItem.Name = "editAllEntriesToolStripMenuItem";
             resources.ApplyResources(this.editAllEntriesToolStripMenuItem, "editAllEntriesToolStripMenuItem");
-            this.editAllEntriesToolStripMenuItem.Click += new System.EventHandler(this.editAllEntriesToolStripMenuItem_Click);
             // 
             // label11
             // 
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
-            // 
-            // treeViewMain
-            // 
-            this.treeViewMain.AllowDrop = true;
-            this.treeViewMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.treeViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewMain.ContextMenuStrip = this.contextMenuPCKEntries;
-            resources.ApplyResources(this.treeViewMain, "treeViewMain");
-            this.treeViewMain.ForeColor = System.Drawing.Color.White;
-            this.treeViewMain.ImageList = this.imageList;
-            this.treeViewMain.LabelEdit = true;
-            this.treeViewMain.Name = "treeViewMain";
-            this.treeViewMain.PathSeparator = "/";
-            this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
-            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
-            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
-            this.treeViewMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseClick);
-            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
-            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
-            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
-            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
-            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
             // contextMenuPCKEntries
             // 
@@ -698,48 +534,52 @@ namespace PckStudio.Controls
             resources.ApplyResources(this.addMultipleEntriesToolStripMenuItem, "addMultipleEntriesToolStripMenuItem");
             this.addMultipleEntriesToolStripMenuItem.Name = "addMultipleEntriesToolStripMenuItem";
             // 
-            // LittleEndianCheckBox
+            // tableLayoutPanel1
             // 
-            resources.ApplyResources(this.LittleEndianCheckBox, "LittleEndianCheckBox");
-            this.LittleEndianCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.LittleEndianCheckBox.Name = "LittleEndianCheckBox";
-            this.LittleEndianCheckBox.Style = MetroFramework.MetroColorStyle.White;
-            this.LittleEndianCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.LittleEndianCheckBox.UseSelectable = true;
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.treeViewMain, 0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
-            // previewPictureBox
+            // treeViewMain
             // 
-            resources.ApplyResources(this.previewPictureBox, "previewPictureBox");
-            this.previewPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.previewPictureBox.BackgroundInterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.previewPictureBox.Image = global::PckStudio.Properties.Resources.NoImageFound;
-            this.previewPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.TabStop = false;
+            this.treeViewMain.AllowDrop = true;
+            this.treeViewMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.treeViewMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeViewMain.ContextMenuStrip = this.contextMenuPCKEntries;
+            resources.ApplyResources(this.treeViewMain, "treeViewMain");
+            this.treeViewMain.ForeColor = System.Drawing.Color.White;
+            this.treeViewMain.HideSelection = false;
+            this.treeViewMain.ImageList = this.imageList;
+            this.treeViewMain.LabelEdit = true;
+            this.treeViewMain.LineColor = System.Drawing.Color.DarkGray;
+            this.treeViewMain.Name = "treeViewMain";
+            this.treeViewMain.PathSeparator = "/";
+            this.tableLayoutPanel1.SetRowSpan(this.treeViewMain, 2);
+            this.treeViewMain.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeViewMain_BeforeLabelEdit);
+            this.treeViewMain.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewMain_ItemDrag);
+            this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
+            this.treeViewMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseClick);
+            this.treeViewMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragDrop);
+            this.treeViewMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragEnter);
+            this.treeViewMain.DragOver += new System.Windows.Forms.DragEventHandler(this.treeViewMain_DragOver);
+            this.treeViewMain.DoubleClick += new System.EventHandler(this.treeViewMain_DoubleClick);
+            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
-            // PckEditor
+            // PckAssetBrowserEditor
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.previewPictureBox);
-            this.Controls.Add(this.LittleEndianCheckBox);
             this.Controls.Add(this.pckFileLabel);
-            this.Controls.Add(this.labelImageSize);
             this.Controls.Add(this.fileEntryCountLabel);
-            this.Controls.Add(this.PropertiesTabControl);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.treeViewMain);
             this.Controls.Add(logoPictureBox);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.Color.Transparent;
-            this.Name = "PckEditor";
+            this.Name = "PckAssetBrowserEditor";
             this.Load += new System.EventHandler(this.PckEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(logoPictureBox)).EndInit();
-            this.PropertiesTabControl.ResumeLayout(false);
-            this.MetaTab.ResumeLayout(false);
-            this.MetaTab.PerformLayout();
-            this.contextMenuMetaTree.ResumeLayout(false);
             this.contextMenuPCKEntries.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -748,14 +588,8 @@ namespace PckStudio.Controls
         #endregion
 
         private MetroFramework.Controls.MetroLabel pckFileLabel;
-        private MetroFramework.Controls.MetroLabel labelImageSize;
         private MetroFramework.Controls.MetroLabel fileEntryCountLabel;
-        private MetroFramework.Controls.MetroTabControl PropertiesTabControl;
-        private MetroFramework.Controls.MetroTabPage MetaTab;
-        private System.Windows.Forms.TreeView treeMeta;
         private MetroFramework.Controls.MetroLabel label11;
-        private System.Windows.Forms.TreeView treeViewMain;
-        private PckStudio.ToolboxItems.InterpolationPictureBox previewPictureBox;
         private System.Windows.Forms.ContextMenuStrip contextMenuMetaTree;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addEntryToolStripMenuItem1;
@@ -806,11 +640,7 @@ namespace PckStudio.Controls
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ToolStripMenuItem addMultipleEntriesToolStripMenuItem1;
         private MetroFramework.Controls.MetroLabel metroLabel2;
-        private MetroFramework.Controls.MetroTextBox entryTypeTextBox;
-        private MetroFramework.Controls.MetroTextBox entryDataTextBox;
-        private MetroFramework.Controls.MetroButton buttonEdit;
         private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroCheckBox LittleEndianCheckBox;
         private System.Windows.Forms.ToolStripMenuItem setSubPCKEndiannessToolStripMenuItem;
         private ToolStripMenuItem bigEndianXbox360PS3WiiUToolStripMenuItem;
         private ToolStripMenuItem littleEndianPS4PSVitaSwitchToolStripMenuItem;
@@ -820,5 +650,7 @@ namespace PckStudio.Controls
         private ToolStripMenuItem version3114ToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripSeparator toolStripSeparator6;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TreeView treeViewMain;
     }
 }

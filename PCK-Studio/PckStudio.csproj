@@ -136,6 +136,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DefaultPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DefaultPanel.Designer.cs">
+      <DependentUpon>DefaultPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -148,7 +154,16 @@
     <Compile Include="Controls\ImmersiveForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\ModelsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ModelsPanel.Designer.cs">
+      <DependentUpon>ModelsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NamedTextureTreeNode.cs" />
+    <Compile Include="Controls\ViewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PageClosingEventArgs.cs" />
     <Compile Include="Controls\PckAssetBrowserEditor.cs">
       <SubType>UserControl</SubType>
@@ -399,6 +414,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\DefaultPanel.resx">
+      <DependentUpon>DefaultPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ModelsPanel.resx">
+      <DependentUpon>ModelsPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PckAssetBrowserEditor.resx">
       <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
     </EmbeddedResource>

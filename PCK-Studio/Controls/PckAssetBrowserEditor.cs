@@ -74,9 +74,15 @@ namespace PckStudio.Controls
         private delegate void OnModifiedChangeDelegate(bool state);
         private OnModifiedChangeDelegate _onModifiedChangeDelegate;
 
+        private ViewPanel _currentViewPanel;
+
+        private readonly ViewPanel _default;
+        private readonly ViewPanel _models;
+
         private int _timesSaved = 0;
 
-        private readonly Dictionary<PckAssetType, Action<PckAsset>> _pckAssetTypeHandler;
+        private readonly IDictionary<PckAssetType, Action<PckAsset>> _pckAssetTypeHandler;
+        //private readonly IDictionary<PckAssetType, ViewPanel> _viewPanels;
 
         public PckAssetBrowserEditor(PackInfo packInfo, ISaveContext<PackInfo> saveContext)
             : base(packInfo, saveContext)
@@ -86,9 +92,20 @@ namespace PckStudio.Controls
             _originalEndianness = packInfo.ByteOrder;
             _currentEndianness = packInfo.ByteOrder;
 
-            LittleEndianCheckBox.Visible = packInfo.AllowByteOrderSwap;
+            //! InitializeViewPanels
+            {
+                _default = new DefaultPanel();
+                _models = new ModelsPanel(TryGet<string, Image>.FromDelegate((string path, out Image img) =>
+                {
+                    bool found = EditorValue.File.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset asset) ||
+                                 EditorValue.File.TryGetAsset(path + ".tga", PckAssetType.TextureFile, out asset);
+                    img = found ? asset.GetTexture() : default;
+                    return found;
+                }));
+            }
 
             treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
+            LoadViewPanel(_default);
 
             skinToolStripMenuItem1.Click += (sender, e) => SetFileType(PckAssetType.SkinFile);
             capeToolStripMenuItem.Click += (sender, e) => SetFileType(PckAssetType.CapeFile);
@@ -140,7 +157,20 @@ namespace PckStudio.Controls
                 [PckAssetType.MaterialFile] = HandleMaterialFile,
             };
         }
-        
+
+        private void LoadViewPanel(ViewPanel viewPanel)
+        {
+            _currentViewPanel?.Reset();
+            if (viewPanel == _currentViewPanel)
+                return; 
+            if (_currentViewPanel is not null)
+                tableLayoutPanel1.Controls.Remove(_currentViewPanel);
+            viewPanel.Dock = DockStyle.Fill;
+            tableLayoutPanel1.SetRowSpan(viewPanel, 2);
+            tableLayoutPanel1.Controls.Add(viewPanel, 1, 0);
+            _currentViewPanel = viewPanel;
+        }
+
         public new void Save()
         {
             base.Save();
@@ -216,6 +246,7 @@ namespace PckStudio.Controls
                 Trace.TraceInformation($"[{nameof(PckAssetBrowserEditor)}:{nameof(HandleTextureFile)}] '{asset.Filename}' size is 0.");
                 return;
             }
+            _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
 
             ResourceLocation resourceLocation = ResourceLocations.GetFromPath(asset.Filename);
             Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
@@ -495,9 +526,8 @@ namespace PckStudio.Controls
             using CustomSkinEditor skinEditor = new CustomSkinEditor(skin, cape, saveContext, EditorValue.File.HasVerionString);
             if (skinEditor.ShowDialog() == DialogResult.OK)
             {
-                entryDataTextBox.Text = entryTypeTextBox.Text = string.Empty;
                 _wasModified = true;
-                ReloadMetaTreeView();
+                _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
             }
         }
 
@@ -593,8 +623,7 @@ namespace PckStudio.Controls
         {
             // In case the Rename function was just used and the selected node name no longer matches the file name
             string selectedNodeText = treeViewMain.SelectedNode is TreeNode node ? node.FullPath : string.Empty;
-            previewPictureBox.Image = Resources.NoImageFound;
-            treeMeta.Nodes.Clear();
+            _currentViewPanel.Reset();
             treeViewMain.Nodes.Clear();
             BuildPckTreeView(treeViewMain.Nodes, EditorValue.File);
             treeViewMain.Sort();
@@ -685,19 +714,6 @@ namespace PckStudio.Controls
             return false;
         }
 
-        private void ReloadMetaTreeView()
-        {
-            treeMeta.Nodes.Clear();
-            if (treeViewMain.SelectedNode is TreeNode node &&
-                node.Tag is PckAsset asset)
-            {
-                foreach (KeyValuePair<string, string> property in asset.GetProperties())
-                {
-                    treeMeta.Nodes.Add(CreateNode(property.Key, property));
-                }
-            }
-        }
-
         private void UpdateRichPresence()
         {
             if (EditorValue is not null &&
@@ -712,10 +728,10 @@ namespace PckStudio.Controls
             RPC.SetPresence("An Open Source .PCK File Editor");
         }
 
-        private static PckAsset CreateNewAudioAsset(bool isLittle, PckAudioFile audioFile)
+        private static PckAsset CreateNewAudioAsset(OMI.ByteOrder byteOrder, PckAudioFile audioFile)
         {
             PckAsset newAsset = new PckAsset("audio.pck", PckAssetType.AudioFile);
-            newAsset.SetData(new PckAudioFileWriter(audioFile, isLittle ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
+            newAsset.SetData(new PckAudioFileWriter(audioFile, byteOrder));
             return newAsset;
         }
 
@@ -846,10 +862,6 @@ namespace PckStudio.Controls
             folderNamePrompt.OKButtonText = "Add";
             if (folderNamePrompt.ShowDialog(this) == DialogResult.OK)
             {
-                TreeNode folerNode = CreateNode(folderNamePrompt.NewText);
-                folerNode.ImageIndex = 0;
-                folerNode.SelectedImageIndex = 0;
-
                 TreeNodeCollection nodeCollection = treeViewMain.Nodes;
                 if (treeViewMain.SelectedNode is TreeNode node)
                 {
@@ -865,7 +877,9 @@ namespace PckStudio.Controls
                     else
                         nodeCollection = node.Nodes;
                 }
-                nodeCollection.Add(folerNode);
+                TreeNode folerNode = nodeCollection.CreateNode(folderNamePrompt.NewText);
+                folerNode.ImageIndex = 0;
+                folerNode.SelectedImageIndex = 0;
             }
         }
 
@@ -883,86 +897,29 @@ namespace PckStudio.Controls
 
         private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            ReloadMetaTreeView();
-
-            entryTypeTextBox.Text = entryDataTextBox.Text = labelImageSize.Text = string.Empty;
-            buttonEdit.Visible = false;
-
-            previewPictureBox.Image = Resources.NoImageFound;
-            viewFileInfoToolStripMenuItem.Visible = false;
+            _currentViewPanel.Reset();
 
             if (!e.Node.TryGetTagData(out PckAsset asset))
             {
                 return;
             }
 
+            SetViewPanelFor(asset.Type);
+            _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
+
             viewFileInfoToolStripMenuItem.Visible = true;
-            if (asset.HasProperty("BOX"))
+        }
+
+        private void SetViewPanelFor(PckAssetType type) => LoadViewPanel(GetViewPanel(type));
+
+        private ViewPanel GetViewPanel(PckAssetType type)
+        {
+            switch (type)
             {
-                buttonEdit.Text = "EDIT BOXES";
-                buttonEdit.Visible = true;
-            }
-            else if (asset.HasProperty("ANIM") &&
-                    asset.GetProperty("ANIM", s => SkinANIM.FromString(s) == (SkinAnimMask.RESOLUTION_64x64 | SkinAnimMask.SLIM_MODEL)))
-            {
-                buttonEdit.Text = "View Skin";
-                buttonEdit.Visible = true;
-            }
-
-            switch (asset.Type)
-            {
-                case PckAssetType.SkinFile:
-                case PckAssetType.CapeFile:
-                case PckAssetType.TextureFile:
-                {
-                    Image img = asset.GetTexture();
-
-                    previewPictureBox.Image = img;
-                    labelImageSize.Text = $"{previewPictureBox.Image.Size.Width}x{previewPictureBox.Image.Size.Height}";
-
-                    if (asset.Type != PckAssetType.TextureFile)
-                        break;
-
-                    ResourceLocation resourceLocation = ResourceLocations.GetFromPath(asset.Filename);
-                    if (resourceLocation is null || resourceLocation.Category == ResourceCategory.Unknown)
-                        break;
-
-                    if (resourceLocation.Category == ResourceCategory.ItemAnimation ||
-                        resourceLocation.Category == ResourceCategory.BlockAnimation &&
-                        !asset.IsMipmappedFile())
-                    {
-                        buttonEdit.Text = "EDIT TILE ANIMATION";
-                        buttonEdit.Visible = true;
-                        break;
-                    }
-
-                    buttonEdit.Text = "EDIT TEXTURE ATLAS";
-                    buttonEdit.Visible = true;
-                }
-                break;
-
-                case PckAssetType.LocalisationFile:
-                    buttonEdit.Text = "EDIT LOC";
-                    buttonEdit.Visible = true;
-                    break;
-
-                case PckAssetType.AudioFile:
-                    buttonEdit.Text = "EDIT MUSIC CUES";
-                    buttonEdit.Visible = true;
-                    break;
-
-                case PckAssetType.ColourTableFile when asset.Filename == "colours.col":
-                    buttonEdit.Text = "EDIT COLORS";
-                    buttonEdit.Visible = true;
-                    break;
-
-                case PckAssetType.BehavioursFile when asset.Filename == "behaviours.bin":
-                    buttonEdit.Text = "EDIT BEHAVIOURS";
-                    buttonEdit.Visible = true;
-                    break;
+                case PckAssetType.ModelsFile:
+                    return _models;
                 default:
-                    buttonEdit.Visible = false;
-                    break;
+                    return _default;
             }
         }
 
@@ -1281,7 +1238,7 @@ namespace PckStudio.Controls
                 PckAsset asset = EditorValue.File.CreateNewAsset(animationFilepath, PckAssetType.TextureFile);
                 asset.SetSerializedData(newAnimation, AnimationSerializer.DefaultSerializer);
                 BuildMainTreeView();
-                ReloadMetaTreeView();
+                _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
             }
         }
 
@@ -1301,11 +1258,11 @@ namespace PckStudio.Controls
             }
 
             PckAudioFile newAudioFile = CreateNewAudioFile();
-            PckAsset newAudioAsset = CreateNewAudioAsset(LittleEndianCheckBox.Checked, newAudioFile);
+            PckAsset newAudioAsset = CreateNewAudioAsset(_currentEndianness, newAudioFile);
 
             ISaveContext<PckAudioFile> saveContext = new DelegatedSaveContext<PckAudioFile>(Settings.Default.AutoSaveChanges, (audioFile) =>
             {
-                newAudioAsset.SetData(new PckAudioFileWriter(audioFile, LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
+                newAudioAsset.SetData(new PckAudioFileWriter(audioFile, _currentEndianness));
             });
 
             AudioEditor diag = new AudioEditor(newAudioFile, saveContext);
@@ -1337,8 +1294,7 @@ namespace PckStudio.Controls
                 return;
             }
 
-            EditorValue.File.CreateNewAsset("Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true),
-                    LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian));
+            EditorValue.File.CreateNewAsset("Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true), _currentEndianness));
 
             BuildMainTreeView();
         }
@@ -1511,10 +1467,10 @@ namespace PckStudio.Controls
             if (treeViewMain.SelectedNode.Tag is PckAsset asset)
             {
                 MessageBox.Show(
-                    $"Asset path: {asset.Filename}" +
-                    $"\nAsset type: {(int)asset.Type} ({asset.Type})" +
-                    $"\nAsset size: {asset.Size}" + 
-                    $"\nProperties count: {asset.PropertyCount}"
+                    $"Asset path: {asset.Filename}\n" +
+                    $"Asset type: {(int)asset.Type} ({asset.Type})\n" +
+                    $"Asset size: {asset.Size}\n" + 
+                    $"Properties count: {asset.PropertyCount}"
                     , Path.GetFileName(asset.Filename) + " Asset info");
             }
         }
@@ -1529,7 +1485,7 @@ namespace PckStudio.Controls
                     if (p.Key == "BOX" || p.Key == "OFFSET")
                         asset.SetProperty(asset.GetPropertyIndex(p), new KeyValuePair<string, string>(p.Key, p.Value.Replace(',', '.')));
                 }
-                ReloadMetaTreeView();
+                _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
                 _wasModified = true;
             }
         }
@@ -1779,6 +1735,7 @@ namespace PckStudio.Controls
             {
                 if (!BeforeFileRemove(asset) && EditorValue.File.RemoveAsset(asset))
                 {
+                    _currentViewPanel.Reset();
                     node.Remove();
                     _wasModified = true;
                 }
@@ -1790,15 +1747,6 @@ namespace PckStudio.Controls
                 EditorValue.File.RemoveAll(file => file.Filename.StartsWith(pckFolderDir) && !BeforeFileRemove(file));
                 node.Remove();
                 _wasModified = true;
-            }
-        }
-
-        private void treeMeta_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node is TreeNode t && t.Tag is KeyValuePair<string, string> property)
-            {
-                entryTypeTextBox.Text = property.Key;
-                entryDataTextBox.Text = property.Value;
             }
         }
 
@@ -1821,167 +1769,6 @@ namespace PckStudio.Controls
             // TODO: add folder renaming
             //e.CancelEdit = e.Node.Tag is PckAsset;
             e.CancelEdit = true;
-        }
-
-        private void editAllEntriesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
-            {
-                IEnumerable<string> props = asset.SerializeProperties(seperater: " ");
-                using (var input = new MultiTextPrompt(props))
-                {
-                    if (input.ShowDialog(this) == DialogResult.OK)
-                    {
-                        asset.ClearProperties();
-                        asset.DeserializeProperties(input.TextOutput);
-                        ReloadMetaTreeView();
-                        _wasModified = true;
-                    }
-                }
-            }
-        }
-
-        private void treeMeta_DoubleClick(object sender, EventArgs e)
-        {
-            if (treeMeta.SelectedNode is TreeNode subnode && subnode.Tag is KeyValuePair<string, string> property &&
-                treeViewMain.SelectedNode is TreeNode node && node.Tag is PckAsset asset)
-            {
-                if (asset.HasProperty(property.Key))
-                {
-                    switch (property.Key)
-                    {
-                        case "ANIM" when asset.Type == PckAssetType.SkinFile:
-                            try
-                            {
-                                using ANIMEditor diag = new ANIMEditor(SkinANIM.FromString(property.Value));
-                                if (diag.ShowDialog(this) == DialogResult.OK)
-                                {
-                                    asset.SetProperty(asset.GetPropertyIndex(property), new KeyValuePair<string, string>("ANIM", diag.ResultAnim.ToString()));
-                                    ReloadMetaTreeView();
-                                    _wasModified = true;
-                                }
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine(ex.Message);
-                                Trace.WriteLine("Invalid ANIM value: " + property.Value);
-                                MessageBox.Show(this, "Failed to parse ANIM value, aborting to normal functionality. Please make sure the value only includes hexadecimal characters (0-9,A-F) and has no more than 8 characters.");
-                            }
-                            break;
-
-                        case "BOX" when asset.Type == PckAssetType.SkinFile:
-                            try
-                            {
-                                using BoxEditor diag = new BoxEditor(property.Value, false);
-                                if (diag.ShowDialog(this) == DialogResult.OK)
-                                {
-                                    asset.SetProperty(asset.GetPropertyIndex(property), new KeyValuePair<string, string>("BOX", diag.Result.ToString()));
-                                    ReloadMetaTreeView();
-                                    _wasModified = true;
-                                }
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine(ex.Message);
-                                Trace.WriteLine("Invalid BOX value: " + property.Value);
-                                MessageBox.Show(this, "Failed to parse BOX value, aborting to normal functionality.");
-                            }
-                            break;
-
-                        default:
-                            break;
-
-                    }
-
-                    using (AddPropertyPrompt addProperty = new AddPropertyPrompt(property))
-                    {
-                        if (addProperty.ShowDialog(this) == DialogResult.OK)
-                        {
-                            asset.SetProperty(asset.GetPropertyIndex(property), addProperty.Property);
-                            ReloadMetaTreeView();
-                            _wasModified = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void treeMeta_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Delete)
-                deleteEntryToolStripMenuItem_Click(sender, e);
-        }
-
-        private void addMultipleEntriesToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
-            {
-                using var input = new MultiTextPrompt();
-                if (input.ShowDialog(this) == DialogResult.OK)
-                {
-                    asset.DeserializeProperties(input.TextOutput);
-                    ReloadMetaTreeView();
-                    _wasModified = true;
-                }
-            }
-        }
-
-        private void addBOXEntryToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (treeViewMain.SelectedNode is TreeNode t && t.Tag is PckAsset asset)
-            {
-                using BoxEditor diag = new BoxEditor(SkinBOX.DefaultHead, false);
-                if (diag.ShowDialog(this) == DialogResult.OK)
-                {
-                    asset.AddProperty("BOX", diag.Result);
-                    ReloadMetaTreeView();
-                    _wasModified = true;
-                }
-                return;
-            }
-        }
-
-        private void addANIMEntryToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (treeViewMain.SelectedNode.TryGetTagData(out PckAsset asset))
-            {
-                using ANIMEditor diag = new ANIMEditor(SkinANIM.Empty);
-                if (diag.ShowDialog(this) == DialogResult.OK)
-                {
-                    asset.AddProperty("ANIM", diag.ResultAnim);
-                    ReloadMetaTreeView();
-                    _wasModified = true;
-                }
-                return;
-            }
-        }
-
-        private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeMeta.SelectedNode is TreeNode t && t.Tag is KeyValuePair<string, string> property &&
-                treeViewMain.SelectedNode is TreeNode main && main.Tag is PckAsset asset &&
-                asset.RemoveProperty(property))
-            {
-                treeMeta.SelectedNode.Remove();
-                _wasModified = true;
-            }
-        }
-
-        private void addEntryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (treeViewMain.SelectedNode is TreeNode t &&
-                t.Tag is PckAsset asset)
-            {
-                using AddPropertyPrompt addProperty = new AddPropertyPrompt();
-                if (addProperty.ShowDialog(this) == DialogResult.OK)
-                {
-                    asset.AddProperty(addProperty.Property);
-                    ReloadMetaTreeView();
-                    _wasModified = true;
-                }
-            }
         }
 
         private static bool TryGetDefaultEntityModel(string modelName, out Model model)
@@ -2063,16 +1850,6 @@ namespace PckStudio.Controls
             CheckForPasswordAndRemove();
             BuildMainTreeView();
             UpdateRichPresence();
-        }
-
-        private void SetEndianess(OMI.ByteOrder endianness)
-        {
-            LittleEndianCheckBox.Checked = endianness == OMI.ByteOrder.LittleEndian;
-        }
-
-        private OMI.ByteOrder GetEndianess()
-        {
-            return LittleEndianCheckBox.Checked ? OMI.ByteOrder.LittleEndian : OMI.ByteOrder.BigEndian;
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)

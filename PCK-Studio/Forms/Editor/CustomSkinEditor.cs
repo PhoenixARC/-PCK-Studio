@@ -66,7 +66,6 @@ namespace PckStudio.Forms.Editor
             base.OnLoad(e);
             if (DesignMode)
                 return;
-            renderer3D1.Initialize(_inflateOverlayParts);
             renderer3D1.GuideLineColor = Color.LightCoral;
             skinNameLabel.Text = EditorValue.MetaData.Name;
             if (EditorValue.HasCape)
