@@ -40,7 +40,7 @@ namespace PckStudio.Forms.Editor
             modelTreeView.ImageList.Images.AddRange(ApplicationScope.EntityImages);
         }
 
-        private const int InvalidImageIndex = 127;
+        private const int INVALID_IMAGE_INDEX = 127;
         // TODO: move to json file. -miku
         private static Dictionary<string, int> ModelImageIndex = new Dictionary<string, int>()
         {
@@ -123,7 +123,7 @@ namespace PckStudio.Forms.Editor
                 ["zombie.villager_v2"] = 102,
         };
 
-        private static int GetModelImageIndex(string name) => ModelImageIndex.TryGetValue(name, out int index) ? index : InvalidImageIndex;
+        private static int GetModelImageIndex(string name) => ModelImageIndex.TryGetValue(name, out int index) ? index : INVALID_IMAGE_INDEX;
 
         private class ModelNode : TreeNode
         {
