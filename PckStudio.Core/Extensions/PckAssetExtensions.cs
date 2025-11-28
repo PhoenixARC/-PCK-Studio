@@ -19,7 +19,7 @@ namespace PckStudio.Core.Extensions
 {
     public static class PckAssetExtensions
     {
-        private const string MipMap = "MipMapLevel";
+        private const string MIPMAP_LEVEL = "MipMapLevel";
 
         public static Image GetTexture(this PckAsset asset)
         {
@@ -178,7 +178,7 @@ namespace PckStudio.Core.Extensions
                 return false;
 
             // If string does not end with MipMapLevel, then it's not MipMapped
-            if (!name.Remove(name.Length - 1, 1).EndsWith(MipMap))
+            if (!name.Remove(name.Length - 1, 1).EndsWith(MIPMAP_LEVEL))
                 return false;
             return true;
         }
@@ -188,7 +188,7 @@ namespace PckStudio.Core.Extensions
             if (!asset.IsMipmappedFile())
                 return asset.Filename;
             string ext = Path.GetExtension(asset.Filename);
-            return asset.Filename.Remove(asset.Filename.Length - (MipMap.Length + 1) - ext.Length) + ext;
+            return asset.Filename.Remove(asset.Filename.Length - (MIPMAP_LEVEL.Length + 1) - ext.Length) + ext;
         }
 
         public static void DeserializeProperties(this PckAsset asset, IEnumerable<string> serializedData)
