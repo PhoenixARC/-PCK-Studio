@@ -103,6 +103,7 @@
     <Compile Include="Extensions\SkinBOXExtensions.cs" />
     <Compile Include="Extensions\SkinExtensions.cs" />
     <Compile Include="Extensions\System.Numerics.cs" />
+    <Compile Include="Extensions\TreeNodeCollectionExtensions.cs" />
     <Compile Include="Extensions\TreeNodeExtensions.cs" />
     <Compile Include="Extensions\TreeViewExtensions.cs" />
     <Compile Include="FileDialogFilter.cs" />

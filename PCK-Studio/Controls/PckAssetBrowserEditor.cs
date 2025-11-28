@@ -577,49 +577,11 @@ namespace PckStudio.Controls
             }
         }
 
-        /// <summary>
-        /// wrapper that allows the use of <paramref name="name"/> in <code>TreeNode.Nodes.Find(<paramref name="name"/>, ...)</code> and <code>TreeNode.Nodes.ContainsKey(<paramref name="name"/>)</code>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="tag"></param>
-        /// <returns>new Created TreeNode</returns>
-        private static TreeNode CreateNode(string name, object tag = null)
-        {
-            TreeNode node = new TreeNode(name);
-            node.Name = name;
-            node.Tag = tag;
-            return node;
-        }
-
-        private TreeNode BuildNodeTreeBySeperator(TreeNodeCollection root, string path, char seperator)
-        {
-            _ = root ?? throw new ArgumentNullException(nameof(root));
-            if (!path.Contains(seperator))
-            {
-                TreeNode finalNode = CreateNode(path);
-                root.Add(finalNode);
-                return finalNode;
-            }
-            string nodeText = path.Substring(0, path.IndexOf(seperator));
-            string subPath = path.Substring(path.IndexOf(seperator) + 1);
-
-            if (string.IsNullOrWhiteSpace(nodeText))
-            {
-                return BuildNodeTreeBySeperator(root, subPath, seperator);
-            }
-
-            bool alreadyExists = root.ContainsKey(nodeText);
-            TreeNode subNode = alreadyExists ? root[nodeText] : CreateNode(nodeText);
-            if (!alreadyExists)
-                root.Add(subNode);
-            return BuildNodeTreeBySeperator(subNode.Nodes, subPath, seperator);
-        }
-
         private void BuildPckTreeView(TreeNodeCollection root, PckFile pckFile)
         {
             foreach (PckAsset asset in pckFile.GetAssets())
             {
-                TreeNode node = BuildNodeTreeBySeperator(root, asset.Filename, '/');
+                TreeNode node = root.BuildNodeTreeBySeperator(asset.Filename, '/');
                 node.Tag = asset;
                 int nodeIconId = GetNodeIconId(asset.Type);
                 node.ImageIndex = nodeIconId;
