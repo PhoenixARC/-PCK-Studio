@@ -79,6 +79,23 @@ namespace PckStudio.Rendering
             }
         }
 
+        [Description("The current cape texture")]
+        [Category("Appearance")]
+        public Image ArmorTexture
+        {
+            get => _armorImage;
+            set
+            {
+                var args = new TextureChangingEventArgs(value);
+                Events[nameof(ArmorTextureChanging)]?.DynamicInvoke(this, args);
+                OnArmorTextureChanging(this, args);
+                if (!args.Cancel)
+                {
+                    _armorImage = value;
+                }
+            }
+        }
+
         [Description("The Color used for outlines")]
         [Category("Appearance")]
         public Color GuideLineColor { get; set; }
@@ -148,6 +165,15 @@ namespace PckStudio.Rendering
             remove => Events.RemoveHandler(nameof(CapeTextureChanging), value);
         }
 
+        [Description("Event that gets fired when the armor texture is changing")]
+        [Category("Property Chnaged")]
+        [Browsable(true)]
+        public event EventHandler<TextureChangingEventArgs> ArmorTextureChanging
+        {
+            add => Events.AddHandler(nameof(ArmorTextureChanging), value);
+            remove => Events.RemoveHandler(nameof(ArmorTextureChanging), value);
+        }
+
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public SkinANIM ANIM
@@ -211,6 +237,7 @@ namespace PckStudio.Rendering
         private SkinANIM _anim;
         private Image _skinImage;
         private Image _capeImage;
+        private Image _armorImage;
         private Texture2D skinTexture;
         private Texture2D capeTexture;
         private Texture2D armorTexture;
@@ -414,7 +441,7 @@ namespace PckStudio.Rendering
                 armorTexture.MagFilter = TextureMagFilter.Nearest;
                 armorTexture.WrapS = TextureWrapMode.Repeat;
                 armorTexture.WrapT = TextureWrapMode.Repeat;
-                armorTexture.SetTexture(Resources.armor);
+                ArmorTexture = Resources.armor;
                 GLErrorCheck();
 
                 capeTexture = new Texture2D();
@@ -605,11 +632,25 @@ namespace PckStudio.Rendering
         protected virtual void OnCapeTextureChanging(object sender, TextureChangingEventArgs e)
         {
             if (e.NewTexture is null)
-                e.Cancel = true;
+            {
+                e.Cancel = false;
+                return;
+            }
             
             if (e.Cancel)
                 return;
             capeTexture.SetTexture(e.NewTexture);
+            GLErrorCheck();
+        }
+
+        protected virtual void OnArmorTextureChanging(object sender, TextureChangingEventArgs e)
+        {
+            if (e.NewTexture is null)
+                e.Cancel = true;
+            
+            if (e.Cancel)
+                return;
+            armorTexture.SetTexture(e.NewTexture);
             GLErrorCheck();
         }
 
