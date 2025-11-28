@@ -13,7 +13,7 @@ namespace PckStudio.Core.DLC
         public PckFile PckFile { get; }
 
         public UnknownDLCPackage(string name, PckFile pckFile)
-            : base(name ?? nameof(UnknownDLCPackage), -1, default, default)
+            : base(name ?? nameof(UnknownDLCPackage), -1, default)
         {
             PckFile = pckFile;
         }

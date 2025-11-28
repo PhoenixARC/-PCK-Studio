@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using PckStudio.Core.Interfaces;
@@ -18,16 +19,18 @@ namespace PckStudio.Core.DLC
     {
         public DLCSkinPackageOrder SkinPackageOrder { get; set; } = DLCSkinPackageOrder.CapesFirst;
 
-        private readonly Dictionary<SkinIdentifier, Skin.Skin> _skins;
+        private readonly IDictionary<int, Image> _capes;
+        private readonly IDictionary<SkinIdentifier, Skin.Skin> _skins;
 
-        internal DLCSkinPackage(string name, int identifier, IEnumerable<Skin.Skin> skins, IDLCPackageSerialization packageInfo, IDLCPackage parentPackage)
-            : base(name, identifier, packageInfo, parentPackage)
+        internal DLCSkinPackage(string name, int identifier, IEnumerable<Skin.Skin> skins, IDictionary<int, Image> capes, IDLCPackage parentPackage)
+            : base(name, identifier, parentPackage)
         {
             _skins = skins.ToDictionary(skin => skin.Identifier);
+            _capes = capes;
         }
 
         internal DLCSkinPackage(string name, int identifier, IDLCPackage parentPackage = null)
-            : this(name, identifier, Enumerable.Empty<Skin.Skin>(), null, parentPackage)
+            : this(name, identifier, Enumerable.Empty<Skin.Skin>(), new Dictionary<int, Image>(), parentPackage)
         {
         }
 
@@ -38,7 +41,10 @@ namespace PckStudio.Core.DLC
 
         public bool ContainsSkin(SkinIdentifier skinIdentifier) => _skins.ContainsKey(skinIdentifier);
 
-        public void AddSkin(Skin.Skin skin) => _skins.Add(skin.Identifier, skin);
+        public void AddSkin(Skin.Skin skin)
+        {
+            _skins.Add(skin.Identifier, skin);
+        }
 
         public bool RemoveSkin(SkinIdentifier skinIdentifier) => _skins.Remove(skinIdentifier);
         
@@ -47,5 +53,7 @@ namespace PckStudio.Core.DLC
         public IReadOnlyCollection<Skin.Skin> GetSkins() => _skins.Values.Cast<Skin.Skin>().ToArray();
 
         public override DLCPackageType GetDLCPackageType() => DLCPackageType.SkinPack;
+
+        internal KeyValuePair<int, Image>[] GetCapes() => _capes.ToArray();
     }
 }

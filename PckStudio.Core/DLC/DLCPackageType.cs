@@ -1,13 +1,13 @@
 ﻿namespace PckStudio.Core.DLC
 {
-    public enum DLCPackageType
+    public enum DLCPackageType : int
     {
         Unknown = -1,
         Invalid,
         SkinPack,
         TexturePack,
         MashUpPack,
-        //! TODO: Add DLCPackage class for minigames... -null
+
         MG01,
         MG02,
         MG03,

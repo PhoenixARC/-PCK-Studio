@@ -12,13 +12,13 @@ namespace PckStudio.Core.DLC
     {
         internal static IDLCPackage Instance { get; } = new InvalidDLCPackage();
 
-        private InvalidDLCPackage(string name, int identifier, IDLCPackageSerialization packageInfo, IDLCPackage parentPackage)
-            : base(name, identifier, packageInfo, parentPackage)
+        private InvalidDLCPackage(string name, int identifier, IDLCPackage parentPackage)
+            : base(name, identifier, parentPackage)
         {
         }
 
         private InvalidDLCPackage()
-            : this(nameof(InvalidDLCPackage), -1, null, null)
+            : this(nameof(InvalidDLCPackage), -1, null)
         {
 
         }

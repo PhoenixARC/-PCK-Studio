@@ -10,17 +10,14 @@ namespace PckStudio.Core.DLC
 {
     public abstract class DLCPackage : IDLCPackage
     {
-        protected DLCPackage(string name, int identifier, IDLCPackageSerialization packageInfo, IDLCPackage parentPackage)
+        protected DLCPackage(string name, int identifier, IDLCPackage parentPackage)
         {
             Name = name;
             Identifier = identifier;
-            PackageInfo = packageInfo;
             ParentPackage = parentPackage;
         }
 
         public int Identifier { get; }
-
-        public IDLCPackageSerialization PackageInfo { get; }
 
         public string Name { get; } = string.Empty;
 

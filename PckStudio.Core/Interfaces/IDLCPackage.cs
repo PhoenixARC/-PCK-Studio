@@ -8,8 +8,6 @@
 
         bool IsRootPackage { get; }
 
-        IDLCPackageSerialization PackageInfo { get; }
-
         DLC.DLCPackageType GetDLCPackageType();
 
         IDLCPackage ParentPackage { get; }

@@ -14,8 +14,8 @@ namespace PckStudio.Core.DLC
         private readonly DLCPackageType _packageType;
         private readonly MiniGameId _miniGameId;
 
-        public DLCMiniGamePackage(string name, int identifier, DLCPackageType packageType, MiniGameId miniGameId, IDLCPackageSerialization packageInfo = null, IDLCPackage parentPackage = null)
-            : base(name, identifier, packageInfo, parentPackage)
+        public DLCMiniGamePackage(string name, int identifier, DLCPackageType packageType, MiniGameId miniGameId, IDLCPackage parentPackage = null)
+            : base(name, identifier, parentPackage)
         {
             _packageType = packageType;
             _miniGameId = miniGameId;
