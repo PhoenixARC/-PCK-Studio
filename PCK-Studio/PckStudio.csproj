@@ -148,6 +148,7 @@
     <Compile Include="Controls\ImmersiveForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\NamedTextureTreeNode.cs" />
     <Compile Include="Controls\PageClosingEventArgs.cs" />
     <Compile Include="Controls\PckAssetBrowserEditor.cs">
       <SubType>UserControl</SubType>

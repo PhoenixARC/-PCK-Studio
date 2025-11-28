@@ -177,20 +177,6 @@ namespace PckStudio.Forms.Editor
             internal static ModelBoxNode Create(ModelBox modelBox) => new ModelBoxNode(modelBox);
         }
 
-        private class NamedTextureTreeNode : TreeNode
-        {
-            private readonly NamedData<Image> _namedTexture;
-
-            public NamedTextureTreeNode(NamedData<Image> namedTexture)
-                : base(namedTexture.Name)
-            {
-                Tag = namedTexture;
-                _namedTexture = namedTexture;
-            }
-
-            public Image GetTexture() => _namedTexture.Value;
-        }
-
         private void LoadModels()
         {
             modelTreeView.Nodes.Clear();
