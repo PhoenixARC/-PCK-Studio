@@ -628,7 +628,6 @@
     <None Include="Resources\icons\clock.png" />
     <None Include="Resources\changeTile.png" />
     <None Include="Resources\HamburgerMenuIcon.png" />
-    <None Include="Resources\pack.png" />
     <None Include="Resources\external\Xbox.png" />
     <None Include="Resources\external\PS3.png" />
     <None Include="Resources\external\WiiU.png" />
