@@ -161,6 +161,12 @@
       <DependentUpon>ModelsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\NamedTextureTreeNode.cs" />
+    <Compile Include="Controls\SkinsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SkinsPanel.Designer.cs">
+      <DependentUpon>SkinsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ViewPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -422,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PckAssetBrowserEditor.resx">
       <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SkinsPanel.resx">
+      <DependentUpon>SkinsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Additional-Popups\FilterPrompt.resx">
       <DependentUpon>FilterPrompt.cs</DependentUpon>

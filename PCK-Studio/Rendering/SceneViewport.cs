@@ -66,7 +66,7 @@ namespace PckStudio.Rendering
             set
             {
                 base.BackColor = value;
-                if (!DesignMode && Context.IsCurrent)
+                if (!DesignMode)
                     Renderer.SetClearColor(value);
             }
         }
@@ -149,6 +149,8 @@ namespace PckStudio.Rendering
 
             Camera = new PerspectiveCamera(fov, camareaPosition);
             _shaderLibrary = new ShaderLibrary();
+            if (!DesignMode)
+                GetContext();
         }
 
         protected virtual void Initialize() { }
@@ -171,9 +173,9 @@ namespace PckStudio.Rendering
             if (DesignMode)
                 return;
             if (!Visible)
-                _timer.Stop();
+                _timer?.Stop();
             if (Visible)
-                _timer.Start();
+                _timer?.Start();
         }
 
         protected override void OnGotFocus(EventArgs e)

@@ -78,6 +78,7 @@ namespace PckStudio.Controls
 
         private readonly ViewPanel _default;
         private readonly ViewPanel _models;
+        private readonly ViewPanel _skins;
 
         private int _timesSaved = 0;
 
@@ -102,6 +103,7 @@ namespace PckStudio.Controls
                     img = found ? asset.GetTexture() : default;
                     return found;
                 }));
+                _skins = new SkinsPanel(_currentEndianness);
             }
 
             treeViewMain.TreeViewNodeSorter = new PckNodeSorter();
@@ -918,6 +920,8 @@ namespace PckStudio.Controls
             {
                 case PckAssetType.ModelsFile:
                     return _models;
+                case PckAssetType.SkinDataFile:
+                    return _skins;
                 default:
                     return _default;
             }

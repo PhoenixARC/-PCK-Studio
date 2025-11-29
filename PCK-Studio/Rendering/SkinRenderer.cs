@@ -16,24 +16,23 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Drawing;
 using System.Diagnostics;
-using OpenTK;
-using PckStudio.Internal;
-using PckStudio.Core.Extensions;
-using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.Drawing;
-using PckStudio.Properties;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Drawing.Imaging;
-using System.IO;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using PckStudio.Properties;
 using PckStudio.Rendering.Extension;
 using PckStudio.Rendering.Texture;
 using PckStudio.Rendering.Shader;
-using System.Linq;
+using PckStudio.Core.Extensions;
 using PckStudio.Core.Skin;
 using PckStudio.Core;
 
@@ -183,7 +182,8 @@ namespace PckStudio.Rendering
             set
             {
                 _anim = value;
-                OnANIMUpdate();
+                if (value is not null && !DesignMode)
+                    OnANIMUpdate();
             }
         }
 
@@ -291,6 +291,15 @@ namespace PckStudio.Rendering
 
         public SkinRenderer() : base(fov: 60f)
         {
+            InitializeComponent();
+
+            ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
+            ModelData = new ObservableCollection<SkinBOX>();
+            ModelData.CollectionChanged += ModelData_CollectionChanged;
+        }
+
+        protected override void Initialize()
+        {
             InitializeSkinData();
             InitializeCapeData();
             meshStorage = new Dictionary<string, CubeMeshCollection>()
@@ -312,15 +321,6 @@ namespace PckStudio.Rendering
             CalculateSkinBounds();
             InitializeArmorData();
             InitializeCamera();
-            InitializeComponent();
-
-            ANIM ??= new SkinANIM(SkinAnimMask.RESOLUTION_64x64);
-            ModelData = new ObservableCollection<SkinBOX>();
-            ModelData.CollectionChanged += ModelData_CollectionChanged;
-        }
-
-        protected override void Initialize()
-        {
             InitializeShaders();
             Renderer.SetClearColor(BackColor);
             GLErrorCheck();
@@ -755,6 +755,8 @@ namespace PckStudio.Rendering
 
         private void OnANIMUpdate()
         {
+            if (ANIM is null)
+                return;
             head.SetVisible(0, !ANIM.GetFlag(SkinAnimFlag.HEAD_DISABLED));
             head.SetVisible(1, !ANIM.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED));
             

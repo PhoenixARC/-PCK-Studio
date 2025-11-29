@@ -77,5 +77,46 @@ namespace PckStudio.Core.Extensions
             int index = Array.IndexOf(SkinBOX.OverlayTypes, type);
             return SkinBOX.BaseTypes.IndexInRange(index) ? SkinBOX.BaseTypes[index] : "";
         }
+
+        public enum SkinBoxFace
+        {
+            Front,
+            Back,
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
+
+        public static Rectangle GetFaceArea(this SkinBOX skinBox, SkinBoxFace face) => new Rectangle(skinBox.GetPoint(face), skinBox.GetSize(face));
+
+        public static Point GetPoint(this SkinBOX skinBox, SkinBoxFace face)
+        {
+            return Point.Truncate((face) switch
+            {
+                SkinBoxFace.Front  => new PointF(skinBox.UV.X + skinBox.Size.Z                     , skinBox.UV.Y + skinBox.Size.Z),
+                SkinBoxFace.Back   => new PointF(skinBox.UV.X + skinBox.Size.Z * 2 + skinBox.Size.X, skinBox.UV.Y + skinBox.Size.Z),
+                SkinBoxFace.Top    => new PointF(skinBox.UV.X + skinBox.Size.X                     , skinBox.UV.Y),
+                SkinBoxFace.Bottom => new PointF(skinBox.UV.X + skinBox.Size.X * 2                 , skinBox.UV.Y),
+                SkinBoxFace.Left   => new PointF(skinBox.UV.X + skinBox.Size.Z + skinBox.Size.X    , skinBox.UV.Y + skinBox.Size.Z),
+                SkinBoxFace.Right  => new PointF(skinBox.UV.X + skinBox.Size.Z                     , skinBox.UV.Y + skinBox.Size.Z),
+                _ => PointF.Empty,
+            });
+        }
+
+        public static Size GetSize(this SkinBOX skinBox, SkinBoxFace face)
+        {
+            return Size.Truncate((face) switch
+            {
+                SkinBoxFace.Front  => new SizeF(skinBox.Size.X, skinBox.Size.Y),
+                SkinBoxFace.Back   => new SizeF(skinBox.Size.X, skinBox.Size.Y),
+                SkinBoxFace.Top    => new SizeF(skinBox.Size.X, skinBox.Size.Z),
+                SkinBoxFace.Bottom => new SizeF(skinBox.Size.X, skinBox.Size.Z),
+                SkinBoxFace.Left   => new SizeF(skinBox.Size.Z, skinBox.Size.Y),
+                SkinBoxFace.Right  => new SizeF(skinBox.Size.Z, skinBox.Size.Y),
+                _ => SizeF.Empty,
+            });
+        }
+
     }
 }

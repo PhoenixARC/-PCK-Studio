@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -67,6 +68,31 @@ namespace PckStudio.Core.Extensions
             PckAsset capeFile = new PckAsset($"dlccape{skin.CapeId}.png", PckAssetType.CapeFile);
             capeFile.SetTexture(capeTexture);
             return capeFile;
+        }
+
+        public static Image GetPreviewImage(this Skin.Skin skin, Size size) => skin.GetPreviewImage(size.Width, size.Height);
+        public static Image GetPreviewImage(this Skin.Skin skin, int width = 16, int height = 16)
+        {
+            Image result = new Bitmap(width, height);
+            using Graphics g = Graphics.FromImage(result);
+            g.ApplyConfig(GraphicsConfig.PixelPerfect());
+            g.Clear(Color.Transparent);
+
+            if (!skin.Anim.GetFlag(SkinAnimFlag.HEAD_DISABLED))
+            {
+                g.DrawImage(skin.Texture.GetArea(new Rectangle(8, 8, 8, 8)), 0, 0, width, height);
+            }
+            else if (!skin.Anim.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED))
+            {
+                g.DrawImage(skin.Texture.GetArea(new Rectangle(40, 8, 8, 8)), 0, 0, width, height);
+            }
+            else
+            {
+                Rectangle area = skin.Model.AdditionalBoxes.Where(sb => sb.Type == "HEAD" || sb.Type == "HEADWEAR").OrderBy(sb=> sb.Pos.Z - sb.Scale).FirstOrDefault()?.GetFaceArea(SkinBOXExtensions.SkinBoxFace.Front) ?? Rectangle.Empty;
+                Image img = skin.Texture.GetArea(area);
+                g.DrawImage(img, 0, 0, width, height);
+            }
+            return result;
         }
     }
 }
