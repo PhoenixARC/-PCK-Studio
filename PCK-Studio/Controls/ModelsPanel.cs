@@ -42,14 +42,18 @@ namespace PckStudio.Controls
             _models = asset.GetData(new ModelFileReader());
             modelTreeView.Nodes.AddRange(_models.Select(m => new TreeNode(m.Name)).ToArray());
             if (modelTreeView.Nodes.Count > 0)
+            {
                 modelTreeView.SelectedNode = modelTreeView.Nodes[0];
-            modelRenderer.MakeCurrent();
+                modelRenderer.Visible = true;
+                modelRenderer.MakeCurrent();
+            }
         }
 
         public override void Reset()
         {
             modelTreeView.Nodes.Clear();
             textureTreeView.Nodes.Clear();
+            modelRenderer.Visible = false;
             _models = null;
         }
 

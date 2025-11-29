@@ -81,6 +81,7 @@
             this.modelRenderer.RenderModelBounds = false;
             this.modelRenderer.Size = new System.Drawing.Size(470, 300);
             this.modelRenderer.TabIndex = 1;
+            this.modelRenderer.Visible = false;
             this.modelRenderer.VSync = true;
             // 
             // textureTreeView
