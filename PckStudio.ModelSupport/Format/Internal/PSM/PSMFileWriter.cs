@@ -49,7 +49,10 @@ namespace PckStudio.ModelSupport.Internal.Format
 
         private void WritePart(EndiannessAwareBinaryWriter writer, SkinBOX part)
         {
-            writer.Write((byte)GetParentPart(part.Type));
+            byte data = (byte)GetParentPart(part.Type);
+            if (_PSM.Version == 2)
+                data |= (byte)((byte)part.Visibility << 4);
+            writer.Write(data);
             writer.Write(part.Pos.X);
             writer.Write(part.Pos.Y);
             writer.Write(part.Pos.Z);
@@ -60,10 +63,10 @@ namespace PckStudio.ModelSupport.Internal.Format
             byte uvX = (byte)MathHelper.Clamp((int)part.UV.X, 0, 64);
             byte uvY = (byte)MathHelper.Clamp((int)part.UV.Y, 0, 64);
             byte mirrorAndUvX = (byte)(Convert.ToByte(part.Mirror) << 7 | uvX);
-            byte hideWithArmorAndUvY = (byte)(Convert.ToByte(part.HideWithArmor) << 7 | uvY);
+            byte hideWithArmorAndUvY = (byte)(Convert.ToByte((part.Visibility & SkinBOX.BoxVisibility.HideWhenWearingHelmet) != 0) << 7 | uvY);
 
             writer.Write(mirrorAndUvX);
-            writer.Write(hideWithArmorAndUvY);
+            writer.Write(_PSM.Version == 1 ? hideWithArmorAndUvY : uvY);
             writer.Write(part.Scale);
         }
 

@@ -28,6 +28,7 @@ namespace PckStudio.Core.Skin
     public record SkinBOX : IEquatable<SkinBOX>
     {
         public static readonly SkinBOX DefaultHead = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
+        public static readonly SkinBOX Empty = new SkinBOX("", Vector3.Zero, Vector3.Zero, Vector2.Zero);
 
         public static readonly string[] BaseTypes = new string[]
         {
@@ -52,7 +53,7 @@ namespace PckStudio.Core.Skin
         public static Dictionary<int, SkinAnimFlag> KnownHashes = new Dictionary<int, SkinAnimFlag>()
         {
             [unchecked((int)0x9560320c)] = SkinAnimFlag.HEAD_DISABLED,              // HEAD     -4 -8 -4 8  8 8  0  0 0 0 0
-            
+
             [unchecked((int)0x1f13e4a3)] = SkinAnimFlag.BODY_DISABLED,              // BODY     -4  0 -2 8 12 4 16 16 0 0 0
 
             [unchecked((int)0x407c9b27)] = SkinAnimFlag.RIGHT_ARM_DISABLED,         // ARM0     -3 -2 -2 4 12 4 40 16 0 0 0 // standard (64x64)
@@ -91,46 +92,67 @@ namespace PckStudio.Core.Skin
         public Vector3 Pos { get; }
         public Vector3 Size { get; }
         public Vector2 UV { get; }
-        public bool HideWithArmor { get; }
+        public BoxVisibility Visibility { get; }
         public bool Mirror { get; }
         public float Scale { get; }
 
+        [Flags]
+        public enum BoxVisibility : byte
+        {
+            Always,
+            HideWhenWearingHelmet     = 0x1,
+            HideWhenWearingChestplate = 0x2,
+            HideWhenWearingLeggings   = 0x4,
+            HideWhenWearingBoots      = 0x8,
+        }
+
         public SkinBOX(string type, Vector3 pos, Vector3 size, Vector2 uv,
-            bool hideWithArmor = false, bool mirror = false, float scale = 0.0f)
+           BoxVisibility visibility = BoxVisibility.Always, bool mirror = false, float scale = 0.0f)
         {
             Type = type;
             Pos = pos;
             Size = size;
             UV = uv;
-            HideWithArmor = hideWithArmor;
+            Visibility = visibility;
             Mirror = mirror;
             Scale = scale;
         }
 
-        public static SkinBOX FromString(string value)
-         {
+        public static SkinBOX FromString(string value) => FromString(value, false);
+
+        public static SkinBOX FromString(string value, bool validateType = default)
+        {
             var arguments = value.TrimEnd('\n', '\r', ' ').Split(' ');
             if (arguments.Length < 9)
             {
-                throw new ArgumentException("Arguments must have at least a length of 9");
+                Trace.TraceError("Arguments must have at least a length of 9.");
+                return Empty;
             }
             var type = arguments[0];
+            if (validateType && !IsValidType(type))
+            {
+                Trace.TraceError($"Invalid skinbox type: {type}.");
+                return Empty;
+            }
+
             Vector3 pos = TryGetVector3(arguments, 1);
             Vector3 size = TryGetVector3(arguments, 4);
             Vector2 uv = TryGetVector2(arguments, 7);
-            
-            bool hideWithArmor = arguments.IndexInRange(9) && arguments[9] == "1";    
+
+            BoxVisibility visibility = arguments.IndexInRange(9) && int.TryParse(arguments[9], out int flags) && flags >= 0 && flags <= 0xf ? (BoxVisibility)flags : default;
             bool mirror = arguments.IndexInRange(10) && arguments[10] == "1";
             float scale = arguments.IndexInRange(11) && float.TryParse(arguments[11], out scale) ? scale : default;
-            return new SkinBOX(type, pos, size, uv, hideWithArmor, mirror, scale);
+            return new SkinBOX(type, pos, size, uv, visibility, mirror, scale);
         }
 
         public bool IsValidType() => IsValidType(Type);
+        
+        public bool IsEmpty() => Size.Length() == 0;
 
         public static bool IsValidType(string type) => ValidBoxTypes.Contains(type);
 
         public bool IsBasePart() => IsBasePart(Type);
-        
+
         public static bool IsBasePart(string type) => BaseTypes.Contains(type);
 
         public bool IsOverlayPart() => IsOverlayPart(Type);
@@ -138,9 +160,9 @@ namespace PckStudio.Core.Skin
         public static bool IsOverlayPart(string type) => OverlayTypes.Contains(type);
 
         public KeyValuePair<string, string> ToProperty()
-		{
-			return new KeyValuePair<string, string>("BOX", ToString());
-		}
+        {
+            return new KeyValuePair<string, string>("BOX", ToString());
+        }
 
         private static string InvariantFormat(params object[] values)
         {
@@ -154,7 +176,7 @@ namespace PckStudio.Core.Skin
 
         public override string ToString()
         {
-            return InvariantFormat(Type, Pos.X, Pos.Y, Pos.Z, Size.X, Size.Y, Size.Z, UV.X, UV.Y, Convert.ToInt32(HideWithArmor), Convert.ToInt32(Mirror), Scale);
+            return InvariantFormat(Type, Pos.X, Pos.Y, Pos.Z, Size.X, Size.Y, Size.Z, UV.X, UV.Y, Visibility.ToString("d"), Convert.ToInt32(Mirror), Scale);
         }
 
         private static Vector2 TryGetVector2(string[] arguments, int startIndex)
@@ -178,7 +200,7 @@ namespace PckStudio.Core.Skin
             hashCode = hashCode * -1521134295 + Pos.GetHashCode();
             hashCode = hashCode * -1521134295 + Size.GetHashCode();
             hashCode = hashCode * -1521134295 + UV.GetHashCode();
-            hashCode = hashCode * -1521134295 + HideWithArmor.GetHashCode();
+            hashCode = hashCode * -1521134295 + Visibility.GetHashCode();
             hashCode = hashCode * -1521134295 + Mirror.GetHashCode();
             hashCode = hashCode * -1521134295 + Scale.GetHashCode();
             return hashCode;

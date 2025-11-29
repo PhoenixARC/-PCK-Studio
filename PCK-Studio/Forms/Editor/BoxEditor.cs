@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Windows.Forms;
 using PckStudio.Controls;
 using PckStudio.Core.Skin;
@@ -19,6 +20,7 @@ namespace PckStudio.Forms.Editor
 		public BoxEditor(SkinBOX box, bool hasInflation)
 		{
 			InitializeComponent();
+			boxVisibilityComboBox.Items.AddRange(Enum.GetNames(typeof(SkinBOX.BoxVisibility)));
 
             if (string.IsNullOrEmpty(box.Type) || !parentComboBox.Items.Contains(box.Type))
             {
@@ -29,7 +31,7 @@ namespace PckStudio.Forms.Editor
 
             inflationUpDown.Enabled = hasInflation;
 
-			parentComboBox.SelectedItem = parentComboBox.Items[parentComboBox.Items.IndexOf(box.Type)];
+			parentComboBox.SelectedIndex = parentComboBox.Items.IndexOf(box.Type);
 			PosXUpDown.Value = (decimal)box.Pos.X;
 			PosYUpDown.Value = (decimal)box.Pos.Y;
 			PosZUpDown.Value = (decimal)box.Pos.Z;
@@ -38,21 +40,18 @@ namespace PckStudio.Forms.Editor
 			SizeZUpDown.Value = (decimal)box.Size.Z;
 			uvXUpDown.Value = (decimal)box.UV.X;
 			uvYUpDown.Value = (decimal)box.UV.Y;
-			armorCheckBox.Checked = box.HideWithArmor;
+			boxVisibilityComboBox.SelectedItem = Enum.GetName(typeof(SkinBOX.BoxVisibility), box.Visibility);
 			mirrorCheckBox.Checked = box.Mirror;
 			inflationUpDown.Value = (decimal)box.Scale;
 		}
 
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-			result = SkinBOX.FromString(
-				$"{parentComboBox.SelectedItem} " +
-				$"{PosXUpDown.Value} {PosYUpDown.Value} {PosZUpDown.Value} " +
-				$"{SizeXUpDown.Value} {SizeYUpDown.Value} {SizeZUpDown.Value} " +
-				$"{uvXUpDown.Value} {uvYUpDown.Value} " +
-				$"{Convert.ToInt32(armorCheckBox.Checked)} " +
-				$"{Convert.ToInt32(mirrorCheckBox.Checked)} " +
-				$"{inflationUpDown.Value}");
+            SkinBOX.BoxVisibility visibility = Enum.TryParse(boxVisibilityComboBox.SelectedItem.ToString(), out SkinBOX.BoxVisibility v) ? v : default;
+			Vector3 pos = new Vector3((float)PosXUpDown.Value, (float)PosYUpDown.Value, (float)PosZUpDown.Value);
+			Vector3 size = new Vector3((float)SizeXUpDown.Value, (float)SizeYUpDown.Value, (float)SizeZUpDown.Value);
+			Vector2 uv = new Vector2((int)uvXUpDown.Value, (int)uvYUpDown.Value);
+            result = new SkinBOX(parentComboBox.SelectedItem.ToString(), pos, size, uv, visibility, mirrorCheckBox.Checked, (float)inflationUpDown.Value);
 			DialogResult = DialogResult.OK;
 		}
 

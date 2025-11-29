@@ -30,7 +30,7 @@ namespace PckStudio.ModelSupport.Internal.Format
     public sealed class PSMFile
     {
 		internal static readonly string HEADER_MAGIC = "psm";
-		internal const byte CurrentVersion = 1;
+		internal const byte CURRENT_VERSION = 2;
 
         public readonly byte Version;
 

@@ -175,7 +175,6 @@ namespace PckStudio.Controls
                             break;
 
                         case "BOX" when _currentAsset.Type == PckAssetType.SkinFile:
-                            try
                             {
                                 using BoxEditor diag = new BoxEditor(property.Value, false);
                                 if (diag.ShowDialog(this) == DialogResult.OK)
@@ -186,13 +185,6 @@ namespace PckStudio.Controls
                                 }
                                 return;
                             }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine(ex.Message);
-                                Trace.WriteLine("Invalid BOX value: " + property.Value);
-                                MessageBox.Show(this, "Failed to parse BOX value, aborting to normal functionality.");
-                            }
-                            break;
 
                         default:
                             break;

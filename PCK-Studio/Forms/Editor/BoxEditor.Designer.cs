@@ -33,6 +33,7 @@
             MetroFramework.Controls.MetroLabel sizeLabel;
             MetroFramework.Controls.MetroLabel uvLabel;
             MetroFramework.Controls.MetroLabel inflationLabel;
+            MetroFramework.Controls.MetroLabel metroLabel1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoxEditor));
             this.closeButton = new MetroFramework.Controls.MetroButton();
             this.toolTip = new MetroFramework.Components.MetroToolTip();
@@ -45,14 +46,15 @@
             this.SizeXUpDown = new System.Windows.Forms.NumericUpDown();
             this.uvYUpDown = new System.Windows.Forms.NumericUpDown();
             this.uvXUpDown = new System.Windows.Forms.NumericUpDown();
-            this.armorCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.mirrorCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.inflationUpDown = new System.Windows.Forms.NumericUpDown();
+            this.boxVisibilityComboBox = new MetroFramework.Controls.MetroComboBox();
             parentLabel = new MetroFramework.Controls.MetroLabel();
             positionLabel = new MetroFramework.Controls.MetroLabel();
             sizeLabel = new MetroFramework.Controls.MetroLabel();
             uvLabel = new MetroFramework.Controls.MetroLabel();
             inflationLabel = new MetroFramework.Controls.MetroLabel();
+            metroLabel1 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.PosXUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PosZUpDown)).BeginInit();
@@ -119,6 +121,17 @@
             inflationLabel.Text = "Scale:";
             inflationLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
+            // metroLabel1
+            // 
+            metroLabel1.AutoSize = true;
+            metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
+            metroLabel1.Location = new System.Drawing.Point(354, 106);
+            metroLabel1.Name = "metroLabel1";
+            metroLabel1.Size = new System.Drawing.Size(77, 25);
+            metroLabel1.TabIndex = 33;
+            metroLabel1.Text = "Visibility:";
+            metroLabel1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // closeButton
             // 
             this.closeButton.Location = new System.Drawing.Point(252, 187);
@@ -167,7 +180,7 @@
             "BELT"});
             this.parentComboBox.Location = new System.Drawing.Point(417, 72);
             this.parentComboBox.Name = "parentComboBox";
-            this.parentComboBox.Size = new System.Drawing.Size(163, 29);
+            this.parentComboBox.Size = new System.Drawing.Size(172, 29);
             this.parentComboBox.TabIndex = 3;
             this.parentComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.parentComboBox.UseSelectable = true;
@@ -357,25 +370,12 @@
             this.uvXUpDown.Size = new System.Drawing.Size(73, 20);
             this.uvXUpDown.TabIndex = 27;
             // 
-            // armorCheckBox
-            // 
-            this.armorCheckBox.AutoSize = true;
-            this.armorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
-            this.armorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
-            this.armorCheckBox.Location = new System.Drawing.Point(363, 101);
-            this.armorCheckBox.Name = "armorCheckBox";
-            this.armorCheckBox.Size = new System.Drawing.Size(245, 25);
-            this.armorCheckBox.TabIndex = 29;
-            this.armorCheckBox.Text = "Hide when wearing a helmet";
-            this.armorCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.armorCheckBox.UseSelectable = true;
-            // 
             // mirrorCheckBox
             // 
             this.mirrorCheckBox.AutoSize = true;
             this.mirrorCheckBox.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
             this.mirrorCheckBox.FontWeight = MetroFramework.MetroCheckBoxWeight.Light;
-            this.mirrorCheckBox.Location = new System.Drawing.Point(363, 130);
+            this.mirrorCheckBox.Location = new System.Drawing.Point(363, 141);
             this.mirrorCheckBox.Name = "mirrorCheckBox";
             this.mirrorCheckBox.Size = new System.Drawing.Size(133, 25);
             this.mirrorCheckBox.TabIndex = 30;
@@ -403,11 +403,24 @@
             this.inflationUpDown.Size = new System.Drawing.Size(73, 20);
             this.inflationUpDown.TabIndex = 32;
             // 
+            // boxVisibilityComboBox
+            // 
+            this.boxVisibilityComboBox.FormattingEnabled = true;
+            this.boxVisibilityComboBox.ItemHeight = 23;
+            this.boxVisibilityComboBox.Location = new System.Drawing.Point(426, 107);
+            this.boxVisibilityComboBox.Name = "boxVisibilityComboBox";
+            this.boxVisibilityComboBox.Size = new System.Drawing.Size(163, 29);
+            this.boxVisibilityComboBox.TabIndex = 34;
+            this.boxVisibilityComboBox.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.boxVisibilityComboBox.UseSelectable = true;
+            // 
             // BoxEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(630, 220);
+            this.ClientSize = new System.Drawing.Size(614, 220);
+            this.Controls.Add(this.boxVisibilityComboBox);
+            this.Controls.Add(metroLabel1);
             this.Controls.Add(this.inflationUpDown);
             this.Controls.Add(this.uvYUpDown);
             this.Controls.Add(this.uvXUpDown);
@@ -420,12 +433,12 @@
             this.Controls.Add(inflationLabel);
             this.Controls.Add(this.parentComboBox);
             this.Controls.Add(this.mirrorCheckBox);
-            this.Controls.Add(this.armorCheckBox);
             this.Controls.Add(uvLabel);
             this.Controls.Add(sizeLabel);
             this.Controls.Add(positionLabel);
             this.Controls.Add(parentLabel);
             this.Controls.Add(this.closeButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(630, 554);
@@ -461,8 +474,8 @@
 		private System.Windows.Forms.NumericUpDown SizeXUpDown;
 		private System.Windows.Forms.NumericUpDown uvYUpDown;
 		private System.Windows.Forms.NumericUpDown uvXUpDown;
-		private MetroFramework.Controls.MetroCheckBox armorCheckBox;
 		private MetroFramework.Controls.MetroCheckBox mirrorCheckBox;
 		private System.Windows.Forms.NumericUpDown inflationUpDown;
-	}
+        private MetroFramework.Controls.MetroComboBox boxVisibilityComboBox;
+    }
 }

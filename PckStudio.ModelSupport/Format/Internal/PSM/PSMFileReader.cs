@@ -6,6 +6,7 @@ using OMI.Workers;
 using PckStudio.Core.FileFormats;
 using PckStudio.Core;
 using PckStudio.Core.Skin;
+using System;
 
 namespace PckStudio.ModelSupport.Internal.Format
 {
@@ -30,14 +31,14 @@ namespace PckStudio.ModelSupport.Internal.Format
             var magic = reader.ReadString(3);
             if (magic != PSMFile.HEADER_MAGIC)
             {
-                Trace.TraceError("PSMFileReader.FromStream - Failed to load csmb.\n\tReason: Header magic mismatch.");
+                Trace.TraceError($"{nameof(PSMFileReader)}.{nameof(FromStream)} - Failed to load {nameof(PSMFile)}.\n\tReason: Header magic mismatch.");
                 return new PSMFile(byte.MaxValue);
             }
             
             byte version = reader.ReadByte();
             if (version < 1 || version > 1)
             {
-                Trace.TraceError("PSMFileReader.FromStream - Failed to load csmb.\n\tReason: Unsupported version.");
+                Trace.TraceError($"{nameof(PSMFileReader)}.{nameof(FromStream)} - Failed to load {nameof(PSMFile)}.\n\tReason: Unsupported version.");
                 return new PSMFile(byte.MaxValue);
             }
 
@@ -46,7 +47,7 @@ namespace PckStudio.ModelSupport.Internal.Format
             int numOfParts = reader.ReadInt32();
             for (int i = 0; i < numOfParts; i++)
             {
-                SkinBOX part = ReadPart(reader);
+                SkinBOX part = ReadPart(reader, version);
                 csmbFile.Parts.Add(part);
             }
             int numOfOffsets = reader.ReadInt32();
@@ -59,9 +60,12 @@ namespace PckStudio.ModelSupport.Internal.Format
             return csmbFile;
         }
 
-        private SkinBOX ReadPart(EndiannessAwareBinaryReader reader)
+        private SkinBOX ReadPart(EndiannessAwareBinaryReader reader, byte version)
         {
-            string type = GetParentType((PSMParentType)reader.ReadByte());
+            byte data = reader.ReadByte();
+            if (version == 2)
+                data &= 0x0f;
+            string type = GetParentType((PSMParentType)data);
             float posX = reader.ReadSingle();
             float posY = reader.ReadSingle();
             float posZ = reader.ReadSingle();
@@ -73,7 +77,8 @@ namespace PckStudio.ModelSupport.Internal.Format
             int uvX = mirrorAndUvX & 0x7f;
             int uvY = hideWithArmorAndUvY & 0x7f;
             bool mirror = (mirrorAndUvX & 0x80) != 0;
-            bool hideWithArmor = (hideWithArmorAndUvY & 0x80) != 0;
+
+            SkinBOX.BoxVisibility hideWithArmor = version == 2 ? (SkinBOX.BoxVisibility)((data >> 4) & 0xf) : (hideWithArmorAndUvY & 0x80) != 0 ? SkinBOX.BoxVisibility.HideWhenWearingHelmet : SkinBOX.BoxVisibility.Always;
             float scale = reader.ReadSingle();
             return new SkinBOX(type, new System.Numerics.Vector3(posX, posY, posZ), new System.Numerics.Vector3(sizeX, sizeY, sizeZ), new System.Numerics.Vector2(uvX, uvY), hideWithArmor, mirror, scale);
         }
@@ -110,42 +115,24 @@ namespace PckStudio.ModelSupport.Internal.Format
         {
             switch (type)
             {
-                case PSMOffsetType.HEAD:
-                    return "HEAD";
-                case PSMOffsetType.BODY:
-                    return "BODY";
-                case PSMOffsetType.ARM0:
-                    return "ARM0";
-                case PSMOffsetType.ARM1:
-                    return "ARM1";
-                case PSMOffsetType.LEG0:
-                    return "LEG0";
-                case PSMOffsetType.LEG1:
-                    return "LEG1";
-                case PSMOffsetType.TOOL0:
-                    return "TOOL0";
-                case PSMOffsetType.TOOL1:
-                    return "TOOL1";
-                case PSMOffsetType.HELMET:
-                    return "HELMET";
-                case PSMOffsetType.SHOULDER0:
-                    return "SHOULDER0";
-                case PSMOffsetType.SHOULDER1:
-                    return "SHOULDER1";
-                case PSMOffsetType.CHEST:
-                    return "CHEST";
-                case PSMOffsetType.WAIST:
-                    return "WAIST";
-                case PSMOffsetType.PANTS0:
-                    return "PANTS0";
-                case PSMOffsetType.PANTS1:
-                    return "PANTS1";
-                case PSMOffsetType.BOOT0:
-                    return "BOOT0";
-                case PSMOffsetType.BOOT1:
-                    return "BOOT1";
-                default:
-                    throw new InvalidDataException(type.ToString());
+                case PSMOffsetType.HEAD:      return "HEAD";
+                case PSMOffsetType.BODY:      return "BODY";
+                case PSMOffsetType.ARM0:      return "ARM0";
+                case PSMOffsetType.ARM1:      return "ARM1";
+                case PSMOffsetType.LEG0:      return "LEG0";
+                case PSMOffsetType.LEG1:      return "LEG1";
+                case PSMOffsetType.TOOL0:     return "TOOL0";
+                case PSMOffsetType.TOOL1:     return "TOOL1";
+                case PSMOffsetType.HELMET:    return "HELMET";
+                case PSMOffsetType.SHOULDER0: return "SHOULDER0";
+                case PSMOffsetType.SHOULDER1: return "SHOULDER1";
+                case PSMOffsetType.CHEST:     return "CHEST";
+                case PSMOffsetType.WAIST:     return "WAIST";
+                case PSMOffsetType.PANTS0:    return "PANTS0";
+                case PSMOffsetType.PANTS1:    return "PANTS1";
+                case PSMOffsetType.BOOT0:     return "BOOT0";
+                case PSMOffsetType.BOOT1:     return "BOOT1";
+                default: throw new ArgumentException(type.ToString());
             }
         }
 
