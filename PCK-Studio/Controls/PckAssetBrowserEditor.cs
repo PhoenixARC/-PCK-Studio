@@ -253,14 +253,33 @@ namespace PckStudio.Controls
             ResourceLocation resourceLocation = ResourceLocations.GetFromPath(asset.Filename);
             Debug.WriteLine("Handling Resource file: " + resourceLocation?.ToString());
 
-            switch (resourceLocation.Category)
+            switch ((ResourceCategory)((int)resourceLocation.Category & 0xff000000))
             {
                 case ResourceCategory.Unknown:
                     Debug.WriteLine($"Unknown Resource Category.");
                     break;
-                case ResourceCategory.MobEntityTextures:
-                case ResourceCategory.ItemEntityTextures:
+                case ResourceCategory.Textures:
                 {
+                    if ((resourceLocation.Category & ResourceCategory.ArmorTextures) != 0)
+                    {
+                        string assetName = Path.GetFileNameWithoutExtension(asset.Filename);
+                        ArmorSetDescription armorSetDescription = ArmorSetDescription.GetFromAssetName(assetName);
+                        Debug.WriteLineIf(!armorSetDescription.IsEmpty, armorSetDescription.Name);
+                        ITryGet<string, Image> tryGet = TryGet<string, Image>.FromDelegate((string path, out Image img) =>
+                        {
+                            img = null;
+                            if (EditorValue.File.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset armorAsset))
+                            {
+                                img = armorAsset.GetTexture();
+                                Debug.WriteLine($"Got texture for: {path}");
+                                return true;
+                            }
+                            return false;
+                        });
+                        ArmorSet armorSet = armorSetDescription.GetArmorSet(tryGetTexture: tryGet);
+                        break;
+                    }
+
                     string texturePath = asset.Filename.Substring(0, asset.Filename.Length - Path.GetExtension(asset.Filename).Length);
                     string[] modelNames = GameModelImporter.ModelMetaData.Where(kv => kv.Value.TextureLocations.Contains(texturePath)).Select(kv => kv.Key).ToArray();
 
@@ -310,8 +329,7 @@ namespace PckStudio.Controls
                 }
                 break;
 
-                case ResourceCategory.ItemAnimation:
-                case ResourceCategory.BlockAnimation:
+                case ResourceCategory.Animation:
                     Animation animation = asset.GetDeserializedData(AnimationDeserializer.DefaultDeserializer);
                     string internalName = Path.GetFileNameWithoutExtension(asset.Filename);
                     IList<JsonTileInfo> textureInfos = resourceLocation.Category == ResourceCategory.ItemAnimation ? Tiles.ItemTileInfos : Tiles.BlockTileInfos;
@@ -333,16 +351,7 @@ namespace PckStudio.Controls
                         }
                     }
                     break;
-                case ResourceCategory.ParticleAtlas:
-                case ResourceCategory.MoonPhaseAtlas:
-                case ResourceCategory.ItemAtlas:
-                case ResourceCategory.BlockAtlas:
-                case ResourceCategory.BannerAtlas:
-                case ResourceCategory.PaintingAtlas:
-                case ResourceCategory.ExplosionAtlas:
-                case ResourceCategory.ExperienceOrbAtlas:
-                case ResourceCategory.MapIconAtlas:
-                case ResourceCategory.AdditionalMapIconsAtlas:
+                case ResourceCategory.Atlas:
                     Atlas atlas = asset.GetDeserializedData(new AtlasDeserializer(resourceLocation));
                     ColorContainer colorContainer = default;
                     if (EditorValue.File.TryGetAsset("colours.col", PckAssetType.ColourTableFile, out PckAsset colAsset))
@@ -397,23 +406,6 @@ namespace PckStudio.Controls
                         _wasModified = true;
                         BuildMainTreeView();
                     }
-                    break;
-                case ResourceCategory.ArmorTextures:
-                    string assetName = Path.GetFileNameWithoutExtension(asset.Filename);
-                    ArmorSetDescription armorSetDescription = ArmorSetDescription.GetFromAssetName(assetName);
-                    Debug.WriteLineIf(!armorSetDescription.IsEmpty, armorSetDescription.Name);
-                    ITryGet<string, Image> tryGet = TryGet<string, Image>.FromDelegate((string path, out Image img) =>
-                    {
-                        img = null;
-                        if (EditorValue.File.TryGetAsset(path + ".png", PckAssetType.TextureFile, out PckAsset armorAsset))
-                        {
-                            img = armorAsset.GetTexture();
-                            Debug.WriteLine($"Got texture for: {path}");
-                            return true;
-                        }
-                        return false;
-                    });
-                    ArmorSet armorSet = armorSetDescription.GetArmorSet(tryGetTexture: tryGet);
                     break;
                 default:
                     Debug.WriteLine($"Unhandled Resource Category: {resourceLocation.Category}");
@@ -1837,6 +1829,7 @@ namespace PckStudio.Controls
             form.Controls.Add(renderer);
 
             renderer.VSync = true;
+            renderer.RefreshRate = 120;
             renderer.BackColor = Color.FromArgb(30, 30, 30);
             renderer.Dock = DockStyle.Fill;
             renderer.Texture = modelTexture.Value;
