@@ -410,6 +410,53 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;anvil&quot;: &quot;anvil_base&quot;,
+        ///  &quot;anvil_top&quot;: &quot;anvil_top_damaged_0&quot;,
+        ///  &quot;chipped_anvil_top&quot;: &quot;anvil_top_damaged_1&quot;,
+        ///  &quot;damaged_anvil_top&quot;: &quot;anvil_top_damaged_2&quot;,
+        ///  &quot;beetroots_stage0&quot;: &quot;beetroots_stage_0&quot;,
+        ///  &quot;beetroots_stage1&quot;: &quot;beetroots_stage_1&quot;,
+        ///  &quot;beetroots_stage2&quot;: &quot;beetroots_stage_2&quot;,
+        ///  &quot;beetroots_stage3&quot;: &quot;beetroots_stage_3&quot;,
+        ///  &quot;bricks&quot;: &quot;brick&quot;,
+        ///  &quot;carrots_stage0&quot;: &quot;carrots_stage_0&quot;,
+        ///  &quot;carrots_stage1&quot;: &quot;carrots_stage_1&quot;,
+        ///  &quot;carrots_stage2&quot;: &quot;carrots_stage_2&quot;,
+        ///  &quot;carrots_stage3&quot;: &quot;carrots_sta [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_blocks {
+            get {
+                return ResourceManager.GetString("latest2lce_blocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;apple_golden&quot;: &quot;appleGold&quot;,
+        ///  &quot;beef_cooked&quot;: &quot;beefCooked&quot;,
+        ///  &quot;beef_raw&quot;: &quot;beefRaw&quot;,
+        ///  &quot;blaze_powder&quot;: &quot;blazePowder&quot;,
+        ///  &quot;blaze_rod&quot;: &quot;blazeRod&quot;,
+        ///  &quot;oak_boat&quot;: &quot;boat&quot;,
+        ///  &quot;book_normal&quot;: &quot;book&quot;,
+        ///  &quot;chainmail_boots&quot;: &quot;bootsChain&quot;,
+        ///  &quot;leather_boots&quot;: &quot;bootsCloth&quot;,
+        ///  &quot;leather_boots_overlay&quot;: &quot;bootsCloth_overlay&quot;,
+        ///  &quot;diamond_boots&quot;: &quot;bootsDiamond&quot;,
+        ///  &quot;gold_boots&quot;: &quot;bootsGold&quot;,
+        ///  &quot;iron_boots&quot;: &quot;bootsIron&quot;,
+        ///  &quot;bow_standby&quot;: &quot;bow&quot;,
+        ///  &quot;bow_pulling_0&quot;: &quot;bow_pull_0&quot;,
+        ///  &quot;bow_pulling_1&quot;: &quot;bow_pull_1&quot;,        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_items {
+            get {
+                return ResourceManager.GetString("latest2lce_items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap map_icons_atlas {
@@ -576,6 +623,37 @@ namespace PckStudio.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("particles_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;grass_block_top&quot;: 0,
+        ///  &quot;grass_block_side&quot;: 3,
+        ///  &quot;oak_planks&quot;: 4,
+        ///  &quot;smooth_stone_slab_side&quot;: 5,
+        ///  &quot;smooth_stone&quot;: 6,
+        ///  &quot;bricks&quot;: 7,
+        ///  &quot;cobweb&quot;: 11,
+        ///  &quot;poppy&quot;: 12,
+        ///  &quot;dandelion&quot;: 13,
+        ///  &quot;nether_portal&quot;: 14,
+        ///  &quot;oak_sapling&quot;: 15,
+        ///  &quot;oak_log&quot;: 20,
+        ///  &quot;oak_log_top&quot;: 21,
+        ///  &quot;dropper_front&quot;: 27,
+        ///  &quot;jungle_sapling&quot;: 30,
+        ///  &quot;mossy_cobblestone&quot;: 36,
+        ///  &quot;grass_block_side_overlay&quot;: 38,
+        ///  &quot;grass&quot;: 39,
+        ///  &quot;stone_bricks&quot;: 54,
+        ///  &quot;crafting_table_top&quot;: 43,
+        ///  &quot;dead_bush&quot;: 55,
+        ///  &quot;crafting_table_side&quot;: 59,        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string resourceFormat_6 {
+            get {
+                return ResourceManager.GetString("resourceFormat_6", resourceCulture);
             }
         }
         

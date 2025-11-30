@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\Java\ImportResult.cs" />
+    <Compile Include="LCEGameVersion.cs" />
+    <Compile Include="IO\Java\McPackmeta.cs" />
+    <Compile Include="IO\Java\ResourcePackImporter.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="App\AppLanguage.cs" />
     <Compile Include="App\SettingsManager.cs" />
@@ -228,6 +233,10 @@
     <None Include="Resources\entityBehavioursData.json" />
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
+    <None Include="Resources\java\blocks_1.6.1.json" />
+    <None Include="Resources\java\latest2lce_items.json" />
+    <None Include="Resources\java\latest2lce_blocks.json" />
+    <None Include="Resources\java\resourceFormat_6.json" />
     <None Include="Resources\TexturePackIcon.png" />
   </ItemGroup>
   <ItemGroup>

@@ -1085,7 +1085,7 @@
 			}
 		},
 		{
-			"internalName": "water_flow",
+			"internalName": "", // water_flow0
 			"displayName": ""
 		},
 		{
@@ -1145,11 +1145,11 @@
 			"displayName": "Detector Rail (On)"
 		},
 		{
-			"internalName": "water_flow",
+			"internalName": "", // water_flow1
 			"displayName": ""
 		},
 		{
-			"internalName": "water_flow",
+			"internalName": "", // water_flow2
 			"displayName": ""
 		},
 		{
@@ -1215,7 +1215,7 @@
 			"height": 2
 		},
 		{
-			"internalName": "lava_flow",
+			"internalName": "", // lava_flow0
 			"displayName": "",
 		},
 		{
@@ -1275,11 +1275,11 @@
 			"displayName": "Hay Bale (Top)"
 		},
 		{
-			"internalName": "lava_flow",
+			"internalName": "", // lava_flow1
 			"displayName": "",
 		},
 		{
-			"internalName": "lava_flow",
+			"internalName": "", // lava_flow2
 			"displayName": "",
 		},
 		{
@@ -2475,15 +2475,15 @@
 			"displayName": "Kelp (Bottom)"
 		},
 		{
-			"internalName": "kelp_a",
+			"internalName": "kelp_a0",
 			"displayName": ""
 		},
 		{
-			"internalName": "kelp_a",
+			"internalName": "kelp_a1",
 			"displayName": ""
 		},
 		{
-			"internalName": "kelp_a",
+			"internalName": "kelp_a2",
 			"displayName": ""
 		},
 		{
@@ -2491,15 +2491,15 @@
 			"displayName": "Kelp (Top)"
 		},
 		{
-			"internalName": "kelp_top_a",
+			"internalName": "kelp_top_a0",
 			"displayName": ""
 		},
 		{
-			"internalName": "kelp_top_a",
+			"internalName": "kelp_top_a1",
 			"displayName": ""
 		},
 		{
-			"internalName": "kelp_top_a",
+			"internalName": "kelp_top_a2",
 			"displayName": ""
 		},
 		{

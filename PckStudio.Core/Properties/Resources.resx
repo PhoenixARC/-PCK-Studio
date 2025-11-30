@@ -184,6 +184,12 @@
   <data name="items_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="latest2lce_blocks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\java\latest2lce_blocks.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="latest2lce_items" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\java\latest2lce_items.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
@@ -207,6 +213,9 @@
   </data>
   <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resourceFormat_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\java\resourceFormat_6.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="terrain_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

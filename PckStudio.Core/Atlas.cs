@@ -17,10 +17,15 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Markup;
 using PckStudio.Core.Extensions;
+using PckStudio.Core.IO.Java;
+using PckStudio.Core.Properties;
 
 namespace PckStudio.Core
 {
@@ -30,7 +35,7 @@ namespace PckStudio.Core
         public int Rows { get; }
         public int Columns { get; }
 
-        public Size TileSize { get; }
+        public Size TileSize { get; private set; }
         public int TileCount => _tiles.Length;
 
         private readonly AtlasTile[] _tiles;
@@ -39,21 +44,16 @@ namespace PckStudio.Core
 
         public static implicit operator Image(Atlas atlas) => atlas.BuildFinalImage();
         
-        private Atlas(string name, int rows, int columns)
+
+        private Atlas(string name, int rows, int columns, IEnumerable<AtlasTile> tiles, Size tileSize, ImageLayoutDirection layoutDirection)
         {
             Name = name;
             Rows = rows;
             Columns = columns;
-            _tiles = new AtlasTile[rows * columns];
-            _groups = new List<AtlasGroup>();
-        }
-
-        private Atlas(string name, int rows, int columns, IEnumerable<AtlasTile> tiles, Size tileSize, ImageLayoutDirection layoutDirection)
-            : this(name, rows, columns)
-        {
-            _tiles = tiles.Take(rows * columns).ToArray();
             TileSize = tileSize;
+            _tiles = tiles.Take(rows * columns).ToArray();
             _layoutDirection = layoutDirection;
+            _groups = new List<AtlasGroup>();
         }
 
         public static Atlas FromResourceLocation(Image source, ResourceLocation resourceLocation, ImageLayoutDirection imageLayout = default)
@@ -67,6 +67,14 @@ namespace PckStudio.Core
             var atlas = new Atlas(atlasResource.Path, rows, columns, tiles, tileArea, imageLayout);
             atlas.AddGroups(atlasResource.AtlasGroups);
             return atlas;
+        }
+
+        public static Atlas CreateEmpty(int rows, int columns, AtlasResource atlasResource, int res = 16)
+        {
+            ImageLayoutDirection layoutDirection = default;
+            Image none = new Bitmap(res, res);
+            IEnumerable<AtlasTile> tiles = Enumerable.Repeat(none, rows * columns).enumerate().Select(iv => new AtlasTile(iv.value, GetSelectedPoint(iv.index, out int col, rows, columns, layoutDirection), col, iv.index, default));
+            return new Atlas(atlasResource.Path, rows, columns, tiles, none.Size, layoutDirection);
         }
 
         private static int GetSelectedPoint(int index, out int col, int rows, int columns, ImageLayoutDirection layoutDirection)
@@ -170,7 +178,24 @@ namespace PckStudio.Core
 
         private Animation GetAnimation(AtlasGroupAnimation groupAnimation) => new Animation(GetRange(groupAnimation.Row, groupAnimation.Column, groupAnimation.Direction == ImageLayoutDirection.Horizontal ? groupAnimation.Count : 1, groupAnimation.Direction == ImageLayoutDirection.Vertical ? groupAnimation.Count : 1).Select(t => t.Texture), true, groupAnimation.FrameTime);
 
-        private Image BuildFinalImage() => _tiles.Select(t => t.Texture).Combine(Rows, Columns, _layoutDirection);
+        private Image BuildFinalImage()
+        {
+            return _tiles.Select(t => t.Texture).Combine(Rows, Columns, _layoutDirection);
+        }
+
+        public void SetTileSize(Size size)
+        {
+            if (size.Width != size.Height || size == Size.Empty)
+                throw new Exception();
+            TileSize = size;
+            GraphicsConfig graphicsConfig = GraphicsConfig.PixelPerfect();
+            foreach (AtlasTile tile in _tiles)
+            {
+                if (tile.Texture.Size == size)
+                    continue;
+                tile.Texture = tile.Texture.Resize(size, graphicsConfig);
+            }
+        }
 
         public IReadOnlyCollection<AtlasTile> GetTiles() => _tiles;
 
@@ -239,6 +264,25 @@ namespace PckStudio.Core
                 return SetGroup(tile.GetGroup(), image);
             tile.Texture = image;
             return true;
+        }
+
+        internal static Atlas CreateDefault(AtlasResource atlasResource, LCEGameVersion gameVersion)
+        {
+            Image defaultAtlas = atlasResource.Type switch
+            {
+                AtlasResource.AtlasType.ItemAtlas => Resources.items_atlas,
+                AtlasResource.AtlasType.BlockAtlas => Resources.terrain_atlas,
+                AtlasResource.AtlasType.ParticleAtlas => Resources.particles_atlas,
+                AtlasResource.AtlasType.BannerAtlas => Resources.banners_atlas,
+                AtlasResource.AtlasType.PaintingAtlas => Resources.paintings_atlas,
+                AtlasResource.AtlasType.ExplosionAtlas => Resources.explosions_atlas,
+                AtlasResource.AtlasType.ExperienceOrbAtlas => Resources.experience_orbs_atlas,
+                AtlasResource.AtlasType.MoonPhaseAtlas => Resources.moon_phases_atlas,
+                AtlasResource.AtlasType.MapIconAtlas => Resources.map_icons_atlas,
+                AtlasResource.AtlasType.AdditionalMapIconsAtlas => Resources.additional_map_icons_atlas,
+                _ => throw new InvalidOperationException()
+            };
+            return FromResourceLocation(defaultAtlas, atlasResource);
         }
     }
 }
