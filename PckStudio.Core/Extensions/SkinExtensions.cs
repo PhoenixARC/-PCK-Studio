@@ -82,7 +82,7 @@ namespace PckStudio.Core.Extensions
             {
                 g.DrawImage(skin.Texture.GetArea(new Rectangle(8, 8, 8, 8)), 0, 0, width, height);
             }
-            else if (!skin.Anim.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED))
+            if (!skin.Anim.GetFlag(SkinAnimFlag.HEAD_OVERLAY_DISABLED))
             {
                 g.DrawImage(skin.Texture.GetArea(new Rectangle(40, 8, 8, 8)), 0, 0, width, height);
             }
