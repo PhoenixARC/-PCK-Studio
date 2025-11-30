@@ -593,14 +593,6 @@ namespace PckStudio
 			}
 		}
 
-		private void fullBoxSupportToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-		{
-            if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
-            {
-                editor.EditorValue.File.SetVersion(fullBoxSupportToolStripMenuItem.Checked);
-            }
-        }
-
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var appSettings = new AppSettingsForm();

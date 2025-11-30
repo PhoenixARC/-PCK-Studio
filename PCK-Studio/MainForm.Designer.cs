@@ -41,8 +41,6 @@
             this.mashUpPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentlyOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.packSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fullBoxSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,7 +129,6 @@
             toolStripSeparator2,
             this.recentlyOpenToolStripMenuItem,
             toolStripSeparator4,
-            this.packSettingsToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.closeToolStripMenuItem,
@@ -178,21 +175,6 @@
             // 
             resources.ApplyResources(this.recentlyOpenToolStripMenuItem, "recentlyOpenToolStripMenuItem");
             this.recentlyOpenToolStripMenuItem.Name = "recentlyOpenToolStripMenuItem";
-            // 
-            // packSettingsToolStripMenuItem
-            // 
-            this.packSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fullBoxSupportToolStripMenuItem});
-            this.packSettingsToolStripMenuItem.Image = global::PckStudio.Properties.Resources.ranch;
-            this.packSettingsToolStripMenuItem.Name = "packSettingsToolStripMenuItem";
-            resources.ApplyResources(this.packSettingsToolStripMenuItem, "packSettingsToolStripMenuItem");
-            // 
-            // fullBoxSupportToolStripMenuItem
-            // 
-            this.fullBoxSupportToolStripMenuItem.CheckOnClick = true;
-            this.fullBoxSupportToolStripMenuItem.Name = "fullBoxSupportToolStripMenuItem";
-            resources.ApplyResources(this.fullBoxSupportToolStripMenuItem, "fullBoxSupportToolStripMenuItem");
-            this.fullBoxSupportToolStripMenuItem.CheckedChanged += new System.EventHandler(this.fullBoxSupportToolStripMenuItem_CheckedChanged);
             // 
             // saveToolStripMenuItem
             // 
@@ -558,8 +540,6 @@
 		private System.Windows.Forms.ToolStripMenuItem wavBinkaToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem binkaWavToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openPckManagerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem packSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fullBoxSupportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem videosToolStripMenuItem;
