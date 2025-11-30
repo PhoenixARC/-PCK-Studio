@@ -52,8 +52,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 		{
 			(List<JsonTileInfo> textureInfos, Image[] images, string name) = key switch
 			{
-                ResourceCategory.BlockAnimation => (Tiles.BlockTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(ResourceCategory.BlockAtlas)).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Blocks"),
-                ResourceCategory.ItemAnimation => (Tiles.ItemTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(ResourceCategory.ItemAtlas)).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Items"),
+                ResourceCategory.BlockAnimation => (Tiles.BlockTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.BlockAtlas))).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Blocks"),
+                ResourceCategory.ItemAnimation => (Tiles.ItemTileInfos, ((AtlasResource)ResourceLocations.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ItemAtlas))).GetDefaultAtlas().GetTiles().Select(t => t.Texture).ToArray(), "Items"),
 				_ => throw new InvalidOperationException(nameof(key))
 			};
             TreeView view = filterPrompt.AddFilterPage(name, null, filterPredicate);

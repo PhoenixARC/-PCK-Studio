@@ -15,6 +15,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <ApplicationRevision>0</ApplicationRevision>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -27,7 +28,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PckStudio</RootNamespace>
     <AssemblyName>PCK-Studio</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>

@@ -162,10 +162,10 @@ namespace PckStudio.Core.DLC
 
             MetaData metadata = new MetaData(Resources.Comparison, Resources.TexturePackIcon);
 
-            Atlas terrain = Atlas.FromResourceLocation(Resources.terrain_atlas, ResourceLocation.GetFromCategory(ResourceCategory.BlockAtlas));
-            Atlas items = Atlas.FromResourceLocation(Resources.items_atlas, ResourceLocation.GetFromCategory(ResourceCategory.ItemAtlas));
-            Atlas particles = Atlas.FromResourceLocation(Resources.particles_atlas, ResourceLocation.GetFromCategory(ResourceCategory.ParticleAtlas));
-            Atlas painting = Atlas.FromResourceLocation(Resources.paintings_atlas, ResourceLocation.GetFromCategory(ResourceCategory.PaintingAtlas));
+            Atlas terrain = Atlas.FromResourceLocation(Resources.terrain_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.BlockAtlas)));
+            Atlas items = Atlas.FromResourceLocation(Resources.items_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ItemAtlas)));
+            Atlas particles = Atlas.FromResourceLocation(Resources.particles_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ParticleAtlas)));
+            Atlas painting = Atlas.FromResourceLocation(Resources.paintings_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.PaintingAtlas)));
             //ColorContainer colors = new COLFileReader().FromStream(new MemoryStream());
             IDictionary<string, Color> colors = null;
             IDictionary<string, (Color, Color, Color)> waterColors = null;

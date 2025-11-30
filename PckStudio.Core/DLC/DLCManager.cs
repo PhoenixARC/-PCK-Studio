@@ -279,10 +279,10 @@ namespace PckStudio.Core.DLC
             Image iconImg = iconnAsset?.GetTexture() ?? Resources.unknown_pack;
             DLCTexturePackage.MetaData metaData = new DLCTexturePackage.MetaData(comparisonImg, iconImg);
 
-            bool hasTerrainAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.BlockAtlas, out Atlas terrainAtlas);
-            bool hasItemAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.ItemAtlas, out Atlas itemAtlas);
-            bool hasParticleAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.ParticleAtlas, out Atlas particleAtlas);
-            bool hasPaintingAtlas = TryGetAtlasFromResourceCategory(dataPck, ResourceCategory.PaintingAtlas, out Atlas paintingAtlas);
+            bool hasTerrainAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.BlockAtlas, out Atlas terrainAtlas);
+            bool hasItemAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.ItemAtlas, out Atlas itemAtlas);
+            bool hasParticleAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.ParticleAtlas, out Atlas particleAtlas);
+            bool hasPaintingAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.PaintingAtlas, out Atlas paintingAtlas);
 
             string itemAnimationAssetPath = ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation);
 
@@ -323,9 +323,9 @@ namespace PckStudio.Core.DLC
                 armorSets, null, null, null, null, null, null, null, null);
         }
 
-        private bool TryGetAtlasFromResourceCategory(PckFile pck, ResourceCategory resourceCategory, out Atlas atlas)
+        private bool TryGetAtlasFromResourceCategory(PckFile pck, AtlasResource.AtlasType atlasType, out Atlas atlas)
         {
-            ResourceLocation resourceLocation = ResourceLocation.GetFromCategory(resourceCategory);
+            ResourceLocation resourceLocation = ResourceLocation.GetFromCategory((ResourceCategory)((int)ResourceCategory.Atlas | (int)atlasType));
             if (!pck.TryGetAsset(resourceLocation.ToString(), PckAssetType.TextureFile, out PckAsset asset))
             {
                 Trace.TraceWarning($"Could not find '{resourceLocation}'.");

@@ -21,6 +21,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using PckStudio.Core.Json;
+using static PckStudio.Core.AtlasResource;
 
 namespace PckStudio.Core
 {
@@ -28,47 +29,65 @@ namespace PckStudio.Core
     {
         public enum TillingMode
         {
-            Width,
-            Height,
-            WidthAndHeight
+            X,
+            Y,
+            XY
+        }
+
+        public enum AtlasType
+        {
+            Invalid,
+            ItemAtlas,
+            BlockAtlas,
+            ParticleAtlas,
+            BannerAtlas,
+            PaintingAtlas,
+            ExplosionAtlas,
+            ExperienceOrbAtlas,
+            MoonPhaseAtlas,
+            MapIconAtlas,
+            AdditionalMapIconsAtlas,
         }
 
         public IEnumerable<JsonTileInfo> TilesInfo { get; }
         public AtlasGroup[] AtlasGroups { get; }
         public readonly Image DefaultTexture;
-        public Size TillingFactor { get; }
-        public TillingMode Tilling { get; }
+        public Size TileCount { get; }
+        public TillingMode TileCountAxis { get; }
+        public AtlasType Type { get; }
 
-
-
-        public AtlasResource(string path, ResourceCategory resourceCategory, int tillingFactor, Image defaultTexture, TillingMode tilling = default, IEnumerable<JsonTileInfo> tilesInfo = default, AtlasGroup[] atlasGroups = default)
-            : this(path, resourceCategory, new Size(tillingFactor, tillingFactor), defaultTexture, tilling, tilesInfo, atlasGroups)
+        public AtlasResource(string path, AtlasType atlasType, int tileCount, Image defaultTexture, TillingMode tilling = default, IEnumerable<JsonTileInfo> tilesInfo = default, AtlasGroup[] atlasGroups = default)
+            : this(path, atlasType, new Size(tileCount, tileCount), defaultTexture, tilling, tilesInfo, atlasGroups)
         {
         }
 
-        public AtlasResource(string path, ResourceCategory resourceCategory, Size tillingFactor, Image defaultTexture, TillingMode tilling = default, IEnumerable<JsonTileInfo> tilesInfo = default, AtlasGroup[] atlasGroups = default)
-            : base(path, resourceCategory, isGroup: false)
+        public AtlasResource(string path, AtlasType atlasType, Size tillingFactor, Image defaultTexture, TillingMode tilling = default, IEnumerable<JsonTileInfo> tilesInfo = default, AtlasGroup[] atlasGroups = default)
+            : base(path, GetId(atlasType), isGroup: false)
         {
             TilesInfo = tilesInfo ?? Enumerable.Empty<JsonTileInfo>();
             AtlasGroups = atlasGroups ?? Array.Empty<AtlasGroup>();
             DefaultTexture = defaultTexture;
-            TillingFactor = new Size(Math.Max(1, tillingFactor.Width), Math.Max(1, tillingFactor.Height));
-            Tilling = Enum.IsDefined(typeof(TillingMode), tilling) ? tilling : default;
+            TileCount = new Size(Math.Max(1, tillingFactor.Width), Math.Max(1, tillingFactor.Height));
+            TileCountAxis = Enum.IsDefined(typeof(TillingMode), tilling) ? tilling : default;
+            Type = atlasType;
         }
 
         public Atlas GetDefaultAtlas()
         {
             return Atlas.FromResourceLocation(DefaultTexture, this);
         }
+
         public Size GetTileArea(Size imgSize)
         {
-            return Tilling switch
+            return TileCountAxis switch
             {
-                TillingMode.Width => new Size(imgSize.Width / TillingFactor.Width, imgSize.Width / TillingFactor.Height),
-                TillingMode.Height => new Size(imgSize.Height / TillingFactor.Width, imgSize.Height / TillingFactor.Height),
-                TillingMode.WidthAndHeight => new Size(imgSize.Width / TillingFactor.Width, imgSize.Height / TillingFactor.Height),
+                TillingMode.X => new Size(imgSize.Width / TileCount.Width, imgSize.Width / TileCount.Height),
+                TillingMode.Y => new Size(imgSize.Height / TileCount.Width, imgSize.Height / TileCount.Height),
+                TillingMode.XY => new Size(imgSize.Width / TileCount.Width, imgSize.Height / TileCount.Height),
                 _ => Size.Empty,
             };
         }
+
+        public static ResourceCategory GetId(AtlasType atlasType) => (ResourceCategory)((int)ResourceCategory.Atlas | (int)atlasType);
     }
 }

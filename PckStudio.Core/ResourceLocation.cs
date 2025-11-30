@@ -31,7 +31,7 @@ namespace PckStudio.Core
         private static List<ResourceLocation> ResourceGroups = new List<ResourceLocation>();
         private static readonly ResourceLocation Unknown = new ResourceLocation(string.Empty, ResourceCategory.Unknown);
         private static readonly Dictionary<string, ResourceLocation> _pathLookUp = new Dictionary<string, ResourceLocation>();
-        private static readonly Dictionary<ResourceCategory, ResourceLocation> _categoryLookUp = new Dictionary<ResourceCategory, ResourceLocation>();
+        private static readonly Dictionary<int, ResourceLocation> _categoryLookUp = new Dictionary<int, ResourceLocation>();
 
         public string Path { get; }
         public string FullPath => System.IO.Path.Combine(RESOURCE_PATH_PREFIX, Path);
@@ -49,7 +49,7 @@ namespace PckStudio.Core
 
             if (Category != ResourceCategory.Unknown && !string.IsNullOrWhiteSpace(Path))
             {
-                _categoryLookUp.Add(Category, this);
+                _categoryLookUp.Add((int)Category, this);
                 _pathLookUp.Add(Path, this);
                 Debug.WriteLine($"Add ResourceLocation: {Path}({Category}).");
             }
@@ -57,7 +57,7 @@ namespace PckStudio.Core
 
         public override string ToString() => FullPath;
 
-        internal static ResourceLocation GetFromCategory(ResourceCategory category) => _categoryLookUp.ContainsKey(category) ? _categoryLookUp[category] : Unknown;
+        internal static ResourceLocation GetFromCategory(ResourceCategory category) => _categoryLookUp.ContainsKey((int)category) ? _categoryLookUp[(int)category] : Unknown;
 
         internal static string GetPathFromCategory(ResourceCategory category) => GetFromCategory(category).ToString();
 
