@@ -77,5 +77,21 @@ namespace PckStudio.Core
             Color.FromArgb(0xb02e26), // Red
             Color.FromArgb(0x1d1d21), // Black
             ];
+
+
+        public static int GetColumnCountForGameVersion(AtlasResource.AtlasType atlasType, LCEGameVersion gameVersion)
+        {
+            return gameVersion switch
+            {
+                LCEGameVersion._1_13 when atlasType == AtlasResource.AtlasType.ItemAtlas => 17,
+                LCEGameVersion._1_13 when atlasType == AtlasResource.AtlasType.BlockAtlas => 34,
+                LCEGameVersion.TU0 when atlasType == AtlasResource.AtlasType.BlockAtlas => 16,
+                
+                LCEGameVersion._1_14 when atlasType == AtlasResource.AtlasType.ItemAtlas => 18,
+                LCEGameVersion._1_14 when atlasType == AtlasResource.AtlasType.BlockAtlas => 39,
+                _ when atlasType == AtlasResource.AtlasType.PaintingAtlas => 16,
+               _ => throw new NotImplementedException()
+            };
+        }
     }
 }

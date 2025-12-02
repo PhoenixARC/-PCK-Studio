@@ -56,13 +56,13 @@ namespace PckStudio.Core
             _groups = new List<AtlasGroup>();
         }
 
-        public static Atlas FromResourceLocation(Image source, ResourceLocation resourceLocation, ImageLayoutDirection imageLayout = default)
+        public static Atlas FromResourceLocation(Image source, ResourceLocation resourceLocation, LCEGameVersion gameVersion = default, ImageLayoutDirection imageLayout = default)
         {
             AtlasResource atlasResource = resourceLocation as AtlasResource ?? throw new InvalidDataException(nameof(resourceLocation));
             Json.JsonTileInfo[] tilesInfo = atlasResource.TilesInfo.ToArray();
             Size tileArea = atlasResource.GetTileArea(source.Size);
             int rows = source.Width / tileArea.Width;
-            int columns = source.Height / tileArea.Height;
+            int columns = GameConstants.GetColumnCountForGameVersion(atlasResource.Type, gameVersion);
             IEnumerable<AtlasTile> tiles = source.Split(tileArea, imageLayout).enumerate().Select(((int index, Image img) data) => new AtlasTile(data.img, GetSelectedPoint(data.index, out int col, rows, columns, imageLayout), col, index: data.index, userData: tilesInfo.IndexInRange(data.index) ? tilesInfo[data.index] : default));
             var atlas = new Atlas(atlasResource.Path, rows, columns, tiles, tileArea, imageLayout);
             atlas.AddGroups(atlasResource.AtlasGroups);

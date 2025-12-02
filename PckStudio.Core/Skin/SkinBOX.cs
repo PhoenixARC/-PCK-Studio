@@ -169,8 +169,7 @@ namespace PckStudio.Core.Skin
             const string sep = " ";
             string fstr = Enumerable.Range(0, values.Length)
                 .Select(i => string.Concat("{", i, "}"))
-                .Aggregate((sum, next) => string.IsNullOrWhiteSpace(next) ? sum : sum + sep + next)
-                .ToString();
+                .ToString(sep);
             return string.Format(CultureInfo.InvariantCulture, fstr, values);
         }
 

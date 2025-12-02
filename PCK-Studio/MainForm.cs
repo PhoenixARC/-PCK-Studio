@@ -554,5 +554,16 @@ namespace PckStudio
 			PckManager?.Close();
             Application.Exit();
         }
+
+        private void packSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = "Minecraft texturepack|*.zip"
+            };
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            new JavaTextFormatForm(new FileInfo(fileDialog.FileName)).ShowDialog();
+        }
     }
 }

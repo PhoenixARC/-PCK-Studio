@@ -17,16 +17,21 @@ namespace PckStudio.Core.Extensions
             yield break;
         }
 
-        public static ImageList ToImageList(this Image[] images)
+        public static ImageList ToImageList(this IEnumerable<Image> images)
         {
             ImageList imageList = new ImageList
             {
                 ColorDepth = ColorDepth.Depth32Bit
             };
-            imageList.Images.AddRange(images);
+            imageList.Images.AddRange(images.ToArray());
 
             return imageList;
         }
+
+        public static string ToString<T>(this IEnumerable<T> range, string seperator)
+            => range
+            .Select(t => t.ToString())
+            .Aggregate((res, next) => string.IsNullOrWhiteSpace(next) ? res : res + seperator + next);
 
         public static bool EqualsAny<T>(this T type, params T[] items)
         {
@@ -38,14 +43,6 @@ namespace PckStudio.Core.Extensions
             return false;
         }
 
-        public static bool ContainsAny<T>(this IEnumerable<T> array, params T[] items)
-        {
-            foreach (T item in array)
-            {
-                if (items.Contains(item))
-                    return true;
-            }
-            return false;
-        }
+        public static bool ContainsAny<T>(this IEnumerable<T> source, params T[] items) => source.Any(t => items.Contains(t));
     }
 }

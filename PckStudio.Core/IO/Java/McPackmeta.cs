@@ -2,7 +2,7 @@
 
 namespace PckStudio.Core.IO.Java
 {
-    struct McPackmeta
+    public struct McPackmeta
     {
         [JsonProperty("pack")]
         public McPack Pack;

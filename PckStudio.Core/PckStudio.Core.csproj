@@ -50,7 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ZipArchiveEntryExtensions.cs" />
     <Compile Include="IO\Java\ImportResult.cs" />
+    <Compile Include="IO\Java\IVersion.cs" />
+    <Compile Include="IO\Java\SingleVersion.cs" />
+    <Compile Include="IO\Java\SpecificVerions.cs" />
+    <Compile Include="IO\Java\VersionRange.cs" />
     <Compile Include="LCEGameVersion.cs" />
     <Compile Include="IO\Java\McPackmeta.cs" />
     <Compile Include="IO\Java\ResourcePackImporter.cs" />
