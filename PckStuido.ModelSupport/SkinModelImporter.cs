@@ -70,6 +70,13 @@ namespace PckStudio.ModelSupport
             if (!blockBenchModel.Format.UseBoxUv)
             {
                 Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import skin '{blockBenchModel.Name}': Skin does not use box uv.");
+                MessageBox.Show("Skin does not use box uv.", $"Failed to import skin '{blockBenchModel.Name}'", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            if (!blockBenchModel.Elements.All(e => e.UseBoxUv))
+            {
+                Trace.TraceError($"[{nameof(SkinModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import skin '{blockBenchModel.Name}': Some boxes do not use box uv.");
+                MessageBox.Show("Some boxes do not use box uv.", $"Failed to import skin '{blockBenchModel.Name}'", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
@@ -443,6 +450,8 @@ namespace PckStudio.ModelSupport
 
         private static string TryConvertToSkinBoxType(string name)
         {
+            if (name is null)
+                return string.Empty;
             if (!SkinBOX.IsValidType(name) && SkinBOX.IsValidType(name.ToUpper()))
             {
                 return name.ToUpper();
