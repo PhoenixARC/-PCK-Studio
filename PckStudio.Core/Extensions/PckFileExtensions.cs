@@ -91,5 +91,23 @@ namespace PckStudio.Core.Extensions
             return asset;
         }
 
+        public static bool HasDirectory(this PckFile pck, string directoryPath)
+        {
+            string sanitisedDirectoryPath = directoryPath.Replace('\\', '/');
+            return pck.GetAssets().Any(asset => asset.Filename.StartsWith(sanitisedDirectoryPath));
+        }
+
+        public static IEnumerable<PckAsset> GetDirectoryContent(this PckFile pck, string directoryPath, PckAssetType assetType, bool includeSubDirectories = false)
+            => GetDirectoryContent(pck, directoryPath, includeSubDirectories).Where(asset => asset.Type == assetType);
+        public static IEnumerable<PckAsset> GetDirectoryContent(this PckFile pck, string directoryPath, bool includeSubDirectories = false)
+        {
+            string sanitisedDirectoryPath = directoryPath.Replace('\\', '/');
+            if (!sanitisedDirectoryPath.EndsWith("/"))
+                sanitisedDirectoryPath += "/";
+            return pck.GetAssets()
+                .Where(asset => asset.Filename.StartsWith(sanitisedDirectoryPath))
+                .Where(asset => includeSubDirectories || !asset.Filename.Substring(sanitisedDirectoryPath.Length).Contains('/'));
+        }
+
     }
 }
