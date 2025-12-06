@@ -113,14 +113,14 @@ namespace PckStudio.Core.DLC
             if (!pckFile.TryGetAsset("0", PckAssetType.InfoFile, out PckAsset zeroAsset))
             {
                 Trace.TraceError("Could not find asset named:'0'.");
-                return new UnknownDLCPackage(fileInfo.Name, pckFile);
+                return new RawAssetDLCPackage(fileInfo.Name, pckFile, ByteOrder);
             }
 
-            int identifier = (zeroAsset?.HasProperty("PACKID") ?? default) ? zeroAsset.GetProperty("PACKID", int.Parse) : -1;
+            int identifier = zeroAsset.HasProperty("PACKID") ? zeroAsset.GetProperty("PACKID", int.Parse) : -1;
             if (identifier <= 0 || identifier > GameConstants.MAX_PACK_ID)
             {
                 Trace.TraceError($"{nameof(identifier)}({identifier}) was out of range!");
-                return new UnknownDLCPackage(fileInfo.Name, pckFile);
+                return new RawAssetDLCPackage(fileInfo.Name, pckFile, ByteOrder);
             }
 
             if (_packageRegistry.ContainsPackage(identifier))
@@ -128,9 +128,12 @@ namespace PckStudio.Core.DLC
 
             LOCFile localisation = pckFile.GetAssetsByType(PckAssetType.LocalisationFile).FirstOrDefault()?.GetData(new LOCFileReader());
             if (localisation is null)
-                return new UnknownDLCPackage(fileInfo.Name, pckFile);
+            {
+                Trace.TraceError("No localisation asset found.");
+                return new RawAssetDLCPackage(fileInfo.Name, pckFile, ByteOrder);
+            }
 
-            IDLCPackage package = ScanForPackageType(fileInfo, identifier, pckFile, localisation, fileReader);
+            IDLCPackage package = LoadDLCPackage(fileInfo, identifier, pckFile, localisation, fileReader);
             if (package.GetDLCPackageType() != DLCPackageType.Invalid)
             {
                 _packageRegistry.RegisterPackage(identifier, package, localisation);
@@ -156,7 +159,7 @@ namespace PckStudio.Core.DLC
             return true;
         }
 
-        private IDLCPackage ScanForPackageType(FileInfo fileInfo, int identifier, PckFile pckFile, LOCFile localisation, PckFileReader fileReader)
+        private IDLCPackage LoadDLCPackage(FileInfo fileInfo, int identifier, PckFile pckFile, LOCFile localisation, PckFileReader fileReader)
         {
             bool hasLanguage = localisation?.Languages?.Contains(PreferredLanguage) ?? default;
 
@@ -170,7 +173,7 @@ namespace PckStudio.Core.DLC
             bool couldBeMiniGamePack = fileInfo.Name == DEFAULT_MINIGAME_PACK_FILENAME;
 
             bool hasSkins = TryGetDLCSkinPackage(name, identifier, pckFile, fileReader, out IDLCPackage skinPackage);
-            DLCPackageType dlcPackageType = hasSkins ? DLCPackageType.SkinPack : DLCPackageType.Unknown;
+            DLCPackageType dlcPackageType = hasSkins ? DLCPackageType.SkinPack : DLCPackageType.RawAssets;
 
             DirectoryInfo dataDirectoryInfo = fileInfo.Directory.EnumerateDirectories().Where(dirInfo => dirInfo.Name == DATA_DIRECTORY_NAME).FirstOrDefault();
 
@@ -191,7 +194,7 @@ namespace PckStudio.Core.DLC
                 }
 
             Debug.WriteLine(dlcPackageType);
-            return new UnknownDLCPackage(name, pckFile);
+            return new RawAssetDLCPackage(name, pckFile, ByteOrder);
         }
 
         private Dictionary<string, IDictionary<string, byte[]>> GetMapData(PckFile pck, DirectoryInfo dataDirectory)

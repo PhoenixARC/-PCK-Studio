@@ -78,7 +78,7 @@
     <Compile Include="DLC\DLCPackageRegistry.cs" />
     <Compile Include="DLC\DLCSkinPackage.cs" />
     <Compile Include="DLC\DLCTexturePackage.cs" />
-    <Compile Include="DLC\UnknownDLCPackage.cs" />
+    <Compile Include="DLC\RawAssetDLCPackage.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\BlendOption.cs" />
@@ -159,7 +159,6 @@
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
     <Compile Include="NamedData.cs" />
-    <Compile Include="PackInfo.cs" />
     <Compile Include="DLC\DLCPackageType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

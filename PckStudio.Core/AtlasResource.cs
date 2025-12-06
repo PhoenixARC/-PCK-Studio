@@ -21,7 +21,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using PckStudio.Core.Json;
-using static PckStudio.Core.AtlasResource;
 
 namespace PckStudio.Core
 {

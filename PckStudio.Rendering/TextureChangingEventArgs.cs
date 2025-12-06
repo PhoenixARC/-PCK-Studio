@@ -18,7 +18,6 @@
 using System.ComponentModel;
 using System.Drawing;
 
-<<<<<<<< HEAD:PckStudio.Rendering/TextureChangingEventArgs.cs
 namespace PckStudio.Rendering
 {
     public class TextureChangingEventArgs : CancelEventArgs
@@ -29,26 +28,5 @@ namespace PckStudio.Rendering
         {
             NewTexture = newTexture;
         }
-========
-namespace PckStudio.Core
-{
-    public enum ResourceCategory
-    {
-        Unknown = -1,
-        ItemAnimation,
-        BlockAnimation,
-        MobEntityTextures,
-        ItemEntityTextures,
-        ItemAtlas,
-        BlockAtlas,
-        ParticleAtlas,
-        BannerAtlas,
-        PaintingAtlas,
-        ExplosionAtlas,
-        ExperienceOrbAtlas,
-        MoonPhaseAtlas,
-        MapIconAtlas,
-        AdditionalMapIconsAtlas,
->>>>>>>> main:PckStudio.Core/ResourceCategory.cs
     }
 }

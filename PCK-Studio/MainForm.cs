@@ -65,11 +65,11 @@ namespace PckStudio
             if (dlcPackage is null)
                 return;
             SaveToRecentFiles(filepath);
-            if (dlcPackage.GetDLCPackageType() == DLCPackageType.Unknown)
+            if (dlcPackage.GetDLCPackageType() == DLCPackageType.RawAssets)
                 AddEditorPage(dlcPackage);
         }
 
-		internal void OpenNewPckTab(string caption, string identifier, PackInfo packInfo, ISaveContext<PackInfo> saveContext)
+		internal void OpenNewPckTab(string caption, string identifier, RawAssetDLCPackage packInfo, ISaveContext<RawAssetDLCPackage> saveContext)
 		{
             if (openTabPages.ContainsKey(identifier))
             {
@@ -80,7 +80,7 @@ namespace PckStudio
             AddPage(caption, identifier, editor);
         }
 
-        private void AddEditorPage(string caption, string identifier, PackInfo packInfo, ISaveContext<PackInfo> saveContext = null)
+        private void AddEditorPage(string caption, string identifier, RawAssetDLCPackage packInfo, ISaveContext<RawAssetDLCPackage> saveContext = null)
         {
             saveContext ??= GetDefaultSaveContext("./new.pck", "PCK (Minecraft Console Package)");
             var editor = new PckAssetBrowserEditor(packInfo, saveContext);
@@ -89,15 +89,14 @@ namespace PckStudio
 
         private void AddEditorPage(IDLCPackage dlcPackage)
         {
-            PackInfo packInfo = PackInfo.Create((dlcPackage as UnknownDLCPackage).PckFile, default, false);
-            ISaveContext<PackInfo> saveContext = GetDefaultSaveContext("", "PCK (Minecraft Console Package)");
-            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
+            ISaveContext<RawAssetDLCPackage> saveContext = GetDefaultSaveContext("", "PCK (Minecraft Console Package)");
+            var editor = new PckAssetBrowserEditor(dlcPackage as RawAssetDLCPackage, saveContext);
             TabPage page = AddPage(dlcPackage.Name, dlcPackage.Name, editor);
             }
 
-        private static ISaveContext<PackInfo> GetDefaultSaveContext(string filepath, string description)
+        private static ISaveContext<RawAssetDLCPackage> GetDefaultSaveContext(string filepath, string description)
         {
-            return new DelegatedFileSaveContext<PackInfo>(filepath, false, new FileDialogFilter(description, "*"+Path.GetExtension(filepath)),(packInfo, stream) => new PckFileWriter(packInfo.File, packInfo.ByteOrder).WriteToStream(stream));
+            return new DelegatedFileSaveContext<RawAssetDLCPackage>(filepath, false, new FileDialogFilter(description, "*"+Path.GetExtension(filepath)),(packInfo, stream) => new PckFileWriter(packInfo.PckFile, packInfo.ByteOrder).WriteToStream(stream));
         }
 
         private TabPage AddPage(string caption, string identifier, Control control)
@@ -114,9 +113,9 @@ namespace PckStudio
             return page;
         }
 
-        private bool TryGetEditor(TabPage page, out IEditor<PackInfo> editor)
+        private bool TryGetEditor(TabPage page, out IEditor<RawAssetDLCPackage> editor)
         {
-            if (page.Controls[0] is IEditor<PackInfo> outEditor)
+            if (page.Controls[0] is IEditor<RawAssetDLCPackage> outEditor)
             {
                 editor = outEditor;
                 return true;
@@ -125,7 +124,7 @@ namespace PckStudio
             return false;
         }
 
-        private bool TryGetCurrentEditor(out IEditor<PackInfo> editor) => TryGetEditor(tabControl.SelectedTab, out editor);
+        private bool TryGetCurrentEditor(out IEditor<RawAssetDLCPackage> editor) => TryGetEditor(tabControl.SelectedTab, out editor);
 
         private void MainForm_Load(object sender, EventArgs e)
 		{
@@ -149,7 +148,7 @@ namespace PckStudio
 
         private void CloseTab(TabControl.TabPageCollection collection, TabPage page)
         {
-            if (TryGetEditor(page, out IEditor<PackInfo> editor))
+            if (TryGetEditor(page, out IEditor<RawAssetDLCPackage> editor))
             {
                 editor.Close();
                 RemoveOpenFile(page);
@@ -251,7 +250,7 @@ namespace PckStudio
 
         private void tabControl_PageClosing(object sender, PageClosingEventArgs e)
         {
-            if (TryGetEditor(e.Page, out IEditor<PackInfo> editor))
+            if (TryGetEditor(e.Page, out IEditor<RawAssetDLCPackage> editor))
             {
                 editor.Close();
                 RemoveOpenFile();
@@ -343,8 +342,8 @@ namespace PckStudio
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
                 PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText, true);
-                PackInfo packInfo = PackInfo.Create(skinPck, OMI.ByteOrder.BigEndian, true);
-                AddEditorPage("Unsaved skin pack", "Unsaved skin pack", packInfo);
+                RawAssetDLCPackage newRawAssetDLCPackage = new RawAssetDLCPackage("New pack", skinPck, OMI.ByteOrder.BigEndian);
+                AddEditorPage(newRawAssetDLCPackage.Name, "Unsaved texture pack", newRawAssetDLCPackage);
             }
         }
 
@@ -354,8 +353,8 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
-                PackInfo packInfo = PackInfo.Create(texturePackPck, OMI.ByteOrder.BigEndian, true);
-                AddEditorPage("Unsaved texture pack", "Unsaved texture pack", packInfo);
+                RawAssetDLCPackage newRawAssetDLCPackage = new RawAssetDLCPackage("New pack", texturePackPck, OMI.ByteOrder.BigEndian);
+                AddEditorPage(newRawAssetDLCPackage.Name, "Unsaved texture pack", newRawAssetDLCPackage);
             }
         }
 
@@ -365,16 +364,16 @@ namespace PckStudio
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
                 PckFile mashUpPck = InitializeMashUpPack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
-                PackInfo packInfo = PackInfo.Create(mashUpPck, OMI.ByteOrder.BigEndian, true);
-                AddEditorPage("Unsaved mash-up pack", "Unsaved mash-up pack", packInfo);
+                RawAssetDLCPackage newRawAssetDLCPackage = new RawAssetDLCPackage("New pack", mashUpPck, OMI.ByteOrder.BigEndian);
+                AddEditorPage(newRawAssetDLCPackage.Name, "Unsaved texture pack", newRawAssetDLCPackage);
             }
         }
 
 		private void quickChangeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
+            if (TryGetCurrentEditor(out IEditor<RawAssetDLCPackage> editor))
             {
-                using AdvancedOptions advanced = new AdvancedOptions(editor.EditorValue.File);
+                using AdvancedOptions advanced = new AdvancedOptions(editor.EditorValue.PckFile);
                 advanced.IsLittleEndian = editor.EditorValue.ByteOrder == OMI.ByteOrder.LittleEndian;
                 if (advanced.ShowDialog() == DialogResult.OK)
                 {
@@ -481,7 +480,7 @@ namespace PckStudio
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
+            if (TryGetCurrentEditor(out IEditor<RawAssetDLCPackage> editor))
             {
                 editor.Save();
             }
@@ -489,7 +488,7 @@ namespace PckStudio
 
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            if (TryGetCurrentEditor(out IEditor<PackInfo> editor))
+            if (TryGetCurrentEditor(out IEditor<RawAssetDLCPackage> editor))
             {
                 editor.SaveAs();
             }
