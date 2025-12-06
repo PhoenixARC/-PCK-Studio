@@ -76,21 +76,21 @@ namespace PckStudio
                 tabControl.SelectTab(openTabPages[identifier]);
                 return;
             }
-            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
+            var editor = new RawAssetsEditor(packInfo, saveContext);
             AddPage(caption, identifier, editor);
         }
 
         private void AddEditorPage(string caption, string identifier, RawAssetDLCPackage packInfo, ISaveContext<RawAssetDLCPackage> saveContext = null)
         {
             saveContext ??= GetDefaultSaveContext("./new.pck", "PCK (Minecraft Console Package)");
-            var editor = new PckAssetBrowserEditor(packInfo, saveContext);
+            var editor = new RawAssetsEditor(packInfo, saveContext);
             AddPage(caption, identifier, editor);
         }
 
         private void AddEditorPage(IDLCPackage dlcPackage)
         {
             ISaveContext<RawAssetDLCPackage> saveContext = GetDefaultSaveContext("", "PCK (Minecraft Console Package)");
-            var editor = new PckAssetBrowserEditor(dlcPackage as RawAssetDLCPackage, saveContext);
+            var editor = new RawAssetsEditor(dlcPackage as RawAssetDLCPackage, saveContext);
             TabPage page = AddPage(dlcPackage.Name, dlcPackage.Name, editor);
             }
 

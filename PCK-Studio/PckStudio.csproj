@@ -171,11 +171,11 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PageClosingEventArgs.cs" />
-    <Compile Include="Controls\PckAssetBrowserEditor.cs">
+    <Compile Include="Controls\RawAssetsEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PckAssetBrowserEditor.Designer.cs">
-      <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
+    <Compile Include="Controls\RawAssetsEditor.Designer.cs">
+      <DependentUpon>RawAssetsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
       <SubType>UserControl</SubType>
@@ -426,8 +426,8 @@
     <EmbeddedResource Include="Controls\ModelsPanel.resx">
       <DependentUpon>ModelsPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PckAssetBrowserEditor.resx">
-      <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\RawAssetsEditor.resx">
+      <DependentUpon>RawAssetsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SkinsPanel.resx">
       <DependentUpon>SkinsPanel.cs</DependentUpon>

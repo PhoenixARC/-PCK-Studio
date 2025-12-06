@@ -51,7 +51,7 @@ using PckStudio.Core.DLC;
 
 namespace PckStudio.Controls
 {
-    internal partial class PckAssetBrowserEditor : EditorControl<RawAssetDLCPackage>
+    internal partial class RawAssetsEditor : EditorControl<RawAssetDLCPackage>
     {
         private string _location = string.Empty;
 
@@ -85,7 +85,7 @@ namespace PckStudio.Controls
         private readonly IDictionary<PckAssetType, Action<PckAsset>> _pckAssetTypeHandler;
         //private readonly IDictionary<PckAssetType, ViewPanel> _viewPanels;
 
-        public PckAssetBrowserEditor(RawAssetDLCPackage rawAssetDLCPackage, ISaveContext<RawAssetDLCPackage> saveContext)
+        public RawAssetsEditor(RawAssetDLCPackage rawAssetDLCPackage, ISaveContext<RawAssetDLCPackage> saveContext)
             : base(rawAssetDLCPackage, saveContext)
         {
             InitializeComponent();
@@ -242,7 +242,7 @@ namespace PckStudio.Controls
 
             if (asset.Size <= 0)
             {
-                Trace.TraceInformation($"[{nameof(PckAssetBrowserEditor)}:{nameof(HandleTextureFile)}] '{asset.Filename}' size is 0.");
+                Trace.TraceInformation($"[{nameof(RawAssetsEditor)}:{nameof(HandleTextureFile)}] '{asset.Filename}' size is 0.");
                 return;
             }
             _currentViewPanel.LoadAsset(asset, () => _wasModified = true);
@@ -707,14 +707,14 @@ namespace PckStudio.Controls
 
         private void UpdateRichPresence()
         {
-            if (EditorValue is not null &&
-                TryGetLocFile(out LOCFile locfile) &&
-                locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
-                locfile.Languages.Contains(DLCManager.Default.PreferredLanguage))
-            {
-                RPC.SetPresence("Editing a Pack:", $" > {locfile.GetLocEntry("IDS_DISPLAY_NAME", DLCManager.Default.PreferredLanguage)}");
-                return;
-            }
+            //if (EditorValue is not null &&
+            //    TryGetLocFile(out LOCFile locfile) &&
+            //    locfile.HasLocEntry("IDS_DISPLAY_NAME") &&
+            //    locfile.Languages.Contains(DLCManager.Default.PreferredLanguage))
+            //{
+            //    RPC.SetPresence("Editing a Pack:", $" > {locfile.GetLocEntry("IDS_DISPLAY_NAME", DLCManager.Default.PreferredLanguage)}");
+            //    return;
+            //}
             // default
             RPC.SetPresence("An Open Source .PCK File Editor");
         }
