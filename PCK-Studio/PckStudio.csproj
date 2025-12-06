@@ -178,7 +178,7 @@
       <DependentUpon>PckAssetBrowserEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Additional-Popups\FilterPrompt.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Additional-Popups\FilterPrompt.Designer.cs">
       <DependentUpon>FilterPrompt.cs</DependentUpon>
@@ -440,6 +440,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor\ModelEditor.resx">
       <DependentUpon>ModelEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Features\CemuPanel.resx">
       <DependentUpon>CemuPanel.cs</DependentUpon>
