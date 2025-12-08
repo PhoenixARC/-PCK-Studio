@@ -222,6 +222,16 @@ namespace PckStudio.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap clouds {
+            get {
+                object obj = ResourceManager.GetObject("clouds", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Comparison {
             get {
                 object obj = ResourceManager.GetObject("Comparison", resourceCulture);
@@ -632,6 +642,26 @@ namespace PckStudio.Core.Properties {
         public static System.Drawing.Bitmap particles_atlas {
             get {
                 object obj = ResourceManager.GetObject("particles_atlas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rain {
+            get {
+                object obj = ResourceManager.GetObject("rain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap snow {
+            get {
+                object obj = ResourceManager.GetObject("snow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
