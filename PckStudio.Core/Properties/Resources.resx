@@ -151,6 +151,9 @@
   <data name="compass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\compass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="defaultModels" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\defaultModels.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="diamond" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\armor\diamond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -189,6 +192,9 @@
   </data>
   <data name="map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="modelMetaData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\modelMetaData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="moonPhaseData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\moonPhaseData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>

@@ -29,11 +29,10 @@ using Newtonsoft.Json.Linq;
 
 using OMI.Formats.Model;
 
-using PckStudio.Core.Json;
+using PckStudio.Core.Properties;
 using PckStudio.Core.Extensions;
 using PckStudio.Core;
 using PckStudio.ModelSupport.Format.External;
-using PckStuido.ModelSupport.Properties;
 using NamedTexture = PckStudio.Core.NamedData<System.Drawing.Image>;
 
 namespace PckStudio.ModelSupport
