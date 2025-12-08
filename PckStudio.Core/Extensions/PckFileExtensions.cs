@@ -55,7 +55,7 @@ namespace PckStudio.Core.Extensions
 
             if (skin.HasCape)
             {
-                asset.AddProperty("CAPEPATH", $"dlccape{skinId}.png");
+                asset.AddProperty("CAPEPATH", $"dlccape{skin.CapeId}.png");
             }
 
             asset.AddProperty("ANIM", skin.Anim);
