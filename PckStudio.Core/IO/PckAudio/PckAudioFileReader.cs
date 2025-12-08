@@ -16,7 +16,7 @@ namespace PckStudio.Core.IO.PckAudio
         private PckAudioFile _file;
         private ByteOrder _endianness;
         private List<string> LUT = new List<string>();
-        private List<PckAudioFile.AudioCategory.EAudioType> _OriginalAudioTypeOrder = new List<PckAudioFile.AudioCategory.EAudioType>();
+        private List<PckAudioFile.Category> _OriginalAudioTypeOrder = new List<PckAudioFile.Category>();
 
         public PckAudioFileReader(ByteOrder endianness)
         {
@@ -75,8 +75,8 @@ namespace PckStudio.Core.IO.PckAudio
             int categoryEntryCount = reader.ReadInt32();
             for (; 0 < categoryEntryCount; categoryEntryCount--)
             {
-                var parameterType = (PckAudioFile.AudioCategory.EAudioParameterType)reader.ReadInt32();
-                var audioType = (PckAudioFile.AudioCategory.EAudioType)reader.ReadInt32();
+                var parameterType = (PckAudioFile.EAudioParameterType)reader.ReadInt32();
+                var audioType = (PckAudioFile.Category)reader.ReadInt32();
                 string name = ReadString(reader);
                 // AddCategory puts the file's categories out of order and causes some songs to be put in the wrong categories
                 // This is my simple fix for the issue.
@@ -89,7 +89,7 @@ namespace PckStudio.Core.IO.PckAudio
         {
             List<string> credits = new List<string>();
             List<string> creditIds = new List<string>();
-            foreach (PckAudioFile.AudioCategory.EAudioType c in _OriginalAudioTypeOrder)
+            foreach (PckAudioFile.Category c in _OriginalAudioTypeOrder)
             {
                 int audioCount = reader.ReadInt32();
                 for (; 0 < audioCount; audioCount--)

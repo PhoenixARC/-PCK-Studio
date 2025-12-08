@@ -15,34 +15,33 @@ namespace PckStudio.Core.FileFormats
         private AudioCategory[] _categories { get; } = new AudioCategory[9];
 
 		public Dictionary<string, string> Credits { get; } = new Dictionary<string, string>();
+		public enum Category : int
+		{
+			Overworld,
+			Nether,
+			End,
+			Creative,
+			Menu,
+			Battle,
+			Tumble,
+			Glide,
+			BuildOff,
+		}
+
+		public enum EAudioParameterType : int
+		{
+			Unk0, // dimension music
+			Unk1, // unused music ?
+		}
 
 		public sealed class AudioCategory
         {
-			public enum EAudioType : int
-			{
-				Overworld,
-				Nether,
-				End,
-				Creative,
-				Menu,
-				Battle,
-				Tumble,
-				Glide,
-				BuildOff,
-			}
-
-			public enum EAudioParameterType : int
-			{
-				Unk0, // dimension music
-				Unk1, // unused music ?
-			}
-
 			public string Name { get; set; } = string.Empty;
-			public EAudioType AudioType { get; }
+			public Category AudioType { get; }
 			public List<string> SongNames { get;  } = new List<string>();
             public EAudioParameterType ParameterType { get; }
 
-			public AudioCategory(string name, EAudioParameterType parameterType, EAudioType audioType)
+			public AudioCategory(string name, EAudioParameterType parameterType, Category audioType)
 			{
 				Name = name;
 				ParameterType = parameterType;
@@ -98,17 +97,17 @@ namespace PckStudio.Core.FileFormats
 
 
 		/// <exception cref="InvalidCategoryException"></exception>
-		public bool HasCategory(AudioCategory.EAudioType category) => GetCategory(category) is AudioCategory;
+		public bool HasCategory(Category category) => GetCategory(category) is AudioCategory;
 
 		/// <exception cref="InvalidCategoryException"></exception>
-		public AudioCategory GetCategory(AudioCategory.EAudioType category)
+		public AudioCategory GetCategory(Category category)
 		{
-			if (!Enum.IsDefined(typeof(AudioCategory.EAudioType), category))
+			if (!Enum.IsDefined(typeof(Category), category))
 				throw new InvalidCategoryException(nameof(category));
 			return _categories[(int)category];
 		}
 
-		public bool TryGetCategory(AudioCategory.EAudioType category, out AudioCategory audioCategory)
+		public bool TryGetCategory(Category category, out AudioCategory audioCategory)
         {
 			if (GetCategory(category) is AudioCategory audioCat)
             {
@@ -121,9 +120,9 @@ namespace PckStudio.Core.FileFormats
 
 		/// <returns>True when category was created, otherwise false</returns>
 		/// <exception cref="InvalidCategoryException"></exception>
-		public bool AddCategory(string name, AudioCategory.EAudioType category, AudioCategory.EAudioParameterType parameterType)
+		public bool AddCategory(string name, Category category, EAudioParameterType parameterType)
         {
-			if (!Enum.IsDefined(typeof(AudioCategory.EAudioType), category))
+			if (!Enum.IsDefined(typeof(Category), category))
 				throw new InvalidCategoryException(nameof(category));
 			bool exists = HasCategory(category);
 			if (!exists)
@@ -133,11 +132,11 @@ namespace PckStudio.Core.FileFormats
 
 		/// <returns>True when category was created, otherwise false</returns>
 		/// <exception cref="InvalidCategoryException"></exception>
-		public bool AddCategory(AudioCategory.EAudioType category) => AddCategory("", category, AudioCategory.EAudioParameterType.Unk0);
+		public bool AddCategory(Category category) => AddCategory("", category, EAudioParameterType.Unk0);
 
 		/// <returns>True when category was removed, otherwise false</returns>
 		/// <exception cref="InvalidCategoryException"></exception>
-		public bool RemoveCategory(AudioCategory.EAudioType category)
+		public bool RemoveCategory(Category category)
         {
 			bool exists = HasCategory(category);
 			if (exists)

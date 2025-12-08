@@ -5,35 +5,35 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using OMI;
+using OMI.Formats.Color;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using OMI.Workers.Color;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
+using OMI.Workers.Material;
 using OMI.Workers.Pck;
 using PckStudio.Core.App;
 using PckStudio.Core.Deserializer;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
 using PckStudio.Core.IO.PckAudio;
-using PckStudio.Core.Properties;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Core.DLC
 {
-    public sealed class DLCManager
+    public class DLCManager
     {
-        public static DLCManager Default { get; } = new DLCManager(default, AppLanguage.SystemDefault);
-       
         internal const string DEFAULT_TEXTURE_PACK_FILENAME = "TexturePack.pck";
         internal const string DEFAULT_MINIGAME_PACK_FILENAME = "WorldPack.pck";
         internal const string DATA_DIRECTORY_NAME = "Data";
         internal const string PACKAGE_DISPLAYNAME_ID = "IDS_DISPLAY_NAME";
+        private const string BASE_SAVE_NAME_GRF_PARAMETER_KEY = "baseSaveName";
+        private const string GRF_MAP_OPTIONS_NAME = "MapOptions";
+        private const string TEXTURE_PACK_DATA_PATH_KEY = "DATAPATH";
+        private const string CAPE_PATH_KEY = "CAPEPATH";
 
         public ByteOrder ByteOrder => _byteOrder;
 
@@ -117,7 +117,7 @@ namespace PckStudio.Core.DLC
             }
 
             int identifier = zeroAsset.HasProperty("PACKID") ? zeroAsset.GetProperty("PACKID", int.Parse) : -1;
-            if (identifier <= 0 || identifier > GameConstants.MAX_PACK_ID)
+            if (!identifier.IsWithinRangeOf(1, GameConstants.MAX_PACK_ID))
             {
                 Trace.TraceError($"{nameof(identifier)}({identifier}) was out of range!");
                 return new RawAssetDLCPackage(fileInfo.Name, pckFile, ByteOrder);
@@ -204,18 +204,13 @@ namespace PckStudio.Core.DLC
             IEnumerable<string> values = pck.GetAssetsByType(PckAssetType.GameRulesFile)
                 .Concat(pck.GetAssetsByType(PckAssetType.GameRulesHeader))
                 .Select(asset => asset.GetData(reader))
-                .SelectMany(grf => grf.Root.GetRules().Where(rule => rule.Name == "MapOptions" && rule.ContainsParameter("baseSaveName")))
-                .Select(rule => rule.GetRule("MapOptions").GetParameterValue("baseSaveName"));
+                .SelectMany(grf => grf.Root.GetRules().Where(rule => rule.Name == GRF_MAP_OPTIONS_NAME && rule.ContainsParameter(BASE_SAVE_NAME_GRF_PARAMETER_KEY)))
+                .Select(rule => rule.GetParameterValue(BASE_SAVE_NAME_GRF_PARAMETER_KEY));
 
-            Dictionary<string, IDictionary<string, byte[]>> saves = new Dictionary<string, IDictionary<string, byte[]>>();
-            foreach (FileInfo worldFile in dataDirectory.EnumerateFiles("*.mcs").Where(file => values.Contains(file.Name)))
-            {
-                IDictionary<string, byte[]> save = MapReader.OpenSave(worldFile.OpenRead());
-                saves.Add(worldFile.Name, save);
+            return dataDirectory.EnumerateFiles("*.mcs")
+                .Where(file => values.Contains(file.Name))
+                .ToDictionary(worldFile => worldFile.Name, worldFile => MapReader.OpenSave(worldFile.OpenRead()));
             }
-
-            return saves;
-        }
 
         private bool TryGetTexturePack(string name, string description, int identifier, DirectoryInfo dataDirectoryInfo, PckFile pckFile, PckFileReader pckFormatReader, out IDLCPackage texturePackage)
             {
@@ -232,7 +227,7 @@ namespace PckStudio.Core.DLC
             }
 
             DLCTexturePackage.TextureResolution resolution = DLCTexturePackage.GetTextureResolutionFromString(texturePackInfo.Filename);
-            string dataPath = texturePackInfo.GetProperty("DATAPATH");
+            string dataPath = texturePackInfo.GetProperty(TEXTURE_PACK_DATA_PATH_KEY);
 
             if (string.IsNullOrWhiteSpace(dataPath))
             {
@@ -253,13 +248,8 @@ namespace PckStudio.Core.DLC
             PckFile texturePackPck = pckFormatReader.FromStream(texturePackFileStream);
             texturePackage = GetTexturePackageFromPckFile(name, description, identifier, infoPck, texturePackPck, resolution);
 
-            IEnumerable<FileInfo> audioFiles = dataDirectoryInfo.EnumerateFiles("*.binka");
-            IDictionary<string, byte[]> audios = new Dictionary<string, byte[]>();
-            foreach (FileInfo audioFile in audioFiles)
-            {
-                byte[] data = File.ReadAllBytes(audioFile.FullName);
-                audios.Add(audioFile.Name, data);
-            }
+            IDictionary<string, byte[]> audios = dataDirectoryInfo.EnumerateFiles("*.binka")
+                .ToDictionary(audioFile => audioFile.Name, audioFile => File.ReadAllBytes(audioFile.FullName));
 
             return texturePackage is not null;
             }
@@ -270,68 +260,94 @@ namespace PckStudio.Core.DLC
                 return null;
 
             if (!infoPck.TryGetAsset("comparison.png", PckAssetType.TextureFile, out PckAsset comparisonAsset))
-            {
                 Trace.TraceError($"Could not find 'comparison.png'.");
-            }
+            
             if (!infoPck.TryGetAsset("icon.png", PckAssetType.TextureFile, out PckAsset iconnAsset))
-            {
                 Trace.TraceError($"Could not find 'icon.png'.");
-            }
 
             Image comparisonImg = comparisonAsset?.GetTexture();
-            Image iconImg = iconnAsset?.GetTexture() ?? Resources.unknown_pack;
+            Image iconImg = iconnAsset?.GetTexture();
             DLCTexturePackage.MetaData metaData = new DLCTexturePackage.MetaData(comparisonImg, iconImg);
 
             bool hasTerrainAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.BlockAtlas, out Atlas terrainAtlas);
             bool hasItemAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.ItemAtlas, out Atlas itemAtlas);
             bool hasParticleAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.ParticleAtlas, out Atlas particleAtlas);
             bool hasPaintingAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.PaintingAtlas, out Atlas paintingAtlas);
+            bool hasMoonPhaseAtlas = TryGetAtlasFromResourceCategory(dataPck, AtlasResource.AtlasType.MoonPhaseAtlas, out Atlas moonPhaseAtlas);
 
             string itemAnimationAssetPath = ResourceLocation.GetPathFromCategory(ResourceCategory.ItemAnimation);
 
             IPckAssetDeserializer<Animation> deserializer = AnimationDeserializer.DefaultDeserializer;
-            Animation compassAnimation = dataPck.TryGetAsset(itemAnimationAssetPath + "/compass.png", PckAssetType.TextureFile, out PckAsset compassAsset) ? comparisonAsset.GetDeserializedData(deserializer) : Animation.CreateEmpty();
-            Animation clockAnimation = dataPck.TryGetAsset(itemAnimationAssetPath + "/clock.png", PckAssetType.TextureFile, out PckAsset clockAsset) ? clockAsset.GetDeserializedData(deserializer) : Animation.CreateEmpty();
 
-            if (compassAnimation.FrameCount == 0)
+            IDictionary<string, Animation> animations = dataPck.GetDirectoryContent(itemAnimationAssetPath, PckAssetType.TextureFile)
+                .ToDictionary(asset => Path.GetFileNameWithoutExtension(asset.Filename), deserializer.Deserialize);
+
+            bool hasCompassAnimation = animations.ContainsKey("compass");
+            bool hasClockAnimation = animations.ContainsKey("clock");
+
+            if (!hasCompassAnimation)
                 Trace.TraceError("No compass animation found!");
 
-            if (clockAnimation.FrameCount == 0)
+            if (!hasClockAnimation)
                 Trace.TraceError("No clock animation found!");
 
-            ITryGet<string, Image> tryGet = TryGet<string, Image>.FromDelegate((string path, out Image image) =>
+            ITryGet<string, Image> tryGetTexture = TryGet<string, Image>.FromDelegate((string path, out Image image) =>
             {
                 bool success = dataPck.TryGetAsset(path, PckAssetType.TextureFile, out PckAsset asset);
                 image = asset?.GetTexture();
                 return success;
             });
                 
-            Image[] blockEntityBreakingAnimation = new Image[10];
-            for (int i = 0; i < blockEntityBreakingAnimation.Length; i++)
-            {
-                if (dataPck.TryGetAsset("", PckAssetType.TextureFile, out PckAsset asset))
-                    blockEntityBreakingAnimation[i] = asset.GetTexture();
-            }
+            IEnumerable<Image> blockEntityBreakingFrames = dataPck.GetDirectoryContent("res/textures/", PckAssetType.TextureFile)
+                .Select(ImageDeserializer.DefaultDeserializer.Deserialize);
+            Animation blockEntityBreakAnimation = new Animation(blockEntityBreakingFrames);
 
-            ArmorSet[] armorSets = new ArmorSet[6]
-            {
-                ArmorSetDescription.Leather.GetArmorSet(tryGet),
-                ArmorSetDescription.Chain.GetArmorSet(tryGet),
-                ArmorSetDescription.Iron.GetArmorSet(tryGet),
-                ArmorSetDescription.Gold.GetArmorSet(tryGet),
-                ArmorSetDescription.Diamond.GetArmorSet(tryGet),
-                ArmorSetDescription.Turtle.GetArmorSet(tryGet)
-            };
-            return new DLCTexturePackage(name, description, identifier, metaData, resolution, terrainAtlas, itemAtlas, particleAtlas, paintingAtlas,
-                armorSets, null, null, null, null, null, null, null, null);
+            ColorContainer colorContainer = dataPck.GetAssetsByType(PckAssetType.ColourTableFile).FirstOrDefault()?.GetData(new COLFileReader()) ?? new ColorContainer();
+
+            IDictionary<string, Color> colors = colorContainer.Colors
+                .GroupBy(c => c.Name)
+                .Select(grp => grp.FirstOrDefault())
+                .ToDictionary(c => c.Name, c => c.ColorPallette);
+            IDictionary<string, (Color, Color, Color)> waterColors = colorContainer.WaterColors
+                .GroupBy(c => c.Name)
+                .Select(grp => grp.FirstOrDefault())
+                .ToDictionary(c => c.Name, c => (c.SurfaceColor, c.UnderwaterColor, c.FogColor));
+
+            IDictionary<string, Image> environmentTextures = dataPck.GetDirectoryContent("res/environment/", PckAssetType.TextureFile)
+                .ToDictionary(a => Path.GetFileNameWithoutExtension(a.Filename), ImageDeserializer.DefaultDeserializer.Deserialize);
+            environmentTextures.TryGetValue("clouds", out Image clouds);
+            environmentTextures.TryGetValue("rain", out Image rain);
+            environmentTextures.TryGetValue("snow", out Image snow);
+            DLCTexturePackage.EnvironmentData environmentData = new DLCTexturePackage.EnvironmentData(clouds, rain, snow);
+
+            IList<KeyValuePair<string, string>> materials = dataPck.GetAssetsByType(PckAssetType.MaterialFile).FirstOrDefault()?.GetData(new MaterialFileReader())
+                .Select(mat => new KeyValuePair<string, string>(mat.Name, mat.Type)).ToList();
+
+            return new DLCTexturePackage(name, description, identifier, metaData, resolution,
+                terrainAtlas, itemAtlas, particleAtlas, paintingAtlas, moonPhaseAtlas,
+                ArmorSetDescription.Leather.GetArmorSet(tryGetTexture),
+                ArmorSetDescription.Chain.GetArmorSet(tryGetTexture),
+                ArmorSetDescription.Iron.GetArmorSet(tryGetTexture),
+                ArmorSetDescription.Gold.GetArmorSet(tryGetTexture),
+                ArmorSetDescription.Diamond.GetArmorSet(tryGetTexture),
+                ArmorSetDescription.Turtle.GetArmorSet(tryGetTexture),
+                environmentData,
+                colors,  
+                waterColors: null,
+                customModels: null, 
+                materials, 
+                blockEntityBreakAnimation, 
+                itemAnimations: null, 
+                blockAnimations: null, 
+                parentPackage: null);
         }
 
         private bool TryGetAtlasFromResourceCategory(PckFile pck, AtlasResource.AtlasType atlasType, out Atlas atlas)
         {
-            ResourceLocation resourceLocation = ResourceLocation.GetFromCategory((ResourceCategory)((int)ResourceCategory.Atlas | (int)atlasType));
+            ResourceLocation resourceLocation = ResourceLocation.GetFromCategory(AtlasResource.GetId(atlasType));
             if (!pck.TryGetAsset(resourceLocation.ToString(), PckAssetType.TextureFile, out PckAsset asset))
             {
-                Trace.TraceWarning($"Could not find '{resourceLocation}'.");
+                Trace.TraceWarning($"Could not find '{resourceLocation.FullPath}'.");
                 atlas = null;
                 return false;
             }
@@ -354,7 +370,7 @@ namespace PckStudio.Core.DLC
             Skin.Skin GetSkinWithCape(PckAsset skinAsset)
             {
                 Skin.Skin skin = skinAsset.GetSkin();
-                if (skinAsset.TryGetProperty("CAPEPATH", out string capeAssetPath) && pck.TryGetAsset(capeAssetPath, PckAssetType.CapeFile, out PckAsset capeAsset))
+                if (skinAsset.TryGetProperty(CAPE_PATH_KEY, out string capeAssetPath) && pck.TryGetAsset(capeAssetPath, PckAssetType.CapeFile, out PckAsset capeAsset))
                     skin.CapeId = capeAsset.GetId();
                 return skin;
             }
@@ -370,7 +386,31 @@ namespace PckStudio.Core.DLC
             skinPackage = new DLCSkinPackage(name, identifier, skins, capes, parentPackage);
             return true;
         }
+
+        public static GameRuleFile.CompressionType GetCompressionTypeForPlatform(ConsolePlatform platform)
+        {
+            switch (platform)
+            {
+                case ConsolePlatform.Xbox360:
+                    return GameRuleFile.CompressionType.XMem;
+
+                case ConsolePlatform.PS3:
+                    return GameRuleFile.CompressionType.Deflate;
+
+                case ConsolePlatform.XboxOne:
+                case ConsolePlatform.PS4:
+                case ConsolePlatform.PSVita:
+                case ConsolePlatform.WiiU:
+                case ConsolePlatform.Switch:
+                    return GameRuleFile.CompressionType.Zlib;
+
+                case ConsolePlatform.Unknown:
+                default:
+                    throw new ArgumentException("Platform was not set");
+            }
         }
+
+        private GameRuleFile.CompressionType GetPlatformCompressionType() => GetCompressionTypeForPlatform(Platform);
 
         private static string GetPreferredLanguage(AppLanguage appLanguage)
         {

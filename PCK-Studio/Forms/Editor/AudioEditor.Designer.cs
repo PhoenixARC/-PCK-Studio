@@ -269,7 +269,7 @@ namespace PckStudio.Forms.Editor
             // playOverworldInCreative
             // 
             resources.ApplyResources(this.playOverworldInCreative, "playOverworldInCreative");
-            this.playOverworldInCreative.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.playOverworldInCreative.BackColor = System.Drawing.Color.Transparent;
             this.playOverworldInCreative.ForeColor = System.Drawing.SystemColors.Window;
             this.playOverworldInCreative.Name = "playOverworldInCreative";
             this.playOverworldInCreative.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -281,6 +281,7 @@ namespace PckStudio.Forms.Editor
             // 
             resources.ApplyResources(this.compressionUpDown, "compressionUpDown");
             this.compressionUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.compressionUpDown.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.compressionUpDown.ForeColor = System.Drawing.SystemColors.Window;
             this.compressionUpDown.Maximum = new decimal(new int[] {
             9,
@@ -319,7 +320,6 @@ namespace PckStudio.Forms.Editor
             this.MinimizeBox = false;
             this.Name = "AudioEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioEditor_FormClosing);
-            this.Shown += new System.EventHandler(this.AudioEditor_Shown);
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();

@@ -393,32 +393,6 @@ namespace PckStudio
 			info.ShowDialog(this);
 		}
 
-		[Obsolete("ReMove this")]
-		public string GetDataPath()
-		{
-			return "";
-		}
-
-		[Obsolete("Move this")]
-		public bool HasDataFolder()
-		{
-			return Directory.Exists(GetDataPath());
-		}
-
-		[Obsolete("Move this")]
-		public bool CreateDataFolder()
-		{
-			if (!HasDataFolder())
-			{
-				DialogResult result = MessageBox.Show(this, "There is not a \"Data\" folder present in the pack folder. Would you like to create one?", "Folder missing", MessageBoxButtons.YesNo);
-				if (result == DialogResult.No)
-					return false;
-				else
-					Directory.CreateDirectory(GetDataPath());
-			}
-			return true;
-		}
-
         private void howToMakeABasicSkinPackToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=A43aHRHkKxk");
 
         private void howToMakeACustomSkinModelToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=pEC_ug55lag");
