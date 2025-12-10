@@ -257,7 +257,7 @@ namespace PckStudio.Controls
                     break;
                 case ResourceCategory.Textures:
                 {
-                    if ((resourceLocation.Category & ResourceCategory.ArmorTextures) != 0)
+                    if ((resourceLocation.Category & ResourceCategory.ArmorTextures) == 0)
                     {
                         string assetName = Path.GetFileNameWithoutExtension(asset.Filename);
                         ArmorSetDescription armorSetDescription = ArmorSetDescription.GetFromAssetName(assetName);
