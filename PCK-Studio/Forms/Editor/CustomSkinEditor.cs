@@ -282,11 +282,11 @@ namespace PckStudio.Forms.Editor
             StringBuilder pos_sb = new StringBuilder();
             foreach (SkinBOX b in skinPartListBox.SelectedItems.Cast<SkinBOX>())
             {
-                uv_sb.Append(b.UV);
+                uv_sb.Append(b.Uv);
                 uv_sb.Append(", ");
                 size_sb.Append(b.Size);
                 size_sb.Append(", ");
-                pos_sb.Append(b.Pos);
+                pos_sb.Append(b.Position);
                 pos_sb.Append(", ");
             }
 
@@ -298,7 +298,7 @@ namespace PckStudio.Forms.Editor
             if (skinPartListBox.SelectedItem is SkinBOX box)
             {
 
-                Image uvArea = EditorValue.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.UV.X, box.UV.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
+                Image uvArea = EditorValue.Texture.GetArea(Rectangle.Truncate(new RectangleF(box.Uv.X, box.Uv.Y, box.Size.X * 2 + box.Size.Z * 2, box.Size.Z + box.Size.Y)));
 
                 Bitmap refImg = new Bitmap(1, 1);
 

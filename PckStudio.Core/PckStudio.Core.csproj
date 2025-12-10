@@ -160,6 +160,7 @@
     <Compile Include="MapReader.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
+    <Compile Include="Box.cs" />
     <Compile Include="NamedData.cs" />
     <Compile Include="DLC\DLCPackageType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -281,7 +282,11 @@
     <Content Include="Resources\atlas\paintings.png" />
     <Content Include="Resources\atlas\particles.png" />
     <Content Include="Resources\atlas\terrain.png" />
+    <Content Include="Resources\clouds.png" />
+    <Content Include="Resources\rain.png" />
+    <Content Include="Resources\snow.png" />
     <None Include="Resources\unknown_pack.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

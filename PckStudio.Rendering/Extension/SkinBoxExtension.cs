@@ -13,6 +13,6 @@ namespace PckStudio.Rendering.Extension
         public static Cube ToCube(this SkinBOX skinBOX) => skinBOX.ToCube(0f);
 
         public static Cube ToCube(this SkinBOX skinBOX, float inflate, bool flipZMapping = false)
-            => new Cube(skinBOX.Pos.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.UV.ToOpenTKVector(), skinBOX.Scale + inflate, skinBOX.Mirror, flipZMapping);
+            => new Cube(skinBOX.Position.ToOpenTKVector(), skinBOX.Size.ToOpenTKVector(), skinBOX.Uv.ToOpenTKVector(), skinBOX.Inflate + inflate, skinBOX.Mirror, flipZMapping);
     }
 }

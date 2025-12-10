@@ -25,7 +25,7 @@ using PckStudio.Core.Extensions;
 
 namespace PckStudio.Core.Skin
 {
-    public record SkinBOX : IEquatable<SkinBOX>
+    public class SkinBOX : Box
     {
         public static readonly SkinBOX DefaultHead = new SkinBOX("HEAD", new Vector3(-4, -8, -4), new Vector3(8), Vector2.Zero);
         public static readonly SkinBOX Empty = new SkinBOX("", Vector3.Zero, Vector3.Zero, Vector2.Zero);
@@ -89,12 +89,7 @@ namespace PckStudio.Core.Skin
         public static readonly string[] ValidBoxTypes = BaseTypes.Concat(OverlayTypes).ToArray();
 
         public string Type { get; }
-        public Vector3 Pos { get; }
-        public Vector3 Size { get; }
-        public Vector2 UV { get; }
         public BoxVisibility Visibility { get; }
-        public bool Mirror { get; }
-        public float Scale { get; }
 
         [Flags]
         public enum BoxVisibility : byte
@@ -108,14 +103,10 @@ namespace PckStudio.Core.Skin
 
         public SkinBOX(string type, Vector3 pos, Vector3 size, Vector2 uv,
            BoxVisibility visibility = BoxVisibility.Always, bool mirror = false, float scale = 0.0f)
+            : base(pos, size, uv, scale, mirror)
         {
             Type = type;
-            Pos = pos;
-            Size = size;
-            UV = uv;
             Visibility = visibility;
-            Mirror = mirror;
-            Scale = scale;
         }
 
         public static SkinBOX FromString(string value) => FromString(value, false);
@@ -176,7 +167,7 @@ namespace PckStudio.Core.Skin
 
         public override string ToString()
         {
-            return InvariantFormat(Type, Pos.X, Pos.Y, Pos.Z, Size.X, Size.Y, Size.Z, UV.X, UV.Y, Visibility.ToString("d"), Convert.ToInt32(Mirror), Scale);
+            return InvariantFormat(Type, Position.X, Position.Y, Position.Z, Size.X, Size.Y, Size.Z, Uv.X, Uv.Y, Visibility.ToString("d"), Convert.ToInt32(Mirror), Inflate);
         }
 
         private static Vector2 TryGetVector2(string[] arguments, int startIndex)
@@ -197,12 +188,12 @@ namespace PckStudio.Core.Skin
         {
             int hashCode = -1311939065;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Type);
-            hashCode = hashCode * -1521134295 + Pos.GetHashCode();
+            hashCode = hashCode * -1521134295 + Position.GetHashCode();
             hashCode = hashCode * -1521134295 + Size.GetHashCode();
-            hashCode = hashCode * -1521134295 + UV.GetHashCode();
+            hashCode = hashCode * -1521134295 + Uv.GetHashCode();
             hashCode = hashCode * -1521134295 + Visibility.GetHashCode();
             hashCode = hashCode * -1521134295 + Mirror.GetHashCode();
-            hashCode = hashCode * -1521134295 + Scale.GetHashCode();
+            hashCode = hashCode * -1521134295 + Inflate.GetHashCode();
             return hashCode;
         }
     }

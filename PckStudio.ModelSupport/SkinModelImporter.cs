@@ -116,7 +116,7 @@ namespace PckStudio.ModelSupport
             SkinBOX ApplyOffset(SkinBOX box)
             {
                 SkinPartOffset offset = skinModel.PartOffsets.FirstOrDefault(offset => offset.Type == (box.IsOverlayPart() ? box.GetBaseType() : box.Type));
-                return string.IsNullOrEmpty(offset.Type) ? box : new SkinBOX(box.Type, box.Pos - (Vector3.UnitY * offset.Value), box.Size, box.UV, box.Visibility, box.Mirror, box.Scale);
+                return string.IsNullOrEmpty(offset.Type) ? box : new SkinBOX(box.Type, box.Position - (Vector3.UnitY * offset.Value), box.Size, box.Uv, box.Visibility, box.Mirror, box.Inflate);
             }
 
             IEnumerable<SkinBOX> convertedBoxes = boxes.Select(ApplyOffset);
@@ -221,7 +221,7 @@ namespace PckStudio.ModelSupport
         private static Element CreateElement(SkinBOX box)
         {
             Vector3 transformPos = TranslateFromInternalPosistion(box, new Vector3(1, 1, 0));
-            Element element = CreateElement(box.UV, transformPos, box.Size, box.Scale, box.Mirror);
+            Element element = CreateElement(box.Uv, transformPos, box.Size, box.Inflate, box.Mirror);
             if (box.IsOverlayPart())
                 element.Inflate = box.Type == "HEADWEAR" ? 0.5f : 0.25f;
             return element;
@@ -343,8 +343,8 @@ namespace PckStudio.ModelSupport
                 {
                     Origin = pos + offset,
                     Size = box.Size,
-                    Uv = box.UV,
-                    Inflate = box.Scale + (box.IsOverlayPart() ? box.Type == "HEAD" ? 0.5f : 0.25f : 0f),
+                    Uv = box.Uv,
+                    Inflate = box.Inflate + (box.IsOverlayPart() ? box.Type == "HEAD" ? 0.5f : 0.25f : 0f),
                     Mirror = box.Mirror,
                 });
             }
@@ -502,7 +502,7 @@ namespace PckStudio.ModelSupport
         {
             return SwapTextureAreas(texture, boxes.Where(box => !(box.Size == Vector3.One || box.Size == Vector3.Zero)).Select(box =>
             {
-                var imgPos = Point.Truncate(new PointF(box.UV.X + box.Size.X + box.Size.Z, box.UV.Y));
+                var imgPos = Point.Truncate(new PointF(box.Uv.X + box.Size.X + box.Size.Z, box.Uv.Y));
                 var area = new RectangleF(imgPos, Size.Truncate(new SizeF(box.Size.X, box.Size.Z)));
                 return Rectangle.Truncate(area);
             }), RotateFlipType.RotateNoneFlipY);
@@ -547,7 +547,7 @@ namespace PckStudio.ModelSupport
 
         private static Vector3 TranslateFromInternalPosistion(SkinBOX skinBox, Vector3 translationUnit)
         {
-            return TranslateToInternalPosition(skinBox.Type, skinBox.Pos, skinBox.Size, translationUnit);
+            return TranslateToInternalPosition(skinBox.Type, skinBox.Position, skinBox.Size, translationUnit);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace PckStudio.Core.Extensions
             }
             else
             {
-                Rectangle area = skin.Model.AdditionalBoxes.Where(sb => sb.Type == "HEAD" || sb.Type == "HEADWEAR").OrderBy(sb=> sb.Pos.Z - sb.Scale).FirstOrDefault()?.GetFaceArea(SkinBOXExtensions.SkinBoxFace.Front) ?? Rectangle.Empty;
+                Rectangle area = skin.Model.AdditionalBoxes.Where(sb => sb.Type == "HEAD" || sb.Type == "HEADWEAR").OrderBy(sb=> sb.Position.Z - sb.Inflate).FirstOrDefault()?.GetFaceArea(SkinBOXExtensions.SkinBoxFace.Front) ?? Rectangle.Empty;
                 Image img = skin.Texture.GetArea(area);
                 g.DrawImage(img, 0, 0, width, height);
             }
