@@ -187,6 +187,7 @@ namespace PckStudio.Forms.Editor
 
                 if (playAnimationsToolStripMenuItem.Checked && hasAnimation)
                 {
+                    selectTilePictureBox.UseBlendColor = false;
                     selectTilePictureBox.Image = animation.CreateAnimationImage(selectTilePictureBox.BlendColor);
                     selectTilePictureBox.Start();
                     return;
@@ -233,7 +234,7 @@ namespace PckStudio.Forms.Editor
 
             if (selectTilePictureBox.IsPlaying)
                 selectTilePictureBox.Stop();
-            selectTilePictureBox.UseBlendColor = false;
+            selectTilePictureBox.UseBlendColor = true;
             selectTilePictureBox.Image = null;
         }
 
