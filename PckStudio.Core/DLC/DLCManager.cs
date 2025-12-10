@@ -467,5 +467,7 @@ namespace PckStudio.Core.DLC
             _platform = platform;
             _byteOrder = GetByteOrderForPlatform(platform);
         }
+
+        public bool CloseDLCPackage(int identifier) => _packageRegistry.UnregisterPackage(identifier);
     }
 }

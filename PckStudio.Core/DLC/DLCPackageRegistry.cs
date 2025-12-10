@@ -29,5 +29,10 @@ namespace PckStudio.Core.DLC
         internal bool ContainsPackage(int identifier) => _openPackages.ContainsKey(identifier) && _localisationFiles.ContainsKey(identifier);
 
         internal LOCFile GetLocalisation(int identifier) => _localisationFiles[identifier];
+
+        internal bool UnregisterPackage(int identifier)
+        {
+            return _openPackages.Remove(identifier) && _localisationFiles.Remove(identifier);
+        }
     }
 }
