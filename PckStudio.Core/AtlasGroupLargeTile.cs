@@ -17,18 +17,24 @@
 **/
 using System;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace PckStudio.Core
 {
     internal sealed class AtlasGroupLargeTile : AtlasGroup
     {
+        [JsonProperty("rowSpan")]
         public int RowSpan { get; }
+        [JsonProperty("columnSpan")]
         public int ColumnSpan { get; }
 
+        [JsonIgnore]
         public override int Count => RowSpan * ColumnSpan;
 
+        [JsonIgnore]
         protected override bool isAnimation => false;
 
+        [JsonIgnore]
         protected override bool isLargeTile => true;
 
         public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width, ColumnSpan * tileSize.Height);

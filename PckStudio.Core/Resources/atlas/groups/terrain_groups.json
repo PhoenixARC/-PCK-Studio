@@ -1,0 +1,146 @@
+[
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Oak Door",
+    "row": 1,
+    "column": 5,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Iron Door",
+    "row": 2,
+    "column": 5,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Acacia Door",
+    "row": 0,
+    "column": 23,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Birch Door",
+    "row": 1,
+    "column": 23,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Dark Oak Door",
+    "row": 2,
+    "column": 23,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Jungle Door",
+    "row": 3,
+    "column": 23,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Spruce Door",
+    "row": 4,
+    "column": 23,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Large Fern",
+    "row": 0,
+    "column": 20,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Double Tall Grass",
+    "row": 1,
+    "column": 20,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Poeny",
+    "row": 2,
+    "column": 20,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Rose Bush",
+    "row": 3,
+    "column": 20,
+    "direction": 1
+  },
+  {
+    "rowSpan": 1,
+    "columnSpan": 2,
+    "name": "Lilac",
+    "row": 4,
+    "column": 20,
+    "direction": 1
+  },
+  {
+    "frameCount": 8,
+    "frameTime": 5,
+    "direction": 0,
+    "name": "Wheat",
+    "row": 8,
+    "column": 5
+  },
+  {
+    "frameCount": 4,
+    "frameTime": 9,
+    "direction": 0,
+    "name": "Potatoes",
+    "row": 9,
+    "column": 16
+  },
+  {
+    "frameCount": 4,
+    "frameTime": 9,
+    "direction": 0,
+    "name": "Carrots",
+    "row": 8,
+    "column": 12
+  },
+  {
+    "frameCount": 4,
+    "frameTime": 9,
+    "direction": 0,
+    "name": "Beetroots",
+    "row": 0,
+    "column": 25
+  },
+  {
+    "frameCount": 3,
+    "frameTime": 10,
+    "direction": 0,
+    "name": "Nether Wart",
+    "row": 2,
+    "column": 14
+  },
+  {
+    "frameCount": 10,
+    "frameTime": 3,
+    "direction": 0,
+    "name": "Destroy",
+    "row": 0,
+    "column": 15
+  }
+]

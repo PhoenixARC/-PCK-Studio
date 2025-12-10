@@ -19,24 +19,35 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace PckStudio.Core
 {
     internal sealed class AtlasGroupLargeTileAnimation : AtlasGroup
     {
+        [JsonIgnore]
         private AtlasGroupLargeTile[] _largeTiles;
+
+        [JsonProperty("frameCount")]
         private int _frameCount;
 
+        [JsonProperty("rowSpan")]
         public int RowSpan { get; }
+        [JsonProperty("columnSpan")]
         public int ColumnSpan { get; }
+        [JsonProperty("frameTime")]
         public int FrameTime { get; }
 
+        [JsonIgnore]
         public override int Count => RowSpan * ColumnSpan * _frameCount;
 
+        [JsonProperty("direction")]
         public override ImageLayoutDirection Direction { get; }
 
+        [JsonIgnore]
         protected override bool isAnimation => true;
 
+        [JsonIgnore]
         protected override bool isLargeTile => true;
 
         public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? _frameCount : 1), ColumnSpan * tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? _frameCount : 1));

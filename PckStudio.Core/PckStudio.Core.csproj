@@ -218,6 +218,10 @@
     <None Include="Resources\atlas\blockData.json" />
     <None Include="Resources\atlas\experienceOrbData.json" />
     <None Include="Resources\atlas\explosionData.json" />
+    <None Include="Resources\atlas\groups\item_groups.json" />
+    <None Include="Resources\atlas\groups\painting_groups.json" />
+    <None Include="Resources\atlas\groups\particles_groups.json" />
+    <None Include="Resources\atlas\groups\terrain_groups.json" />
     <None Include="Resources\atlas\itemData.json" />
     <None Include="Resources\atlas\mapIconData.json" />
     <None Include="Resources\atlas\moonPhaseData.json" />

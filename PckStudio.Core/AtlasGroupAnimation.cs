@@ -16,17 +16,28 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System.Drawing;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace PckStudio.Core
 {
     internal sealed class AtlasGroupAnimation : AtlasGroup
     {
-        public int FrameTime { get; }
-        public override int Count { get; }
+        [JsonProperty("frameCount", Required = Required.Always)]
+        private int _frameCount;
+
+        [JsonProperty("frameTime")]
+        public int FrameTime { get; } = Animation.MINIMUM_FRAME_TIME;
+
+        public override int Count => _frameCount;
+
+        [JsonProperty("direction")]
         public override ImageLayoutDirection Direction { get; }
 
+        [JsonIgnore]
         protected override bool isAnimation => true;
 
+        [JsonIgnore]
         protected override bool isLargeTile => false;
 
         public override Size GetSize(Size tileSize) => new Size(tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? Count : 1), tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? Count : 1));
@@ -34,7 +45,7 @@ namespace PckStudio.Core
         public AtlasGroupAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME)
             : base(name, row, column)
         {
-            Count = frameCount;
+            _frameCount = frameCount;
             Direction = direction;
             FrameTime = frameTime;
         }

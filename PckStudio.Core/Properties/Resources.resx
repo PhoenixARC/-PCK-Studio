@@ -187,8 +187,14 @@
   <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\itemData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
+  <data name="items_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\item_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="items_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="painting_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\painting_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
@@ -214,6 +220,9 @@
   <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
+  <data name="particles_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\particles_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -222,6 +231,9 @@
   </data>
   <data name="snow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\snow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="terrain_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\terrain_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="terrain_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -443,6 +443,24 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;frameCount&quot;: 3,
+        ///    &quot;frameTime&quot;: 6,
+        ///    &quot;direction&quot;: 1,
+        ///    &quot;name&quot;: &quot;Bow Pulling&quot;,
+        ///    &quot;row&quot;: 5,
+        ///    &quot;column&quot;: 6
+        ///  }
+        ///].
+        /// </summary>
+        public static string items_groups {
+            get {
+                return ResourceManager.GetString("items_groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap map_icons_atlas {
@@ -568,6 +586,45 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;name&quot;: &quot;The Pool&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;name&quot;: &quot;Bonjour Monsiuer Courbet&quot;,
+        ///    &quot;row&quot;: 2,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;name&quot;: &quot;Seaside&quot;,
+        ///    &quot;row&quot;: 4,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;name&quot;: &quot;sunset_dense&quot;,
+        ///    &quot;row&quot;: 6,
+        ///    &quot;column&quot;:  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string painting_groups {
+            get {
+                return ResourceManager.GetString("painting_groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
         ///	&quot;entries&quot;: [
@@ -647,6 +704,46 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;frameCount&quot;: 8,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: 0,
+        ///    &quot;name&quot;: &quot;generic&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;frameCount&quot;: 4,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: 0,
+        ///    &quot;name&quot;: &quot;splash&quot;,
+        ///    &quot;row&quot;: 3,
+        ///    &quot;column&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;frameCount&quot;: 3,
+        ///    &quot;frameTime&quot;: 4,
+        ///    &quot;direction&quot;: 0,
+        ///    &quot;name&quot;: &quot;drip&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 7
+        ///  },
+        ///  {
+        ///    &quot;frameCount&quot;: 8,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: 0,
+        ///    &quot;name&quot;: &quot;effect&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string particles_groups {
+            get {
+                return ResourceManager.GetString("particles_groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap rain {
@@ -673,6 +770,46 @@ namespace PckStudio.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("terrain_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;name&quot;: &quot;Oak Door&quot;,
+        ///    &quot;row&quot;: 1,
+        ///    &quot;column&quot;: 5,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;name&quot;: &quot;Iron Door&quot;,
+        ///    &quot;row&quot;: 2,
+        ///    &quot;column&quot;: 5,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;name&quot;: &quot;Acacia Door&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 23,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;name&quot;: &quot;Birch Door&quot;,
+        ///    &quot;row&quot;: 1,
+        ///    &quot;column&quot;: 23,
+        ///    &quot;di [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string terrain_groups {
+            get {
+                return ResourceManager.GetString("terrain_groups", resourceCulture);
             }
         }
         
