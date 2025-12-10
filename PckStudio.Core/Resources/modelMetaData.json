@@ -35,7 +35,36 @@
     "textureLocations": [
       "res/item/bed"
     ],
-    "uv_offsets": [ {"X": 0, "Y": 64} ]
+    "textureAspectRatio": 0.5,
+    "layers": [
+      {
+        "name": "overlay",
+        "uv": {"X": 0, "Y": 0},
+        "allowedColors":
+        [
+          "Bed_White",
+          "Bed_Silver",
+          "Bed_Grey",
+          "Bed_Black",
+          "Bed_Blue",
+          "Bed_Brown",
+          "Bed_Cyan",
+          "Bed_Green",
+          "Bed_Light_Blue",
+          "Bed_Lime",
+          "Bed_Magenta",
+          "Bed_Orange",
+          "Bed_Pink",
+          "Bed_Purple",
+          "Bed_Red",
+          "Bed_Yellow"
+        ]
+      },
+      {
+        "name": "base",
+        "uv": {"X": 0, "Y": 64}
+      }
+    ]
   },
   "blaze": {
     "textureLocations": [
@@ -107,24 +136,24 @@
       { "name": "neck" },
 
       // neck 1-5 & tail 1-12 are not required to be inside the model
-      { "name": "neck1" },
-      { "name": "neck2" },
-      { "name": "neck3" },
-      { "name": "neck4" },
-      { "name": "neck5" },
+      { "name": "neck1", "required": false },
+      { "name": "neck2", "required": false },
+      { "name": "neck3", "required": false },
+      { "name": "neck4", "required": false },
+      { "name": "neck5", "required": false },
 
-      { "name": "tail1" },
-      { "name": "tail2" },
-      { "name": "tail3" },
-      { "name": "tail4" },
-      { "name": "tail5" },
-      { "name": "tail6" },
-      { "name": "tail7" },
-      { "name": "tail8" },
-      { "name": "tail9" },
-      { "name": "tail10" },
-      { "name": "tail11" },
-      { "name": "tail12" },
+      { "name": "tail1", "required": false },
+      { "name": "tail2", "required": false },
+      { "name": "tail3", "required": false },
+      { "name": "tail4", "required": false },
+      { "name": "tail5", "required": false },
+      { "name": "tail6", "required": false },
+      { "name": "tail7", "required": false },
+      { "name": "tail8", "required": false },
+      { "name": "tail9", "required": false },
+      { "name": "tail10", "required": false },
+      { "name": "tail11", "required": false },
+      { "name": "tail12", "required": false },
 
       {
         "name": "head",
@@ -750,15 +779,9 @@
         "name": "leftArm",
         "children": [{ "name": "leftItem" }]
       },
-      {
-        "name": "rightLeg"
-      },
-      {
-        "name": "leftLeg"
-      },
-      {
-        "name": "base_plate"
-      }
+      { "name": "rightLeg" },
+      { "name": "leftLeg" },
+      { "name": "base_plate" }
     ]
   }
 }
