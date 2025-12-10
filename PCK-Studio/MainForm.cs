@@ -270,7 +270,7 @@ namespace PckStudio
             }
         }
 
-        private static PckFile InitializePack(int packId, int packVersion, string packName, bool createSkinsPCK)
+        private static PckFile InitializePack(int packId, int packVersion, string packName)
 		{
 			var pack = new PckFile(3);
 
@@ -281,15 +281,12 @@ namespace PckStudio
 			var locFile = new LOCFile();
 			locFile.InitializeDefault(packName);
 			pack.CreateNewAsset("localisation.loc", PckAssetType.LocalisationFile, new LOCFileWriter(locFile, 2));
-
-			pack.CreateNewAssetIf(createSkinsPCK, "Skins.pck", PckAssetType.SkinDataFile, new PckFileWriter(new PckFile(3, true), OMI.ByteOrder.BigEndian));
-
 			return pack;
 		}
 
-		private static PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res, bool createSkinsPCK)
+        private static PckFile InitializeTexturePack(int packId, int packVersion, string packName, string res)
 		{
-            PckFile pack = InitializePack(packId, packVersion, packName, createSkinsPCK);
+            PckFile pack = InitializePack(packId, packVersion, packName);
 
 			PckFile infoPCK = new PckFile(3);
 
@@ -312,7 +309,7 @@ namespace PckStudio
 
 		private static PckFile InitializeMashUpPack(int packId, int packVersion, string packName, string res)
 		{
-            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res, true);
+            PckFile pack = InitializeTexturePack(packId, packVersion, packName, res);
             PckAsset gameRuleAsset = pack.CreateNewAsset("GameRules.grf", PckAssetType.GameRulesFile);
             GameRuleFile grfFile = new GameRuleFile();
 			grfFile.AddRule("MapOptions",
@@ -341,7 +338,7 @@ namespace PckStudio
             namePrompt.OKButtonText = "Ok";
             if (namePrompt.ShowDialog(this) == DialogResult.OK)
             {
-                PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText, true);
+                PckFile skinPck = InitializePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, namePrompt.NewText);
                 RawAssetDLCPackage newRawAssetDLCPackage = new RawAssetDLCPackage("New pack", skinPck, OMI.ByteOrder.BigEndian);
                 AddEditorPage(newRawAssetDLCPackage.Name, "Unsaved texture pack", newRawAssetDLCPackage);
             }
@@ -352,7 +349,7 @@ namespace PckStudio
             var packPrompt = new CreateTexturePackPrompt();
             if (packPrompt.ShowDialog() == DialogResult.OK)
             {
-                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes, packPrompt.CreateSkinsPck);
+                PckFile texturePackPck = InitializeTexturePack(new Random().Next(8000, GameConstants.MAX_PACK_ID), 0, packPrompt.PackName, packPrompt.PackRes);
                 RawAssetDLCPackage newRawAssetDLCPackage = new RawAssetDLCPackage("New pack", texturePackPck, OMI.ByteOrder.BigEndian);
                 AddEditorPage(newRawAssetDLCPackage.Name, "Unsaved texture pack", newRawAssetDLCPackage);
             }

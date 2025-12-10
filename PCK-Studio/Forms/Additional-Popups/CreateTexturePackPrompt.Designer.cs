@@ -34,7 +34,6 @@
             this.InputTextBox = new MetroFramework.Controls.MetroTextBox();
             this.resolutionComboBox = new MetroFramework.Controls.MetroComboBox();
             this.label1 = new MetroFramework.Controls.MetroLabel();
-            this.createSkinsPckCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.SuspendLayout();
             // 
             // TextLabel
@@ -99,20 +98,11 @@
             this.label1.Name = "label1";
             this.label1.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
-            // createSkinsPckCheckBox
-            // 
-            resources.ApplyResources(this.createSkinsPckCheckBox, "createSkinsPckCheckBox");
-            this.createSkinsPckCheckBox.Name = "createSkinsPckCheckBox";
-            this.createSkinsPckCheckBox.Style = MetroFramework.MetroColorStyle.White;
-            this.createSkinsPckCheckBox.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.createSkinsPckCheckBox.UseSelectable = true;
-            // 
             // CreateTexturePackPrompt
             // 
             this.AcceptButton = this.OKButton;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.createSkinsPckCheckBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.resolutionComboBox);
             this.Controls.Add(this.InputTextBox);
@@ -132,6 +122,5 @@
         private MetroFramework.Controls.MetroTextBox InputTextBox;
 		private MetroFramework.Controls.MetroComboBox resolutionComboBox;
 		public MetroFramework.Controls.MetroLabel label1;
-        private MetroFramework.Controls.MetroCheckBox createSkinsPckCheckBox;
     }
 }

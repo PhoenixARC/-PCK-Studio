@@ -147,7 +147,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;TextLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="OKButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>166, 74</value>
@@ -171,7 +171,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;OKButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="resource.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
@@ -208,7 +208,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;InputTextBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="resolutionComboBox.ItemHeight" type="System.Int32, mscorlib">
     <value>23</value>
@@ -232,7 +232,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;resolutionComboBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -262,33 +262,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="createSkinsPckCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="createSkinsPckCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 77</value>
-  </data>
-  <data name="createSkinsPckCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 15</value>
-  </data>
-  <data name="createSkinsPckCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="createSkinsPckCheckBox.Text" xml:space="preserve">
-    <value>Create Skins.pck</value>
-  </data>
-  <data name="&gt;&gt;createSkinsPckCheckBox.Name" xml:space="preserve">
-    <value>createSkinsPckCheckBox</value>
-  </data>
-  <data name="&gt;&gt;createSkinsPckCheckBox.Type" xml:space="preserve">
-    <value>MetroFramework.Controls.MetroCheckBox, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
-  </data>
-  <data name="&gt;&gt;createSkinsPckCheckBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;createSkinsPckCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -2813,6 +2786,6 @@
     <value>CreateTexturePackPrompt</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>ImmersiveForm, MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a</value>
+    <value>PckStudio.Controls.ImmersiveForm, PCK-Studio, Version=7.0.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>
