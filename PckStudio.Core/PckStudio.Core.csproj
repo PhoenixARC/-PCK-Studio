@@ -152,6 +152,8 @@
     <Compile Include="ItemSelectionPopUp.Designer.cs" />
     <Compile Include="Json\ColorEntry.cs" />
     <Compile Include="Json\EntityInfo.cs" />
+    <Compile Include="Json\JsonDefaultModel.cs" />
+    <Compile Include="Json\JsonModelMetaData.cs" />
     <Compile Include="Json\TileInfo.cs" />
     <Compile Include="Json\UpdateInformation.cs" />
     <Compile Include="MapData.cs" />
@@ -224,9 +226,11 @@
     <None Include="Resources\Comparison.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\defaultModels.json" />
     <None Include="Resources\entityBehavioursData.json" />
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
+    <None Include="Resources\modelMetaData.json" />
     <None Include="Resources\TexturePackIcon.png" />
   </ItemGroup>
   <ItemGroup>

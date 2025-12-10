@@ -2,7 +2,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.ModelSupport
+namespace PckStudio.Core.Json
 {
     public class DefaultModel
     {

@@ -54,8 +54,6 @@
     <Compile Include="Format\Internal\PSM\PSMFileWriter.cs" />
     <Compile Include="GameModelImporter.cs" />
     <Compile Include="GameModelInfo.cs" />
-    <Compile Include="Json\JsonDefaultModel.cs" />
-    <Compile Include="Json\JsonModelMetaData.cs" />
     <Compile Include="ModelImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

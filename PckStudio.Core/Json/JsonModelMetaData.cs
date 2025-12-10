@@ -2,7 +2,7 @@
 using System.Numerics;
 using Newtonsoft.Json;
 
-namespace PckStudio.ModelSupport
+namespace PckStudio.Core.Json
 {
     public class ModelMetaDataPart
     {
@@ -11,6 +11,9 @@ namespace PckStudio.ModelSupport
 
         [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ModelMetaDataPart[] Children { get; set; } = Array.Empty<ModelMetaDataPart>();
+
+        [JsonProperty("required")]
+        public bool Reqired { get; set; } = default;
 
         [JsonConstructor]
         public ModelMetaDataPart()
@@ -29,6 +32,18 @@ namespace PckStudio.ModelSupport
         }
     }
 
+    public class JsonModelMetaLayer
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("uv")]
+        public Vector2 Uv { get; set; }
+        
+        [JsonProperty("allowedColors", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] AllowedColors { get; set; } = Array.Empty<string>();
+    }
+
     public class JsonModelMetaData
     {
         [JsonProperty("textureLocations", Required = Required.Always)]
@@ -37,8 +52,8 @@ namespace PckStudio.ModelSupport
         [JsonProperty("materialName", NullValueHandling = NullValueHandling.Ignore)]
         public string MaterialName { get; set; } = string.Empty;
 
-        [JsonProperty("uv_offsets", NullValueHandling = NullValueHandling.Ignore)]
-        public Vector2[] UvOffsets { get; set; } = Array.Empty<Vector2>();
+        [JsonProperty("layers", NullValueHandling = NullValueHandling.Ignore)]
+        public JsonModelMetaLayer[] Layers { get; set; } = Array.Empty<JsonModelMetaLayer>();
 
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
         public ModelMetaDataPart[] RootParts { get; set; } = Array.Empty<ModelMetaDataPart>();
