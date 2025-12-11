@@ -1,84 +1,84 @@
 [
   {
-    "frameCount": 8,
-    "frameTime": 2,
-    "direction": 0,
     "name": "generic",
     "row": 0,
     "column": 0
-  },
-  {
-    "frameCount": 4,
+    "frameCount": 8,
     "frameTime": 2,
     "direction": 0,
+  },
+  {
     "name": "splash",
     "row": 3,
     "column": 1
+    "frameCount": 4,
+    "frameTime": 2,
+    "direction": 0,
   },
   {
-    "frameCount": 3,
-    "frameTime": 4,
-    "direction": 0,
     "name": "drip",
     "row": 0,
     "column": 7
+    "frameCount": 3,
+    "frameTime": 4,
+    "direction": 0,
   },
   {
-    "frameCount": 8,
-    "frameTime": 2,
-    "direction": 0,
     "name": "effect",
     "row": 0,
     "column": 8
-  },
-  {
     "frameCount": 8,
     "frameTime": 2,
     "direction": 0,
+  },
+  {
     "name": "splash_effect",
     "row": 0,
     "column": 9
-  },
-  {
     "frameCount": 8,
     "frameTime": 2,
     "direction": 0,
+  },
+  {
     "name": "firework_spark",
     "row": 0,
     "column": 10
-  },
-  {
     "frameCount": 8,
     "frameTime": 2,
     "direction": 0,
+  },
+  {
     "name": "glitter",
     "row": 0,
     "column": 11
+    "frameCount": 8,
+    "frameTime": 2,
+    "direction": 0,
   },
   {
-    "frameCount": 16,
-    "frameTime": 1,
-    "direction": 0,
     "name": "BE_explosion",
     "row": 0,
     "column": 12
+    "frameCount": 16,
+    "frameTime": 1,
+    "direction": 0,
   },
   {
-    "rowSpan": 4,
-    "columnSpan": 4,
     "name": "flash",
     "row": 4,
     "column": 2,
+    "rowSpan": 4,
+    "columnSpan": 4,
     "direction": 0
   },
   {
+    "name": "bubble_pop",
+    "row": 6,
+    "column": 6
     "frameCount": 5,
     "rowSpan": 2,
     "columnSpan": 2,
     "frameTime": 2,
     "direction": 0,
-    "name": "bubble_pop",
-    "row": 6,
-    "column": 6
   }
 ]
