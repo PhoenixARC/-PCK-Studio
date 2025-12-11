@@ -53,7 +53,7 @@ namespace PckStudio.Core.Json
         public string MaterialName { get; set; } = string.Empty;
 
         [JsonProperty("layers", NullValueHandling = NullValueHandling.Ignore)]
-        public JsonModelMetaLayer[] Layers { get; set; } = Array.Empty<JsonModelMetaLayer>();
+        public JsonModelMetaLayer[] Layers { get; set; } =  [new JsonModelMetaLayer() { Name = "base", Uv = Vector2.Zero}];
 
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
         public ModelMetaDataPart[] RootParts { get; set; } = Array.Empty<ModelMetaDataPart>();
