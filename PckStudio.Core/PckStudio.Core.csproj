@@ -162,7 +162,10 @@
     <Compile Include="MapReader.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
+    <Compile Include="Model\AbstractModel.cs" />
+    <Compile Include="Model\AbstractModelContainer.cs" />
     <Compile Include="Box.cs" />
+    <Compile Include="Model\AbstractModelPart.cs" />
     <Compile Include="NamedData.cs" />
     <Compile Include="DLC\DLCPackageType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
