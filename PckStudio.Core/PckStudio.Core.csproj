@@ -59,6 +59,7 @@
     <Compile Include="Atlas.cs" />
     <Compile Include="AtlasGroup.cs" />
     <Compile Include="AtlasGroupAnimation.cs" />
+    <Compile Include="AtlasGroupJsonConverter.cs" />
     <Compile Include="AtlasGroupLargeTile.cs" />
     <Compile Include="AtlasGroupLargeTileAnimation.cs" />
     <Compile Include="AtlasResource.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
+    <Compile Include="Extensions\JObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
