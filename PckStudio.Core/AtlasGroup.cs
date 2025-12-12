@@ -19,58 +19,16 @@ using System;
 using System.Data.SqlTypes;
 using System.Drawing;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace PckStudio.Core
 {
-    public class AtlasGroupJsonConverter : JsonConverter<AtlasGroup>
-    {
-        public override AtlasGroup ReadJson(JsonReader reader, Type objectType, AtlasGroup existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            JObject jObject = JObject.Load(reader);
-
-            if (!TryGetValue(jObject, "name", out string name) || !TryGetValue(jObject, "row", out int row) || !TryGetValue(jObject, "column", out int column))
-                return default;
-
-            int frameTime = 1;
-            int frameCount = 0;
-            int rowSpan = 0;
-            int columnSpan = 0;
-            ImageLayoutDirection direction = default;
-            bool isAnimation = TryGetValue(jObject, "frameTime", out frameTime) &&
-                TryGetValue(jObject, "frameCount", out frameCount) &&
-                TryGetValue(jObject, "direction", out direction);
-            bool isLargeTile = TryGetValue(jObject, "rowSpan", out rowSpan) && TryGetValue(jObject, "columnSpan", out columnSpan);
-            if (isAnimation && isLargeTile)
-                return new AtlasGroupLargeTileAnimation(name, row, column, rowSpan, columnSpan, frameCount, direction, frameTime);
-            if (isAnimation)
-                return new AtlasGroupAnimation(name, row, column, frameCount, direction, frameTime);
-            if (isLargeTile)
-                return new AtlasGroupLargeTile(name, row, column, rowSpan, columnSpan);
-            return default;
-        }
-
-        bool TryGetValue<T>(JObject jObject, string propertyName, out T value)
-        {
-            if (!jObject.TryGetValue(propertyName, out JToken token))
-            {
-                value = default;
-                return false;
-            }
-            value = token.ToObject<T>() ?? default;
-            return value is T;
-        }
-
-        public override void WriteJson(JsonWriter writer, AtlasGroup value, JsonSerializer serializer) => serializer.Serialize(writer, value);
-    }
-
     public abstract class AtlasGroup
     {
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonProperty("name", Required = Required.Always, Order = 0)]
         public string Name { get; set; }
-        [JsonProperty("row", Required = Required.Always)]
+        [JsonProperty("row", Required = Required.Always, Order = 1)]
         public int Row { get; }
-        [JsonProperty("column", Required = Required.Always)]
+        [JsonProperty("column", Required = Required.Always, Order = 2)]
         public int Column { get; }
 
         [JsonIgnore]
