@@ -82,7 +82,7 @@ namespace PckStudio.Core.DLC
                 DLCPackageType.MG01 => new DLCBattlePackage(name, identifier),
                 DLCPackageType.MG02 => new DLCMiniGamePackage(name, identifier, packageType, MiniGameId.Tumble),
                 DLCPackageType.MG03 => new DLCMiniGamePackage(name, identifier, packageType, MiniGameId.Glide),
-                DLCPackageType.Invalid => InvalidDLCPackage.Instance,
+                DLCPackageType.Invalid => DLCPackage.Invalid,
                 _ => throw new ArgumentException("Unable to create DLC Package of 'Unknown' type."),
             };
 
@@ -102,7 +102,7 @@ namespace PckStudio.Core.DLC
                 throw new Exception($"{nameof(Platform)} is Unknown.");
 
             if (!IsValidPckFile(fileInfo))
-                return InvalidDLCPackage.Instance;
+                return DLCPackage.Invalid;
 
             using Stream stream = fileInfo.OpenRead();
 

@@ -131,7 +131,6 @@
     <Compile Include="Interfaces\IPckAssetSerializer.cs" />
     <Compile Include="Interfaces\ISaveContext.cs" />
     <Compile Include="Interfaces\ITryGetSet.cs" />
-    <Compile Include="DLC\InvalidDLCPackage.cs" />
     <Compile Include="IO\3DST\3DSTextureReader.cs" />
     <Compile Include="IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="IO\3DST\TextureCodec.cs" />

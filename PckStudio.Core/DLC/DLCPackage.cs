@@ -10,11 +10,19 @@ namespace PckStudio.Core.DLC
 {
     public abstract class DLCPackage : IDLCPackage
     {
+        public static IDLCPackage Invalid = new InvalidDLCPackage();
         protected DLCPackage(string name, int identifier, IDLCPackage parentPackage)
         {
             Name = name;
             Identifier = identifier;
             ParentPackage = parentPackage;
+        }
+
+        private sealed class InvalidDLCPackage : DLCPackage
+        {
+            internal InvalidDLCPackage() : base(nameof(InvalidDLCPackage), -1, null) { }
+
+            public override DLCPackageType GetDLCPackageType() => DLCPackageType.Invalid;
         }
 
         public int Identifier { get; }
