@@ -156,19 +156,19 @@ namespace PckStudio.Core
         {
             if (!group.IsAnimation())
                 return Animation.CreateEmpty();
-            if (group is AtlasGroupLargeTileAnimation largeTileAnimation)
+            if (group is AtlasLargeTileAnimation largeTileAnimation)
                 return GetLargeAnimation(largeTileAnimation);
-            return GetAnimation(group as AtlasGroupAnimation);
+            return GetAnimation(group as AtlasAnimation);
         }
 
-        private Animation GetLargeAnimation(AtlasGroupLargeTileAnimation group)
+        private Animation GetLargeAnimation(AtlasLargeTileAnimation group)
         {
             return new Animation(GetLargeAnimationTiles(group).Select(largeTileParts => largeTileParts.Select(t => t.Texture).Combine(group.RowSpan, group.ColumnSpan, _layoutDirection)), true, group.FrameTime);
         }
 
-        private IEnumerable<IEnumerable<AtlasTile>> GetLargeAnimationTiles(AtlasGroupLargeTileAnimation group) => group.GetLargeTiles().Select(GetLargeTile);
+        private IEnumerable<IEnumerable<AtlasTile>> GetLargeAnimationTiles(AtlasLargeTileAnimation group) => group.GetLargeTiles().Select(GetLargeTile);
 
-        private Animation GetAnimation(AtlasGroupAnimation groupAnimation) => new Animation(GetRange(groupAnimation.Row, groupAnimation.Column, groupAnimation.Direction == ImageLayoutDirection.Horizontal ? groupAnimation.Count : 1, groupAnimation.Direction == ImageLayoutDirection.Vertical ? groupAnimation.Count : 1).Select(t => t.Texture), true, groupAnimation.FrameTime);
+        private Animation GetAnimation(AtlasAnimation groupAnimation) => new Animation(GetRange(groupAnimation.Row, groupAnimation.Column, groupAnimation.Direction == ImageLayoutDirection.Horizontal ? groupAnimation.Count : 1, groupAnimation.Direction == ImageLayoutDirection.Vertical ? groupAnimation.Count : 1).Select(t => t.Texture), true, groupAnimation.FrameTime);
 
         private Image BuildFinalImage() => _tiles.Select(t => t.Texture).Combine(Rows, Columns, _layoutDirection);
 
@@ -179,30 +179,50 @@ namespace PckStudio.Core
             SetRange(group.Row, group.Column, group.Count, group.Direction, animation.GetFrames().Select(f => f.Texture));
         }
 
-        private IEnumerable<AtlasTile> GetLargeTile(AtlasGroupLargeTile group) => GetRange(group.Row, group.Column, group.RowSpan, group.ColumnSpan);
+        private IEnumerable<AtlasTile> GetLargeTile(AtlasLargeTile group) => GetRange(group.Row, group.Column, group.RowSpan, group.ColumnSpan);
 
-        public Image GetTileTexture(AtlasTile tile)
+        public Image GetTileTexture(AtlasTile tile, Color blendColor)
         {
             if (!tile.IsPartOfGroup)
                 return tile;
             AtlasGroup atlasGroup = tile.GetGroup();
 
+            if (atlasGroup.IsComposedOfMultipleTiles())
+                return ComposeTileTexture(atlasGroup, blendColor);
+
             if (!atlasGroup.IsLargeTile())
                 return tile;
 
-            AtlasGroupLargeTile largeTile = atlasGroup is AtlasGroupLargeTileAnimation largeTileAnimation ? largeTileAnimation.GetTile(tile.Row, tile.Column) : atlasGroup as AtlasGroupLargeTile;
-            return GetLargeTile(largeTile).Select(t => t.Texture).Combine(largeTile.RowSpan, largeTile.ColumnSpan, _layoutDirection);
+            AtlasLargeTile largeTile = atlasGroup is AtlasLargeTileAnimation largeTileAnimation ? largeTileAnimation.GetTile(tile.Row, tile.Column) : atlasGroup as AtlasLargeTile;
+            Image tileTexture = GetLargeTile(largeTile).Select(t => t.Texture).Combine(largeTile.RowSpan, largeTile.ColumnSpan, _layoutDirection);
+            return atlasGroup.AllowCustomColor ? tileTexture.Blend(BlendOption.Multiply(blendColor)) : tileTexture;
+        }
+
+        private Image ComposeTileTexture(AtlasGroup atlasGroup, Color blendColor)
+        {
+            Image result = new Bitmap(TileSize.Width, TileSize.Height);
+            using Graphics g = Graphics.FromImage(result);
+            g.ApplyConfig(GraphicsConfig.PixelPerfect());
+
+            AtlasTile[] textures = atlasGroup.GetTileArea(new Size(1, 1)).Select(r => this[r.X, r.Y]).ToArray();
+            if (textures.Length > 1)
+            {
+                g.DrawImage(textures[0].Texture.Blend(BlendOption.Multiply(blendColor)), Point.Empty);
+                g.DrawImage(textures[1], Point.Empty);
+            }
+            
+            return result;
         }
 
         private IEnumerable<AtlasTile> InternalGetTilesFromGroup(AtlasGroup atlasGroup, out int rowSpan, out int columnSpan)
         {
-            if (atlasGroup is AtlasGroupLargeTileAnimation largeTileAnimation)
+            if (atlasGroup is AtlasLargeTileAnimation largeTileAnimation)
             {
                 rowSpan = largeTileAnimation.RowSpan;
                 columnSpan = largeTileAnimation.ColumnSpan;
                 return largeTileAnimation.GetLargeTiles().SelectMany(GetLargeTile);
             }
-            if (atlasGroup is AtlasGroupLargeTile largeTile)
+            if (atlasGroup is AtlasLargeTile largeTile)
             {
                 rowSpan = largeTile.RowSpan;
                 columnSpan = largeTile.ColumnSpan;
@@ -210,15 +230,17 @@ namespace PckStudio.Core
             }
             rowSpan = 1;
             columnSpan = 1;
+            if (atlasGroup is AtlasOverlayGroup multipleTiles)
+                return multipleTiles.GetTileArea(new Size(1, 1)).Select(r => this[r.X, r.Y]);
             return GetRange(atlasGroup.Row, atlasGroup.Column, atlasGroup.Count, atlasGroup.Direction);
         }
 
-        public Rectangle GetTileArea(AtlasTile tile)
+        public Rectangle[] GetTileArea(AtlasTile tile)
         {
             if (!tile.IsPartOfGroup)
-                return tile.GetArea(TileSize);
+                return [tile.GetArea(TileSize)];
             AtlasGroup group = tile.GetGroup();
-            return new Rectangle(new Point(group.Row * TileSize.Width, group.Column * TileSize.Height), group.GetSize(TileSize));
+            return group.GetTileArea(TileSize);
         }
 
         public bool SetGroup(AtlasGroup group, Image texture)

@@ -16,6 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace PckStudio.Core
@@ -44,6 +45,7 @@ namespace PckStudio.Core
 
         internal void SetGroup(AtlasGroup group)
         {
+            Debug.Assert(_group is null, $"Tile is already part of group:'{_group?.Name}'");
             _group = group;
         }
 

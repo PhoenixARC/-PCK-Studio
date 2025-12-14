@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 
 namespace PckStudio.Core
 {
-    internal sealed class AtlasGroupLargeTile : AtlasGroup
+    internal sealed class AtlasLargeTile : AtlasGroup
     {
         [JsonProperty("rowSpan")]
         public int RowSpan { get; }
@@ -37,10 +37,12 @@ namespace PckStudio.Core
         [JsonIgnore]
         protected override bool isLargeTile => true;
 
+        protected override bool isComposedOfMultipleTiles => false;
+
         public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width, ColumnSpan * tileSize.Height);
 
-        public AtlasGroupLargeTile(string name, int row, int column, int rowSpan, int columnSpan)
-            : base(name, row, column)
+        public AtlasLargeTile(string name, int row, int column, int rowSpan, int columnSpan, bool allowCustomColor)
+            : base(name, row, column, allowCustomColor)
         {
             RowSpan = Math.Max(1, rowSpan);
             ColumnSpan = Math.Max(1, columnSpan);

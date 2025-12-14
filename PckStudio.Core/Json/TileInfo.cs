@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PckStudio.Json;
 
 namespace PckStudio.Core.Json
 {
@@ -15,20 +16,17 @@ namespace PckStudio.Core.Json
         [JsonProperty("internalName")]
         public string InternalName { get; set; }
 
-        [JsonProperty("width")]
-        public int TileWidth { get; set; } = 1;
-
-        [JsonProperty("height")]
-        public int TileHeight { get; set; } = 1;
-
-        [JsonIgnore]
-        public bool HasColourEntry => ColourEntry != null;
-
-        [JsonProperty("colourEntry", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public JsonColorEntry ColourEntry { get; set; }
-
         [JsonProperty("allowCustomColour", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool AllowCustomColour { get; set; }
+
+        [JsonProperty("colorKey", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string ColorKey { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public bool HasColourEntry => Tiles.ColorEntries.ContainsKey(ColorKey);
+
+        [JsonIgnore]
+        public JsonColorEntry ColorEntry => Tiles.ColorEntries[ColorKey];
 
         public JsonTileInfo(string displayName, string internalName)
         {

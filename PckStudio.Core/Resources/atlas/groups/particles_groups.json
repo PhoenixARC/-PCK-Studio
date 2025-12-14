@@ -1,6 +1,6 @@
 [
   {
-    "name": "generic",
+    "name": "Generic",
     "row": 0,
     "column": 0,
     "frameCount": 8,
@@ -8,7 +8,7 @@
     "direction": 0
   },
   {
-    "name": "splash",
+    "name": "Splash",
     "row": 3,
     "column": 1,
     "frameCount": 4,
@@ -16,7 +16,7 @@
     "direction": 0
   },
   {
-    "name": "drip",
+    "name": "Drip",
     "row": 0,
     "column": 7,
     "frameCount": 3,
@@ -24,7 +24,7 @@
     "direction": 0
   },
   {
-    "name": "effect",
+    "name": "Effect",
     "row": 0,
     "column": 8,
     "frameCount": 8,
@@ -32,7 +32,7 @@
     "direction": 0
   },
   {
-    "name": "splash_effect",
+    "name": "Splash Effect",
     "row": 0,
     "column": 9,
     "frameCount": 8,
@@ -40,7 +40,7 @@
     "direction": 0
   },
   {
-    "name": "firework_spark",
+    "name": "Firework Spark",
     "row": 0,
     "column": 10,
     "frameCount": 8,
@@ -48,7 +48,7 @@
     "direction": 0
   },
   {
-    "name": "glitter",
+    "name": "Shulker/End Rod Glitter",
     "row": 0,
     "column": 11,
     "frameCount": 8,
@@ -56,7 +56,7 @@
     "direction": 0
   },
   {
-    "name": "BE_explosion",
+    "name": "Bedrock Edition Explosion (Unused)",
     "row": 0,
     "column": 12,
     "frameCount": 16,
@@ -64,15 +64,16 @@
     "direction": 0
   },
   {
-    "name": "flash",
+    "name": "Firework Flash",
     "row": 4,
     "column": 2,
     "rowSpan": 4,
     "columnSpan": 4,
-    "direction": 0
+    "direction": 0,
+    "allowCustomColor": true
   },
   {
-    "name": "bubble_pop",
+    "name": "Bubble Pop (Unused)",
     "row": 6,
     "column": 6,
     "frameCount": 5,

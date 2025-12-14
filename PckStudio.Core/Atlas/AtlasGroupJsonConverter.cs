@@ -19,6 +19,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PckStudio.Core.Extensions;
+using PckStudio.Core.Json;
 
 namespace PckStudio.Core
 {
@@ -31,6 +32,11 @@ namespace PckStudio.Core
             if (!jObject.TryGetValue("name", out string name) || !jObject.TryGetValue("row", out int row) || !jObject.TryGetValue("column", out int column))
                 return default;
 
+            bool allowCustomColor = default;
+            jObject.TryGetValue("allowCustomColor", out allowCustomColor);
+            if (jObject.TryGetValue("overlay", out JsonRowAndColumn rowsAndColumns))
+                return new AtlasOverlayGroup(name, row, column, rowsAndColumns, allowCustomColor);
+
             int frameTime = Animation.MINIMUM_FRAME_TIME;
             int frameCount = default;
             int rowSpan = default;
@@ -41,11 +47,11 @@ namespace PckStudio.Core
                 jObject.TryGetValue("direction", out direction);
             bool isLargeTile = jObject.TryGetValue("rowSpan", out rowSpan) && jObject.TryGetValue("columnSpan", out columnSpan);
             if (isAnimation && isLargeTile)
-                return new AtlasGroupLargeTileAnimation(name, row, column, rowSpan, columnSpan, frameCount, direction, frameTime);
+                return new AtlasLargeTileAnimation(name, row, column, rowSpan, columnSpan, frameCount, direction, frameTime, allowCustomColor);
             if (isAnimation)
-                return new AtlasGroupAnimation(name, row, column, frameCount, direction, frameTime);
+                return new AtlasAnimation(name, row, column, frameCount, direction, frameTime, allowCustomColor);
             if (isLargeTile)
-                return new AtlasGroupLargeTile(name, row, column, rowSpan, columnSpan);
+                return new AtlasLargeTile(name, row, column, rowSpan, columnSpan, allowCustomColor);
             return default;
         }
 

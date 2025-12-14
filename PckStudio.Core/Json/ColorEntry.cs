@@ -9,13 +9,13 @@ namespace PckStudio.Core.Json
 {
     public class JsonColorEntry
     {
-        [JsonProperty("defaultName", Required = Required.Always)]
+        [JsonProperty("defaultName", DefaultValueHandling = DefaultValueHandling.Populate)]
         public string DefaultName { get; set; }
 
         [JsonProperty("isWaterColour", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool IsWaterColour { get; set; }
 
-        [JsonProperty("variants", DefaultValueHandling = DefaultValueHandling.Populate)]
-        public string[] Variants { get; set; }
+        [JsonProperty("variants", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] Variants { get; set; } = Array.Empty<string>();
     }
 }

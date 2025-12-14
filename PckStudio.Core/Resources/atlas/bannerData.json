@@ -1,1053 +1,213 @@
 {
-	"COMMENT_1": "JSON by MattNL",
-	"entries": [
-		{
-			"internalName": "base",
-			"displayName": "Base",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "border",
-			"displayName": "Bordure",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "bricks",
-			"displayName": "Field Masoned",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "circle",
-			"displayName": "Roundel",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "creeper",
-			"displayName": "Creeper Charge",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "cross",
-			"displayName": "Saltire",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "curly_border",
-			"displayName": "Bordure Indented",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "diagonal_left",
-			"displayName": "Per Bend Sinister",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "diagonal_right",
-			"displayName": "Per Bend",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "diagonal_up_left",
-			"displayName": "Per Bend Inverted",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "diagonal_up_right",
-			"displayName": "Per Bend Sinister Inverted",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "flower",
-			"displayName": "Flower Charge",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "gradient",
-			"displayName": "Gradient",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "gradient_up",
-			"displayName": "Base Gradient",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "half_horizontal",
-			"displayName": "Per Fess",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "half_horizontal_bottom",
-			"displayName": "Per Fess Inverted",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "half_vertical",
-			"displayName": "Per Pale",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "half_vertical_right",
-			"displayName": "Per Pale Inverted",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "mojang",
-			"displayName": "Thing",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "rhombus",
-			"displayName": "Lozenge",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "skull",
-			"displayName": "Skull Charge",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "small_stripes",
-			"displayName": "Paly",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "square_bottom_left",
-			"displayName": "Base Dexter Canton",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "square_bottom_right",
-			"displayName": "Base Sinister Canton",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "square_top_left",
-			"displayName": "Chief Dexter Canton",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "square_top_right",
-			"displayName": "Chief Sinister Canton",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "straight_cross",
-			"displayName": "Cross",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_bottom",
-			"displayName": "Base Fess",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_center",
-			"displayName": "Pale",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "strip_downleft",
-			"displayName": "Bend Sinister",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_downright",
-			"displayName": "Bend",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_left",
-			"displayName": "Pale Dexter",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_middle",
-			"displayName": "Fess",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_right",
-			"displayName": "Pale Sinister",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "stripe_top",
-			"displayName": "Chief Fess",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "triangle_bottom",
-			"displayName": "Chevron",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "triangle_top",
-			"displayName": "Inverted Chevron",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "triangles_bottom",
-			"displayName": "Base Indented",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "triangles_top",
-			"displayName": "Chief Indented",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "mask",
-			"displayName": "Mask"
-		},
-		{
-			"internalName": "illager",
-			"displayName": "Ominous Banner [PS4 ONLY]"
-		},
-		{
-			"internalName": "globe",
-			"displayName": "Globe [PS4 ONLY]",
-
-			"colourEntry": {
-				"defaultName": "Banner_White",
-				"variants": [
-					"Banner_Black",
-					"Banner_Blue",
-					"Banner_Brown",
-					"Banner_Cyan",
-					"Banner_Gray",
-					"Banner_Green",
-					"Banner_Light_Blue",
-					"Banner_Lime",
-					"Banner_Magenta",
-					"Banner_Orange",
-					"Banner_Pink",
-					"Banner_Purple",
-					"Banner_Red",
-					"Banner_Silver",
-					"Banner_White",
-					"Banner_Yellow"
-				]
-			}
-		}
-	]
+  "COMMENT_1": "JSON by MattNL",
+  "entries": [
+    {
+      "internalName": "base",
+      "displayName": "Base",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "border",
+      "displayName": "Bordure",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "bricks",
+      "displayName": "Field Masoned",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "circle",
+      "displayName": "Roundel",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "creeper",
+      "displayName": "Creeper Charge",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "cross",
+      "displayName": "Saltire",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "curly_border",
+      "displayName": "Bordure Indented",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "diagonal_left",
+      "displayName": "Per Bend Sinister",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "diagonal_right",
+      "displayName": "Per Bend",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "diagonal_up_left",
+      "displayName": "Per Bend Inverted",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "diagonal_up_right",
+      "displayName": "Per Bend Sinister Inverted",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "flower",
+      "displayName": "Flower Charge",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "gradient",
+      "displayName": "Gradient",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "gradient_up",
+      "displayName": "Base Gradient",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "half_horizontal",
+      "displayName": "Per Fess",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "half_horizontal_bottom",
+      "displayName": "Per Fess Inverted",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "half_vertical",
+      "displayName": "Per Pale",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "half_vertical_right",
+      "displayName": "Per Pale Inverted",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "mojang",
+      "displayName": "Thing",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "rhombus",
+      "displayName": "Lozenge",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "skull",
+      "displayName": "Skull Charge",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "small_stripes",
+      "displayName": "Paly",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "square_bottom_left",
+      "displayName": "Base Dexter Canton",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "square_bottom_right",
+      "displayName": "Base Sinister Canton",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "square_top_left",
+      "displayName": "Chief Dexter Canton",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "square_top_right",
+      "displayName": "Chief Sinister Canton",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "straight_cross",
+      "displayName": "Cross",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_bottom",
+      "displayName": "Base Fess",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_center",
+      "displayName": "Pale",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "strip_downleft",
+      "displayName": "Bend Sinister",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_downright",
+      "displayName": "Bend",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_left",
+      "displayName": "Pale Dexter",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_middle",
+      "displayName": "Fess",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_right",
+      "displayName": "Pale Sinister",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "stripe_top",
+      "displayName": "Chief Fess",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "triangle_bottom",
+      "displayName": "Chevron",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "triangle_top",
+      "displayName": "Inverted Chevron",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "triangles_bottom",
+      "displayName": "Base Indented",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "triangles_top",
+      "displayName": "Chief Indented",
+      "colorKey": "Banner_Color"
+    },
+    {
+      "internalName": "mask",
+      "displayName": "Mask"
+    },
+    {
+      "internalName": "illager",
+      "displayName": "Ominous Banner [PS4 ONLY]"
+    },
+    {
+      "internalName": "globe",
+      "displayName": "Globe [PS4 ONLY]",
+      "colorKey": "Banner_Color"
+    }
+  ]
 }

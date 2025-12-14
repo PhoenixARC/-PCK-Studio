@@ -1,197 +1,85 @@
 {
-	"COMMENT_1": "JSON by MattNL",
-	"entries": [
-		{
-			"internalName": "explosion_0",
-			"displayName": "Explosion (Stage 1)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_1",
-			"displayName": "Explosion (Stage 2)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_2",
-			"displayName": "Explosion (Stage 3)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_3",
-			"displayName": "Explosion (Stage 4)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_4",
-			"displayName": "Explosion (Stage 5)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_5",
-			"displayName": "Explosion (Stage 6)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_6",
-			"displayName": "Explosion (Stage 7)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_7",
-			"displayName": "Explosion (Stage 8)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_8",
-			"displayName": "Explosion (Stage 9)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_9",
-			"displayName": "Explosion (Stage 10)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_10",
-			"displayName": "Explosion (Stage 11)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_11",
-			"displayName": "Explosion (Stage 12)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_12",
-			"displayName": "Explosion (Stage 13)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_13",
-			"displayName": "Explosion (Stage 14)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_14",
-			"displayName": "Explosion (Stage 15)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		},
-		{
-			"internalName": "explosion_15",
-			"displayName": "Explosion (Stage 16)",
-			"hasColourEntry": true,
-			"colourEntry": {
-				"defaultName": "Particle_Explode",
-				"variants": [
-					"Particle_Explode",
-					"Particle_HugeExplosion"
-				]
-			}
-		}
-	]
+  "COMMENT_1": "JSON by MattNL",
+  "entries": [
+    {
+      "internalName": "explosion_0",
+      "displayName": "Explosion (Stage 1)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_1",
+      "displayName": "Explosion (Stage 2)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_2",
+      "displayName": "Explosion (Stage 3)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_3",
+      "displayName": "Explosion (Stage 4)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_4",
+      "displayName": "Explosion (Stage 5)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_5",
+      "displayName": "Explosion (Stage 6)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_6",
+      "displayName": "Explosion (Stage 7)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_7",
+      "displayName": "Explosion (Stage 8)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_8",
+      "displayName": "Explosion (Stage 9)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_9",
+      "displayName": "Explosion (Stage 10)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_10",
+      "displayName": "Explosion (Stage 11)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_11",
+      "displayName": "Explosion (Stage 12)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_12",
+      "displayName": "Explosion (Stage 13)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_13",
+      "displayName": "Explosion (Stage 14)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_14",
+      "displayName": "Explosion (Stage 15)",
+      "colorKey": "Particle_Explode"
+    },
+    {
+      "internalName": "explosion_15",
+      "displayName": "Explosion (Stage 16)",
+      "colorKey": "Particle_Explode"
+    }
+  ]
 }

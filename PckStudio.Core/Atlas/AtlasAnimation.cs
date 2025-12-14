@@ -21,7 +21,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace PckStudio.Core
 {
-    internal sealed class AtlasGroupAnimation : AtlasGroup
+    internal sealed class AtlasAnimation : AtlasGroup
     {
         [JsonProperty("frameCount", Required = Required.Always)]
         private int _frameCount;
@@ -40,10 +40,12 @@ namespace PckStudio.Core
         [JsonIgnore]
         protected override bool isLargeTile => false;
 
+        protected override bool isComposedOfMultipleTiles => false;
+
         public override Size GetSize(Size tileSize) => new Size(tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? Count : 1), tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? Count : 1));
 
-        public AtlasGroupAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME)
-            : base(name, row, column)
+        public AtlasAnimation(string name, int row, int column, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME, bool allowCustomColor = default)
+            : base(name, row, column, allowCustomColor)
         {
             _frameCount = frameCount;
             Direction = direction;

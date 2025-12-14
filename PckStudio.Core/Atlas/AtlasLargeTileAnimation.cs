@@ -23,10 +23,10 @@ using Newtonsoft.Json;
 
 namespace PckStudio.Core
 {
-    internal sealed class AtlasGroupLargeTileAnimation : AtlasGroup
+    internal sealed class AtlasLargeTileAnimation : AtlasGroup
     {
         [JsonIgnore]
-        private AtlasGroupLargeTile[] _largeTiles;
+        private AtlasLargeTile[] _largeTiles;
 
         [JsonProperty("frameCount")]
         private int _frameCount;
@@ -50,10 +50,12 @@ namespace PckStudio.Core
         [JsonIgnore]
         protected override bool isLargeTile => true;
 
+        protected override bool isComposedOfMultipleTiles => false;
+
         public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? _frameCount : 1), ColumnSpan * tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? _frameCount : 1));
 
-        public AtlasGroupLargeTileAnimation(string name, int row, int column, int rowSpan, int columnSpan, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME)
-            : base(name, row, column)
+        public AtlasLargeTileAnimation(string name, int row, int column, int rowSpan, int columnSpan, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME, bool allowCustomColor = default)
+            : base(name, row, column, allowCustomColor)
         {
             _frameCount = Math.Abs(frameCount);
             RowSpan = Math.Max(1, rowSpan);
@@ -63,16 +65,16 @@ namespace PckStudio.Core
             _largeTiles = InternalGetLargeTiles().ToArray();
         }
 
-        private IEnumerable<AtlasGroupLargeTile> InternalGetLargeTiles()
+        private IEnumerable<AtlasLargeTile> InternalGetLargeTiles()
         {
             for (int i = 0; i < _frameCount; i++)
             {
-                yield return new AtlasGroupLargeTile($"{Name}_{i}", Row + (Direction == ImageLayoutDirection.Horizontal ? i * RowSpan : 0), Column + (Direction == ImageLayoutDirection.Vertical ? i * ColumnSpan : 0), RowSpan, ColumnSpan);
+                yield return new AtlasLargeTile($"{Name}_{i}", Row + (Direction == ImageLayoutDirection.Horizontal ? i * RowSpan : 0), Column + (Direction == ImageLayoutDirection.Vertical ? i * ColumnSpan : 0), RowSpan, ColumnSpan, AllowCustomColor);
             }
             yield break;
         }
 
-        internal AtlasGroupLargeTile GetTile(int row, int col)
+        internal AtlasLargeTile GetTile(int row, int col)
         {
             if (!IsInRange(row, col))
                 return default;
@@ -85,6 +87,6 @@ namespace PckStudio.Core
             return Row <= row && row < (Row + (RowSpan * (Direction == ImageLayoutDirection.Horizontal ? _frameCount : 1))) && Column <= col && col < (Column + (ColumnSpan * (Direction == ImageLayoutDirection.Horizontal ? _frameCount : 1)));
         }
 
-        internal IEnumerable<AtlasGroupLargeTile> GetLargeTiles() => _largeTiles;
+        internal IEnumerable<AtlasLargeTile> GetLargeTiles() => _largeTiles;
     }
 }

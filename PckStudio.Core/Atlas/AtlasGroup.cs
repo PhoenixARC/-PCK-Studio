@@ -16,7 +16,6 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Data.SqlTypes;
 using System.Drawing;
 using Newtonsoft.Json;
 
@@ -30,6 +29,8 @@ namespace PckStudio.Core
         public int Row { get; }
         [JsonProperty("column", Required = Required.Always, Order = 2)]
         public int Column { get; }
+        [JsonProperty("allowCustomColor", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public bool AllowCustomColor { get; }
 
         [JsonIgnore]
         public virtual int Count => 1;
@@ -38,20 +39,28 @@ namespace PckStudio.Core
         protected abstract bool isAnimation { get; }
         [JsonIgnore]
         protected abstract bool isLargeTile { get; }
+        [JsonIgnore]
+        protected abstract bool isComposedOfMultipleTiles { get; }
         [JsonProperty("direction")]
         public virtual ImageLayoutDirection Direction => Column > Row ? ImageLayoutDirection.Vertical : ImageLayoutDirection.Horizontal;
 
-        public AtlasGroup(string name, int row, int column)
+        public AtlasGroup(string name, int row, int column, bool allowCustomColor)
         {
             Name = name;
             Row = Math.Max(0, row);
             Column = Math.Max(0, column);
+            AllowCustomColor = allowCustomColor;
         }
 
         public bool IsAnimation() => isAnimation;
         public bool IsLargeTile() => isLargeTile;
+        public bool IsComposedOfMultipleTiles() => isComposedOfMultipleTiles;
 
         public abstract Size GetSize(Size tileSize);
 
+        internal virtual Rectangle[] GetTileArea(Size tileSize)
+        {
+            return [new Rectangle(new Point(Row * tileSize.Width, Column * tileSize.Height), GetSize(tileSize))];
+        }
     }
 }

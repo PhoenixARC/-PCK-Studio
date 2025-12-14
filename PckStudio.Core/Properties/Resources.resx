@@ -247,4 +247,7 @@
   <data name="unknown_pack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\unknown_pack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="colorEntries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\colorEntries.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>
