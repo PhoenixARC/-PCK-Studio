@@ -18,6 +18,7 @@ using OMI.Workers.Material;
 using OMI.Workers.Model;
 using OMI.Workers.Pck;
 using PckStudio.Core.App;
+using PckStudio.Core.Colors;
 using PckStudio.Core.Deserializer;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.FileFormats;
@@ -329,15 +330,6 @@ namespace PckStudio.Core.DLC
 
             ColorContainer colorContainer = dataPck.GetAssetsByType(PckAssetType.ColourTableFile).FirstOrDefault()?.GetData(new COLFileReader()) ?? new ColorContainer();
 
-            IDictionary<string, Color> colors = colorContainer.Colors
-                .GroupBy(c => c.Name)
-                .Select(grp => grp.FirstOrDefault())
-                .ToDictionary(c => c.Name, c => c.ColorPallette);
-            IDictionary<string, (Color, Color, Color)> waterColors = colorContainer.WaterColors
-                .GroupBy(c => c.Name)
-                .Select(grp => grp.FirstOrDefault())
-                .ToDictionary(c => c.Name, c => (c.SurfaceColor, c.UnderwaterColor, c.FogColor));
-
             IDictionary<string, Image> environmentTextures = dataPck.GetDirectoryContent("res/environment/", PckAssetType.TextureFile)
                 .ToDictionary(a => Path.GetFileNameWithoutExtension(a.Filename), defaultDeserializer.Deserialize);
             environmentTextures.TryGetValue("clouds", out Image clouds);
@@ -371,8 +363,7 @@ namespace PckStudio.Core.DLC
                 ArmorSetDescription.Diamond.GetArmorSet(tryGetTexture),
                 ArmorSetDescription.Turtle.GetArmorSet(tryGetTexture),
                 environmentData,
-                colors,  
-                waterColors,
+                AbstractColorContainer.FromColorContainer(colorContainer),
                 customModels,
                 materials, 
                 blockEntityBreakAnimation, 

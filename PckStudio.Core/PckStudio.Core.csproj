@@ -66,6 +66,7 @@
     <Compile Include="Atlas\AtlasOverlayGroup.cs" />
     <Compile Include="Atlas\AtlasTile.cs" />
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="Colors\AbstractColorContainer.cs" />
     <Compile Include="ConsolePlatform.cs" />
     <Compile Include="DelegatedFileSaveContext.cs" />
     <Compile Include="DelegatedSaveContext.cs" />

@@ -48,6 +48,7 @@ using PckStudio.Core.IO.PckAudio;
 using PckStudio.Core.IO._3DST;
 using PckStudio.Core.Misc;
 using PckStudio.Core.DLC;
+using PckStudio.Core.Colors;
 
 namespace PckStudio.Controls
 {
@@ -484,12 +485,15 @@ namespace PckStudio.Controls
 
         private void HandleColourFile(PckAsset asset)
         {
-            ColorContainer colorContainer = asset.GetData(new COLFileReader());
-            ISaveContext<ColorContainer> saveContext = new DelegatedSaveContext<ColorContainer>(Settings.Default.AutoSaveChanges, (colorContainer) =>
+            AbstractColorContainer abstractColorContainer = AbstractColorContainer.FromColorContainer(asset.GetData(new COLFileReader()));
+            ISaveContext<AbstractColorContainer> saveContext = new DelegatedSaveContext<AbstractColorContainer>(Settings.Default.AutoSaveChanges, (newColorContainer) =>
             {
+                ColorContainer colorContainer = new ColorContainer();
+                colorContainer.Colors.AddRange(newColorContainer.Colors.Select(kv => new ColorContainer.Color() { Name = kv.Key, ColorPallette = kv.Value }));
+                colorContainer.WaterColors.AddRange(newColorContainer.WaterColors.Select(kv => new ColorContainer.WaterColor() { Name = kv.Key, SurfaceColor = kv.Value.Surface, FogColor = kv.Value.Fog, UnderwaterColor = kv.Value.Underwater }));
                 asset.SetData(new COLFileWriter(colorContainer));
             });
-            using COLEditor diag = new COLEditor(colorContainer, saveContext);
+            using COLEditor diag = new COLEditor(abstractColorContainer, saveContext);
             _wasModified = diag.ShowDialog(this) == DialogResult.OK;
         }
 

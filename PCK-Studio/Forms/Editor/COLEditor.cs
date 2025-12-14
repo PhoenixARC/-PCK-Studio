@@ -8,15 +8,16 @@ using OMI.Formats.Color;
 
 using OMI.Workers.Color;
 using PckStudio.Core.Extensions;
+using PckStudio.Core.Colors;
 using PckStudio.Properties;
 using PckStudio.Controls;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Forms.Editor
 {
-    public partial class COLEditor : EditorForm<ColorContainer>
+    public partial class COLEditor : EditorForm<AbstractColorContainer>
     {
-        ColorContainer _defaultColourfile;
+        AbstractColorContainer _defaultColourfile;
         string _clipboard_color = "#FFFFFF";
 
         TreeView colorTreeView;
@@ -24,7 +25,7 @@ namespace PckStudio.Forms.Editor
         TreeView underwaterTreeView;
         TreeView fogTreeView;
 
-        private static readonly ICollection<string> PS4Biomes = new List<string>
+        private static readonly ICollection<string> PS4BiomeColors = new List<string>
         {
             "bamboo_jungle",
             "bamboo_jungle_hills",
@@ -33,7 +34,7 @@ namespace PckStudio.Forms.Editor
             "mega_taiga_mutated"
         };
 
-        public COLEditor(ColorContainer colorContainer, ISaveContext<ColorContainer> saveContext)
+        public COLEditor(AbstractColorContainer colorContainer, ISaveContext<AbstractColorContainer> saveContext)
             : base(colorContainer, saveContext)
         {
             InitializeComponent();
@@ -64,29 +65,34 @@ namespace PckStudio.Forms.Editor
             underwaterTreeView.KeyDown += treeView1_KeyDown;
             fogTreeView.KeyDown += treeView1_KeyDown;
 
+            colorTreeView.ContextMenuStrip = ColorContextMenu;
+            waterTreeView.ContextMenuStrip = ColorContextMenu;
+            underwaterTreeView.ContextMenuStrip = ColorContextMenu;
+            fogTreeView.ContextMenuStrip = ColorContextMenu;
+
             BuildTreeViews(EditorValue);
         }
 
-        private void BuildTreeViews(ColorContainer c)
+        private void BuildTreeViews(AbstractColorContainer c)
         {
             colorTreeView.Nodes.Clear();
             waterTreeView.Nodes.Clear();
             underwaterTreeView.Nodes.Clear();
             fogTreeView.Nodes.Clear();
             int nodeDepth = Convert.ToInt32(compactViewToolStripMenuItem.Checked);
-            c.Colors.ForEach(col =>
-            {
-                TreeNode n = colorTreeView.Nodes.BuildNodeTreeBySeperator(col.Name, '_', nodeDepth);
-                //n.Text = n.Text.Replace('_', '.');
-                n.Tag = col;
-            });
 
-            c.WaterColors.ForEach(col =>
+            foreach (KeyValuePair<string, Color> col in c.Colors)
             {
-                waterTreeView.Nodes.BuildNodeTreeBySeperator(col.Name, '_', nodeDepth).Tag = col;
-                underwaterTreeView.Nodes.BuildNodeTreeBySeperator(col.Name, '_', nodeDepth).Tag = col;
-                fogTreeView.Nodes.BuildNodeTreeBySeperator(col.Name, '_', nodeDepth).Tag = col;
-            });
+                TreeNode n = colorTreeView.Nodes.BuildNodeTreeBySeperator(col.Key, '_', nodeDepth);
+                n.Tag = col;
+            }
+
+            foreach (KeyValuePair<string, (Color surface, Color underwater, Color fog)> col in c.WaterColors)
+            {
+                waterTreeView.Nodes.BuildNodeTreeBySeperator(col.Key, '_', 0).Tag = col;
+                underwaterTreeView.Nodes.BuildNodeTreeBySeperator(col.Key, '_', 0).Tag = col;
+                fogTreeView.Nodes.BuildNodeTreeBySeperator(col.Key, '_', 0).Tag = col;
+            }
 
             filterPrompt.Update();
         }
@@ -120,7 +126,7 @@ namespace PckStudio.Forms.Editor
             var reader = new COLFileReader();
             using (var stream = new MemoryStream(colorData))
             {
-                _defaultColourfile = reader.FromStream(stream);
+                _defaultColourfile = AbstractColorContainer.FromColorContainer(reader.FromStream(stream));
             }
 
             BuildTreeViews(_defaultColourfile);
@@ -181,18 +187,18 @@ namespace PckStudio.Forms.Editor
         {
             Color color = Color.FromArgb(filterPrompt.SelectedTabIndex == 1 ? (int)alphaUpDown.Value : 255, (int)redUpDown.Value, (int)greenUpDown.Value, (int)blueUpDown.Value);
 
-            if (filterPrompt.SelectedTabIndex == 0 && filterPrompt.SelectedItem is ColorContainer.Color colorEntry)
+            if (filterPrompt.SelectedTabIndex == 0 && filterPrompt.SelectedItem is KeyValuePair<string, Color> colorEntry)
             {
-                colorEntry.ColorPallette = color;
+                EditorValue.Colors[colorEntry.Key] = color;
             }
-            else if (filterPrompt.SelectedItem is ColorContainer.WaterColor waterColorEntry)
+            else if (filterPrompt.SelectedItem is KeyValuePair<string, (Color Surface,Color Underwater, Color Fog)> waterColorEntry)
             {
                 if (filterPrompt.SelectedTabIndex == 1)
-                    waterColorEntry.SurfaceColor = color;
+                    EditorValue.WaterColors[waterColorEntry.Key] =  (color, waterColorEntry.Value.Underwater, waterColorEntry.Value.Fog);
                 else if (filterPrompt.SelectedTabIndex == 2)
-                    waterColorEntry.UnderwaterColor = color;
+                    EditorValue.WaterColors[waterColorEntry.Key] = (waterColorEntry.Value.Surface, color, waterColorEntry.Value.Fog);
                 else
-                    waterColorEntry.FogColor = color;
+                    EditorValue.WaterColors[waterColorEntry.Key] = (waterColorEntry.Value.Surface, waterColorEntry.Value.Underwater, color);
             }
 
             pictureBox1.BackColor = color;
@@ -207,74 +213,64 @@ namespace PckStudio.Forms.Editor
             colorPick.SolidColorOnly = filterPrompt.SelectedTabIndex == 0;
             if (colorPick.ShowDialog(this) != DialogResult.OK)
                 return;
-            if (filterPrompt.SelectedTabIndex == 1 && filterPrompt.SelectedItem is ColorContainer.WaterColor waterColor)
-            {
-                // preserves the alpha so the user can handle it since the color picker doesn't support alpha
-                waterColor.SurfaceColor = Color.FromArgb(waterColor.SurfaceColor.A, colorPick.Color);
-                SetColor(waterColor.SurfaceColor);
-            }
-            else if (filterPrompt.SelectedTabIndex == 2 && filterPrompt.SelectedItem is ColorContainer.WaterColor underwaterColor)
-            {
-                underwaterColor.UnderwaterColor = Color.FromArgb(0, colorPick.Color);
-                SetColor(underwaterColor.UnderwaterColor);
-            }
-            else if (filterPrompt.SelectedTabIndex == 3 && filterPrompt.SelectedItem is ColorContainer.WaterColor fogColor)
-            {
-                fogColor.FogColor = Color.FromArgb(0, colorPick.Color);
-                SetColor(fogColor.FogColor);
-            }
-            else if (filterPrompt.SelectedTabIndex == 0 && filterPrompt.SelectedItem is ColorContainer.Color color)
+            if (filterPrompt.SelectedTabIndex == 0 && filterPrompt.SelectedItem is ColorContainer.Color color)
             {
                 color.ColorPallette = colorPick.Color;
                 SetColor(color.ColorPallette);
+                return;
+            }
+            if (filterPrompt.SelectedItem is KeyValuePair<string, (Color Surface,Color Underwater, Color Fog)> waterColorEntry)
+            {
+                Color wColor =
+                filterPrompt.SelectedTabIndex == 1 ? waterColorEntry.Value.Surface :
+                filterPrompt.SelectedTabIndex == 2 ? waterColorEntry.Value.Underwater : waterColorEntry.Value.Fog;
+                if (filterPrompt.SelectedTabIndex == 1)
+                    EditorValue.WaterColors[waterColorEntry.Key] = (wColor, waterColorEntry.Value.Underwater, waterColorEntry.Value.Fog);
+                else if (filterPrompt.SelectedTabIndex == 2)
+                    EditorValue.WaterColors[waterColorEntry.Key] = (waterColorEntry.Value.Surface, wColor, waterColorEntry.Value.Fog);
+                else
+                    EditorValue.WaterColors[waterColorEntry.Key] = (waterColorEntry.Value.Surface, waterColorEntry.Value.Underwater, wColor);
             }
         }
 
         private void alpha_ValueChanged(object sender, EventArgs e)
         {
-            var colorEntry = (ColorContainer.WaterColor)waterTreeView.SelectedNode.Tag;
-            pictureBox1.BackColor = colorEntry.SurfaceColor = Color.FromArgb((int)alphaUpDown.Value, colorEntry.SurfaceColor);
+            var colorEntry = (KeyValuePair<string, (Color Surface,Color Underwater, Color Fog)>)waterTreeView.SelectedNode.Tag;
+            EditorValue.WaterColors[colorEntry.Key] = colorEntry.Value;
+            pictureBox1.BackColor = Color.FromArgb((int)alphaUpDown.Value, colorEntry.Value.Surface);
         }
 
         private void restoreOriginalColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (tabControl.SelectedTab is var tab)
-            //{
-            //    Color color = Color.Empty;
+            if (filterPrompt.SelectedItem is KeyValuePair<string, Color> color)
+            {
+                if (!_defaultColourfile.Colors.TryGetValue(color.Key, out Color col_entry))
+                {
+                    HideColorEdit();
+                    return;
+                }
+                EditorValue.Colors[color.Key] = col_entry;
+                SetColor(col_entry);
+            }
+            if (filterPrompt.SelectedItem is KeyValuePair<string, (Color Surface, Color Underwater, Color Fog)> waterColor)
+            {
+                if (_defaultColourfile.WaterColors.TryGetValue(waterColor.Key, out (Color Surface, Color Underwater, Color Fog) waterColorEntry))
+                {
+                    HideColorEdit();
+                    return;
+                }
 
-            //    if (tab == colorsTab)
-            //    {
-            //        ColorContainer.Color col_entry = _defaultColourfile.Colors.Find(color => color.Name == node.Text);
-
-            //        if (col_entry == null)
-            //            return;
-
-            //        color = col_entry.ColorPallette;
-
-            //        colorTextbox.Text = ColorTranslator.ToHtml(color).TrimStart('#');
-            //    }
-            //    else
-            //    {
-            //        ColorContainer.WaterColor waterEntry = _defaultColourfile.WaterColors.Find(color => color.Name == node.Text);
-
-            //        if (waterEntry == null)
-            //            return;
-
-            //        color =
-            //            tab == waterTab ? waterEntry.SurfaceColor :
-            //            tab == underwaterTab ? waterEntry.UnderwaterColor : waterEntry.FogColor;
-
-            //        if (tab == waterTab)
-            //        {
-            //            alphaUpDown.Value = color.A;
-            //        }
-
-            //        redUpDown.Value = color.R;
-            //        greenUpDown.Value = color.G;
-            //        blueUpDown.Value = color.B;
-            //    }
-            //    pictureBox1.BackColor = Color.FromArgb(tab == colorsTab ? 0xFF : color.A, color);
-            //}
+                Color wColor =
+                    filterPrompt.SelectedTabIndex == 1 ? waterColorEntry.Surface :
+                    filterPrompt.SelectedTabIndex == 2 ? waterColorEntry.Underwater: waterColorEntry.Fog;
+                if (filterPrompt.SelectedTabIndex == 1)
+                    EditorValue.WaterColors[waterColor.Key] = (wColor, waterColorEntry.Underwater, waterColorEntry.Fog);
+                else if (filterPrompt.SelectedTabIndex == 2)
+                    EditorValue.WaterColors[waterColor.Key] = (waterColorEntry.Surface, wColor, waterColorEntry.Fog);
+                else
+                    EditorValue.WaterColors[waterColor.Key] = (waterColorEntry.Surface, waterColorEntry.Underwater, wColor);
+                SetColor(wColor);
+            }
         }
 
         private void copyColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -314,7 +310,11 @@ namespace PckStudio.Forms.Editor
 
         private void stripPS4BiomesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditorValue.WaterColors.RemoveAll(col => PS4Biomes.Contains(col.Name));
+            foreach (string ps4BiomeColor in PS4BiomeColors)
+            {
+                if (EditorValue.WaterColors.ContainsKey(ps4BiomeColor))
+                    EditorValue.WaterColors.Remove(ps4BiomeColor);
+            }
             BuildTreeViews(EditorValue);
         }
 
@@ -328,16 +328,12 @@ namespace PckStudio.Forms.Editor
                     prompt.contextLabel.Text = "Insert the name of the color you would like to add";
                     if (prompt.ShowDialog(this) == DialogResult.OK)
                     {
-                        ColorContainer.Color entry = new ColorContainer.Color();
-                        entry.Name = prompt.NewText;
-                        entry.ColorPallette = Color.White;
-
-                        if (EditorValue.Colors.Find(c => c.Name == entry.Name) != null)
+                        if (EditorValue.Colors.ContainsKey(prompt.Name))
                         {
-                            MessageBox.Show(this, $"\"{entry.Name}\" already exists in this color table", "Color not added");
+                            MessageBox.Show(this, $"\"{prompt.Name}\" already exists in this color table", "Color not added");
                         }
 
-                        EditorValue.Colors.Add(entry);
+                        EditorValue.Colors.Add(prompt.Name, Color.White);
                         BuildTreeViews(EditorValue);
                     }
                 }
@@ -348,7 +344,7 @@ namespace PckStudio.Forms.Editor
         {
             if (filterPrompt.SelectedItem is ColorContainer.Color color)
             {
-                EditorValue.Colors.Remove(color);
+                EditorValue.Colors.Remove(color.Name);
             }
         }
 
@@ -360,21 +356,45 @@ namespace PckStudio.Forms.Editor
 
             pictureBox1.BackColor = Color.FromArgb(color.A == 0 ? 0xff : color.A, color);
             colorTextbox.Text = color.ToArgb().ToString("X06");
+            ShowColorEdit();
+            alphaUpDown.Visible = color.A != 0;
         }
 
         private void filterPrompt_OnSelectedItemChanged(object sender, EventArgs e)
         {
-            if (filterPrompt.SelectedItem is ColorContainer.Color col)
+            if (filterPrompt.SelectedItem is KeyValuePair<string, Color> col)
             {
-                SetColor(col?.ColorPallette ?? Color.AliceBlue);
+                SetColor(col.Value);
                 return;
             }
-            if (filterPrompt.SelectedItem is ColorContainer.WaterColor waterColor)
+            if (filterPrompt.SelectedItem is KeyValuePair<string, (Color Surface,Color Underwater, Color Fog)> waterColor)
             {
-                SetColor(waterColor?.SurfaceColor ?? Color.AliceBlue);
+                SetColor(waterColor.Value.Surface);
                 return;
             }
-            SetColor(Color.Black);
+            HideColorEdit();
+        }
+
+        private void HideColorEdit()
+        {
+            redUpDown.Visible = false;
+            greenUpDown.Visible = false;
+            blueUpDown.Visible = false;
+            alphaUpDown.Visible = false;
+
+            pictureBox1.Visible = false;
+            colorTextbox.Visible = false;
+        }
+
+        private void ShowColorEdit()
+        {
+            redUpDown.Visible = true;
+            greenUpDown.Visible = true;
+            blueUpDown.Visible = true;
+            alphaUpDown.Visible = true;
+
+            pictureBox1.Visible = true;
+            colorTextbox.Visible = true;
         }
 
         private void compactViewToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using OMI.Formats.Color;
+using PckStudio.Core.Colors;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
 using PckStudio.Core.Model;
@@ -50,8 +52,7 @@ namespace PckStudio.Core.DLC
 
         //! Data for x{16}Data.pck
         //! => colours.col
-        private IDictionary<string, Color> _colors;
-        private IDictionary<string, (Color surface, Color underwater, Color fog)> _waterColors;
+        private AbstractColorContainer _colorContainter;
         private AbstractModelContainer _customModels; //! can be null.. => models.bin
         private IDictionary<string, string> _materials; //! can be null.. 
 
@@ -99,8 +100,7 @@ namespace PckStudio.Core.DLC
             ArmorSet diamondArmorSet,
             ArmorSet turtleArmorSet,
             EnvironmentData environmentData,
-            IDictionary<string, Color> colors,
-            IDictionary<string, (Color surface, Color underwater, Color fog)> waterColors,
+            AbstractColorContainer colorContainter,
             AbstractModelContainer customModels,
             IDictionary<string, string> materials,
             Animation blockEntityBreakAnimation,
@@ -129,8 +129,7 @@ namespace PckStudio.Core.DLC
             _diamondArmorSet = diamondArmorSet;
             _turtleArmorSet = turtleArmorSet;
             _environmentData = environmentData;
-            _colors = colors ?? new Dictionary<string, Color>();
-            _waterColors = waterColors ?? new Dictionary<string, (Color, Color, Color)>();
+            _colorContainter = colorContainter;
             _customModels = customModels;
             _materials = materials;
             _blockEntityBreakAnimation = blockEntityBreakAnimation;
@@ -218,7 +217,7 @@ namespace PckStudio.Core.DLC
                 new ArmorSet(ArmorSetDescription.DIAMOND, Resources.diamond, default),
                 new ArmorSet(ArmorSetDescription.TURTLE, Resources.turtle, default),
                 new EnvironmentData(Resources.clouds, Resources.rain, Resources.snow),
-                colors, waterColors,
+                new AbstractColorContainer(colors, waterColors),
                 new AbstractModelContainer(),
                 new Dictionary<string, string>(),
                 blockEntityBreakAnimation,

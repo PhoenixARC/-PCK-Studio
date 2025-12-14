@@ -34,8 +34,7 @@ namespace PckStudio.Forms.Editor
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(COLEditor));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.filterPrompt = new PckStudio.Forms.Additional_Popups.Animation.FilterPrompt();
             this.setColorBtn = new MetroFramework.Controls.MetroButton();
             this.blueUpDown = new System.Windows.Forms.NumericUpDown();
             this.greenUpDown = new System.Windows.Forms.NumericUpDown();
@@ -67,21 +66,14 @@ namespace PckStudio.Forms.Editor
             this.TU54ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TU69ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._1_9_1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.waterTab = new System.Windows.Forms.TabPage();
-            this.waterTreeView = new System.Windows.Forms.TreeView();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compactViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColorContextMenu = new MetroFramework.Controls.MetroContextMenu(this.components);
             this.copyColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreOriginalColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.underwaterTreeView = new System.Windows.Forms.TreeView();
-            this.fogTreeView = new System.Windows.Forms.TreeView();
-            this.colorsTab = new System.Windows.Forms.TabPage();
-            this.colorTreeView = new System.Windows.Forms.TreeView();
-            this.tabControl = new MetroFramework.Controls.MetroTabControl();
-            this.underwaterTab = new System.Windows.Forms.TabPage();
-            this.fogTab = new System.Windows.Forms.TabPage();
             this.metroPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenUpDown)).BeginInit();
@@ -89,18 +81,12 @@ namespace PckStudio.Forms.Editor
             ((System.ComponentModel.ISupportInitialize)(this.alphaUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
-            this.waterTab.SuspendLayout();
             this.ColorContextMenu.SuspendLayout();
-            this.colorsTab.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.underwaterTab.SuspendLayout();
-            this.fogTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroPanel1
             // 
-            this.metroPanel1.Controls.Add(this.metroTextBox1);
-            this.metroPanel1.Controls.Add(this.metroLabel2);
+            this.metroPanel1.Controls.Add(this.filterPrompt);
             this.metroPanel1.Controls.Add(this.setColorBtn);
             this.metroPanel1.Controls.Add(this.blueUpDown);
             this.metroPanel1.Controls.Add(this.greenUpDown);
@@ -124,41 +110,13 @@ namespace PckStudio.Forms.Editor
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // metroTextBox1
+            // filterPrompt
             // 
-            // 
-            // 
-            // 
-            this.metroTextBox1.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.metroTextBox1.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
-            this.metroTextBox1.Lines = new string[0];
-            resources.ApplyResources(this.metroTextBox1, "metroTextBox1");
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.metroTextBox1.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
-            // 
-            // metroLabel2
-            // 
-            resources.ApplyResources(this.metroLabel2, "metroLabel2");
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.filterPrompt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.filterPrompt.ForeColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(this.filterPrompt, "filterPrompt");
+            this.filterPrompt.Name = "filterPrompt";
+            this.filterPrompt.OnSelectedItemChanged += new System.EventHandler(this.filterPrompt_OnSelectedItemChanged);
             // 
             // setColorBtn
             // 
@@ -247,16 +205,16 @@ namespace PckStudio.Forms.Editor
             // 
             // 
             // 
-            this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image1")));
+            this.colorTextbox.CustomButton.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
             this.colorTextbox.CustomButton.ImeMode = ((System.Windows.Forms.ImeMode)(resources.GetObject("resource.ImeMode")));
-            this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location1")));
+            this.colorTextbox.CustomButton.Location = ((System.Drawing.Point)(resources.GetObject("resource.Location")));
             this.colorTextbox.CustomButton.Name = "";
-            this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size1")));
+            this.colorTextbox.CustomButton.Size = ((System.Drawing.Size)(resources.GetObject("resource.Size")));
             this.colorTextbox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex1")));
+            this.colorTextbox.CustomButton.TabIndex = ((int)(resources.GetObject("resource.TabIndex")));
             this.colorTextbox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.colorTextbox.CustomButton.UseSelectable = true;
-            this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible1")));
+            this.colorTextbox.CustomButton.Visible = ((bool)(resources.GetObject("resource.Visible")));
             this.colorTextbox.Lines = new string[0];
             resources.ApplyResources(this.colorTextbox, "colorTextbox");
             this.colorTextbox.MaxLength = 6;
@@ -293,7 +251,8 @@ namespace PckStudio.Forms.Editor
             this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.toolsToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // fileToolStripMenuItem
@@ -409,22 +368,21 @@ namespace PckStudio.Forms.Editor
             this._1_9_1ToolStripMenuItem.Name = "_1_9_1ToolStripMenuItem";
             resources.ApplyResources(this._1_9_1ToolStripMenuItem, "_1_9_1ToolStripMenuItem");
             // 
-            // waterTab
+            // viewToolStripMenuItem
             // 
-            this.waterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.waterTab.Controls.Add(this.waterTreeView);
-            resources.ApplyResources(this.waterTab, "waterTab");
-            this.waterTab.Name = "waterTab";
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.compactViewToolStripMenuItem});
+            this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             // 
-            // waterTreeView
+            // compactViewToolStripMenuItem
             // 
-            this.waterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.waterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.waterTreeView, "waterTreeView");
-            this.waterTreeView.ForeColor = System.Drawing.Color.White;
-            this.waterTreeView.Name = "waterTreeView";
-            this.waterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-            this.waterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView2_KeyDown);
+            this.compactViewToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.compactViewToolStripMenuItem.CheckOnClick = true;
+            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
+            resources.ApplyResources(this.compactViewToolStripMenuItem, "compactViewToolStripMenuItem");
+            this.compactViewToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.compactViewToolStripMenuItem_CheckStateChanged);
             // 
             // ColorContextMenu
             // 
@@ -472,76 +430,11 @@ namespace PckStudio.Forms.Editor
             resources.ApplyResources(this.removeColorToolStripMenuItem, "removeColorToolStripMenuItem");
             this.removeColorToolStripMenuItem.Click += new System.EventHandler(this.removeColorToolStripMenuItem_Click);
             // 
-            // underwaterTreeView
-            // 
-            this.underwaterTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.underwaterTreeView.ContextMenuStrip = this.ColorContextMenu;
-            this.underwaterTreeView.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.underwaterTreeView, "underwaterTreeView");
-            this.underwaterTreeView.Name = "underwaterTreeView";
-            this.underwaterTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView3_AfterSelect);
-            this.underwaterTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView3_KeyDown);
-            // 
-            // fogTreeView
-            // 
-            this.fogTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.fogTreeView.ContextMenuStrip = this.ColorContextMenu;
-            this.fogTreeView.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.fogTreeView, "fogTreeView");
-            this.fogTreeView.Name = "fogTreeView";
-            this.fogTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView4_AfterSelect);
-            this.fogTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView4_KeyDown);
-            // 
-            // colorsTab
-            // 
-            this.colorsTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.colorsTab.Controls.Add(this.colorTreeView);
-            resources.ApplyResources(this.colorsTab, "colorsTab");
-            this.colorsTab.Name = "colorsTab";
-            // 
-            // colorTreeView
-            // 
-            this.colorTreeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.colorTreeView.ContextMenuStrip = this.ColorContextMenu;
-            resources.ApplyResources(this.colorTreeView, "colorTreeView");
-            this.colorTreeView.ForeColor = System.Drawing.Color.White;
-            this.colorTreeView.Name = "colorTreeView";
-            this.colorTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.colorTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            // 
-            // tabControl
-            // 
-            resources.ApplyResources(this.tabControl, "tabControl");
-            this.tabControl.Controls.Add(this.colorsTab);
-            this.tabControl.Controls.Add(this.waterTab);
-            this.tabControl.Controls.Add(this.underwaterTab);
-            this.tabControl.Controls.Add(this.fogTab);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Style = MetroFramework.MetroColorStyle.White;
-            this.tabControl.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.tabControl.UseSelectable = true;
-            // 
-            // underwaterTab
-            // 
-            this.underwaterTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.underwaterTab.Controls.Add(this.underwaterTreeView);
-            resources.ApplyResources(this.underwaterTab, "underwaterTab");
-            this.underwaterTab.Name = "underwaterTab";
-            // 
-            // fogTab
-            // 
-            this.fogTab.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.fogTab.Controls.Add(this.fogTreeView);
-            resources.ApplyResources(this.fogTab, "fogTab");
-            this.fogTab.Name = "fogTab";
-            // 
             // COLEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.menuStrip);
-            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.metroPanel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "COLEditor";
@@ -554,12 +447,7 @@ namespace PckStudio.Forms.Editor
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.waterTab.ResumeLayout(false);
             this.ColorContextMenu.ResumeLayout(false);
-            this.colorsTab.ResumeLayout(false);
-            this.tabControl.ResumeLayout(false);
-            this.underwaterTab.ResumeLayout(false);
-            this.fogTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -567,10 +455,6 @@ namespace PckStudio.Forms.Editor
 		#endregion
 
 		private MetroFramework.Controls.MetroPanel metroPanel1;
-		private TreeView colorTreeView;
-		private TreeView waterTreeView;
-		private TreeView fogTreeView;
-		private TreeView underwaterTreeView;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -580,12 +464,7 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel redLabel;
 		private MetroFramework.Controls.MetroLabel alphaLabel;
 		private System.Windows.Forms.NumericUpDown alphaUpDown;
-		private TabPage waterTab;
-		private TabPage colorsTab;
-		private MetroFramework.Controls.MetroTabControl tabControl;
 		private MetroFramework.Controls.MetroButton setColorBtn;
-		private TabPage underwaterTab;
-		private TabPage fogTab;
 		private NumericUpDown blueUpDown;
 		private NumericUpDown greenUpDown;
 		private NumericUpDown redUpDown;
@@ -593,8 +472,6 @@ namespace PckStudio.Forms.Editor
 		private MetroFramework.Controls.MetroLabel metroLabel1;
 		private MetroFramework.Controls.MetroContextMenu ColorContextMenu;
 		private ToolStripMenuItem restoreOriginalColorToolStripMenuItem;
-		private MetroFramework.Controls.MetroTextBox metroTextBox1;
-		private MetroFramework.Controls.MetroLabel metroLabel2;
         private ToolStripMenuItem copyColorToolStripMenuItem;
         private ToolStripMenuItem pasteColorToolStripMenuItem;
         private ToolStripMenuItem toolsToolStripMenuItem;
@@ -615,5 +492,8 @@ namespace PckStudio.Forms.Editor
         private ToolStripMenuItem stripPS4BiomesToolStripMenuItem;
         private ToolStripMenuItem addColorToolStripMenuItem;
         private ToolStripMenuItem removeColorToolStripMenuItem;
+        private Additional_Popups.Animation.FilterPrompt filterPrompt;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem compactViewToolStripMenuItem;
     }
 }

@@ -17,6 +17,7 @@
 **/
 using System;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using PckStudio.Core.Extensions;
 
@@ -24,8 +25,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 {
 	internal partial class FilterPrompt : UserControl
 	{
-		public Color PageBackColor { get; set; } = Color.FromArgb(64, 64, 64);
-
 		private object _selectedItem;
 		public object SelectedItem => _selectedItem;
 
@@ -53,15 +52,21 @@ namespace PckStudio.Forms.Additional_Popups.Animation
                     continue;
 
                 pageView.BeginUpdate();
+				pageView.ContextMenuStrip = backingView.ContextMenuStrip;
+				pageView.ImageList = backingView.ImageList;
                 pageView.Nodes.Clear();
-				FilterPredicate filerPredicate = tabpage.Tag as FilterPredicate;
+                pageView.Show();
+                FilterPredicate filerPredicate = tabpage.Tag as FilterPredicate;
                 foreach (TreeNode node in backingView.Nodes.GetLeafNodes())
                 {
                     if (string.IsNullOrEmpty(filterTextBox.Text) ||
 						node.FullPath.ToLower().Contains(filterTextBox.Text.ToLower()) ||
 						(filerPredicate?.Invoke(filterTextBox.Text, node.Tag) ?? false))
                     {
-                        pageView.Nodes.BuildNodeTreeBySeperator(node.FullPath, backingView.PathSeparator);
+						TreeNode n = pageView.Nodes.BuildNodeTreeBySeperator(node.FullPath, backingView.PathSeparator);
+						n.Tag = node.Tag;
+						n.ImageIndex = node.ImageIndex;
+						n.SelectedImageIndex = node.SelectedImageIndex;
                     }
                 }
                 pageView.EndUpdate();
@@ -78,8 +83,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			var pageView = new TreeView()
 			{
 				Dock = DockStyle.Fill,
-				BackColor = PageBackColor,
-			};
+				BackColor = BackColor,
+                ForeColor = ForeColor,
+            };
 			pageView.AfterSelect += (sender, e) =>
 			{
 				_selectedItem = e.Node.Tag;
@@ -88,7 +94,8 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			var backingView = new TreeView()
             {
                 Dock = DockStyle.Fill,
-                BackColor = PageBackColor,
+                BackColor = BackColor,
+				ForeColor = ForeColor,
             };
             pageView.Tag = backingView;
             page.Controls.Add(pageView);
