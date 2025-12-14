@@ -47,7 +47,7 @@ namespace PckStudio.Forms.Editor
 
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-            SkinBOX.BoxVisibility visibility = Enum.TryParse(boxVisibilityComboBox.SelectedItem.ToString(), out SkinBOX.BoxVisibility v) ? v : default;
+            SkinBOX.BoxVisibility visibility = Enum.TryParse(boxVisibilityComboBox.SelectedItem?.ToString(), out SkinBOX.BoxVisibility v) ? v : default;
 			Vector3 pos = new Vector3((float)PosXUpDown.Value, (float)PosYUpDown.Value, (float)PosZUpDown.Value);
 			Vector3 size = new Vector3((float)SizeXUpDown.Value, (float)SizeYUpDown.Value, (float)SizeZUpDown.Value);
 			Vector2 uv = new Vector2((int)uvXUpDown.Value, (int)uvYUpDown.Value);
