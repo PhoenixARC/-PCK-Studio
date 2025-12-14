@@ -11,7 +11,6 @@ namespace PckStudio.Controls
         public NamedTextureTreeNode(NamedData<Image> namedTexture)
             : base(namedTexture.Name)
         {
-            Tag = namedTexture;
             _namedTexture = namedTexture;
         }
 
