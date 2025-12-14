@@ -20,7 +20,7 @@ namespace PckStudio.ModelSupport.Internal.Format
 
         public void WriteToFile(string filename)
         {
-            using(var fs = File.OpenWrite(filename))
+            using (Stream fs = File.OpenWrite(filename))
             {
                 WriteToStream(fs);
             }
@@ -53,21 +53,21 @@ namespace PckStudio.ModelSupport.Internal.Format
             if (_PSM.Version == 2)
                 data |= (byte)((byte)part.Visibility << 4);
             writer.Write(data);
-            writer.Write(part.Pos.X);
-            writer.Write(part.Pos.Y);
-            writer.Write(part.Pos.Z);
+            writer.Write(part.Position.X);
+            writer.Write(part.Position.Y);
+            writer.Write(part.Position.Z);
             writer.Write(part.Size.X);
             writer.Write(part.Size.Y);
             writer.Write(part.Size.Z);
 
-            byte uvX = (byte)MathHelper.Clamp((int)part.UV.X, 0, 64);
-            byte uvY = (byte)MathHelper.Clamp((int)part.UV.Y, 0, 64);
+            byte uvX = (byte)MathHelper.Clamp((int)part.Uv.X, 0, 64);
+            byte uvY = (byte)MathHelper.Clamp((int)part.Uv.Y, 0, 64);
             byte mirrorAndUvX = (byte)(Convert.ToByte(part.Mirror) << 7 | uvX);
             byte hideWithArmorAndUvY = (byte)(Convert.ToByte((part.Visibility & SkinBOX.BoxVisibility.HideWhenWearingHelmet) != 0) << 7 | uvY);
 
             writer.Write(mirrorAndUvX);
             writer.Write(_PSM.Version == 1 ? hideWithArmorAndUvY : uvY);
-            writer.Write(part.Scale);
+            writer.Write(part.Inflate);
         }
 
         private static PSMParentType GetParentPart(string type)

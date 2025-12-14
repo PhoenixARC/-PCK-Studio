@@ -267,7 +267,6 @@ namespace PckStudio.Rendering
         private float animationMaxAngleInDegrees = 5f;
 
         private bool showWireFrame = false;
-        private bool autoInflateOverlayParts;
 
         private const float DEFAULT_ARM_ROTATION = 5f;
 
@@ -750,7 +749,7 @@ namespace PckStudio.Rendering
             }
 
             CubeMeshCollection cubeMesh = meshStorage[skinBox.Type];
-            cubeMesh.AddSkinBox(skinBox, autoInflateOverlayParts && skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f);
+            cubeMesh.AddSkinBox(skinBox, skinBox.IsOverlayPart() ? skinBox.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f);
         }
 
         private void OnANIMUpdate()
@@ -1105,7 +1104,7 @@ namespace PckStudio.Rendering
                     if (!meshStorage.ContainsKey(box.Type))
                         continue;
 
-                    float inflate = autoInflateOverlayParts && box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f;
+                    float inflate = box.IsOverlayPart() ? box.Type == "HEADWEAR" ? OVERLAY_SCALE * 2 : OVERLAY_SCALE : 0f;
                     Cube cube = box.ToCube(inflate);
                     CubeMeshCollection cubeMesh = meshStorage[box.Type];
                     yield return cube.GetBoundingBox(cubeMesh.GetTransform());

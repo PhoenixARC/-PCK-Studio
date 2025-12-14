@@ -114,11 +114,11 @@ namespace PckStudio.Core
 			return new ReadOnlyCollection<Frame>(_frames);
 		}
 
-		public IReadOnlyCollection<Frame> GetInterpolatedFrames()
+		public IEnumerable<Frame> GetInterpolatedFrames()
 		{
             if (Interpolate)
             {
-                return new ReadOnlyCollection<Frame>(InternalGetInterpolatedFrames().ToList());
+                return InternalGetInterpolatedFrames();
             }
 			return GetFrames();
         }
@@ -133,7 +133,7 @@ namespace PckStudio.Core
 					nextFrame = _frames[i + 1];
 				for (int tick = 0; tick < currentFrame.Ticks; tick++)
 				{
-					double delta = 1.0f - tick / (double)currentFrame.Ticks;
+					float delta = 1.0f - tick / (float)currentFrame.Ticks;
 					yield return new Frame(currentFrame.Texture.Interpolate(nextFrame.Texture, delta));
 				}
 			}

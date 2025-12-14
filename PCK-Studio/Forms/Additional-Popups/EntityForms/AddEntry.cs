@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PckStudio.Forms.Additional_Popups.Animation;
+using PckStudio.Controls;
 using PckStudio.Core.Json;
+using PckStudio.Forms.Additional_Popups.Animation;
 using PckStudio.Json;
 
 
@@ -63,8 +64,12 @@ namespace PckStudio.Forms.Additional_Popups.EntityForms
 
         public DialogResult ShowDialog(IWin32Window owner)
 		{
-			return filterPrompt.ShowDialog(owner);
-		}
+            var f = new ImmersiveForm();
+            filterPrompt.Dock = DockStyle.Fill;
+            filterPrompt.Update();
+            f.Controls.Add(filterPrompt);
+            return f.ShowDialog(owner);
+        }
 
 		private void treeViews_AfterSelect(object sender, TreeViewEventArgs e)
 		{

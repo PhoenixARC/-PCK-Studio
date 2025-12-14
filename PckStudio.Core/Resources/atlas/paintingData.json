@@ -51,21 +51,19 @@
 		},
 		{
 			"internalName": "Back",
-			"displayName": "Back Texture",
-			"width": 4,
-			"height": 4
+			"displayName": "Back Texture"
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "1x1E1",
@@ -121,20 +119,19 @@
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Pool",
-			"displayName": "\"The Pool\" by Kristoffer Zetterstrand",
-			"width": 2
+			"displayName": "\"The Pool\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Pool",
@@ -142,8 +139,7 @@
 		},
 		{
 			"internalName": "Courbet",
-			"displayName": "\"Bonjour Monsieur Courbet\" by Kristoffer Zetterstrand",
-			"width": 2
+			"displayName": "\"Bonjour Monsieur Courbet\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Courbet",
@@ -151,8 +147,7 @@
 		},
 		{
 			"internalName": "Sea",
-			"displayName": "\"Seaside\" by Kristoffer Zetterstrand",
-			"width": 2
+			"displayName": "\"Seaside\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Sea",
@@ -160,8 +155,7 @@
 		},
 		{
 			"internalName": "Sunset",
-			"displayName": "\"sunset_dense\" by Kristoffer Zetterstrand",
-			"width": 2
+			"displayName": "\"sunset_dense\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Sunset",
@@ -169,8 +163,7 @@
 		},
 		{
 			"internalName": "Creebet",
-			"displayName": "\"Creebet\" by Kristoffer Zetterstrand",
-			"width": 2
+			"displayName": "\"Creebet\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Creebet",
@@ -190,62 +183,6 @@
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
-		},
-		{
-			"internalName": "Back",
-			"displayName": "",
-		},
-		{
-			"internalName": "Back",
-			"displayName": "",
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
 			"displayName": ""
 		},
 		{
@@ -254,25 +191,79 @@
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Back",
-			"displayName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": ""
+		},
+		{
+			"internalName": "Back",
+			"displayName": ""
 		},
 		{
 			"internalName": "Wanderer",
-			"displayName": "\"Wanderer\" by Kristoffer Zetterstrand",
-			"height": 2
+			"displayName": "\"Wanderer\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Graham",
-			"displayName": "\"Graham\" by Kristoffer Zetterstrand",
-			"height": 2
+			"displayName": "\"Graham\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "",
@@ -316,21 +307,19 @@
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "\"Mortal Coil\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 3
+			"displayName": "\"Mortal Coil\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Wanderer",
@@ -382,25 +371,23 @@
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Skeleton",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Fighters",
-			"displayName": "\"Fighters\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 2
+			"displayName": "\"Fighters\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Fighters",
@@ -512,9 +499,7 @@
 		},
 		{
 			"internalName": "DonkeyKong",
-			"displayName": "\"Kong\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 3
+			"displayName": "\"Kong\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "DonkeyKong",
@@ -530,9 +515,7 @@
 		},
 		{
 			"internalName": "Match",
-			"displayName": "\"Match\" by Kristoffer Zetterstrand",
-			"width": 2,
-			"height": 2
+			"displayName": "\"Match\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Match",
@@ -540,9 +523,7 @@
 		},
 		{
 			"internalName": "Bust",
-			"displayName": "\"Bust\" by Kristoffer Zetterstrand",
-			"width": 2,
-			"height": 2
+			"displayName": "\"Bust\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Bust",
@@ -550,9 +531,7 @@
 		},
 		{
 			"internalName": "Stage",
-			"displayName": "\"The stage is set\" by Kristoffer Zetterstrand",
-			"width": 2,
-			"height": 2
+			"displayName": "\"The stage is set\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Stage",
@@ -560,9 +539,7 @@
 		},
 		{
 			"internalName": "Void",
-			"displayName": "\"The Void\" by Kristoffer Zetterstrand",
-			"width": 2,
-			"height": 2
+			"displayName": "\"The Void\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Void",
@@ -570,9 +547,7 @@
 		},
 		{
 			"internalName": "SkullAndRoses",
-			"displayName": "\"Skull and Roses\" by Kristoffer Zetterstrand",
-			"width": 2,
-			"height": 2
+			"displayName": "\"Skull and Roses\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "SkullAndRoses",
@@ -580,9 +555,7 @@
 		},
 		{
 			"internalName": "Wither",
-			"displayName": "\"Wither\" by Jens Bergensten",
-			"width": 2,
-			"height": 2
+			"displayName": "\"Wither\" by Jens Bergensten"
 		},
 		{
 			"internalName": "Wither",
@@ -654,19 +627,19 @@
 		},
 		{
 			"internalName": "DonkeyKong",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "DonkeyKong",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "DonkeyKong",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "DonkeyKong",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
@@ -798,9 +771,7 @@
 		},
 		{
 			"internalName": "Pointer",
-			"displayName": "\"Pointer\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 4
+			"displayName": "\"Pointer\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Pointer",
@@ -816,9 +787,7 @@
 		},
 		{
 			"internalName": "Pigscene",
-			"displayName": "\"Pigscene\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 4
+			"displayName": "\"Pigscene\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "Pigscene",
@@ -834,9 +803,7 @@
 		},
 		{
 			"internalName": "BurningSkull",
-			"displayName": "\"Skull On Fire\" by Kristoffer Zetterstrand",
-			"width": 4,
-			"height": 4
+			"displayName": "\"Skull On Fire\" by Kristoffer Zetterstrand"
 		},
 		{
 			"internalName": "BurningSkull",
@@ -852,83 +819,19 @@
 		},
 		{
 			"internalName": "",
-			"displayName": "",
-		},
-		{
-			"internalName": "",
-			"displayName": "",
-		},
-		{
-			"internalName": "",
-			"displayName": "",
-		},
-		{
-			"internalName": "",
-			"displayName": "",
-		},
-		{
-			"internalName": "Pointer",
-			"displayName": "",
-		},
-		{
-			"internalName": "Pointer",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pointer",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pointer",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pigscene",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pigscene",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pigscene",
-			"displayName": ""
-		},
-		{
-			"internalName": "Pigscene",
-			"displayName": ""
-		},
-		{
-			"internalName": "BurningSkull",
-			"displayName": ""
-		},
-		{
-			"internalName": "BurningSkull",
-			"displayName": ""
-		},
-		{
-			"internalName": "BurningSkull",
-			"displayName": ""
-		},
-		{
-			"internalName": "BurningSkull",
 			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
-		},
-		{
-			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Pointer",
@@ -948,10 +851,6 @@
 		},
 		{
 			"internalName": "Pigscene",
-			"displayName": "",
-		},
-		{
-			"internalName": "Pigscene",
 			"displayName": ""
 		},
 		{
@@ -963,11 +862,7 @@
 			"displayName": ""
 		},
 		{
-			"internalName": "BurningSkull",
-			"displayName": "",
-		},
-		{
-			"internalName": "BurningSkull",
+			"internalName": "Pigscene",
 			"displayName": ""
 		},
 		{
@@ -979,24 +874,28 @@
 			"displayName": ""
 		},
 		{
-			"internalName": "",
-			"displayName": "",
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
-			"internalName": "Pointer",
-			"displayName": "",
+			"internalName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Pointer",
@@ -1011,8 +910,12 @@
 			"displayName": ""
 		},
 		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
 			"internalName": "Pigscene",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "Pigscene",
@@ -1028,10 +931,6 @@
 		},
 		{
 			"internalName": "BurningSkull",
-			"displayName": "",
-		},
-		{
-			"internalName": "BurningSkull",
 			"displayName": ""
 		},
 		{
@@ -1043,20 +942,88 @@
 			"displayName": ""
 		},
 		{
-			"internalName": "",
-			"displayName": "",
+			"internalName": "BurningSkull",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
 		},
 		{
 			"internalName": "",
-			"displayName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pointer",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "Pigscene",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "BurningSkull",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
+		},
+		{
+			"internalName": "",
+			"displayName": ""
 		}
 	]
 }

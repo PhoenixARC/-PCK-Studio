@@ -16,10 +16,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -34,6 +32,7 @@ using PckStudio.Core.IO;
 using PckStudio.Core.Json;
 using PckStudio.Interfaces;
 using PckStudio.Internal;
+using PckStudio.Json;
 using PckStudio.Properties;
 
 namespace PckStudio.Forms.Editor
@@ -43,7 +42,7 @@ namespace PckStudio.Forms.Editor
         private readonly ITryGet<string, Animation> _tryGetAnimation;
         private readonly ITryGet<string, ISaveContext<Animation>> _tryGetAnimationSaveContext;
         private readonly AtlasResource _atlasResource;
-        private readonly ColorContainer _colourTable;
+        private readonly ColorContainer _colorTable;
         private readonly ResourceCategory _resourceLocationCategory;
         private readonly Atlas _atlas;
 
@@ -70,7 +69,7 @@ namespace PckStudio.Forms.Editor
             Text += _atlas.Name;
             originalPictureBox.Image = atlas;
 
-            _colourTable = colorContainer ?? AppResourceManager.Default.GetData(Resources.tu69colours, new COLFileReader());
+            _colorTable = colorContainer ?? AppResourceManager.Default.GetData(Resources.tu69colours, new COLFileReader());
             _tryGetAnimation = tryGetAnimation;
             _tryGetAnimationSaveContext = tryGetAnimationSaveContext;
             _atlasResource = resourceLocation as AtlasResource;
@@ -115,15 +114,22 @@ namespace PckStudio.Forms.Editor
 
         private void UpdateAtlasDisplay()
         {
-            using (var g = Graphics.FromImage(originalPictureBox.Image))
-            {
-                g.ApplyConfig(_graphicsConfig);
-                g.Clear(Color.Transparent);
-                Image image = EditorValue;
-                g.DrawImage(image, 0, 0, image.Width, image.Height);
+            using Graphics g = Graphics.FromImage(originalPictureBox.Image);
+            g.ApplyConfig(_graphicsConfig);
+            g.Clear(Color.Transparent);
+            Image image = EditorValue;
+            g.DrawImage(image, 0, 0, image.Width, image.Height);
 
-                SolidBrush brush = new SolidBrush(Color.FromArgb(127, Color.White));
-                g.FillRectangle(brush, allowGroupsToolStripMenuItem.Checked ? _atlas.GetTileArea(_selectedTile) : _selectedTile.GetArea(_atlas.TileSize));
+            SolidBrush brush = new SolidBrush(Color.FromArgb(127, Color.White));
+            if (!allowGroupsToolStripMenuItem.Checked)
+            {
+                g.FillRectangle(brush, _selectedTile.GetArea(_atlas.TileSize));
+                originalPictureBox.Invalidate();
+                return;
+            }
+            foreach (Rectangle area in _atlas.GetTileArea(_selectedTile))
+            {
+                g.FillRectangle(brush, area);
             }
             originalPictureBox.Invalidate();
         }
@@ -146,13 +152,13 @@ namespace PckStudio.Forms.Editor
             tileNameLabel.Text = $"{tileInfo?.DisplayName}";
             internalTileNameLabel.Text = $"{tileInfo?.InternalName}";
             setColorButton.Enabled = tileInfo.AllowCustomColour;
-            variantComboBox.Enabled = variantComboBox.Visible = tileInfo.HasColourEntry && tileInfo.ColourEntry?.Variants?.Length > 1;
+            variantComboBox.Enabled = Tiles.ColorEntries.TryGetValue(tileInfo.ColorKey, out JsonColorEntry colorEntry) && colorEntry?.Variants?.Length > 1 || _colorTable.Colors.Any(c => c.Name == tileInfo.ColorKey);
 
             if (variantComboBox.Enabled)
             {
-                if (tileInfo.ColourEntry.IsWaterColour)
+                if (colorEntry?.IsWaterColour ?? default)
                 {
-                    foreach (ColorContainer.WaterColor col in _colourTable.WaterColors)
+                    foreach (ColorContainer.WaterColor col in _colorTable.WaterColors)
                     {
                         if (!variantComboBox.Items.Contains(col.Name))
                             variantComboBox.Items.Add(col.Name);
@@ -160,10 +166,22 @@ namespace PckStudio.Forms.Editor
                 }
 
                 // TODO: only add variants that are available in the color table
-                variantComboBox.Items.AddRange(tileInfo.ColourEntry.Variants.Where(colorName => _colourTable.Colors.Any(c => c.Name == colorName) || _colourTable.WaterColors.Any(c => c.Name == colorName)).ToArray());
+                if (_colorTable.Colors.Where(c => c.Name == tileInfo.ColorKey).FirstOrDefault() is ColorContainer.Color c)
+                    variantComboBox.Items.Add(c.Name);
+                if (_colorTable.WaterColors.Where(c => c.Name == tileInfo.ColorKey).FirstOrDefault() is ColorContainer.WaterColor wc)
+                    variantComboBox.Items.Add(wc.Name);
+                if (tileInfo.HasColourEntry)
+                {
+                    if (!string.IsNullOrWhiteSpace(colorEntry.DefaultName))
+                        variantComboBox.Items.Add(colorEntry.DefaultName);
+                    variantComboBox.Items.AddRange(colorEntry.Variants.Where(colorName => _colorTable.Colors.Any(c => c.Name == colorName) || _colorTable.WaterColors.Any(c => c.Name == colorName)).ToArray());
+                }
 
                 if (variantComboBox.Items.Count > 0)
+                {
+                    variantComboBox.Visible = variantComboBox.Items.Count > 1;
                     variantComboBox.SelectedIndex = 0;
+                }
             }
 
             CheckForAnimation();
@@ -187,6 +205,7 @@ namespace PckStudio.Forms.Editor
 
                 if (playAnimationsToolStripMenuItem.Checked && hasAnimation)
                 {
+                    selectTilePictureBox.UseBlendColor = false;
                     selectTilePictureBox.Image = animation.CreateAnimationImage(selectTilePictureBox.BlendColor);
                     selectTilePictureBox.Start();
                     return;
@@ -196,7 +215,8 @@ namespace PckStudio.Forms.Editor
             if (_selectedTile.IsPartOfGroup && allowGroupsToolStripMenuItem.Checked)
             {
                 AtlasGroup group = _selectedTile.GetGroup();
-                tileNameLabel.Text = $"{group.Name}";
+                if (!string.IsNullOrWhiteSpace(group.Name))
+                    tileNameLabel.Text = group.Name;
                 internalTileNameLabel.Text = string.Empty;
                 if (group.IsAnimation())
                 {
@@ -210,11 +230,30 @@ namespace PckStudio.Forms.Editor
                         return;
                     }
                 }
-                if (group.IsLargeTile())
-                {
-                    selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile);
-                }
+                selectTilePictureBox.UseBlendColor = false;
+                setColorButton.Enabled |= group.AllowCustomColor;
+                selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile, selectTilePictureBox.BlendColor);
             }
+        }
+
+        private void ResetView()
+        {
+            tileNameLabel.Text = string.Empty;
+            internalTileNameLabel.Text = string.Empty;
+
+            colorSlider.Visible = false;
+            colorSliderLabel.Visible = false;
+            variantComboBox.Visible = false;
+
+            variantComboBox.SelectedItem = null;
+            variantComboBox.Enabled = false;
+            variantComboBox.Items.Clear();
+            clearColorButton.Enabled = false;
+
+            if (selectTilePictureBox.IsPlaying)
+                selectTilePictureBox.Stop();
+            selectTilePictureBox.UseBlendColor = true;
+            selectTilePictureBox.Image = null;
         }
 
         private void ResetView()
@@ -323,11 +362,11 @@ namespace PckStudio.Forms.Editor
 
         private void SetTile(Image texture)
         {
-            if (_selectedTile.IsPartOfGroup)
+            if (_selectedTile.IsPartOfGroup && allowGroupsToolStripMenuItem.Checked)
             {
                 AtlasGroup group = _selectedTile.GetGroup();
                 _atlas.SetGroup(group, texture);
-                selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile);
+                selectTilePictureBox.Image = _atlas.GetTileTexture(_selectedTile, selectTilePictureBox.BlendColor);
                 UpdateAtlasDisplay();
                 return;
             }
@@ -342,36 +381,38 @@ namespace PckStudio.Forms.Editor
 
         private Color GetBlendColor()
         {
-            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) && tileInfo.HasColourEntry)
+            if (_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo))
             {
-                return FindBlendColorByKey(tileInfo.ColourEntry.DefaultName);
+                string colorKey = tileInfo.InternalName;
+
+                colorSlider.Visible = colorSliderLabel.Visible = true;
+                // Simply, Experience orbs red value is just sliding between 255 and 0
+                if (colorKey.StartsWith("experience_orb"))
+                    return Color.FromArgb(colorSlider.Value, 255, 0);
+
+                // Similar story for critical hits, but for all values
+                if (colorKey == "critical_hit")
+                    return Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
+
+                // Enchanted hits are modified critical hit particles
+                if (colorKey == "enchanted_hit")
+                {
+                    // This is directly based on Java's source code for handling enchanted hits
+                    // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
+                    var c = Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
+                    return Color.FromArgb((byte)(c.R * 0.3f), (byte)(c.G * 0.8f), c.B);
+                }
+                colorSlider.Visible = colorSliderLabel.Visible = false;
+                if (tileInfo.HasColourEntry)
+                    return FindBlendColorByKey(tileInfo.ColorEntry.DefaultName);
             }
             return Color.White;
         }
 
-        private Color GetSpecificBlendColor(string colorKey)
+        private Color FindBlendColorByKey(string colorKey, bool isWaterColour = default)
         {
-            colorSlider.Visible = colorSliderLabel.Visible = true;
-
-            // Simply, Experience orbs red value is just sliding between 255 and 0
-            if (colorKey == "experience_orb")
-                return Color.FromArgb(colorSlider.Value, 255, 0);
-
-            // Similar story for critical hits, but for all values
-            return Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
-            }
-
-        private Color FindBlendColorByKey(string colorKey)
-        {
-            // The following tiles are hardcoded within a range and do not have color table entries
-            if (colorKey == "experience_orb" || colorKey == "critical_hit")
-                return GetSpecificBlendColor(colorKey);
-
-            if (!_selectedTile.TryGetUserDataOfType(out JsonTileInfo tileInfo) || !tileInfo.HasColourEntry)
-            {
-                Debug.WriteLine("Could not find: " + colorKey);
+            if (string.IsNullOrWhiteSpace(colorKey))
                 return Color.White;
-            }
 
             // Enchanted hits are modified critical hit particles
             if (tileInfo.InternalName == "enchanted_hit")
@@ -383,14 +424,11 @@ namespace PckStudio.Forms.Editor
             }
 
             // basic way to check for classic water colors
-            if (!tileInfo.ColourEntry.IsWaterColour || colorKey.StartsWith("Water_"))
+            if (!isWaterColour && !colorKey.StartsWith("Water_") && _colorTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
             {
-                if (_colourTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
-                {
-                    return color.ColorPallette;
-                }
+                return color.ColorPallette;
             }
-            else if (_colourTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
+            if (_colorTable.WaterColors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.WaterColor waterColor)
             {
                 return waterColor.SurfaceColor;
             }
@@ -406,6 +444,18 @@ namespace PckStudio.Forms.Editor
             int down = _atlas.Rows;
             int left = -1;
             int right = 1;
+            if (_selectedTile.IsPartOfGroup)
+            {
+                AtlasGroup group = _selectedTile.GetGroup();
+                if (!group.IsComposedOfMultipleTiles())
+                {
+                    Size s = group.GetSize(new Size(1, 1));
+                    up = -_atlas.Rows * (group.Column - _selectedTile.Column + 1);
+                    down = _atlas.Rows * (group.Column - _selectedTile.Column + s.Height);
+                    left = group.Row - _selectedTile.Row - 1;
+                    right = group.Row - _selectedTile.Row + s.Width;
+                }
+            }
             switch (keyData)
             {
                 case Keys.R:
@@ -512,14 +562,14 @@ namespace PckStudio.Forms.Editor
             };
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                _atlas.GetTileTexture(_selectedTile).Save(saveFileDialog.FileName, ImageFormat.Png);
+                _atlas.GetTileTexture(_selectedTile, selectTilePictureBox.BlendColor).Save(saveFileDialog.FileName, ImageFormat.Png);
                 Action<AtlasTile, FileInfo> onChange = new Action<AtlasTile, FileInfo>((tile, fileInfo) =>
                 {
                     Image img = Image.FromFile(fileInfo.FullName).ReleaseFromFile();
                     bool success = _atlas.SetTile(tile, img);
                     if (!success)
                     {
-                        Size s = _atlas.GetTileArea(tile).Size;
+                        Size s = _atlas.GetTileArea(tile).FirstOrDefault().Size;
                         new ToastContentBuilder()
                             .AddText("Invalid Image Dimensions")
                             .AddText($"Required: {s.Width}x{s.Height} Recived: {img.Width}x{img.Height}")
@@ -554,13 +604,8 @@ namespace PckStudio.Forms.Editor
             {
                 string colorKey = variantComboBox.SelectedItem.ToString();
                 Color blendColor = FindBlendColorByKey(colorKey);
-                if (_selectedTile.IsPartOfGroup && _selectedTile.GetGroup().IsAnimation())
-                {
-                    selectTilePictureBox.Image = _atlas.GetAnimationFromGroup(_selectedTile.GetGroup()).CreateAnimationImage(blendColor);
-                    selectTilePictureBox.Start();
-                    return;
-                }
                 selectTilePictureBox.BlendColor = blendColor;
+                CheckForAnimation();
             }
         }
 
@@ -589,6 +634,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = _colorPick.Color;
             variantComboBox.Enabled = false;
             clearColorButton.Enabled = true;
+            CheckForAnimation();
         }
 
         private void clearColorButton_Click(object sender, EventArgs e)
@@ -598,6 +644,7 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.BlendColor = Color.White;
 
             clearColorButton.Enabled = false;
+            CheckForAnimation();
         }
 
         private void colorSlider_ValueChanged(object sender, EventArgs e)

@@ -11,13 +11,12 @@ namespace PckStudio.Core.DLC
     public enum DLCSkinPackageOrder
     {
         ById,
-        CapesFirst,
-        SkinsFirst
+        ByName,
     }
 
     public sealed class DLCSkinPackage : DLCPackage
     {
-        public DLCSkinPackageOrder SkinPackageOrder { get; set; } = DLCSkinPackageOrder.CapesFirst;
+        public DLCSkinPackageOrder SkinPackageOrder { get; set; } = DLCSkinPackageOrder.ById;
 
         private readonly IDictionary<int, Image> _capes;
         private readonly IDictionary<SkinIdentifier, Skin.Skin> _skins;
@@ -38,6 +37,7 @@ namespace PckStudio.Core.DLC
         internal static IDLCPackage CreateEmpty(IDLCPackage parentPackage) => CreateEmpty(parentPackage.Name, parentPackage.Identifier, parentPackage);
 
         public bool TryGetSkin(SkinIdentifier skinIdentifier, out Skin.Skin skin) => _skins.TryGetValue(skinIdentifier, out skin);
+        public bool TryGetCape(int capeId, out Image cape) => _capes.TryGetValue(capeId, out cape);
 
         public bool ContainsSkin(SkinIdentifier skinIdentifier) => _skins.ContainsKey(skinIdentifier);
 

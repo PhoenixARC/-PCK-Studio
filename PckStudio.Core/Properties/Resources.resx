@@ -145,11 +145,17 @@
   <data name="cloth_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\armor\cloth_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="clouds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clouds.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Comparison" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Comparison.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="compass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\compass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="defaultModels" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\defaultModels.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="diamond" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\armor\diamond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,20 +187,23 @@
   <data name="itemData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\itemData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
+  <data name="items_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\item_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="items_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\items.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="latest2lce_blocks" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\java\latest2lce_blocks.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="latest2lce_items" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\java\latest2lce_items.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="painting_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\painting_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="mapIconData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\mapIconData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="map_icons_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\map_icons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="modelMetaData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\modelMetaData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="moonPhaseData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\moonPhaseData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
@@ -211,11 +220,20 @@
   <data name="particleData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\particleData.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
+  <data name="particles_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\particles_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="particles_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\particles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="resourceFormat_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\java\resourceFormat_6.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="rain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="snow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="terrain_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\groups\terrain_groups.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="terrain_atlas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atlas\terrain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -228,5 +246,8 @@
   </data>
   <data name="unknown_pack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\unknown_pack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="colorEntries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atlas\colorEntries.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

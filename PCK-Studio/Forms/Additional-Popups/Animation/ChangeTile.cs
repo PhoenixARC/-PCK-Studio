@@ -7,6 +7,7 @@ using PckStudio.Json;
 using PckStudio.Core.Extensions;
 using System.Drawing;
 using System.Linq;
+using PckStudio.Controls;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
@@ -36,7 +37,11 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		public DialogResult ShowDialog(IWin32Window owner)
 		{
-			return filterPrompt.ShowDialog(owner);
+			var f = new ImmersiveForm();
+			filterPrompt.Dock = DockStyle.Fill;
+			filterPrompt.Update();
+			f.Controls.Add(filterPrompt);
+            return f.ShowDialog(owner);
 		}
 
 		private void filterPrompt_OnSelectedItemChanged(object sender, EventArgs e)
@@ -68,7 +73,6 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 					Tag = tileData
 				};
                 view.Nodes.Add(tileNode);
-				(view.Tag as List<TreeNode>).Add(tileNode);
 			}
         }
 

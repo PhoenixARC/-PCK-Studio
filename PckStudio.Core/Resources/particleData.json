@@ -1,0 +1,2097 @@
+{
+  "COMMENT_1": "JSON by MattNL",
+  "entries": [
+    {
+      "internalName": "generic_0",
+      "displayName": "Generic (Stage 1)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_1",
+      "displayName": "Generic (Stage 2)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_2",
+      "displayName": "Generic (Stage 3)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_3",
+      "displayName": "Generic (Stage 4)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_4",
+      "displayName": "Generic (Stage 5)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_5",
+      "displayName": "Generic (Stage 6)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_6",
+      "displayName": "Generic (Stage 7)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "generic_7",
+      "displayName": "Generic (Stage 8)",
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_Smoke",
+          "Particle_NetherPortal",
+          "Particle_EnderPortal",
+          "Particle_Ender",
+          "Particle_DragonBreathMin",
+          "Particle_DragonBreathMax"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "unused_splash_0",
+      "displayName": "Splash (Stage 1) (Unused)"
+    },
+    {
+      "internalName": "unused_splash_1",
+      "displayName": "Splash (Stage 2) (Unused)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "splash_0",
+      "displayName": "Splash (Stage 1)"
+    },
+    {
+      "internalName": "splash_1",
+      "displayName": "Splash (Stage 2)"
+    },
+    {
+      "internalName": "splash_2",
+      "displayName": "Splash (Stage 3)"
+    },
+    {
+      "internalName": "splash_3",
+      "displayName": "Splash (Stage 4)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "classic_bubble",
+      "displayName": "Bubble (Unused)"
+    },
+    {
+      "internalName": "bobber",
+      "displayName": "Fishing Bobber"
+    },
+    {
+      "internalName": "bubble",
+      "displayName": "Bubble",
+      "colourEntry": {
+        "isWaterColour": true,
+        "defaultName": "Water_Plains",
+        "variants": [
+          "Water_Ocean",
+          "Water_Plains",
+          "Water_Desert",
+          "Water_ExtremeHills",
+          "Water_Forest",
+          "Water_Taiga",
+          "Water_Swampland",
+          "Water_River",
+          "Water_Hell",
+          "Water_Sky",
+          "Water_FrozenOcean",
+          "Water_FrozenRiver",
+          "Water_IcePlains",
+          "Water_IceMountains",
+          "Water_MushroomIsland",
+          "Water_MushroomIslandShore",
+          "Water_Beach",
+          "Water_DesertHills",
+          "Water_ForestHills",
+          "Water_TaigaHills",
+          "Water_ExtremeHillsEdge",
+          "Water_Jungle",
+          "Water_JungleHills",
+          "Water_JungleEdge",
+          "Water_DeepOcean",
+          "Water_StoneBeach",
+          "Water_ColdBeach",
+          "Water_BirchForest",
+          "Water_BirchForestHills",
+          "Water_RoofedForest",
+          "Water_ColdTaiga",
+          "Water_ColdTaigaHills",
+          "Water_MegaTaiga",
+          "Water_MegaTaigaHills",
+          "Water_ExtremeHillsPlus",
+          "Water_Savanna",
+          "Water_SavannaPlateau",
+          "Water_Mesa",
+          "Water_MesaPlateauF",
+          "Water_MesaPlateau"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": "Firework Flash",
+      "width": 4,
+      "height": 4,
+      "allowCustomColour": true
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "flame",
+      "displayName": "Flame"
+    },
+    {
+      "internalName": "lava",
+      "displayName": "Lava"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "note",
+      "displayName": "Noteblock Note",
+      "colourEntry": {
+        "defaultName": "Particle_Note_00",
+        "variants": [
+          "Particle_Note_00",
+          "Particle_Note_01",
+          "Particle_Note_02",
+          "Particle_Note_03",
+          "Particle_Note_04",
+          "Particle_Note_05",
+          "Particle_Note_06",
+          "Particle_Note_07",
+          "Particle_Note_08",
+          "Particle_Note_09",
+          "Particle_Note_10",
+          "Particle_Note_11",
+          "Particle_Note_12",
+          "Particle_Note_13",
+          "Particle_Note_14",
+          "Particle_Note_15",
+          "Particle_Note_16",
+          "Particle_Note_17",
+          "Particle_Note_18",
+          "Particle_Note_19",
+          "Particle_Note_20",
+          "Particle_Note_21",
+          "Particle_Note_22",
+          "Particle_Note_23",
+          "Particle_Note_24",
+        ]
+      }
+    },
+    {
+      "internalName": "critical_hit",
+      "displayName": "Critical Hit",
+      "colourEntry": {
+        "defaultName": "critical_hit",
+        "variants": [
+          "critical_hit"
+        ]
+      }
+    },
+    {
+      "internalName": "enchanted_hit",
+      "displayName": "Enchanted Hit",
+      "colourEntry": {
+        "defaultName": "critical_hit",
+        "variants": [
+          "critical_hit"
+        ]
+      }
+    },
+    {
+      "internalName": "damage",
+      "displayName": "Damage Indicator"
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "heart",
+      "displayName": "Heart"
+    },
+    {
+      "internalName": "angry",
+      "displayName": "Angry"
+    },
+    {
+      "internalName": "glint",
+      "displayName": "Glint"
+    },
+    {
+      "internalName": "angry_villager",
+      "displayName": "Angry Villager (Unused)"
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "flash",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "water_0",
+      "displayName": "Water (Stage 1) (Unused)"
+    },
+    {
+      "internalName": "water_1",
+      "displayName": "Water (Stage 2) (Unused)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_0",
+      "displayName": "Bubble Pop (Stage 1) (Unused)",
+      "width": 2,
+      "height": 2
+    },
+    {
+      "internalName": "bubble_pop_0",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_1",
+      "displayName": "Bubble Pop (Stage 2) (Unused)",
+      "width": 2,
+      "height": 2
+    },
+    {
+      "internalName": "bubble_pop_1",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_2",
+      "displayName": "Bubble Pop (Stage 3) (Unused)",
+      "width": 2,
+      "height": 2
+    },
+    {
+      "internalName": "bubble_pop_2",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_3",
+      "displayName": "Bubble Pop (Stage 4) (Unused)",
+      "width": 2,
+      "height": 2
+    },
+    {
+      "internalName": "bubble_pop_3",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_4",
+      "displayName": "Bubble Pop (Stage 5) (Unused)",
+      "width": 2,
+      "height": 2
+    },
+    {
+      "internalName": "bubble_pop_4",
+      "displayName": ""
+    },
+    {
+      "internalName": "drip_hang",
+      "displayName": "Drip (Hang)",
+
+      "colourEntry": {
+        "defaultName": "Particle_DripWater",
+        "variants": [
+          "Particle_DripWater",
+          "Particle_DripLavaStart",
+          "Particle_DripLavaEnd"
+        ]
+      }
+    },
+    {
+      "internalName": "drip_fall",
+      "displayName": "Drip (Fall)",
+      "colourEntry": {
+        "defaultName": "Particle_DripWater",
+        "variants": [
+          "Particle_DripWater",
+          "Particle_DripLavaStart",
+          "Particle_DripLavaEnd"
+        ]
+      }
+    },
+    {
+      "internalName": "drip_land",
+      "displayName": "Drip (Land)",
+      "colourEntry": {
+        "defaultName": "Particle_DripWater",
+        "variants": [
+          "Particle_DripWater",
+          "Particle_DripLavaStart",
+          "Particle_DripLavaEnd"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_0",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_0",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_1",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_1",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_2",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_2",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_3",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_3",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_4",
+      "displayName": ""
+    },
+    {
+      "internalName": "bubble_pop_4",
+      "displayName": ""
+    },
+    {
+      "internalName": "effect_0",
+      "displayName": "Effect (Stage 1)",
+
+      "allowCustomColour": true,
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_1",
+      "displayName": "Effect (Stage 2)",
+
+      "allowCustomColour": true,
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_2",
+      "displayName": "Effect (Stage 3)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_3",
+      "displayName": "Effect (Stage 4)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_4",
+      "displayName": "Effect (Stage 5)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_5",
+      "displayName": "Effect (Stage 6)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_6",
+      "displayName": "Effect (Stage 7)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "effect_7",
+      "displayName": "Effect (Stage 8)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "spell_0",
+      "displayName": "Splash Effect (Stage 1)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_1",
+      "displayName": "Splash Effect (Stage 2)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_2",
+      "displayName": "Splash Effect (Stage 3)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_3",
+      "displayName": "Splash Effect (Stage 4)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_4",
+      "displayName": "Splash Effect (Stage 5)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_5",
+      "displayName": "Splash Effect (Stage 6)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_6",
+      "displayName": "Splash Effect (Stage 7)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "spell_7",
+      "displayName": "Splash Effect (Stage 8)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "Potion_BaseColour",
+        "variants": [
+          "Potion_BaseColour",
+          "Effect_MovementSpeed",
+          "Effect_MovementSlowDown",
+          "Effect_DigSpeed",
+          "Effect_DigSlowdown",
+          "Effect_DamageBoost",
+          "Effect_Heal",
+          "Effect_Harm",
+          "Effect_Jump",
+          "Effect_Confusion",
+          "Effect_Regeneration",
+          "Effect_DamageResistance",
+          "Effect_FireResistance",
+          "Effect_WaterBreathing",
+          "Effect_Invisibility",
+          "Effect_Blindness",
+          "Effect_NightVision",
+          "Effect_Hunger",
+          "Effect_Weakness",
+          "Effect_Poison",
+          "Effect_Wither",
+          "Effect_HealthBoost",
+          "Effect_Absorption",
+          "Effect_Saturation",
+          "Effect_Levitation",
+          "Effect_Luck",
+          "Effect_BadLuck",
+          "Effect_TurtleMaster",
+          "Effect_SlowFall"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "spark_0",
+      "displayName": "Firework Spark (Stage 1)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_1",
+      "displayName": "Firework Spark (Stage 2)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_2",
+      "displayName": "Firework Spark (Stage 3)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_3",
+      "displayName": "Firework Spark (Stage 4)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_4",
+      "displayName": "Firework Spark (Stage 5)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_5",
+      "displayName": "Firework Spark (Stage 6)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_6",
+      "displayName": "Firework Spark (Stage 7)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "spark_7",
+      "displayName": "Firework Spark (Stage 8)",
+      "allowCustomColour": true,
+
+      "colourEntry": {
+        "defaultName": "None",
+        "variants": [
+          "None",
+          "Particle_ScoreRing_Small",
+          "Particle_ScoreRing_Medium",
+          "Particle_ScoreRing_Large"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "glitter_0",
+      "displayName": "Shulker/End Rod Glitter (Stage 1)"
+    },
+    {
+      "internalName": "glitter_1",
+      "displayName": "Shulker/End Rod Glitter (Stage 2)"
+    },
+    {
+      "internalName": "glitter_2",
+      "displayName": "Shulker/End Rod Glitter (Stage 3)"
+    },
+    {
+      "internalName": "glitter_3",
+      "displayName": "Shulker/End Rod Glitter (Stage 4)"
+    },
+    {
+      "internalName": "glitter_4",
+      "displayName": "Shulker/End Rod Glitter (Stage 5)"
+    },
+    {
+      "internalName": "glitter_5",
+      "displayName": "Shulker/End Rod Glitter (Stage 6)"
+    },
+    {
+      "internalName": "glitter_6",
+      "displayName": "Shulker/End Rod Glitter (Stage 7)"
+    },
+    {
+      "internalName": "glitter_7",
+      "displayName": "Shulker/End Rod Glitter (Stage 8)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "camera_shoot_explosion_0",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 1)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_1",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 2)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_2",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 3)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_3",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 4)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_4",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 5)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_5",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 6)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_6",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 7)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_7",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 8)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_8",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 9)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_9",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 10)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_10",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 11)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_11",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 12)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_12",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 13)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_13",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 14)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_14",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 15)"
+    },
+    {
+      "internalName": "camera_shoot_explosion_15",
+      "displayName": "Bedrock Edition Explosion (Unused) (Stage 16)"
+    },
+    {
+      "internalName": "conduit_0",
+      "displayName": "Conduit (Stage 1)"
+    },
+    {
+      "internalName": "conduit_1",
+      "displayName": "Conduit (Stage 2)"
+    },
+    {
+      "internalName": "conduit_2",
+      "displayName": "Conduit (Stage 3)"
+    },
+    {
+      "internalName": "conduit_3",
+      "displayName": "Conduit (Stage 4)"
+    },
+    {
+      "internalName": "conduit_4",
+      "displayName": "Conduit (Stage 5)"
+    },
+    {
+      "internalName": "conduit_5",
+      "displayName": "Conduit (Stage 6)"
+    },
+    {
+      "internalName": "conduit_6",
+      "displayName": "Conduit (Stage 7)"
+    },
+    {
+      "internalName": "conduit_7",
+      "displayName": "Conduit (Stage 8)"
+    },
+    {
+      "internalName": "conduit_8",
+      "displayName": "Conduit (Stage 9)"
+    },
+    {
+      "internalName": "conduit_9",
+      "displayName": "Conduit (Stage 10)"
+    },
+    {
+      "internalName": "conduit_10",
+      "displayName": "Conduit (Stage 11)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "sga_a",
+      "displayName": "Standard Galactic Language (A)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_b",
+      "displayName": "Standard Galactic Language (B)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_c",
+      "displayName": "Standard Galactic Language (C)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_d",
+      "displayName": "Standard Galactic Language (D)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_e",
+      "displayName": "Standard Galactic Language (E)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_f",
+      "displayName": "Standard Galactic Language (F)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_g",
+      "displayName": "Standard Galactic Language (G)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_h",
+      "displayName": "Standard Galactic Language (H)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_i",
+      "displayName": "Standard Galactic Language (I)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_j",
+      "displayName": "Standard Galactic Language (J)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_k",
+      "displayName": "Standard Galactic Language (K)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_l",
+      "displayName": "Standard Galactic Language (L)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_m",
+      "displayName": "Standard Galactic Language (M)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_n",
+      "displayName": "Standard Galactic Language (N)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_o",
+      "displayName": "Standard Galactic Language (O)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_p",
+      "displayName": "Standard Galactic Language (P)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_q",
+      "displayName": "Standard Galactic Language (Q)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_r",
+      "displayName": "Standard Galactic Language (R)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_s",
+      "displayName": "Standard Galactic Language (S)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_t",
+      "displayName": "Standard Galactic Language (T)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_u",
+      "displayName": "Standard Galactic Language (U)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_v",
+      "displayName": "Standard Galactic Language (V)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_w",
+      "displayName": "Standard Galactic Language (W)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_x",
+      "displayName": "Standard Galactic Language (X)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_y",
+      "displayName": "Standard Galactic Language (Y)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "sga_z",
+      "displayName": "Standard Galactic Language (Z)",
+
+      "colourEntry": {
+        "defaultName": "Particle_EnchantmentTable",
+        "variants": [
+          "Particle_EnchantmentTable"
+        ]
+      }
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+  ]
+}

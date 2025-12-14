@@ -24,7 +24,6 @@ namespace PckStudio.Forms.Editor
 	public partial class AudioEditor : EditorForm<PckAudioFile>
 	{
 		public string defaultType = "yes";
-        MainForm parent = null;
 
         private static readonly List<string> Categories = new List<string>
 		{
@@ -53,15 +52,14 @@ namespace PckStudio.Forms.Editor
             SetUpTree();
         }
 
-        private string GetCategoryFromId(PckAudioFile.AudioCategory.EAudioType categoryId)
-			=> categoryId >= PckAudioFile.AudioCategory.EAudioType.Overworld &&
-				categoryId <= PckAudioFile.AudioCategory.EAudioType.BuildOff
+        private string GetCategoryFromId(PckAudioFile.Category categoryId)
+			=> Enum.IsDefined(typeof(PckAudioFile.Category), categoryId)
 				? Categories[(int)categoryId]
 				: "Not valid";
 
-		private PckAudioFile.AudioCategory.EAudioType GetCategoryId(string category)
+		private PckAudioFile.Category GetCategoryId(string category)
 		{
-			return (PckAudioFile.AudioCategory.EAudioType)Categories.IndexOf(category);
+			return (PckAudioFile.Category)Categories.IndexOf(category);
 		}
 
 		public void SetUpTree()
@@ -76,10 +74,10 @@ namespace PckStudio.Forms.Editor
 				foreach (string songname in category.SongNames.FindAll(s => s.Contains('\\')))
 					category.SongNames[category.SongNames.IndexOf(songname)] = songname.Replace('\\', '/');
 
-				if (category.AudioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				if (category.AudioType == PckAudioFile.Category.Creative)
 				{
 					if (category.Name == "include_overworld" &&
-                        EditorValue.TryGetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld, out PckAudioFile.AudioCategory overworldCategory))
+                        EditorValue.TryGetCategory(PckAudioFile.Category.Overworld, out PckAudioFile.AudioCategory overworldCategory))
 					{
 						foreach (var name in category.SongNames.ToList())
 						{
@@ -95,7 +93,7 @@ namespace PckStudio.Forms.Editor
 				treeNode.Tag = category;
 				treeView1.Nodes.Add(treeNode);
 			}
-			playOverworldInCreative.Enabled = EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Creative);
+			playOverworldInCreative.Enabled = EditorValue.HasCategory(PckAudioFile.Category.Creative);
 			treeView1.EndUpdate();
 		}
 
@@ -105,9 +103,7 @@ namespace PckStudio.Forms.Editor
 				return;
             TreeNode entry = treeView2.SelectedNode;
 
-			if (!parent.CreateDataFolder())
-				return;
-			string fileName = Path.Combine(parent.GetDataPath(), entry.Text + ".binka");
+			string fileName = Path.Combine(entry.Text + ".binka");
 
 			if (File.Exists(fileName))
 				MessageBox.Show(this, $"\"{entry.Text}.binka\" exists in the \"Data\" folder", "File found");
@@ -144,7 +140,7 @@ namespace PckStudio.Forms.Editor
 			EditorValue.AddCategory(GetCategoryId(add.SelectedItem));
             PckAudioFile.AudioCategory category = EditorValue.GetCategory(GetCategoryId(add.SelectedItem));
 
-			if (GetCategoryId(add.SelectedItem) == PckAudioFile.AudioCategory.EAudioType.Creative)
+			if (GetCategoryId(add.SelectedItem) == PckAudioFile.Category.Creative)
 			{
 				playOverworldInCreative.Visible = true;
 				playOverworldInCreative.Checked = false;
@@ -161,9 +157,6 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView1.SelectedNode is TreeNode t && t.Tag is PckAudioFile.AudioCategory)
 			{
-				if (!parent.CreateDataFolder())
-					return;
-
 				OpenFileDialog ofn = new OpenFileDialog();
 				ofn.Multiselect = true;
 				ofn.Filter = "Supported audio files (*.binka,*.wav)|*.binka;*.wav";
@@ -183,7 +176,7 @@ namespace PckStudio.Forms.Editor
 			if (treeView1.SelectedNode is TreeNode main &&
 				EditorValue.RemoveCategory(GetCategoryId(treeView1.SelectedNode.Text)))
 			{
-				if(GetCategoryId(treeView1.SelectedNode.Text) == PckAudioFile.AudioCategory.EAudioType.Creative)
+				if(GetCategoryId(treeView1.SelectedNode.Text) == PckAudioFile.Category.Creative)
 				{
 					playOverworldInCreative.Visible = false;
 					playOverworldInCreative.Checked = false;
@@ -236,7 +229,7 @@ namespace PckStudio.Forms.Editor
 					if (File.Exists(cacheSongFile))
 						File.Delete(cacheSongFile);
 
-					string new_loc = Path.Combine(parent.GetDataPath(), songName + ".binka");
+					string new_loc = Path.Combine(songName + ".binka");
 					bool is_duplicate_file = false; // To handle if a file already in the pack is dropped back in
 					bool loc_is_occupied = File.Exists(new_loc);
 					if (loc_is_occupied)
@@ -348,24 +341,21 @@ namespace PckStudio.Forms.Editor
 			// Gets the MainForm so we can access the Save Location
 			if (treeView1.SelectedNode != null)
 			{
-				if (!parent.CreateDataFolder())
-					return;
-
 				ProcessEntries((string[])e.Data.GetData(DataFormats.FileDrop, false));
 			}
 		}
 
 		private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			if (!EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Overworld) ||
-			   !EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.Nether) ||
-			   !EditorValue.HasCategory(PckAudioFile.AudioCategory.EAudioType.End))
+			if (!EditorValue.HasCategory(PckAudioFile.Category.Overworld) ||
+			   !EditorValue.HasCategory(PckAudioFile.Category.Nether) ||
+			   !EditorValue.HasCategory(PckAudioFile.Category.End))
 			{
 				MessageBox.Show(this, "Your changes were not saved. The game will crash when loading your pack if the Overworld, Nether and End categories don't all exist with at least one valid song.", "Mandatory Categories Missing");
 				return;
 			}
 
-			PckAudioFile.AudioCategory overworldCategory = EditorValue.GetCategory(PckAudioFile.AudioCategory.EAudioType.Overworld);
+			PckAudioFile.AudioCategory overworldCategory = EditorValue.GetCategory(PckAudioFile.Category.Overworld);
 
 			bool songs_missing = false;
 			foreach (PckAudioFile.AudioCategory category in EditorValue.Categories)
@@ -378,7 +368,7 @@ namespace PckStudio.Forms.Editor
 
 				foreach(var song in category.SongNames)
 				{
-                    string fileName = Path.Combine(parent.GetDataPath(), song + ".binka");
+                    string fileName = Path.Combine(song + ".binka");
 					if (!File.Exists(fileName))
 					{
 						songs_missing = true;
@@ -387,7 +377,7 @@ namespace PckStudio.Forms.Editor
 				}
 
 				category.Name = "";
-				if (playOverworldInCreative.Checked && category.AudioType == PckAudioFile.AudioCategory.EAudioType.Creative)
+				if (playOverworldInCreative.Checked && category.AudioType == PckAudioFile.Category.Creative)
 				{
 					foreach (var name in overworldCategory.SongNames)
 					{
@@ -437,10 +427,8 @@ namespace PckStudio.Forms.Editor
 				totalSongList.Add(song);
 			}
 
-			if (!parent.CreateDataFolder())
-				return;
 			int totalDeleted = 0;
-			foreach (string song in Directory.GetFiles(parent.GetDataPath(), "*.binka"))
+			foreach (string song in Directory.GetFiles("*.binka"))
 			{
 				if (!totalSongList.Contains(Path.GetFileNameWithoutExtension(song)))
 				{
@@ -498,24 +486,11 @@ namespace PckStudio.Forms.Editor
 
 		private void openDataFolderToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!parent.CreateDataFolder())
-				return;
-			Process.Start("explorer.exe", parent.GetDataPath());
-		}
-
-		private void AudioEditor_Shown(object sender, EventArgs e)
-		{
-			if (Owner.Owner is MainForm p)
-				parent = p;
-			else
-				Close();
+			//Process.Start("explorer.exe", parent.GetDataPath());
 		}
 
 		private async void bulkReplaceExistingFilesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!parent.CreateDataFolder())
-				return;
-
 			int exitCode = 0;
 
 
@@ -540,7 +515,7 @@ namespace PckStudio.Forms.Editor
 			{
 				string song_name = Path.GetFileNameWithoutExtension(file);
 				string file_ext = Path.GetExtension(file).ToLower();
-				string new_loc = Path.Combine(parent.GetDataPath(), Path.GetFileNameWithoutExtension(file) + ".binka");
+				string new_loc = Path.Combine(Path.GetFileNameWithoutExtension(file) + ".binka");
 				if (!totalSongList.Contains(song_name) || file == new_loc)
 					continue;
 
@@ -566,7 +541,7 @@ namespace PckStudio.Forms.Editor
 						continue;
 				}
                 else if(file_ext == ".binka")
-					File.Copy(file, Path.Combine(parent.GetDataPath(), Path.GetFileName(file)));
+					File.Copy(file, Path.Combine(Path.GetFileName(file)));
 			}
 		}
 
@@ -574,7 +549,7 @@ namespace PckStudio.Forms.Editor
 		{
 			if (treeView2.SelectedNode != null && treeView1.SelectedNode.Tag is PckAudioFile.AudioCategory)
 			{
-				Binka.ToWav(Path.Combine(parent.GetDataPath(), treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
+				//Binka.ToWav(Path.Combine(treeView2.SelectedNode.Text + ".binka"), Path.Combine(parent.GetDataPath()));
 			}
 		}
 
@@ -593,7 +568,7 @@ namespace PckStudio.Forms.Editor
 
 				EditorValue.RemoveCategory(category.AudioType);
 
-				EditorValue.AddCategory(category.AudioType == PckAudioFile.AudioCategory.EAudioType.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "", GetCategoryId(add.SelectedItem), category.ParameterType);
+				EditorValue.AddCategory(category.AudioType == PckAudioFile.Category.Overworld && playOverworldInCreative.Checked ? "include_overworld" : "", GetCategoryId(add.SelectedItem), category.ParameterType);
 
                 PckAudioFile.AudioCategory newCategory = EditorValue.GetCategory(GetCategoryId(add.SelectedItem));
 
@@ -611,16 +586,16 @@ namespace PckStudio.Forms.Editor
 		{
 			if(MessageBox.Show(this, "This function will move all binka files in the \"Data\" folder into a \"Music\" folder, to keep your data better organized. Would you like to continue?", "Move tracks?", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
-				if (treeView1.Nodes.Count < 1 || !parent.CreateDataFolder())
+				if (treeView1.Nodes.Count < 1)
 					return;
-				string musicdir = Path.Combine(parent.GetDataPath(), "Music");
+				string musicdir = Path.Combine("Music");
 				Directory.CreateDirectory(musicdir);
 				foreach (PckAudioFile.AudioCategory category in EditorValue.Categories)
 				{
 					for (var i = 0; i < category.SongNames.Count; i++) // using standard for loop so the list can be modified
 					{
 						string song = category.SongNames[i];
-						string songpath = Path.Combine(parent.GetDataPath(), song + ".binka");
+						string songpath = Path.Combine(song + ".binka");
 						string new_path = Path.Combine(musicdir, Path.GetFileName(song) + ".binka");
 						if (File.Exists(songpath) && !File.Exists(new_path))
 						{

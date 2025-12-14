@@ -19,7 +19,7 @@ namespace PckStudio.Core.Extensions
 
             var path = new GraphicsPath(FillMode.Winding);
 
-            Vector2 uv = skinBOX.UV;
+            Vector2 uv = skinBOX.Uv;
             Vector3 size = skinBOX.Size;
 
             path.AddRectangle(new RectangleF(new PointF((uv.X                      ) * tillingFactor.X, (uv.Y + size.Z) * tillingFactor.Y), new SizeF(size.Z * tillingFactor.X, size.Y * tillingFactor.Y)));
@@ -94,12 +94,12 @@ namespace PckStudio.Core.Extensions
         {
             return Point.Truncate((face) switch
             {
-                SkinBoxFace.Front  => new PointF(skinBox.UV.X + skinBox.Size.Z                     , skinBox.UV.Y + skinBox.Size.Z),
-                SkinBoxFace.Back   => new PointF(skinBox.UV.X + skinBox.Size.Z * 2 + skinBox.Size.X, skinBox.UV.Y + skinBox.Size.Z),
-                SkinBoxFace.Top    => new PointF(skinBox.UV.X + skinBox.Size.X                     , skinBox.UV.Y),
-                SkinBoxFace.Bottom => new PointF(skinBox.UV.X + skinBox.Size.X * 2                 , skinBox.UV.Y),
-                SkinBoxFace.Left   => new PointF(skinBox.UV.X + skinBox.Size.Z + skinBox.Size.X    , skinBox.UV.Y + skinBox.Size.Z),
-                SkinBoxFace.Right  => new PointF(skinBox.UV.X + skinBox.Size.Z                     , skinBox.UV.Y + skinBox.Size.Z),
+                SkinBoxFace.Front  => new PointF(skinBox.Uv.X + skinBox.Size.Z                     , skinBox.Uv.Y + skinBox.Size.Z),
+                SkinBoxFace.Back   => new PointF(skinBox.Uv.X + skinBox.Size.Z * 2 + skinBox.Size.X, skinBox.Uv.Y + skinBox.Size.Z),
+                SkinBoxFace.Top    => new PointF(skinBox.Uv.X + skinBox.Size.X                     , skinBox.Uv.Y),
+                SkinBoxFace.Bottom => new PointF(skinBox.Uv.X + skinBox.Size.X * 2                 , skinBox.Uv.Y),
+                SkinBoxFace.Left   => new PointF(skinBox.Uv.X + skinBox.Size.Z + skinBox.Size.X    , skinBox.Uv.Y + skinBox.Size.Z),
+                SkinBoxFace.Right  => new PointF(skinBox.Uv.X + skinBox.Size.Z                     , skinBox.Uv.Y + skinBox.Size.Z),
                 _ => PointF.Empty,
             });
         }

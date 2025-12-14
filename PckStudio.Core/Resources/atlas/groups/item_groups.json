@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Bow Pulling",
+    "row": 5,
+    "column": 6,
+    "frameCount": 3,
+    "frameTime": 6,
+    "direction": 1
+  },
+  {
+    "name": "Leather Cap",
+    "row": 0,
+    "column": 0,
+    "overlay": { "row": 0, "column": 9 }
+  },
+  {
+    "name": "Leather Tunic",
+    "row": 0,
+    "column": 1,
+    "overlay": { "row": 0, "column": 10 }
+  },
+  {
+    "name": "Leather Pants",
+    "row": 0,
+    "column": 2,
+    "overlay": { "row": 0, "column": 11 }
+  },
+  {
+    "name": "Leather Boots",
+    "row": 0,
+    "column": 3,
+    "overlay": { "row": 0, "column": 12 }
+  },
+  {
+    "name": "Leather Horse Armor",
+    "row": 15,
+    "column": 13,
+    "overlay": { "row": 0, "column": 16 }
+  }
+]

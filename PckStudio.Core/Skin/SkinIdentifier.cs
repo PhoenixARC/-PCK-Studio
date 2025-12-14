@@ -5,19 +5,19 @@ namespace PckStudio.Core.Skin
 {
     public sealed class SkinIdentifier : IFormattable
     {
-        public int Id { get; }
+        private readonly int _id;
 
         public SkinIdentifier(int id)
         {
-            Id = id;
+            _id = id;
         }
 
-        public static implicit operator int(SkinIdentifier _this) => _this.Id;
+        public static implicit operator int(SkinIdentifier @this) => @this._id;
 
-        public string ToString(string format, IFormatProvider formatProvider) => Id.ToString(format, formatProvider);
+        public string ToString(string format, IFormatProvider formatProvider) => _id.ToString(format, formatProvider);
 
-        public string ToString(string format) => Id.ToString(format, NumberFormatInfo.CurrentInfo);
+        public string ToString(string format) => _id.ToString(format, NumberFormatInfo.CurrentInfo);
 
-        public override string ToString() => Id.ToString(NumberFormatInfo.CurrentInfo);
+        public override string ToString() => _id.ToString(NumberFormatInfo.CurrentInfo);
     }
 }

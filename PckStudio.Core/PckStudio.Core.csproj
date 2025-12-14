@@ -66,14 +66,17 @@
     <Compile Include="ArmorPiece.cs" />
     <Compile Include="ArmorSet.cs" />
     <Compile Include="ArmorSetDescription.cs" />
-    <Compile Include="Atlas.cs" />
-    <Compile Include="AtlasGroup.cs" />
-    <Compile Include="AtlasGroupAnimation.cs" />
-    <Compile Include="AtlasGroupLargeTile.cs" />
-    <Compile Include="AtlasGroupLargeTileAnimation.cs" />
+    <Compile Include="Atlas\Atlas.cs" />
+    <Compile Include="Atlas\AtlasGroup.cs" />
+    <Compile Include="Atlas\AtlasAnimation.cs" />
+    <Compile Include="Atlas\AtlasGroupJsonConverter.cs" />
+    <Compile Include="Atlas\AtlasLargeTile.cs" />
+    <Compile Include="Atlas\AtlasLargeTileAnimation.cs" />
     <Compile Include="AtlasResource.cs" />
-    <Compile Include="AtlasTile.cs" />
+    <Compile Include="Atlas\AtlasOverlayGroup.cs" />
+    <Compile Include="Atlas\AtlasTile.cs" />
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="Colors\AbstractColorContainer.cs" />
     <Compile Include="ConsolePlatform.cs" />
     <Compile Include="DelegatedFileSaveContext.cs" />
     <Compile Include="DelegatedSaveContext.cs" />
@@ -85,10 +88,13 @@
     <Compile Include="DLC\DLCMashUpPackage.cs" />
     <Compile Include="DLC\DLCMiniGamePackage.cs" />
     <Compile Include="DLC\DLCPackage.cs" />
+    <Compile Include="DLC\DLCPackageContent.cs" />
+    <Compile Include="DLC\DLCPackageContentSerilasationType.cs" />
     <Compile Include="DLC\DLCPackageRegistry.cs" />
     <Compile Include="DLC\DLCSkinPackage.cs" />
     <Compile Include="DLC\DLCTexturePackage.cs" />
-    <Compile Include="DLC\UnknownDLCPackage.cs" />
+    <Compile Include="DLC\PckFileCompiler.cs" />
+    <Compile Include="DLC\RawAssetDLCPackage.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
     <Compile Include="Extensions\BlendOption.cs" />
@@ -100,6 +106,7 @@
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\ImageLayoutDirection.cs" />
     <Compile Include="Extensions\ImageSection.cs" />
+    <Compile Include="Extensions\JObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\LocFileExtensions.cs" />
     <Compile Include="Extensions\MaterialContainerExtensions.cs" />
@@ -139,7 +146,6 @@
     <Compile Include="Interfaces\IPckAssetSerializer.cs" />
     <Compile Include="Interfaces\ISaveContext.cs" />
     <Compile Include="Interfaces\ITryGetSet.cs" />
-    <Compile Include="DLC\InvalidDLCPackage.cs" />
     <Compile Include="IO\3DST\3DSTextureReader.cs" />
     <Compile Include="IO\3DST\3DSTextureWriter.cs" />
     <Compile Include="IO\3DST\TextureCodec.cs" />
@@ -162,14 +168,20 @@
     <Compile Include="ItemSelectionPopUp.Designer.cs" />
     <Compile Include="Json\ColorEntry.cs" />
     <Compile Include="Json\EntityInfo.cs" />
+    <Compile Include="Json\JsonDefaultModel.cs" />
+    <Compile Include="Json\JsonModelMetaData.cs" />
+    <Compile Include="Json\JsonRowAndColumn.cs" />
     <Compile Include="Json\TileInfo.cs" />
     <Compile Include="Json\UpdateInformation.cs" />
     <Compile Include="MapData.cs" />
     <Compile Include="MapReader.cs" />
     <Compile Include="Misc\FileCacher.cs" />
     <Compile Include="Misc\OpenFolderDialog.cs" />
+    <Compile Include="Model\AbstractModel.cs" />
+    <Compile Include="Model\AbstractModelContainer.cs" />
+    <Compile Include="Box.cs" />
+    <Compile Include="Model\AbstractModelPart.cs" />
     <Compile Include="NamedData.cs" />
-    <Compile Include="PackInfo.cs" />
     <Compile Include="DLC\DLCPackageType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -225,8 +237,13 @@
     <None Include="Resources\atlas\additionalMapiconsData.json" />
     <None Include="Resources\atlas\bannerData.json" />
     <None Include="Resources\atlas\blockData.json" />
+    <None Include="Resources\atlas\colorEntries.json" />
     <None Include="Resources\atlas\experienceOrbData.json" />
     <None Include="Resources\atlas\explosionData.json" />
+    <None Include="Resources\atlas\groups\item_groups.json" />
+    <None Include="Resources\atlas\groups\painting_groups.json" />
+    <None Include="Resources\atlas\groups\particles_groups.json" />
+    <None Include="Resources\atlas\groups\terrain_groups.json" />
     <None Include="Resources\atlas\itemData.json" />
     <None Include="Resources\atlas\mapIconData.json" />
     <None Include="Resources\atlas\moonPhaseData.json" />
@@ -235,9 +252,11 @@
     <None Include="Resources\Comparison.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\defaultModels.json" />
     <None Include="Resources\entityBehavioursData.json" />
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
+    <None Include="Resources\modelMetaData.json" />
     <None Include="Resources\java\blocks_1.6.1.json" />
     <None Include="Resources\java\latest2lce_items.json" />
     <None Include="Resources\java\latest2lce_blocks.json" />
@@ -288,7 +307,11 @@
     <Content Include="Resources\atlas\paintings.png" />
     <Content Include="Resources\atlas\particles.png" />
     <Content Include="Resources\atlas\terrain.png" />
+    <Content Include="Resources\clouds.png" />
+    <Content Include="Resources\rain.png" />
+    <Content Include="Resources\snow.png" />
     <None Include="Resources\unknown_pack.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

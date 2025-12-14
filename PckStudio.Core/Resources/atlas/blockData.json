@@ -1,2922 +1,2535 @@
 {
-	"COMMENT_1": "Tile data research by MattNL",
-	"COMMENT_2": "JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)",
-	"entries": [
-		{
-			"internalName": "grass_top",
-			"displayName": "Grass Block (Top)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "stone",
-			"displayName": "Stone"
-		},
-		{
-			"internalName": "dirt",
-			"displayName": "Dirt"
-		},
-		{
-			"internalName": "grass_side",
-			"displayName": "Grass Block (Side)"
-		},
-		{
-			"internalName": "planks_oak",
-			"displayName": "Oak Planks"
-		},
-		{
-			"internalName": "stoneslab_side",
-			"displayName": "Stone Slab (Side)"
-		},
-		{
-			"internalName": "stoneslab_top",
-			"displayName": "Stone Slab (Top)"
-		},
-		{
-			"internalName": "brick",
-			"displayName": "Bricks"
-		},
-		{
-			"internalName": "tnt_side",
-			"displayName": "TNT (Side)"
-		},
-		{
-			"internalName": "tnt_top",
-			"displayName": "TNT (Top)"
-		},
-		{
-			"internalName": "tnt_bottom",
-			"displayName": "TNT (Bottom)"
-		},
-		{
-			"internalName": "web",
-			"displayName": "Cobweb"
-		},
-		{
-			"internalName": "flower_rose",
-			"displayName": "Poppy"
-		},
-		{
-			"internalName": "flower_dandelion",
-			"displayName": "Dandelion"
-		},
-		{
-			"internalName": "portal",
-			"displayName": "Nether Portal"
-		},
-		{
-			"internalName": "sapling",
-			"displayName": "Oak Sapling"
-		},
-		{
-			"internalName": "cobblestone",
-			"displayName": "Cobblestone"
-		},
-		{
-			"internalName": "bedrock",
-			"displayName": "Bedrock"
-		},
-		{
-			"internalName": "sand",
-			"displayName": "Sand"
-		},
-		{
-			"internalName": "gravel",
-			"displayName": "Gravel"
-		},
-		{
-			"internalName": "log_oak",
-			"displayName": "Oak Wood (Side)"
-		},
-		{
-			"internalName": "log_oak_top",
-			"displayName": "Oak Wood (Top)"
-		},
-		{
-			"internalName": "iron_block",
-			"displayName": "Block of Iron"
-		},
-		{
-			"internalName": "gold_block",
-			"displayName": "Block of Gold"
-		},
-		{
-			"internalName": "diamond_block",
-			"displayName": "Block of Diamond"
-		},
-		{
-			"internalName": "emerald_block",
-			"displayName": "Block of Emerald"
-		},
-		{
-			"internalName": "redstone_block",
-			"displayName": "Block of Redstone"
-		},
-		{
-			"internalName": "dropper_front_horizontal",
-			"displayName": "Dropper (Front)"
-		},
-		{
-			"internalName": "mushroom_red",
-			"displayName": "Mushroom (Red)"
-		},
-		{
-			"internalName": "mushroom_brown",
-			"displayName": "Mushroom (Brown)"
-		},
-		{
-			"internalName": "sapling_jungle",
-			"displayName": "Jungle Tree Sapling"
-		},
-		{
-			"internalName": "fire_0",
-			"displayName": "Fire (Layer 1)"
-		},
-		{
-			"internalName": "gold_ore",
-			"displayName": "Gold Ore"
-		},
-		{
-			"internalName": "iron_ore",
-			"displayName": "Iron Ore"
-		},
-		{
-			"internalName": "coal_ore",
-			"displayName": "Coal Ore"
-		},
-		{
-			"internalName": "bookshelf",
-			"displayName": "Bookshelf"
-		},
-		{
-			"internalName": "cobblestone_mossy",
-			"displayName": "Moss Stone"
-		},
-		{
-			"internalName": "obsidian",
-			"displayName": "Obsidian"
-		},
-		{
-			"internalName": "grass_side_overlay",
-			"displayName": "Grass Side (Overlay)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "tallgrass",
-			"displayName": "Tall Grass",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "dispenser_front_vertical",
-			"displayName": "Dispenser (Vertical) (Front)"
-		},
-		{
-			"internalName": "beacon",
-			"displayName": "Beacon"
-		},
-		{
-			"internalName": "dropper_front_vertical",
-			"displayName": "Dropper (Vertical) (Front)"
-		},
-		{
-			"internalName": "workbench_top",
-			"displayName": "Crafting Table (Top)"
-		},
-		{
-			"internalName": "furnace_front",
-			"displayName": "Furnace (Front)"
-		},
-		{
-			"internalName": "furnace_side",
-			"displayName": "Furnace/Dispenser/Dropper (Side)"
-		},
-		{
-			"internalName": "dispenser_front",
-			"displayName": "Dispenser (Front)"
-		},
-		{
-			"internalName": "fire_1",
-			"displayName": "Fire (Layer 2)"
-		},
-		{
-			"internalName": "sponge",
-			"displayName": "Sponge"
-		},
-		{
-			"internalName": "glass",
-			"displayName": "Glass"
-		},
-		{
-			"internalName": "diamond_ore",
-			"displayName": "Diamond Ore"
-		},
-		{
-			"internalName": "redstone_ore",
-			"displayName": "Redstone Ore"
-		},
-		{
-			"internalName": "leaves",
-			"displayName": "Oak Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_opaque",
-			"displayName": "Oak Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "stonebrick",
-			"displayName": "Stone Bricks"
-		},
-		{
-			"internalName": "deadbush",
-			"displayName": "Dead Bush/Shrub"
-		},
-		{
-			"internalName": "fern",
-			"displayName": "Fern",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "daylight_detector_top",
-			"displayName": "Daylight Sensor (Top)"
-		},
-		{
-			"internalName": "daylight_detector_side",
-			"displayName": "Daylight Sensor (Side)"
-		},
-		{
-			"internalName": "workbench_side",
-			"displayName": "Crafting Table (Side)"
-		},
-		{
-			"internalName": "workbench_front",
-			"displayName": "Crafting Table (Front)"
-		},
-		{
-			"internalName": "furnace_front_lit",
-			"displayName": "Furnace (Lit) (Front)"
-		},
-		{
-			"internalName": "furnace_top",
-			"displayName": "Furnace/Dispenser/Dropper (Top)"
-		},
-		{
-			"internalName": "sapling_spruce",
-			"displayName": "Spruce Sapling"
-		},
-		{
-			"internalName": "wool_colored_white",
-			"displayName": "White Wool"
-		},
-		{
-			"internalName": "mob_spawner",
-			"displayName": "Monster Spawner"
-		},
-		{
-			"internalName": "snow",
-			"displayName": "Snow"
-		},
-		{
-			"internalName": "ice",
-			"displayName": "Ice"
-		},
-		{
-			"internalName": "snow_side",
-			"displayName": "Grass Block (Snowy) (Side)"
-		},
-		{
-			"internalName": "cactus_top",
-			"displayName": "Cactus (Top)"
-		},
-		{
-			"internalName": "cactus_side",
-			"displayName": "Cactus (Side)"
-		},
-		{
-			"internalName": "cactus_bottom",
-			"displayName": "Cactus (Bottom)"
-		},
-		{
-			"internalName": "clay",
-			"displayName": "Clay"
-		},
-		{
-			"internalName": "reeds",
-			"displayName": "Sugar Canes"
-		},
-		{
-			"internalName": "jukebox_side",
-			"displayName": "Jukebox (Side)"
-		},
-		{
-			"internalName": "jukebox_top",
-			"displayName": "Jukebox (Top)"
-		},
-		{
-			"internalName": "waterlily",
-			"displayName": "Lily Pad",
-
-			"colourEntry": {
-				"defaultName": "Tile_WaterLily",
-				"variants": [ "Tile_WaterLily" ]
-			}
-		},
-		{
-			"internalName": "mycel_side",
-			"displayName": "Mycelium (Side)"
-		},
-		{
-			"internalName": "mycel_top",
-			"displayName": "Mycelium (Top)"
-		},
-		{
-			"internalName": "sapling_birch",
-			"displayName": "Birch Sapling"
-		},
-		{
-			"internalName": "torch_on",
-			"displayName": "Torch"
-		},
-		{
-			"internalName": "door_wood_upper",
-			"displayName": "Oak Door (Top)"
-		},
-		{
-			"internalName": "door_iron_upper",
-			"displayName": "Iron Door (Top)"
-		},
-		{
-			"internalName": "ladder",
-			"displayName": "Ladder"
-		},
-		{
-			"internalName": "trapdoor",
-			"displayName": "Oak Trapdoor"
-		},
-		{
-			"internalName": "iron_bars",
-			"displayName": "Iron Bars"
-		},
-		{
-			"internalName": "farmland_wet",
-			"displayName": "Farmland (Wet)"
-		},
-		{
-			"internalName": "farmland_dry",
-			"displayName": "Farmland"
-		},
-		{
-			"internalName": "crops_0",
-			"displayName": "Wheat (Stage 1)"
-		},
-		{
-			"internalName": "crops_1",
-			"displayName": "Wheat (Stage 2)"
-		},
-		{
-			"internalName": "crops_2",
-			"displayName": "Wheat (Stage 3)"
-		},
-		{
-			"internalName": "crops_3",
-			"displayName": "Wheat (Stage 4)"
-		},
-		{
-			"internalName": "crops_4",
-			"displayName": "Wheat (Stage 5)"
-		},
-		{
-			"internalName": "crops_5",
-			"displayName": "Wheat (Stage 6)"
-		},
-		{
-			"internalName": "crops_6",
-			"displayName": "Wheat (Stage 7)"
-		},
-		{
-			"internalName": "crops_7",
-			"displayName": "Wheat (Stage 8)"
-		},
-		{
-			"internalName": "lever",
-			"displayName": "Lever"
-		},
-		{
-			"internalName": "door_wood_lower",
-			"displayName": "Oak Door (Bottom)"
-		},
-		{
-			"internalName": "door_iron_lower",
-			"displayName": "Iron Door (Bottom)"
-		},
-		{
-			"internalName": "redstone_torch_on",
-			"displayName": "Redstone Torch"
-		},
-		{
-			"internalName": "stonebrick_mossy",
-			"displayName": "Mossy Stone Bricks"
-		},
-		{
-			"internalName": "stonebrick_cracked",
-			"displayName": "Cracked Stone Bricks"
-		},
-		{
-			"internalName": "pumpkin_top",
-			"displayName": "Pumpkin (Top)"
-		},
-		{
-			"internalName": "netherrack",
-			"displayName": "Netherrack"
-		},
-		{
-			"internalName": "soul_sand",
-			"displayName": "Soul Sand"
-		},
-		{
-			"internalName": "glowstone",
-			"displayName": "Glowstone"
-		},
-		{
-			"internalName": "piston_top_sticky",
-			"displayName": "Sticky Piston (Top)"
-		},
-		{
-			"internalName": "piston_top",
-			"displayName": "Piston (Top)"
-		},
-		{
-			"internalName": "piston_side",
-			"displayName": "Piston (Side)"
-		},
-		{
-			"internalName": "piston_bottom",
-			"displayName": "Piston (Bottom)"
-		},
-		{
-			"internalName": "piston_inner_top",
-			"displayName": "Piston (Inside)"
-		},
-		{
-			"internalName": "stem_straight",
-			"displayName": "Stem",
-
-			"colourEntry": {
-				"defaultName": "Tile_StemMin",
-				"variants": [
-					"Tile_StemMin",
-					"Tile_StemMax"
-				]
-			}
-		},
-		{
-			"internalName": "rail_normal_turned",
-			"displayName": "Rail (Turned)"
-		},
-		{
-			"internalName": "wool_colored_black",
-			"displayName": "Black Wool"
-		},
-		{
-			"internalName": "wool_colored_gray",
-			"displayName": "Gray Wool"
-		},
-		{
-			"internalName": "redstone_torch_off",
-			"displayName": "Redstone Torch (Off)"
-		},
-		{
-			"internalName": "log_spruce",
-			"displayName": "Spruce Wood (Side)"
-		},
-		{
-			"internalName": "log_birch",
-			"displayName": "Birch Wood (Side)"
-		},
-		{
-			"internalName": "pumpkin_side",
-			"displayName": "Pumpkin (Side)"
-		},
-		{
-			"internalName": "pumpkin_face_off",
-			"displayName": "Carved Pumpkin"
-		},
-		{
-			"internalName": "pumpkin_face_on",
-			"displayName": "Jack-O-Lantern"
-		},
-		{
-			"internalName": "cake_top",
-			"displayName": "Cake (Top)"
-		},
-		{
-			"internalName": "cake_side",
-			"displayName": "Cake (Side)"
-		},
-		{
-			"internalName": "cake_inner",
-			"displayName": "Cake (Inside)"
-		},
-		{
-			"internalName": "cake_bottom",
-			"displayName": "Cake (Bottom)"
-		},
-		{
-			"internalName": "mushroom_block_skin_red",
-			"displayName": "Mushroom (Red Block)"
-		},
-		{
-			"internalName": "mushroom_block_skin_brown",
-			"displayName": "Mushroom (Brown Block)"
-		},
-		{
-			"internalName": "stem_bent",
-			"displayName": "Stem (Attached)",
-
-			"colourEntry": {
-				"defaultName": "Tile_StemMin",
-				"variants": [
-					"Tile_StemMin",
-					"Tile_StemMax"
-				]
-			}
-		},
-		{
-			"internalName": "rail_normal",
-			"displayName": "Rail"
-		},
-		{
-			"internalName": "wool_colored_red",
-			"displayName": "Red Wool"
-		},
-		{
-			"internalName": "wool_colored_pink",
-			"displayName": "Pink Wool"
-		},
-		{
-			"internalName": "repeater_off",
-			"displayName": "Repeater"
-		},
-		{
-			"internalName": "leaves_spruce",
-			"displayName": "Spruce Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Evergreen",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_spruce_opaque",
-			"displayName": "Spruce Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Evergreen",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "conduit_top",
-			"displayName": "Conduit (Break Particles)"
-		},
-		{
-			"internalName": "turtle_egg_hatch_0",
-			"displayName": "Sea Turtle Egg (Stage 1)"
-		},
-		{
-			"internalName": "melon_side",
-			"displayName": "Melon (Side)"
-		},
-		{
-			"internalName": "melon_top",
-			"displayName": "Melon (Top)"
-		},
-		{
-			"internalName": "cauldron_top",
-			"displayName": "Cauldron (Top)"
-		},
-		{
-			"internalName": "cauldron_inner",
-			"displayName": "Cauldron (Inside)"
-		},
-		{
-			"internalName": "sponge_wet",
-			"displayName": "Wet Sponge"
-		},
-		{
-			"internalName": "mushroom_block_skin_stem",
-			"displayName": "Mushroom (Stem Block)"
-		},
-		{
-			"internalName": "mushroom_block_inside",
-			"displayName": "Mushroom (Inside Block)"
-		},
-		{
-			"internalName": "vine",
-			"displayName": "Vines",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "lapis_block",
-			"displayName": "Lapis Lazuli Block"
-		},
-		{
-			"internalName": "wool_colored_green",
-			"displayName": "Green Wool"
-		},
-		{
-			"internalName": "wool_colored_lime",
-			"displayName": "Lime Wool"
-		},
-		{
-			"internalName": "repeater_on",
-			"displayName": "Redstone Repeater (On)"
-		},
-		{
-			"internalName": "glass_pane_top",
-			"displayName": "Glass Pane (Top)"
-		},
-		{
-			"internalName": "chest_top",
-			"displayName": "Chest (Break Particles)"
-		},
-		{
-			"internalName": "ender_chest_top",
-			"displayName": "Ender Chest (Break Particles)"
-		},
-		{
-			"internalName": "turtle_egg_hatch_1",
-			"displayName": "Sea Turtle Egg (Stage 2)"
-		},
-		{
-			"internalName": "turtle_egg_hatch_2",
-			"displayName": "Sea Turtle Egg (Stage 3)"
-		},
-		{
-			"internalName": "log_jungle",
-			"displayName": "Jungle Wood (Side)"
-		},
-		{
-			"internalName": "cauldron_side",
-			"displayName": "Cauldron (Side)"
-		},
-		{
-			"internalName": "cauldron_bottom",
-			"displayName": "Cauldron (Bottom)"
-		},
-		{
-			"internalName": "brewing_stand_base",
-			"displayName": "Brewing Stand (Base)"
-		},
-		{
-			"internalName": "brewing_stand",
-			"displayName": "Brewing Stand"
-		},
-		{
-			"internalName": "endframe_top",
-			"displayName": "End Portal Frame (Top)"
-		},
-		{
-			"internalName": "endframe_side",
-			"displayName": "End Portal Frame (Side)"
-		},
-		{
-			"internalName": "lapis_ore",
-			"displayName": "Lapis Lazuli Ore"
-		},
-		{
-			"internalName": "wool_colored_brown",
-			"displayName": "Brown Wool"
-		},
-		{
-			"internalName": "wool_colored_yellow",
-			"displayName": "Yellow Wool"
-		},
-		{
-			"internalName": "rail_golden",
-			"displayName": "Powered Rail"
-		},
-		{
-			"internalName": "redstone_dust_cross",
-			"displayName": "Redstone Dust (Cross)",
-
-			"colourEntry": {
-				"defaultName": "Tile_RedstoneDust",
-				"variants": [
-					"Tile_RedstoneDust",
-					"Tile_RedstoneDustUnlit",
-					"Tile_RedstoneDustLitMin",
-					"Tile_RedstoneDustLitMax"
-				]
-			}
-		},
-		{
-			"internalName": "redstone_dust_line",
-			"displayName": "Redstone Dust (Line)",
-
-			"colourEntry": {
-				"defaultName": "Tile_RedstoneDust",
-				"variants": [
-					"Tile_RedstoneDust",
-					"Tile_RedstoneDustUnlit",
-					"Tile_RedstoneDustLitMin",
-					"Tile_RedstoneDustLitMax"
-				]
-			}
-		},
-		{
-			"internalName": "enchantment_top",
-			"displayName": "Enchantment Table (Top)"
-		},
-		{
-			"internalName": "dragon_egg",
-			"displayName": "Dragon Egg"
-		},
-		{
-			"internalName": "cocoa_2",
-			"displayName": "Cocoa (Stage 3)"
-		},
-		{
-			"internalName": "cocoa_1",
-			"displayName": "Cocoa (Stage 2)"
-		},
-		{
-			"internalName": "cocoa_0",
-			"displayName": "Cocoa (Stage 1)"
-		},
-		{
-			"internalName": "emerald_ore",
-			"displayName": "Emerald Ore"
-		},
-		{
-			"internalName": "trip_wire_source",
-			"displayName": "Tripwire Hook"
-		},
-		{
-			"internalName": "trip_wire",
-			"displayName": "Tripwire"
-		},
-		{
-			"internalName": "endframe_eye",
-			"displayName": "End Portal Frame (Eye)"
-		},
-		{
-			"internalName": "end_stone",
-			"displayName": "End Stone"
-		},
-		{
-			"internalName": "sandstone_top",
-			"displayName": "Sandstone (Top)"
-		},
-		{
-			"internalName": "wool_colored_blue",
-			"displayName": "Blue Wool"
-		},
-		{
-			"internalName": "wool_colored_light_blue",
-			"displayName": "Light Blue Wool"
-		},
-		{
-			"internalName": "rail_golden_powered",
-			"displayName": "Powered Rail (On)"
-		},
-		{
-			"internalName": "redstone_dust_cross_overlay",
-			"displayName": "Redstone Dust (Cross) (Overlay)"
-		},
-		{
-			"internalName": "redstone_dust_line_overlay",
-			"displayName": "Redstone Dust (Line) (Overlay)"
-		},
-		{
-			"internalName": "enchantment_side",
-			"displayName": "Enchantment Table (Side)"
-		},
-		{
-			"internalName": "enchantment_bottom",
-			"displayName": "Enchantment Table (Bottom)"
-		},
-		{
-			"internalName": "diamondRing",
-			"displayName": "Diamond Score Ring"
-		},
-		{
-			"internalName": "itemframe_back",
-			"displayName": "Item Frame"
-		},
-		{
-			"internalName": "flower_pot",
-			"displayName": "Flower Pot"
-		},
-		{
-			"internalName": "comparator_off",
-			"displayName": "Redstone Comparator"
-		},
-		{
-			"internalName": "comparator_on",
-			"displayName": "Redstone Comparator (On)"
-		},
-		{
-			"internalName": "rail_activator",
-			"displayName": "Activator Rail"
-		},
-		{
-			"internalName": "rail_activator_powered",
-			"displayName": "Activator Rail (On)"
-		},
-		{
-			"internalName": "quartz_ore",
-			"displayName": "Nether Quartz Ore"
-		},
-		{
-			"internalName": "sandstone_side",
-			"displayName": "Sandstone (Side)"
-		},
-		{
-			"internalName": "wool_colored_purple",
-			"displayName": "Purple Wool"
-		},
-		{
-			"internalName": "wool_colored_magenta",
-			"displayName": "Magenta Wool"
-		},
-		{
-			"internalName": "detectorRail",
-			"displayName": "Detector Rail"
-		},
-		{
-			"internalName": "leaves_jungle",
-			"displayName": "Jungle Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_jungle_opaque",
-			"displayName": "Jungle Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "planks_spruce",
-			"displayName": "Spruce Planks"
-		},
-		{
-			"internalName": "planks_jungle",
-			"displayName": "Jungle Planks"
-		},
-		{
-			"internalName": "carrots_stage_0",
-			"displayName": "Carrots (Stage 1)"
-		},
-		{
-			"internalName": "carrots_stage_1",
-			"displayName": "Carrots (Stage 2)"
-		},
-		{
-			"internalName": "carrots_stage_2",
-			"displayName": "Carrots (Stage 3)"
-		},
-		{
-			"internalName": "carrots_stage_3",
-			"displayName": "Carrots (Stage 4)"
-		},
-		{
-			"internalName": "slime",
-			"displayName": "Slime Block"
-		},
-		{
-			"internalName": "water",
-			"displayName": "Water",
-
-			"colourEntry": {
-				"isWaterColour": true,
-				"defaultName": "Water_Plains",
-				"variants": [
-					"Water_Ocean",
-					"Water_Plains",
-					"Water_Desert",
-					"Water_ExtremeHills",
-					"Water_Forest",
-					"Water_Taiga",
-					"Water_Swampland",
-					"Water_River",
-					"Water_Hell",
-					"Water_Sky",
-					"Water_FrozenOcean",
-					"Water_FrozenRiver",
-					"Water_IcePlains",
-					"Water_IceMountains",
-					"Water_MushroomIsland",
-					"Water_MushroomIslandShore",
-					"Water_Beach",
-					"Water_DesertHills",
-					"Water_ForestHills",
-					"Water_TaigaHills",
-					"Water_ExtremeHillsEdge",
-					"Water_Jungle",
-					"Water_JungleHills",
-					"Water_JungleEdge",
-					"Water_DeepOcean",
-					"Water_StoneBeach",
-					"Water_ColdBeach",
-					"Water_BirchForest",
-					"Water_BirchForestHills",
-					"Water_RoofedForest",
-					"Water_ColdTaiga",
-					"Water_ColdTaigaHills",
-					"Water_MegaTaiga",
-					"Water_MegaTaigaHills",
-					"Water_ExtremeHillsPlus",
-					"Water_Savanna",
-					"Water_SavannaPlateau",
-					"Water_Mesa",
-					"Water_MesaPlateauF",
-					"Water_MesaPlateau"
-				]
-			}
-		},
-		{
-			"internalName": "water_flow",
-			"displayName": "Flowing Water",
-
-			"width": 2,
-			"height": 2,
-			"colourEntry": {
-				"isWaterColour": true,
-				"defaultName": "Water_Plains",
-				"variants": [
-					"Water_Ocean",
-					"Water_Plains",
-					"Water_Desert",
-					"Water_ExtremeHills",
-					"Water_Forest",
-					"Water_Taiga",
-					"Water_Swampland",
-					"Water_River",
-					"Water_Hell",
-					"Water_Sky",
-					"Water_FrozenOcean",
-					"Water_FrozenRiver",
-					"Water_IcePlains",
-					"Water_IceMountains",
-					"Water_MushroomIsland",
-					"Water_MushroomIslandShore",
-					"Water_Beach",
-					"Water_DesertHills",
-					"Water_ForestHills",
-					"Water_TaigaHills",
-					"Water_ExtremeHillsEdge",
-					"Water_Jungle",
-					"Water_JungleHills",
-					"Water_JungleEdge",
-					"Water_DeepOcean",
-					"Water_StoneBeach",
-					"Water_ColdBeach",
-					"Water_BirchForest",
-					"Water_BirchForestHills",
-					"Water_RoofedForest",
-					"Water_ColdTaiga",
-					"Water_ColdTaigaHills",
-					"Water_MegaTaiga",
-					"Water_MegaTaigaHills",
-					"Water_ExtremeHillsPlus",
-					"Water_Savanna",
-					"Water_SavannaPlateau",
-					"Water_Mesa",
-					"Water_MesaPlateauF",
-					"Water_MesaPlateau"
-				]
-			}
-		},
-		{
-			"internalName": "", // water_flow0
-			"displayName": ""
-		},
-		{
-			"internalName": "sandstone_bottom",
-			"displayName": "Sandstone (Bottom)"
-		},
-		{
-			"internalName": "wool_colored_cyan",
-			"displayName": "Cyan Wool"
-		},
-		{
-			"internalName": "wool_colored_orange",
-			"displayName": "Orange Wool"
-		},
-		{
-			"internalName": "redstoneLight",
-			"displayName": "Redstone Lamp"
-		},
-		{
-			"internalName": "redstoneLight_lit",
-			"displayName": "Redstone Lamp (On)"
-		},
-		{
-			"internalName": "stonebrick_carved",
-			"displayName": "Chiseled Stone Bricks"
-		},
-		{
-			"internalName": "planks_birch",
-			"displayName": "Birch Planks"
-		},
-		{
-			"internalName": "anvil_base",
-			"displayName": "Anvil (Base)"
-		},
-		{
-			"internalName": "anvil_top_damaged_1",
-			"displayName": "Anvil (Slightly Damaged) (Top)"
-		},
-		{
-			"internalName": "quartz_block_chiseled_top",
-			"displayName": "Chiseled Quartz Block (Top)"
-		},
-		{
-			"internalName": "quartz_block_lines_top",
-			"displayName": "Pillar Quartz Block (Top)"
-		},
-		{
-			"internalName": "quartz_block_top",
-			"displayName": "Block of Quartz (Top)"
-		},
-		{
-			"internalName": "hopper_outside",
-			"displayName": "Hopper (Side)"
-		},
-		{
-			"internalName": "detectorRail_on",
-			"displayName": "Detector Rail (On)"
-		},
-		{
-			"internalName": "", // water_flow1
-			"displayName": ""
-		},
-		{
-			"internalName": "", // water_flow2
-			"displayName": ""
-		},
-		{
-			"internalName": "nether_brick",
-			"displayName": "Nether Brick"
-		},
-		{
-			"internalName": "wool_colored_silver",
-			"displayName": "Light Gray Wool"
-		},
-		{
-			"internalName": "nether_wart_stage_0",
-			"displayName": "Nether Wart (Stage 1)"
-		},
-		{
-			"internalName": "nether_wart_stage_1",
-			"displayName": "Nether Wart (Stage 2)"
-		},
-		{
-			"internalName": "nether_wart_stage_2",
-			"displayName": "Nether Wart (Stage 3)"
-		},
-		{
-			"internalName": "sandstone_carved",
-			"displayName": "Chiseled Sandstone"
-		},
-		{
-			"internalName": "sandstone_smooth",
-			"displayName": "Smooth Sandstone"
-		},
-		{
-			"internalName": "anvil_top",
-			"displayName": "Anvil (Top)"
-		},
-		{
-			"internalName": "anvil_top_damaged_2",
-			"displayName": "Anvil (Very Damaged) (Top)"
-		},
-		{
-			"internalName": "quartz_block_chiseled",
-			"displayName": "Chiseled Quartz Block (Side)"
-		},
-		{
-			"internalName": "quartz_block_lines",
-			"displayName": "Pillar Quartz Block (Side)"
-		},
-		{
-			"internalName": "quartz_block_side",
-			"displayName": "Block of Quartz (Side)"
-		},
-		{
-			"internalName": "hopper_inside",
-			"displayName": "Hopper (Inside)"
-		},
-		{
-			"internalName": "lava",
-			"displayName": "Lava"
-		},
-		{
-			"internalName": "lava_flow",
-			"displayName": "Flowing Lava",
-			"width": 2,
-			"height": 2
-		},
-		{
-			"internalName": "", // lava_flow0
-			"displayName": "",
-		},
-		{
-			"internalName": "destroy_0",
-			"displayName": "Destroy (Stage 1)"
-		},
-		{
-			"internalName": "destroy_1",
-			"displayName": "Destroy (Stage 2)"
-		},
-		{
-			"internalName": "destroy_2",
-			"displayName": "Destroy (Stage 3)"
-		},
-		{
-			"internalName": "destroy_3",
-			"displayName": "Destroy (Stage 4)"
-		},
-		{
-			"internalName": "destroy_4",
-			"displayName": "Destroy (Stage 5)"
-		},
-		{
-			"internalName": "destroy_5",
-			"displayName": "Destroy (Stage 6)"
-		},
-		{
-			"internalName": "destroy_6",
-			"displayName": "Destroy (Stage 7)"
-		},
-		{
-			"internalName": "destroy_7",
-			"displayName": "Destroy (Stage 8)"
-		},
-		{
-			"internalName": "destroy_8",
-			"displayName": "Destroy (Stage 9)"
-		},
-		{
-			"internalName": "destroy_9",
-			"displayName": "Destroy (Stage 10)"
-		},
-		{
-			"internalName": "hay_block_side",
-			"displayName": "Hay Bale (Side)"
-		},
-		{
-			"internalName": "quartz_block_bottom",
-			"displayName": "Quartz Block (Bottom)"
-		},
-		{
-			"internalName": "hopper_top",
-			"displayName": "Hopper (Top)"
-		},
-		{
-			"internalName": "hay_block_top",
-			"displayName": "Hay Bale (Top)"
-		},
-		{
-			"internalName": "", // lava_flow1
-			"displayName": "",
-		},
-		{
-			"internalName": "", // lava_flow2
-			"displayName": "",
-		},
-		{
-			"internalName": "coal_block",
-			"displayName": "Block of Coal"
-		},
-		{
-			"internalName": "hardened_clay",
-			"displayName": "Terracotta"
-		},
-		{
-			"internalName": "noteblock",
-			"displayName": "Note Block"
-		},
-		{
-			"internalName": "stone_andesite",
-			"displayName": "Andesite"
-		},
-		{
-			"internalName": "stone_andesite_smooth",
-			"displayName": "Polished Andesite"
-		},
-		{
-			"internalName": "stone_diorite",
-			"displayName": "Diorite"
-		},
-		{
-			"internalName": "stone_diorite_smooth",
-			"displayName": "Polished Diorite"
-		},
-		{
-			"internalName": "stone_granite",
-			"displayName": "Granite"
-		},
-		{
-			"internalName": "stone_granite_smooth",
-			"displayName": "Polished Granite"
-		},
-		{
-			"internalName": "potatoes_stage_0",
-			"displayName": "Potatoes (Stage 1)"
-		},
-		{
-			"internalName": "potatoes_stage_1",
-			"displayName": "Potatoes (Stage 2)"
-		},
-		{
-			"internalName": "potatoes_stage_2",
-			"displayName": "Potatoes (Stage 3)"
-		},
-		{
-			"internalName": "potatoes_stage_3",
-			"displayName": "Potatoes (Stage 4)"
-		},
-		{
-			"internalName": "log_spruce_top",
-			"displayName": "Spruce Wood (Top)"
-		},
-		{
-			"internalName": "log_jungle_top",
-			"displayName": "Jungle Wood (Top)"
-		},
-		{
-			"internalName": "log_birch_top",
-			"displayName": "Birch Wood (Top)"
-		},
-		{
-			"internalName": "hardened_clay_stained_black",
-			"displayName": "Black Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_blue",
-			"displayName": "Blue Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_brown",
-			"displayName": "Brown Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_cyan",
-			"displayName": "Cyan Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_gray",
-			"displayName": "Gray Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_green",
-			"displayName": "Green Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_light_blue",
-			"displayName": "Light Blue Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_lime",
-			"displayName": "Lime Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_magenta",
-			"displayName": "Magenta Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_orange",
-			"displayName": "Orange Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_pink",
-			"displayName": "Pink Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_purple",
-			"displayName": "Purple Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_red",
-			"displayName": "Red Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_silver",
-			"displayName": "Light Gray Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_white",
-			"displayName": "White Terracotta"
-		},
-		{
-			"internalName": "hardened_clay_stained_yellow",
-			"displayName": "Yellow Terracotta"
-		},
-		{
-			"internalName": "glass_black",
-			"displayName": "Black Stained Glass"
-		},
-		{
-			"internalName": "glass_blue",
-			"displayName": "Blue Stained Glass"
-		},
-		{
-			"internalName": "glass_brown",
-			"displayName": "Brown Stained Glass"
-		},
-		{
-			"internalName": "glass_cyan",
-			"displayName": "Cyan Stained Glass"
-		},
-		{
-			"internalName": "glass_gray",
-			"displayName": "Gray Stained Glass"
-		},
-		{
-			"internalName": "glass_green",
-			"displayName": "Green Stained Glass"
-		},
-		{
-			"internalName": "glass_light_blue",
-			"displayName": "Light Blue Stained Glass"
-		},
-		{
-			"internalName": "glass_lime",
-			"displayName": "Lime Stained Glass"
-		},
-		{
-			"internalName": "glass_magenta",
-			"displayName": "Magenta Stained Glass"
-		},
-		{
-			"internalName": "glass_orange",
-			"displayName": "Orange Stained Glass"
-		},
-		{
-			"internalName": "glass_pink",
-			"displayName": "Pink Stained Glass"
-		},
-		{
-			"internalName": "glass_purple",
-			"displayName": "Purple Stained Glass"
-		},
-		{
-			"internalName": "glass_red",
-			"displayName": "Red Stained Glass"
-		},
-		{
-			"internalName": "glass_silver",
-			"displayName": "Light Gray Stained Glass"
-		},
-		{
-			"internalName": "glass_white",
-			"displayName": "White Stained Glass"
-		},
-		{
-			"internalName": "glass_yellow",
-			"displayName": "Yellow Stained Glass"
-		},
-		{
-			"internalName": "glass_pane_top_black",
-			"displayName": "Black Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_blue",
-			"displayName": "Blue Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_brown",
-			"displayName": "Brown Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_cyan",
-			"displayName": "Cyan Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_gray",
-			"displayName": "Gray Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_green",
-			"displayName": "Green Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_light_blue",
-			"displayName": "Light Blue Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_lime",
-			"displayName": "Lime Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_magenta",
-			"displayName": "Magenta Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_orange",
-			"displayName": "Orange Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_pink",
-			"displayName": "Pink Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_purple",
-			"displayName": "Purple Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_red",
-			"displayName": "Red Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_silver",
-			"displayName": "Light Gray Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_white",
-			"displayName": "White Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "glass_pane_top_yellow",
-			"displayName": "Yellow Stained Glass Pane (Top)"
-		},
-		{
-			"internalName": "double_plant_fern_top",
-			"displayName": "Large Fern (Top)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "double_plant_grass_top",
-			"displayName": "Double Tall Grass (Top)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "double_plant_paeonia_top",
-			"displayName": "Peony (Top)"
-		},
-		{
-			"internalName": "double_plant_rose_top",
-			"displayName": "Rose Bush (Top)"
-		},
-		{
-			"internalName": "double_plant_syringa_top",
-			"displayName": "Lilac (Top)"
-		},
-		{
-			"internalName": "flower_tulip_orange",
-			"displayName": "Orange Tulip"
-		},
-		{
-			"internalName": "double_plant_sunflower_top",
-			"displayName": "Sunflower (Top)"
-		},
-		{
-			"internalName": "double_plant_sunflower_front",
-			"displayName": "Sunflower (Front)"
-		},
-		{
-			"internalName": "log_acacia",
-			"displayName": "Acacia Wood (Side)"
-		},
-		{
-			"internalName": "log_acacia_top",
-			"displayName": "Acacia Wood (Top)"
-		},
-		{
-			"internalName": "planks_acacia",
-			"displayName": "Acacia Planks"
-		},
-		{
-			"internalName": "leaves_acacia",
-			"displayName": "Acacia Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_acacia_fast",
-			"displayName": "Acacia Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "prismarine_bricks",
-			"displayName": "Prismarine Bricks"
-		},
-		{
-			"internalName": "red_sand",
-			"displayName": "Red Sand"
-		},
-		{
-			"internalName": "red_sandstone_top",
-			"displayName": "Red Sandstone (Top)"
-		},
-		{
-			"internalName": "double_plant_fern_bottom",
-			"displayName": "Large Fern (Bottom)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "double_plant_grass_bottom",
-			"displayName": "Double Tall Grass (Bottom)",
-
-			"colourEntry": {
-				"defaultName": "Grass_Common",
-				"variants": [
-					"Grass_Common",
-					"Grass_Mesa",
-					"Grass_Swamp1",
-					"Grass_Swamp2"
-				]
-			}
-		},
-		{
-			"internalName": "double_plant_paeonia_bottom",
-			"displayName": "Peony (Bottom)"
-		},
-		{
-			"internalName": "double_plant_rose_bottom",
-			"displayName": "Rose Bush (Bottom)"
-		},
-		{
-			"internalName": "double_plant_syringa_bottom",
-			"displayName": "Lilac (Bottom)"
-		},
-		{
-			"internalName": "flower_tulip_pink",
-			"displayName": "Pink Tulip"
-		},
-		{
-			"internalName": "double_plant_sunflower_bottom",
-			"displayName": "Sunflower (Bottom)"
-		},
-		{
-			"internalName": "double_plant_sunflower_back",
-			"displayName": "Sunflower (Back)"
-		},
-		{
-			"internalName": "log_big_oak",
-			"displayName": "Dark Oak Wood (Side)"
-		},
-		{
-			"internalName": "log_big_oak_top",
-			"displayName": "Dark Oak Wood (Top)"
-		},
-		{
-			"internalName": "planks_big_oak",
-			"displayName": "Dark Oak Planks"
-		},
-		{
-			"internalName": "leaves_big_oak",
-			"displayName": "Dark Oak Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_big_oak_fast",
-			"displayName": "Dark Oak Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Default",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "prismarine_dark",
-			"displayName": "Dark Prismarine"
-		},
-		{
-			"internalName": "red_sandstone_bottom",
-			"displayName": "Red Sandstone (Bottom)"
-		},
-		{
-			"internalName": "red_sandstone_normal",
-			"displayName": "Red Sandstone (Side)"
-		},
-		{
-			"internalName": "flower_alium",
-			"displayName": "Allium"
-		},
-		{
-			"internalName": "flower_blue_orchid",
-			"displayName": "Blue Orchid"
-		},
-		{
-			"internalName": "flower_houstonia",
-			"displayName": "Azure Bluet"
-		},
-		{
-			"internalName": "flower_oxeye_daisy",
-			"displayName": "Oxeye Daisy"
-		},
-		{
-			"internalName": "flower_tulip_red",
-			"displayName": "Red Tulip"
-		},
-		{
-			"internalName": "flower_tulip_white",
-			"displayName": "White Tulip"
-		},
-		{
-			"internalName": "sapling_acacia",
-			"displayName": "Acacia Sapling"
-		},
-		{
-			"internalName": "sapling_roofed_oak",
-			"displayName": "Dark Oak Sapling"
-		},
-		{
-			"internalName": "coarse_dirt",
-			"displayName": "Coarse Dirt"
-		},
-		{
-			"internalName": "dirt_podzol_side",
-			"displayName": "Podzol (Side)"
-		},
-		{
-			"internalName": "dirt_podzol_top",
-			"displayName": "Podzol (Top)"
-		},
-		{
-			"internalName": "leaves_birch",
-			"displayName": "Birch Leaves",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Birch",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "leaves_birch_fast",
-			"displayName": "Birch Leaves (Opaque)",
-
-			"colourEntry": {
-				"defaultName": "Foliage_Birch",
-				"variants": [
-					"Foliage_Default",
-					"Foliage_Evergreen",
-					"Foliage_Birch",
-					"Foliage_Mesa",
-					"Foliage_Swampland"
-				]
-			}
-		},
-		{
-			"internalName": "prismarine_rough",
-			"displayName": "Prismarine"
-		},
-		{
-			"internalName": "red_sandstone_carved",
-			"displayName": "Chiseled Red Sandstone"
-		},
-		{
-			"internalName": "red_sandstone_smooth",
-			"displayName": "Smooth Red Standstone"
-		},
-		{
-			"internalName": "door_acacia_upper",
-			"displayName": "Acacia Door (Top)"
-		},
-		{
-			"internalName": "door_birch_upper",
-			"displayName": "Birch Door (Top)"
-		},
-		{
-			"internalName": "door_dark_oak_upper",
-			"displayName": "Dark Oak Door (Top)"
-		},
-		{
-			"internalName": "door_jungle_upper",
-			"displayName": "Jungle Door (Top)"
-		},
-		{
-			"internalName": "door_spruce_upper",
-			"displayName": "Spruce Door (Top)"
-		},
-		{
-			"internalName": "chorus_flower",
-			"displayName": "Chorus Flower"
-		},
-		{
-			"internalName": "chorus_flower_dead",
-			"displayName": "Chorus Flower (Dead)"
-		},
-		{
-			"internalName": "chorus_flower_plant",
-			"displayName": "Chorus Plant"
-		},
-		{
-			"internalName": "end_bricks",
-			"displayName": "End Stone Bricks"
-		},
-		{
-			"internalName": "grass_path_side",
-			"displayName": "Grass Path (Side)"
-		},
-		{
-			"internalName": "grass_path_top",
-			"displayName": "Grass Path (Top)"
-		},
-		{
-			"internalName": "barrier",
-			"displayName": "Barrier"
-		},
-		{
-			"internalName": "ice_packed",
-			"displayName": "Packed Ice"
-		},
-		{
-			"internalName": "sea_lantern",
-			"displayName": "Sea Lantern"
-		},
-		{
-			"internalName": "daylight_detector_inverted_top",
-			"displayName": "Daylight Sensor (Inverted) (Top)"
-		},
-		{
-			"internalName": "iron_trapdoor",
-			"displayName": "Iron Trapdoor"
-		},
-		{
-			"internalName": "door_acacia_lower",
-			"displayName": "Acacia Door (Bottom)"
-		},
-		{
-			"internalName": "door_birch_lower",
-			"displayName": "Birch Door (Bottom)"
-		},
-		{
-			"internalName": "door_dark_oak_lower",
-			"displayName": "Dark Oak Door (Bottom)"
-		},
-		{
-			"internalName": "door_jungle_lower",
-			"displayName": "Jungle Door (Bottom)"
-		},
-		{
-			"internalName": "door_spruce_lower",
-			"displayName": "Spruce Door (Bottom)"
-		},
-		{
-			"internalName": "purpur_block",
-			"displayName": "Purpur Block"
-		},
-		{
-			"internalName": "purpur_pillar",
-			"displayName": "Purpur Pillar (Side)"
-		},
-		{
-			"internalName": "purpur_pillar_top",
-			"displayName": "Purpur Pillar (Top)"
-		},
-		{
-			"internalName": "end_rod",
-			"displayName": "End Rod"
-		},
-		{
-			"internalName": "magma",
-			"displayName": "Magma Block"
-		},
-		{
-			"internalName": "nether_wart_block",
-			"displayName": "Nether Wart Block"
-		},
-		{
-			"internalName": "red_nether_brick",
-			"displayName": "Red Nether Brick"
-		},
-		{
-			"internalName": "frosted_ice_0",
-			"displayName": "Frosted Ice (Stage 1)"
-		},
-		{
-			"internalName": "frosted_ice_1",
-			"displayName": "Frosted Ice (Stage 2)"
-		},
-		{
-			"internalName": "frosted_ice_2",
-			"displayName": "Frosted Ice (Stage 3)"
-		},
-		{
-			"internalName": "frosted_ice_3",
-			"displayName": "Frosted Ice (Stage 4)"
-		},
-		{
-			"internalName": "beetroots_stage_0",
-			"displayName": "Beetroots (Stage 1)"
-		},
-		{
-			"internalName": "beetroots_stage_1",
-			"displayName": "Beetroots (Stage 2)"
-		},
-		{
-			"internalName": "beetroots_stage_2",
-			"displayName": "Beetroots (Stage 3)"
-		},
-		{
-			"internalName": "beetroots_stage_3",
-			"displayName": "Beetroots (Stage 4)"
-		},
-		{
-			"internalName": "chain_command_block_back",
-			"displayName": "Chain Command Block (Back)"
-		},
-		{
-			"internalName": "chain_command_block_conditional",
-			"displayName": "Chain Command Block (Conditional) (Side)"
-		},
-		{
-			"internalName": "chain_command_block_front",
-			"displayName": "Chain Command Block (Front)"
-		},
-		{
-			"internalName": "chain_command_block_side",
-			"displayName": "Chain Command Block (Side)"
-		},
-		{
-			"internalName": "command_block_back",
-			"displayName": "Command Block (Back)"
-		},
-		{
-			"internalName": "command_block_conditional",
-			"displayName": "Command Block (Conditional) (Side)"
-		},
-		{
-			"internalName": "command_block_front",
-			"displayName": "Command Block (Front)"
-		},
-		{
-			"internalName": "command_block_side",
-			"displayName": "Command Block (Side)"
-		},
-		{
-			"internalName": "repeating_command_block_back",
-			"displayName": "Repeating Command Block (Back)"
-		},
-		{
-			"internalName": "repeating_command_block_conditional",
-			"displayName": "Repeating Command Block (Conditional) (Side)"
-		},
-		{
-			"internalName": "repeating_command_block_front",
-			"displayName": "Repeating Command Block (Front)"
-		},
-		{
-			"internalName": "repeating_command_block_side",
-			"displayName": "Repeating Command Block (Side)"
-		},
-		{
-			"internalName": "bone_block_side",
-			"displayName": "Bone Block (Side)"
-		},
-		{
-			"internalName": "bone_block_top",
-			"displayName": "Bone Block (Top)"
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "observer_front",
-			"displayName": "Observer (Front)"
-		},
-		{
-			"internalName": "observer_side",
-			"displayName": "Observer (Side)"
-		},
-		{
-			"internalName": "observer_back",
-			"displayName": "Observer (Back)"
-		},
-		{
-			"internalName": "observer_back_lit",
-			"displayName": "Observer (On) (Back)"
-		},
-		{
-			"internalName": "observer_top",
-			"displayName": "Observer (Top and Bottom)"
-		},
-		{
-			"internalName": "goldRing",
-			"displayName": "Gold Score Ring"
-		},
-		{
-			"internalName": "emeraldRing",
-			"displayName": "Emerald Score Ring"
-		},
-		{
-			"internalName": "structure_block",
-			"displayName": "Structure Block"
-		},
-		{
-			"internalName": "structure_block_corner",
-			"displayName": "Structure Block (Corner)"
-		},
-		{
-			"internalName": "structure_block_data",
-			"displayName": "Structure Block (Data)"
-		},
-		{
-			"internalName": "structure_block_load",
-			"displayName": "Structure Block (Load)"
-		},
-		{
-			"internalName": "structure_block_save",
-			"displayName": "Structure Block (Save)"
-		},
-		{
-			"internalName": "concrete_black",
-			"displayName": "Black Concrete"
-		},
-		{
-			"internalName": "concrete_blue",
-			"displayName": "Blue Concrete"
-		},
-		{
-			"internalName": "concrete_brown",
-			"displayName": "Brown Concrete"
-		},
-		{
-			"internalName": "concrete_cyan",
-			"displayName": "Cyan Concrete"
-		},
-		{
-			"internalName": "concrete_gray",
-			"displayName": "Gray Concrete"
-		},
-		{
-			"internalName": "concrete_green",
-			"displayName": "Green Concrete"
-		},
-		{
-			"internalName": "concrete_light_blue",
-			"displayName": "Light Blue Concrete"
-		},
-		{
-			"internalName": "concrete_lime",
-			"displayName": "Lime Concrete"
-		},
-		{
-			"internalName": "concrete_magenta",
-			"displayName": "Magenta Concrete"
-		},
-		{
-			"internalName": "concrete_orange",
-			"displayName": "Orange Concrete"
-		},
-		{
-			"internalName": "concrete_pink",
-			"displayName": "Pink Concrete"
-		},
-		{
-			"internalName": "concrete_purple",
-			"displayName": "Purple Concrete"
-		},
-		{
-			"internalName": "concrete_red",
-			"displayName": "Red Concrete"
-		},
-		{
-			"internalName": "concrete_silver",
-			"displayName": "Light Gray Concrete"
-		},
-		{
-			"internalName": "concrete_white",
-			"displayName": "White Concrete"
-		},
-		{
-			"internalName": "concrete_yellow",
-			"displayName": "Yellow Concrete"
-		},
-		{
-			"internalName": "concrete_powder_black",
-			"displayName": "Black Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_blue",
-			"displayName": "Blue Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_brown",
-			"displayName": "Brown Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_cyan",
-			"displayName": "Cyan Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_gray",
-			"displayName": "Gray Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_green",
-			"displayName": "Green Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_light_blue",
-			"displayName": "Light Blue Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_lime",
-			"displayName": "Lime Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_magenta",
-			"displayName": "Magenta Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_orange",
-			"displayName": "Orange Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_pink",
-			"displayName": "Pink Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_purple",
-			"displayName": "Purple Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_red",
-			"displayName": "Red Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_silver",
-			"displayName": "Light Gray Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_white",
-			"displayName": "White Concrete Powder"
-		},
-		{
-			"internalName": "concrete_powder_yellow",
-			"displayName": "Yellow Concrete Powder"
-		},
-		{
-			"internalName": "glazed_terracotta_black",
-			"displayName": "Black Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_blue",
-			"displayName": "Blue Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_brown",
-			"displayName": "Brown Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_cyan",
-			"displayName": "Cyan Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_gray",
-			"displayName": "Gray Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_green",
-			"displayName": "Green Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_light_blue",
-			"displayName": "Light Blue Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_lime",
-			"displayName": "Lime Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_magenta",
-			"displayName": "Magenta Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_orange",
-			"displayName": "Orange Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_pink",
-			"displayName": "Pink Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_purple",
-			"displayName": "Purple Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_red",
-			"displayName": "Red Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_silver",
-			"displayName": "Light Gray Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_white",
-			"displayName": "White Glazed Terracotta"
-		},
-		{
-			"internalName": "glazed_terracotta_yellow",
-			"displayName": "Yellow Glazed Terracotta"
-		},
-		{
-			"internalName": "shulker_top",
-			"displayName": "Shulker Box (Break Particles)",
-
-			"colourEntry": {
-				"defaultName": "Shulker_Box_Purple",
-				"variants": [
-					"Shulker_Box_Black",
-					"Shulker_Box_Blue",
-					"Shulker_Box_Brown",
-					"Shulker_Box_Cyan",
-					"Shulker_Box_Grey",
-					"Shulker_Box_Green",
-					"Shulker_Box_Light_Blue",
-					"Shulker_Box_Light_Green",
-					"Shulker_Box_Magenta",
-					"Shulker_Box_Orange",
-					"Shulker_Box_Pink",
-					"Shulker_Box_Purple",
-					"Shulker_Box_Red",
-					"Shulker_Box_Silver",
-					"Shulker_Box_White",
-					"Shulker_Box_Yellow"
-				]
-			}
-		},
-		{
-			"internalName": "shulker_top_overlay",
-			"displayName": "Shulker Box (Break Particles) (Overlay) (Unused)"
-		},
-		{
-			"internalName": "cauldron_water",
-			"displayName": "Cauldron Water",
-			"allowCustomColour": true,
-
-			"colourEntry": {
-				"defaultName": "Cauldron_Water",
-				"variants": [
-					"Cauldron_Water",
-					"Effect_MovementSpeed",
-					"Effect_MovementSlowDown",
-					"Effect_DigSpeed",
-					"Effect_DigSlowdown",
-					"Effect_DamageBoost",
-					"Effect_Heal",
-					"Effect_Harm",
-					"Effect_Jump",
-					"Effect_Confusion",
-					"Effect_Regeneration",
-					"Effect_DamageResistance",
-					"Effect_FireResistance",
-					"Effect_WaterBreathing",
-					"Effect_Invisibility",
-					"Effect_Blindness",
-					"Effect_NightVision",
-					"Effect_Hunger",
-					"Effect_Weakness",
-					"Effect_Poison",
-					"Effect_Wither",
-					"Effect_HealthBoost",
-					"Effect_Absorption",
-					"Effect_Saturation",
-					"Effect_Levitation",
-					"Effect_Luck",
-					"Effect_BadLuck",
-					"Effect_TurtleMaster",
-					"Effect_SlowFall"
-				]
-			}
-		},
-		{
-			"internalName": "seagrass_doubletall_top",
-			"displayName": "Double Tall Seagrass (Top)"
-		},
-		{
-			"internalName": "coral_blue",
-			"displayName": "Tube Coral Block"
-		},
-		{
-			"internalName": "coral_purple",
-			"displayName": "Bubble Coral Block"
-		},
-		{
-			"internalName": "coral_pink",
-			"displayName": "Brain Coral Block"
-		},
-		{
-			"internalName": "coral_red",
-			"displayName": "Fire Coral Block"
-		},
-		{
-			"internalName": "coral_yellow",
-			"displayName": "Horn Coral Block"
-		},
-		{
-			"internalName": "coral_plant_blue",
-			"displayName": "Tube Coral"
-		},
-		{
-			"internalName": "coral_plant_purple",
-			"displayName": "Bubble Coral"
-		},
-		{
-			"internalName": "coral_plant_pink",
-			"displayName": "Brain Coral"
-		},
-		{
-			"internalName": "coral_plant_red",
-			"displayName": "Fire Coral"
-		},
-		{
-			"internalName": "coral_plant_yellow",
-			"displayName": "Horn Coral"
-		},
-		{
-			"internalName": "sea_pickle",
-			"displayName": "Sea Pickle"
-		},
-		{
-			"internalName": "blue_ice",
-			"displayName": "Blue Ice"
-		},
-		{
-			"internalName": "dried_kelp_top",
-			"displayName": "Dried Kelp Block (Top)"
-		},
-		{
-			"internalName": "dried_kelp_side",
-			"displayName": "Dried Kelp Block (Side)"
-		},
-		{
-			"internalName": "seagrass_carried",
-			"displayName": "Seagrass (Item)"
-		},
-		{
-			"internalName": "seagrass_doubletall_bottom",
-			"displayName": "Double Tall Seagrass (Bottom)"
-		},
-		{
-			"internalName": "coral_blue_dead",
-			"displayName": "Dead Tube Coral Block"
-		},
-		{
-			"internalName": "coral_purple_dead",
-			"displayName": "Dead Bubble Coral Block"
-		},
-		{
-			"internalName": "coral_pink_dead",
-			"displayName": "Dead Brain Coral Block"
-		},
-		{
-			"internalName": "coral_red_dead",
-			"displayName": "Dead Fire Coral Block"
-		},
-		{
-			"internalName": "coral_yellow_dead",
-			"displayName": "Dead Horn Coral Block"
-		},
-		{
-			"internalName": "coral_fan_blue",
-			"displayName": "Tube Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_purple",
-			"displayName": "Bubble Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_pink",
-			"displayName": "Brain Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_red",
-			"displayName": "Fire Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_yellow",
-			"displayName": "Horn Coral Fan"
-		},
-		{
-			"internalName": "bamboo_stem",
-			"displayName": "Bamboo (Stem) [PS4 ONLY]"
-		},
-		{
-			"internalName": "bamboo_leaf_small",
-			"displayName": "Bamboo (Small Leaves) [PS4 ONLY]"
-		},
-		{
-			"internalName": "kelp_a",
-			"displayName": "Kelp (Bottom)"
-		},
-		{
-			"internalName": "kelp_a0",
-			"displayName": ""
-		},
-		{
-			"internalName": "kelp_a1",
-			"displayName": ""
-		},
-		{
-			"internalName": "kelp_a2",
-			"displayName": ""
-		},
-		{
-			"internalName": "kelp_top_a",
-			"displayName": "Kelp (Top)"
-		},
-		{
-			"internalName": "kelp_top_a0",
-			"displayName": ""
-		},
-		{
-			"internalName": "kelp_top_a1",
-			"displayName": ""
-		},
-		{
-			"internalName": "kelp_top_a2",
-			"displayName": ""
-		},
-		{
-			"internalName": "seagrass",
-			"displayName": "Seagrass"
-		},
-		{
-			"internalName": "coral_fan_blue_dead",
-			"displayName": "Dead Tube Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_purple_dead",
-			"displayName": "Dead Bubble Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_pink_dead",
-			"displayName": "Dead Brain Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_red_dead",
-			"displayName": "Dead Fire Coral Fan"
-		},
-		{
-			"internalName": "coral_fan_yellow_dead",
-			"displayName": "Dead Horn Coral Fan"
-		},
-		{
-			"internalName": "bamboo_leaf",
-			"displayName": "Bamboo (Leaves) [PS4 ONLY]"
-		},
-		{
-			"internalName": "spruce_trapdoor",
-			"displayName": "Spruce Trapdoor"
-		},
-		{
-			"internalName": "stripped_log_oak",
-			"displayName": "Stripped Oak Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_oak_top",
-			"displayName": "Stripped Oak Log (Top)"
-		},
-		{
-			"internalName": "stripped_log_acacia",
-			"displayName": "Stripped Acacia Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_acacia_top",
-			"displayName": "Stripped Acacia Log (Top)"
-		},
-		{
-			"internalName": "stripped_log_birch",
-			"displayName": "Stripped Birch Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_birch_top",
-			"displayName": "Stripped Birch Log (Top)"
-		},
-		{
-			"internalName": "stripped_log_dark_oak",
-			"displayName": "Stripped Dark Oak Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_dark_oak_top",
-			"displayName": "Stripped Dark Oak Log (Top)"
-		},
-		{
-			"internalName": "stripped_log_jungle",
-			"displayName": "Stripped Jungle Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_jungle_top",
-			"displayName": "Stripped Birch Log (Top)"
-		},
-		{
-			"internalName": "stripped_log_spruce",
-			"displayName": "Stripped Spruce Log (Side)"
-		},
-		{
-			"internalName": "stripped_log_spruce_top",
-			"displayName": "Stripped Spruce Log (Top)"
-		},
-		{
-			"internalName": "acacia_trapdoor",
-			"displayName": "Acacia Trapdoor"
-		},
-		{
-			"internalName": "birch_trapdoor",
-			"displayName": "Birch Trapdoor"
-		},
-		{
-			"internalName": "dark_oak_trapdoor",
-			"displayName": "Dark Oak Trapdoor"
-		},
-		{
-			"internalName": "jungle_trapdoor",
-			"displayName": "Jungle Trapdoor"
-		},
-		{
-			"internalName": "bamboo_sapling",
-			"displayName": "Bamboo Sapling [PS4 ONLY]"
-		},
-		{
-			"internalName": "bamboo_singleleaf",
-			"displayName": "Bamboo (Single Leaf) [PS4 ONLY]"
-		},
-		{
-			"internalName": "flower_lily_of_the_valley",
-			"displayName": "Lily of the Valley [PS4 ONLY]"
-		},
-		{
-			"internalName": "flower_cornflower",
-			"displayName": "Cornflower [PS4 ONLY]"
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "berry_bush_sapling",
-			"displayName": "Sweet Berry Bush (Stage 1) [PS4 ONLY]"
-		},
-		{
-			"internalName": "berry_bush_no_berries",
-			"displayName": "Sweet Berry Bush (Stage 2) [PS4 ONLY]"
-		},
-		{
-			"internalName": "berry_bush_some_berries",
-			"displayName": "Sweet Berry Bush (Stage 3) [PS4 ONLY]"
-		},
-		{
-			"internalName": "berry_bush_full_berries",
-			"displayName": "Sweet Berry Bush (Stage 4) [PS4 ONLY]"
-		},
-		{
-			"internalName": "campfire_log",
-			"displayName": "Campfire (Log) [PS4 ONLY]"
-		},
-		{
-			"internalName": "campfire_log_lit",
-			"displayName": "Campfire (Log) (Lit) [PS4 ONLY]"
-		},
-		{
-			"internalName": "campfire_smoke",
-			"displayName": "Campfire (Smoke) [PS4 ONLY]"
-		},
-		{
-			"internalName": "campfire",
-			"displayName": "Campfire (Flame) [PS4 ONLY]"
-		},
-		{
-			"internalName": "scaffolding_side",
-			"displayName": "Scaffolding (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "scaffolding_bottom",
-			"displayName": "Scaffolding (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "scaffolding_top",
-			"displayName": "Scaffolding (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "barrel_side",
-			"displayName": "Barrel (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "barrel_top",
-			"displayName": "Barrel (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "barrel_bottom",
-			"displayName": "Barrel (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "bell_side",
-			"displayName": "Bell (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "bell_top",
-			"displayName": "Bell (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "bell_bottom",
-			"displayName": "Bell (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "lantern",
-			"displayName": "Lantern [PS4 ONLY]"
-		},
-		{
-			"internalName": "jigsaw_side",
-			"displayName": "Jigsaw (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "jigsaw_top",
-			"displayName": "Jigsaw (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "blast_furnace_front",
-			"displayName": "Blast Furnace (Front) [PS4 ONLY]"
-		},
-		{
-			"internalName": "blast_furnace_front_on",
-			"displayName": "Blast Furnace (Front) (Lit) [PS4 ONLY]"
-		},
-		{
-			"internalName": "blast_furnace_side",
-			"displayName": "Blast Furnace (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "blast_furnace_top",
-			"displayName": "Blast Furnace (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "grindstone_side",
-			"displayName": "Grindstone (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "grindstone_round",
-			"displayName": "Grindstone (Round) [PS4 ONLY]"
-		},
-		{
-			"internalName": "grindstone_pivot",
-			"displayName": "Grindstone (Pivot) [PS4 ONLY]"
-		},
-		{
-			"internalName": "cartography_table_side1",
-			"displayName": "Cartography Table (Back) [PS4 ONLY]"
-		},
-		{
-			"internalName": "cartography_table_side2",
-			"displayName": "Cartography Table (Right Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "cartography_table_side3",
-			"displayName": "Cartography Table (Front and Left Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "cartography_table_top",
-			"displayName": "Cartography Table (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "lectern_sides",
-			"displayName": "Lectern (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "lectern_front",
-			"displayName": "Lectern (Front) [PS4 ONLY]"
-		},
-		{
-			"internalName": "lectern_base",
-			"displayName": "Lectern (Base) [PS4 ONLY]"
-		},
-		{
-			"internalName": "lectern_top",
-			"displayName": "Lectern (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "loom_side",
-			"displayName": "Loom (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "loom_front",
-			"displayName": "Loom (Front) [PS4 ONLY]"
-		},
-		{
-			"internalName": "loom_top",
-			"displayName": "Loom (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "loom_bottom",
-			"displayName": "Loom (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smithing_table_side",
-			"displayName": "Smithing Table (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smithing_table_front",
-			"displayName": "Smithing Table (Front) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smithing_table_top",
-			"displayName": "Smithing Table (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "composter_top",
-			"displayName": "Composter (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "fletcher_table_side2",
-			"displayName": "Fletching Table (Front and Back) [PS4 ONLY]"
-		},
-		{
-			"internalName": "fletcher_table_side1",
-			"displayName": "Fletching Table (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "fletcher_table_top",
-			"displayName": "Fletching Table (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "stonecutter2_saw",
-			"displayName": "Stonecutter (Saw) [PS4 ONLY]"
-		},
-		{
-			"internalName": "stonecutter2_side",
-			"displayName": "Stonecutter (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "stonecutter2_top",
-			"displayName": "Stonecutter (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "stonecutter2_bottom",
-			"displayName": "Stonecutter (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smoker_side",
-			"displayName": "Smoker (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smoker_front",
-			"displayName": "Smoker (Front) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smoker_front_on",
-			"displayName": "Smoker (Front) (Lit) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smoker_top",
-			"displayName": "Smoker (Top) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smoker_bottom",
-			"displayName": "Smoker (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "compost",
-			"displayName": "Compost [PS4 ONLY]"
-		},
-		{
-			"internalName": "compost_ready",
-			"displayName": "Compost (Ready) [PS4 ONLY]"
-		},
-		{
-			"internalName": "composter_bottom",
-			"displayName": "Composter (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "composter_side",
-			"displayName": "Composter (Side) [PS4 ONLY]"
-		},
-		{
-			"internalName": "barrel_top_open",
-			"displayName": "Barrel (Top) (Open) [PS4 ONLY]"
-		},
-		{
-			"internalName": "smithing_table_bottom",
-			"displayName": "Smithing Table (Bottom) [PS4 ONLY]"
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		},
-		{
-			"internalName": "",
-			"displayName": ""
-		}
-	]
+  "COMMENT_1": "Tile data research by MattNL",
+  "COMMENT_2": "JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)",
+  "entries": [
+    {
+      "internalName": "grass_top",
+      "displayName": "Grass Block (Top)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "stone",
+      "displayName": "Stone"
+    },
+    {
+      "internalName": "dirt",
+      "displayName": "Dirt"
+    },
+    {
+      "internalName": "grass_side",
+      "displayName": "Grass Block (Side)"
+    },
+    {
+      "internalName": "planks_oak",
+      "displayName": "Oak Planks"
+    },
+    {
+      "internalName": "stoneslab_side",
+      "displayName": "Stone Slab (Side)"
+    },
+    {
+      "internalName": "stoneslab_top",
+      "displayName": "Stone Slab (Top)"
+    },
+    {
+      "internalName": "brick",
+      "displayName": "Bricks"
+    },
+    {
+      "internalName": "tnt_side",
+      "displayName": "TNT (Side)"
+    },
+    {
+      "internalName": "tnt_top",
+      "displayName": "TNT (Top)"
+    },
+    {
+      "internalName": "tnt_bottom",
+      "displayName": "TNT (Bottom)"
+    },
+    {
+      "internalName": "web",
+      "displayName": "Cobweb"
+    },
+    {
+      "internalName": "flower_rose",
+      "displayName": "Poppy"
+    },
+    {
+      "internalName": "flower_dandelion",
+      "displayName": "Dandelion"
+    },
+    {
+      "internalName": "portal",
+      "displayName": "Nether Portal"
+    },
+    {
+      "internalName": "sapling",
+      "displayName": "Oak Sapling"
+    },
+    {
+      "internalName": "cobblestone",
+      "displayName": "Cobblestone"
+    },
+    {
+      "internalName": "bedrock",
+      "displayName": "Bedrock"
+    },
+    {
+      "internalName": "sand",
+      "displayName": "Sand"
+    },
+    {
+      "internalName": "gravel",
+      "displayName": "Gravel"
+    },
+    {
+      "internalName": "log_oak",
+      "displayName": "Oak Wood (Side)"
+    },
+    {
+      "internalName": "log_oak_top",
+      "displayName": "Oak Wood (Top)"
+    },
+    {
+      "internalName": "iron_block",
+      "displayName": "Block of Iron"
+    },
+    {
+      "internalName": "gold_block",
+      "displayName": "Block of Gold"
+    },
+    {
+      "internalName": "diamond_block",
+      "displayName": "Block of Diamond"
+    },
+    {
+      "internalName": "emerald_block",
+      "displayName": "Block of Emerald"
+    },
+    {
+      "internalName": "redstone_block",
+      "displayName": "Block of Redstone"
+    },
+    {
+      "internalName": "dropper_front_horizontal",
+      "displayName": "Dropper (Front)"
+    },
+    {
+      "internalName": "mushroom_red",
+      "displayName": "Mushroom (Red)"
+    },
+    {
+      "internalName": "mushroom_brown",
+      "displayName": "Mushroom (Brown)"
+    },
+    {
+      "internalName": "sapling_jungle",
+      "displayName": "Jungle Tree Sapling"
+    },
+    {
+      "internalName": "fire_0",
+      "displayName": "Fire (Layer 1)"
+    },
+    {
+      "internalName": "gold_ore",
+      "displayName": "Gold Ore"
+    },
+    {
+      "internalName": "iron_ore",
+      "displayName": "Iron Ore"
+    },
+    {
+      "internalName": "coal_ore",
+      "displayName": "Coal Ore"
+    },
+    {
+      "internalName": "bookshelf",
+      "displayName": "Bookshelf"
+    },
+    {
+      "internalName": "cobblestone_mossy",
+      "displayName": "Moss Stone"
+    },
+    {
+      "internalName": "obsidian",
+      "displayName": "Obsidian"
+    },
+    {
+      "internalName": "grass_side_overlay",
+      "displayName": "Grass Side (Overlay)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "tallgrass",
+      "displayName": "Tall Grass",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "dispenser_front_vertical",
+      "displayName": "Dispenser (Vertical) (Front)"
+    },
+    {
+      "internalName": "beacon",
+      "displayName": "Beacon"
+    },
+    {
+      "internalName": "dropper_front_vertical",
+      "displayName": "Dropper (Vertical) (Front)"
+    },
+    {
+      "internalName": "workbench_top",
+      "displayName": "Crafting Table (Top)"
+    },
+    {
+      "internalName": "furnace_front",
+      "displayName": "Furnace (Front)"
+    },
+    {
+      "internalName": "furnace_side",
+      "displayName": "Furnace/Dispenser/Dropper (Side)"
+    },
+    {
+      "internalName": "dispenser_front",
+      "displayName": "Dispenser (Front)"
+    },
+    {
+      "internalName": "fire_1",
+      "displayName": "Fire (Layer 2)"
+    },
+    {
+      "internalName": "sponge",
+      "displayName": "Sponge"
+    },
+    {
+      "internalName": "glass",
+      "displayName": "Glass"
+    },
+    {
+      "internalName": "diamond_ore",
+      "displayName": "Diamond Ore"
+    },
+    {
+      "internalName": "redstone_ore",
+      "displayName": "Redstone Ore"
+    },
+    {
+      "internalName": "leaves",
+      "displayName": "Oak Leaves",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "leaves_opaque",
+      "displayName": "Oak Leaves (Opaque)",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "stonebrick",
+      "displayName": "Stone Bricks"
+    },
+    {
+      "internalName": "deadbush",
+      "displayName": "Dead Bush/Shrub"
+    },
+    {
+      "internalName": "fern",
+      "displayName": "Fern",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "daylight_detector_top",
+      "displayName": "Daylight Sensor (Top)"
+    },
+    {
+      "internalName": "daylight_detector_side",
+      "displayName": "Daylight Sensor (Side)"
+    },
+    {
+      "internalName": "workbench_side",
+      "displayName": "Crafting Table (Side)"
+    },
+    {
+      "internalName": "workbench_front",
+      "displayName": "Crafting Table (Front)"
+    },
+    {
+      "internalName": "furnace_front_lit",
+      "displayName": "Furnace (Lit) (Front)"
+    },
+    {
+      "internalName": "furnace_top",
+      "displayName": "Furnace/Dispenser/Dropper (Top)"
+    },
+    {
+      "internalName": "sapling_spruce",
+      "displayName": "Spruce Sapling"
+    },
+    {
+      "internalName": "wool_colored_white",
+      "displayName": "White Wool"
+    },
+    {
+      "internalName": "mob_spawner",
+      "displayName": "Monster Spawner"
+    },
+    {
+      "internalName": "snow",
+      "displayName": "Snow"
+    },
+    {
+      "internalName": "ice",
+      "displayName": "Ice"
+    },
+    {
+      "internalName": "snow_side",
+      "displayName": "Grass Block (Snowy) (Side)"
+    },
+    {
+      "internalName": "cactus_top",
+      "displayName": "Cactus (Top)"
+    },
+    {
+      "internalName": "cactus_side",
+      "displayName": "Cactus (Side)"
+    },
+    {
+      "internalName": "cactus_bottom",
+      "displayName": "Cactus (Bottom)"
+    },
+    {
+      "internalName": "clay",
+      "displayName": "Clay"
+    },
+    {
+      "internalName": "reeds",
+      "displayName": "Sugar Canes"
+    },
+    {
+      "internalName": "jukebox_side",
+      "displayName": "Jukebox (Side)"
+    },
+    {
+      "internalName": "jukebox_top",
+      "displayName": "Jukebox (Top)"
+    },
+    {
+      "internalName": "waterlily",
+      "displayName": "Lily Pad",
+      "colorKey": "Tile_WaterLily"
+    },
+    {
+      "internalName": "mycel_side",
+      "displayName": "Mycelium (Side)"
+    },
+    {
+      "internalName": "mycel_top",
+      "displayName": "Mycelium (Top)"
+    },
+    {
+      "internalName": "sapling_birch",
+      "displayName": "Birch Sapling"
+    },
+    {
+      "internalName": "torch_on",
+      "displayName": "Torch"
+    },
+    {
+      "internalName": "door_wood_upper",
+      "displayName": "Oak Door (Top)"
+    },
+    {
+      "internalName": "door_iron_upper",
+      "displayName": "Iron Door (Top)"
+    },
+    {
+      "internalName": "ladder",
+      "displayName": "Ladder"
+    },
+    {
+      "internalName": "trapdoor",
+      "displayName": "Oak Trapdoor"
+    },
+    {
+      "internalName": "iron_bars",
+      "displayName": "Iron Bars"
+    },
+    {
+      "internalName": "farmland_wet",
+      "displayName": "Farmland (Wet)"
+    },
+    {
+      "internalName": "farmland_dry",
+      "displayName": "Farmland"
+    },
+    {
+      "internalName": "crops_0",
+      "displayName": "Wheat (Stage 1)"
+    },
+    {
+      "internalName": "crops_1",
+      "displayName": "Wheat (Stage 2)"
+    },
+    {
+      "internalName": "crops_2",
+      "displayName": "Wheat (Stage 3)"
+    },
+    {
+      "internalName": "crops_3",
+      "displayName": "Wheat (Stage 4)"
+    },
+    {
+      "internalName": "crops_4",
+      "displayName": "Wheat (Stage 5)"
+    },
+    {
+      "internalName": "crops_5",
+      "displayName": "Wheat (Stage 6)"
+    },
+    {
+      "internalName": "crops_6",
+      "displayName": "Wheat (Stage 7)"
+    },
+    {
+      "internalName": "crops_7",
+      "displayName": "Wheat (Stage 8)"
+    },
+    {
+      "internalName": "lever",
+      "displayName": "Lever"
+    },
+    {
+      "internalName": "door_wood_lower",
+      "displayName": "Oak Door (Bottom)"
+    },
+    {
+      "internalName": "door_iron_lower",
+      "displayName": "Iron Door (Bottom)"
+    },
+    {
+      "internalName": "redstone_torch_on",
+      "displayName": "Redstone Torch"
+    },
+    {
+      "internalName": "stonebrick_mossy",
+      "displayName": "Mossy Stone Bricks"
+    },
+    {
+      "internalName": "stonebrick_cracked",
+      "displayName": "Cracked Stone Bricks"
+    },
+    {
+      "internalName": "pumpkin_top",
+      "displayName": "Pumpkin (Top)"
+    },
+    {
+      "internalName": "netherrack",
+      "displayName": "Netherrack"
+    },
+    {
+      "internalName": "soul_sand",
+      "displayName": "Soul Sand"
+    },
+    {
+      "internalName": "glowstone",
+      "displayName": "Glowstone"
+    },
+    {
+      "internalName": "piston_top_sticky",
+      "displayName": "Sticky Piston (Top)"
+    },
+    {
+      "internalName": "piston_top",
+      "displayName": "Piston (Top)"
+    },
+    {
+      "internalName": "piston_side",
+      "displayName": "Piston (Side)"
+    },
+    {
+      "internalName": "piston_bottom",
+      "displayName": "Piston (Bottom)"
+    },
+    {
+      "internalName": "piston_inner_top",
+      "displayName": "Piston (Inside)"
+    },
+    {
+      "internalName": "stem_straight",
+      "displayName": "Stem",
+      "colorKey": "Stem_Color"
+    },
+    {
+      "internalName": "rail_normal_turned",
+      "displayName": "Rail (Turned)"
+    },
+    {
+      "internalName": "wool_colored_black",
+      "displayName": "Black Wool"
+    },
+    {
+      "internalName": "wool_colored_gray",
+      "displayName": "Gray Wool"
+    },
+    {
+      "internalName": "redstone_torch_off",
+      "displayName": "Redstone Torch (Off)"
+    },
+    {
+      "internalName": "log_spruce",
+      "displayName": "Spruce Wood (Side)"
+    },
+    {
+      "internalName": "log_birch",
+      "displayName": "Birch Wood (Side)"
+    },
+    {
+      "internalName": "pumpkin_side",
+      "displayName": "Pumpkin (Side)"
+    },
+    {
+      "internalName": "pumpkin_face_off",
+      "displayName": "Carved Pumpkin"
+    },
+    {
+      "internalName": "pumpkin_face_on",
+      "displayName": "Jack-O-Lantern"
+    },
+    {
+      "internalName": "cake_top",
+      "displayName": "Cake (Top)"
+    },
+    {
+      "internalName": "cake_side",
+      "displayName": "Cake (Side)"
+    },
+    {
+      "internalName": "cake_inner",
+      "displayName": "Cake (Inside)"
+    },
+    {
+      "internalName": "cake_bottom",
+      "displayName": "Cake (Bottom)"
+    },
+    {
+      "internalName": "mushroom_block_skin_red",
+      "displayName": "Mushroom (Red Block)"
+    },
+    {
+      "internalName": "mushroom_block_skin_brown",
+      "displayName": "Mushroom (Brown Block)"
+    },
+    {
+      "internalName": "stem_bent",
+      "displayName": "Stem (Attached)",
+      "colorKey": "Stem_Color"
+    },
+    {
+      "internalName": "rail_normal",
+      "displayName": "Rail"
+    },
+    {
+      "internalName": "wool_colored_red",
+      "displayName": "Red Wool"
+    },
+    {
+      "internalName": "wool_colored_pink",
+      "displayName": "Pink Wool"
+    },
+    {
+      "internalName": "repeater_off",
+      "displayName": "Repeater"
+    },
+    {
+      "internalName": "leaves_spruce",
+      "displayName": "Spruce Leaves",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "leaves_spruce_opaque",
+      "displayName": "Spruce Leaves (Opaque)",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "conduit_top",
+      "displayName": "Conduit (Break Particles)"
+    },
+    {
+      "internalName": "turtle_egg_hatch_0",
+      "displayName": "Sea Turtle Egg (Stage 1)"
+    },
+    {
+      "internalName": "melon_side",
+      "displayName": "Melon (Side)"
+    },
+    {
+      "internalName": "melon_top",
+      "displayName": "Melon (Top)"
+    },
+    {
+      "internalName": "cauldron_top",
+      "displayName": "Cauldron (Top)"
+    },
+    {
+      "internalName": "cauldron_inner",
+      "displayName": "Cauldron (Inside)"
+    },
+    {
+      "internalName": "sponge_wet",
+      "displayName": "Wet Sponge"
+    },
+    {
+      "internalName": "mushroom_block_skin_stem",
+      "displayName": "Mushroom (Stem Block)"
+    },
+    {
+      "internalName": "mushroom_block_inside",
+      "displayName": "Mushroom (Inside Block)"
+    },
+    {
+      "internalName": "vine",
+      "displayName": "Vines",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "lapis_block",
+      "displayName": "Lapis Lazuli Block"
+    },
+    {
+      "internalName": "wool_colored_green",
+      "displayName": "Green Wool"
+    },
+    {
+      "internalName": "wool_colored_lime",
+      "displayName": "Lime Wool"
+    },
+    {
+      "internalName": "repeater_on",
+      "displayName": "Redstone Repeater (On)"
+    },
+    {
+      "internalName": "glass_pane_top",
+      "displayName": "Glass Pane (Top)"
+    },
+    {
+      "internalName": "chest_top",
+      "displayName": "Chest (Break Particles)"
+    },
+    {
+      "internalName": "ender_chest_top",
+      "displayName": "Ender Chest (Break Particles)"
+    },
+    {
+      "internalName": "turtle_egg_hatch_1",
+      "displayName": "Sea Turtle Egg (Stage 2)"
+    },
+    {
+      "internalName": "turtle_egg_hatch_2",
+      "displayName": "Sea Turtle Egg (Stage 3)"
+    },
+    {
+      "internalName": "log_jungle",
+      "displayName": "Jungle Wood (Side)"
+    },
+    {
+      "internalName": "cauldron_side",
+      "displayName": "Cauldron (Side)"
+    },
+    {
+      "internalName": "cauldron_bottom",
+      "displayName": "Cauldron (Bottom)"
+    },
+    {
+      "internalName": "brewing_stand_base",
+      "displayName": "Brewing Stand (Base)"
+    },
+    {
+      "internalName": "brewing_stand",
+      "displayName": "Brewing Stand"
+    },
+    {
+      "internalName": "endframe_top",
+      "displayName": "End Portal Frame (Top)"
+    },
+    {
+      "internalName": "endframe_side",
+      "displayName": "End Portal Frame (Side)"
+    },
+    {
+      "internalName": "lapis_ore",
+      "displayName": "Lapis Lazuli Ore"
+    },
+    {
+      "internalName": "wool_colored_brown",
+      "displayName": "Brown Wool"
+    },
+    {
+      "internalName": "wool_colored_yellow",
+      "displayName": "Yellow Wool"
+    },
+    {
+      "internalName": "rail_golden",
+      "displayName": "Powered Rail"
+    },
+    {
+      "internalName": "redstone_dust_cross",
+      "displayName": "Redstone Dust (Cross)",
+      "colorKey": "RedstoneDust"
+    },
+    {
+      "internalName": "redstone_dust_line",
+      "displayName": "Redstone Dust (Line)",
+      "colorKey": "RedstoneDust"
+    },
+    {
+      "internalName": "enchantment_top",
+      "displayName": "Enchantment Table (Top)"
+    },
+    {
+      "internalName": "dragon_egg",
+      "displayName": "Dragon Egg"
+    },
+    {
+      "internalName": "cocoa_2",
+      "displayName": "Cocoa (Stage 3)"
+    },
+    {
+      "internalName": "cocoa_1",
+      "displayName": "Cocoa (Stage 2)"
+    },
+    {
+      "internalName": "cocoa_0",
+      "displayName": "Cocoa (Stage 1)"
+    },
+    {
+      "internalName": "emerald_ore",
+      "displayName": "Emerald Ore"
+    },
+    {
+      "internalName": "trip_wire_source",
+      "displayName": "Tripwire Hook"
+    },
+    {
+      "internalName": "trip_wire",
+      "displayName": "Tripwire"
+    },
+    {
+      "internalName": "endframe_eye",
+      "displayName": "End Portal Frame (Eye)"
+    },
+    {
+      "internalName": "end_stone",
+      "displayName": "End Stone"
+    },
+    {
+      "internalName": "sandstone_top",
+      "displayName": "Sandstone (Top)"
+    },
+    {
+      "internalName": "wool_colored_blue",
+      "displayName": "Blue Wool"
+    },
+    {
+      "internalName": "wool_colored_light_blue",
+      "displayName": "Light Blue Wool"
+    },
+    {
+      "internalName": "rail_golden_powered",
+      "displayName": "Powered Rail (On)"
+    },
+    {
+      "internalName": "redstone_dust_cross_overlay",
+      "displayName": "Redstone Dust (Cross) (Overlay)"
+    },
+    {
+      "internalName": "redstone_dust_line_overlay",
+      "displayName": "Redstone Dust (Line) (Overlay)"
+    },
+    {
+      "internalName": "enchantment_side",
+      "displayName": "Enchantment Table (Side)"
+    },
+    {
+      "internalName": "enchantment_bottom",
+      "displayName": "Enchantment Table (Bottom)"
+    },
+    {
+      "internalName": "diamondRing",
+      "displayName": "Diamond Score Ring"
+    },
+    {
+      "internalName": "itemframe_back",
+      "displayName": "Item Frame"
+    },
+    {
+      "internalName": "flower_pot",
+      "displayName": "Flower Pot"
+    },
+    {
+      "internalName": "comparator_off",
+      "displayName": "Redstone Comparator"
+    },
+    {
+      "internalName": "comparator_on",
+      "displayName": "Redstone Comparator (On)"
+    },
+    {
+      "internalName": "rail_activator",
+      "displayName": "Activator Rail"
+    },
+    {
+      "internalName": "rail_activator_powered",
+      "displayName": "Activator Rail (On)"
+    },
+    {
+      "internalName": "quartz_ore",
+      "displayName": "Nether Quartz Ore"
+    },
+    {
+      "internalName": "sandstone_side",
+      "displayName": "Sandstone (Side)"
+    },
+    {
+      "internalName": "wool_colored_purple",
+      "displayName": "Purple Wool"
+    },
+    {
+      "internalName": "wool_colored_magenta",
+      "displayName": "Magenta Wool"
+    },
+    {
+      "internalName": "detectorRail",
+      "displayName": "Detector Rail"
+    },
+    {
+      "internalName": "leaves_jungle",
+      "displayName": "Jungle Leaves",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "leaves_jungle_opaque",
+      "displayName": "Jungle Leaves (Opaque)",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "planks_spruce",
+      "displayName": "Spruce Planks"
+    },
+    {
+      "internalName": "planks_jungle",
+      "displayName": "Jungle Planks"
+    },
+    {
+      "internalName": "carrots_stage_0",
+      "displayName": "Carrots (Stage 1)"
+    },
+    {
+      "internalName": "carrots_stage_1",
+      "displayName": "Carrots (Stage 2)"
+    },
+    {
+      "internalName": "carrots_stage_2",
+      "displayName": "Carrots (Stage 3)"
+    },
+    {
+      "internalName": "carrots_stage_3",
+      "displayName": "Carrots (Stage 4)"
+    },
+    {
+      "internalName": "slime",
+      "displayName": "Slime Block"
+    },
+    {
+      "internalName": "water",
+      "displayName": "Water",
+      "colorKey": "Water"
+    },
+    {
+      "internalName": "water_flow",
+      "displayName": "Flowing Water",
+      "colorKey": "Water"
+    },
+    {
+      "internalName": "water_flow",
+      "displayName": ""
+    },
+    {
+      "internalName": "sandstone_bottom",
+      "displayName": "Sandstone (Bottom)"
+    },
+    {
+      "internalName": "wool_colored_cyan",
+      "displayName": "Cyan Wool"
+    },
+    {
+      "internalName": "wool_colored_orange",
+      "displayName": "Orange Wool"
+    },
+    {
+      "internalName": "redstoneLight",
+      "displayName": "Redstone Lamp"
+    },
+    {
+      "internalName": "redstoneLight_lit",
+      "displayName": "Redstone Lamp (On)"
+    },
+    {
+      "internalName": "stonebrick_carved",
+      "displayName": "Chiseled Stone Bricks"
+    },
+    {
+      "internalName": "planks_birch",
+      "displayName": "Birch Planks"
+    },
+    {
+      "internalName": "anvil_base",
+      "displayName": "Anvil (Base)"
+    },
+    {
+      "internalName": "anvil_top_damaged_1",
+      "displayName": "Anvil (Slightly Damaged) (Top)"
+    },
+    {
+      "internalName": "quartz_block_chiseled_top",
+      "displayName": "Chiseled Quartz Block (Top)"
+    },
+    {
+      "internalName": "quartz_block_lines_top",
+      "displayName": "Pillar Quartz Block (Top)"
+    },
+    {
+      "internalName": "quartz_block_top",
+      "displayName": "Block of Quartz (Top)"
+    },
+    {
+      "internalName": "hopper_outside",
+      "displayName": "Hopper (Side)"
+    },
+    {
+      "internalName": "detectorRail_on",
+      "displayName": "Detector Rail (On)"
+    },
+    {
+      "internalName": "water_flow",
+      "displayName": ""
+    },
+    {
+      "internalName": "water_flow",
+      "displayName": ""
+    },
+    {
+      "internalName": "nether_brick",
+      "displayName": "Nether Brick"
+    },
+    {
+      "internalName": "wool_colored_silver",
+      "displayName": "Light Gray Wool"
+    },
+    {
+      "internalName": "nether_wart_stage_0",
+      "displayName": "Nether Wart (Stage 1)"
+    },
+    {
+      "internalName": "nether_wart_stage_1",
+      "displayName": "Nether Wart (Stage 2)"
+    },
+    {
+      "internalName": "nether_wart_stage_2",
+      "displayName": "Nether Wart (Stage 3)"
+    },
+    {
+      "internalName": "sandstone_carved",
+      "displayName": "Chiseled Sandstone"
+    },
+    {
+      "internalName": "sandstone_smooth",
+      "displayName": "Smooth Sandstone"
+    },
+    {
+      "internalName": "anvil_top",
+      "displayName": "Anvil (Top)"
+    },
+    {
+      "internalName": "anvil_top_damaged_2",
+      "displayName": "Anvil (Very Damaged) (Top)"
+    },
+    {
+      "internalName": "quartz_block_chiseled",
+      "displayName": "Chiseled Quartz Block (Side)"
+    },
+    {
+      "internalName": "quartz_block_lines",
+      "displayName": "Pillar Quartz Block (Side)"
+    },
+    {
+      "internalName": "quartz_block_side",
+      "displayName": "Block of Quartz (Side)"
+    },
+    {
+      "internalName": "hopper_inside",
+      "displayName": "Hopper (Inside)"
+    },
+    {
+      "internalName": "lava",
+      "displayName": "Lava"
+    },
+    {
+      "internalName": "lava_flow",
+      "displayName": "Flowing Lava"
+    },
+    {
+      "internalName": "lava_flow",
+      "displayName": "",
+    },
+    {
+      "internalName": "destroy_0",
+      "displayName": "Destroy (Stage 1)"
+    },
+    {
+      "internalName": "destroy_1",
+      "displayName": "Destroy (Stage 2)"
+    },
+    {
+      "internalName": "destroy_2",
+      "displayName": "Destroy (Stage 3)"
+    },
+    {
+      "internalName": "destroy_3",
+      "displayName": "Destroy (Stage 4)"
+    },
+    {
+      "internalName": "destroy_4",
+      "displayName": "Destroy (Stage 5)"
+    },
+    {
+      "internalName": "destroy_5",
+      "displayName": "Destroy (Stage 6)"
+    },
+    {
+      "internalName": "destroy_6",
+      "displayName": "Destroy (Stage 7)"
+    },
+    {
+      "internalName": "destroy_7",
+      "displayName": "Destroy (Stage 8)"
+    },
+    {
+      "internalName": "destroy_8",
+      "displayName": "Destroy (Stage 9)"
+    },
+    {
+      "internalName": "destroy_9",
+      "displayName": "Destroy (Stage 10)"
+    },
+    {
+      "internalName": "hay_block_side",
+      "displayName": "Hay Bale (Side)"
+    },
+    {
+      "internalName": "quartz_block_bottom",
+      "displayName": "Quartz Block (Bottom)"
+    },
+    {
+      "internalName": "hopper_top",
+      "displayName": "Hopper (Top)"
+    },
+    {
+      "internalName": "hay_block_top",
+      "displayName": "Hay Bale (Top)"
+    },
+    {
+      "internalName": "lava_flow",
+      "displayName": "",
+    },
+    {
+      "internalName": "lava_flow",
+      "displayName": "",
+    },
+    {
+      "internalName": "coal_block",
+      "displayName": "Block of Coal"
+    },
+    {
+      "internalName": "hardened_clay",
+      "displayName": "Terracotta"
+    },
+    {
+      "internalName": "noteblock",
+      "displayName": "Note Block"
+    },
+    {
+      "internalName": "stone_andesite",
+      "displayName": "Andesite"
+    },
+    {
+      "internalName": "stone_andesite_smooth",
+      "displayName": "Polished Andesite"
+    },
+    {
+      "internalName": "stone_diorite",
+      "displayName": "Diorite"
+    },
+    {
+      "internalName": "stone_diorite_smooth",
+      "displayName": "Polished Diorite"
+    },
+    {
+      "internalName": "stone_granite",
+      "displayName": "Granite"
+    },
+    {
+      "internalName": "stone_granite_smooth",
+      "displayName": "Polished Granite"
+    },
+    {
+      "internalName": "potatoes_stage_0",
+      "displayName": "Potatoes (Stage 1)"
+    },
+    {
+      "internalName": "potatoes_stage_1",
+      "displayName": "Potatoes (Stage 2)"
+    },
+    {
+      "internalName": "potatoes_stage_2",
+      "displayName": "Potatoes (Stage 3)"
+    },
+    {
+      "internalName": "potatoes_stage_3",
+      "displayName": "Potatoes (Stage 4)"
+    },
+    {
+      "internalName": "log_spruce_top",
+      "displayName": "Spruce Wood (Top)"
+    },
+    {
+      "internalName": "log_jungle_top",
+      "displayName": "Jungle Wood (Top)"
+    },
+    {
+      "internalName": "log_birch_top",
+      "displayName": "Birch Wood (Top)"
+    },
+    {
+      "internalName": "hardened_clay_stained_black",
+      "displayName": "Black Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_blue",
+      "displayName": "Blue Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_brown",
+      "displayName": "Brown Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_cyan",
+      "displayName": "Cyan Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_gray",
+      "displayName": "Gray Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_green",
+      "displayName": "Green Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_light_blue",
+      "displayName": "Light Blue Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_lime",
+      "displayName": "Lime Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_magenta",
+      "displayName": "Magenta Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_orange",
+      "displayName": "Orange Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_pink",
+      "displayName": "Pink Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_purple",
+      "displayName": "Purple Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_red",
+      "displayName": "Red Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_silver",
+      "displayName": "Light Gray Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_white",
+      "displayName": "White Terracotta"
+    },
+    {
+      "internalName": "hardened_clay_stained_yellow",
+      "displayName": "Yellow Terracotta"
+    },
+    {
+      "internalName": "glass_black",
+      "displayName": "Black Stained Glass"
+    },
+    {
+      "internalName": "glass_blue",
+      "displayName": "Blue Stained Glass"
+    },
+    {
+      "internalName": "glass_brown",
+      "displayName": "Brown Stained Glass"
+    },
+    {
+      "internalName": "glass_cyan",
+      "displayName": "Cyan Stained Glass"
+    },
+    {
+      "internalName": "glass_gray",
+      "displayName": "Gray Stained Glass"
+    },
+    {
+      "internalName": "glass_green",
+      "displayName": "Green Stained Glass"
+    },
+    {
+      "internalName": "glass_light_blue",
+      "displayName": "Light Blue Stained Glass"
+    },
+    {
+      "internalName": "glass_lime",
+      "displayName": "Lime Stained Glass"
+    },
+    {
+      "internalName": "glass_magenta",
+      "displayName": "Magenta Stained Glass"
+    },
+    {
+      "internalName": "glass_orange",
+      "displayName": "Orange Stained Glass"
+    },
+    {
+      "internalName": "glass_pink",
+      "displayName": "Pink Stained Glass"
+    },
+    {
+      "internalName": "glass_purple",
+      "displayName": "Purple Stained Glass"
+    },
+    {
+      "internalName": "glass_red",
+      "displayName": "Red Stained Glass"
+    },
+    {
+      "internalName": "glass_silver",
+      "displayName": "Light Gray Stained Glass"
+    },
+    {
+      "internalName": "glass_white",
+      "displayName": "White Stained Glass"
+    },
+    {
+      "internalName": "glass_yellow",
+      "displayName": "Yellow Stained Glass"
+    },
+    {
+      "internalName": "glass_pane_top_black",
+      "displayName": "Black Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_blue",
+      "displayName": "Blue Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_brown",
+      "displayName": "Brown Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_cyan",
+      "displayName": "Cyan Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_gray",
+      "displayName": "Gray Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_green",
+      "displayName": "Green Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_light_blue",
+      "displayName": "Light Blue Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_lime",
+      "displayName": "Lime Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_magenta",
+      "displayName": "Magenta Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_orange",
+      "displayName": "Orange Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_pink",
+      "displayName": "Pink Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_purple",
+      "displayName": "Purple Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_red",
+      "displayName": "Red Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_silver",
+      "displayName": "Light Gray Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_white",
+      "displayName": "White Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "glass_pane_top_yellow",
+      "displayName": "Yellow Stained Glass Pane (Top)"
+    },
+    {
+      "internalName": "double_plant_fern_top",
+      "displayName": "Large Fern (Top)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "double_plant_grass_top",
+      "displayName": "Double Tall Grass (Top)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "double_plant_paeonia_top",
+      "displayName": "Peony (Top)"
+    },
+    {
+      "internalName": "double_plant_rose_top",
+      "displayName": "Rose Bush (Top)"
+    },
+    {
+      "internalName": "double_plant_syringa_top",
+      "displayName": "Lilac (Top)"
+    },
+    {
+      "internalName": "flower_tulip_orange",
+      "displayName": "Orange Tulip"
+    },
+    {
+      "internalName": "double_plant_sunflower_top",
+      "displayName": "Sunflower (Top)"
+    },
+    {
+      "internalName": "double_plant_sunflower_front",
+      "displayName": "Sunflower (Front)"
+    },
+    {
+      "internalName": "log_acacia",
+      "displayName": "Acacia Wood (Side)"
+    },
+    {
+      "internalName": "log_acacia_top",
+      "displayName": "Acacia Wood (Top)"
+    },
+    {
+      "internalName": "planks_acacia",
+      "displayName": "Acacia Planks"
+    },
+    {
+      "internalName": "leaves_acacia",
+      "displayName": "Acacia Leaves",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "leaves_acacia_fast",
+      "displayName": "Acacia Leaves (Opaque)",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "prismarine_bricks",
+      "displayName": "Prismarine Bricks"
+    },
+    {
+      "internalName": "red_sand",
+      "displayName": "Red Sand"
+    },
+    {
+      "internalName": "red_sandstone_top",
+      "displayName": "Red Sandstone (Top)"
+    },
+    {
+      "internalName": "double_plant_fern_bottom",
+      "displayName": "Large Fern (Bottom)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "double_plant_grass_bottom",
+      "displayName": "Double Tall Grass (Bottom)",
+      "colorKey": "Grass"
+    },
+    {
+      "internalName": "double_plant_paeonia_bottom",
+      "displayName": "Peony (Bottom)"
+    },
+    {
+      "internalName": "double_plant_rose_bottom",
+      "displayName": "Rose Bush (Bottom)"
+    },
+    {
+      "internalName": "double_plant_syringa_bottom",
+      "displayName": "Lilac (Bottom)"
+    },
+    {
+      "internalName": "flower_tulip_pink",
+      "displayName": "Pink Tulip"
+    },
+    {
+      "internalName": "double_plant_sunflower_bottom",
+      "displayName": "Sunflower (Bottom)"
+    },
+    {
+      "internalName": "double_plant_sunflower_back",
+      "displayName": "Sunflower (Back)"
+    },
+    {
+      "internalName": "log_big_oak",
+      "displayName": "Dark Oak Wood (Side)"
+    },
+    {
+      "internalName": "log_big_oak_top",
+      "displayName": "Dark Oak Wood (Top)"
+    },
+    {
+      "internalName": "planks_big_oak",
+      "displayName": "Dark Oak Planks"
+    },
+    {
+      "internalName": "leaves_big_oak",
+      "displayName": "Dark Oak Leaves",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "leaves_big_oak_fast",
+      "displayName": "Dark Oak Leaves (Opaque)",
+      "colorKey": "Foliage"
+    },
+    {
+      "internalName": "prismarine_dark",
+      "displayName": "Dark Prismarine"
+    },
+    {
+      "internalName": "red_sandstone_bottom",
+      "displayName": "Red Sandstone (Bottom)"
+    },
+    {
+      "internalName": "red_sandstone_normal",
+      "displayName": "Red Sandstone (Side)"
+    },
+    {
+      "internalName": "flower_alium",
+      "displayName": "Allium"
+    },
+    {
+      "internalName": "flower_blue_orchid",
+      "displayName": "Blue Orchid"
+    },
+    {
+      "internalName": "flower_houstonia",
+      "displayName": "Azure Bluet"
+    },
+    {
+      "internalName": "flower_oxeye_daisy",
+      "displayName": "Oxeye Daisy"
+    },
+    {
+      "internalName": "flower_tulip_red",
+      "displayName": "Red Tulip"
+    },
+    {
+      "internalName": "flower_tulip_white",
+      "displayName": "White Tulip"
+    },
+    {
+      "internalName": "sapling_acacia",
+      "displayName": "Acacia Sapling"
+    },
+    {
+      "internalName": "sapling_roofed_oak",
+      "displayName": "Dark Oak Sapling"
+    },
+    {
+      "internalName": "coarse_dirt",
+      "displayName": "Coarse Dirt"
+    },
+    {
+      "internalName": "dirt_podzol_side",
+      "displayName": "Podzol (Side)"
+    },
+    {
+      "internalName": "dirt_podzol_top",
+      "displayName": "Podzol (Top)"
+    },
+    {
+      "internalName": "leaves_birch",
+      "displayName": "Birch Leaves",
+      "colorKey": "Foliage",
+      "defaultColorKey": "Foliage_Birch"
+    },
+    {
+      "internalName": "leaves_birch_fast",
+      "displayName": "Birch Leaves (Opaque)",
+      "colorKey": "Foliage",
+      "defaultColorKey": "Foliage_Birch"
+    },
+    {
+      "internalName": "prismarine_rough",
+      "displayName": "Prismarine"
+    },
+    {
+      "internalName": "red_sandstone_carved",
+      "displayName": "Chiseled Red Sandstone"
+    },
+    {
+      "internalName": "red_sandstone_smooth",
+      "displayName": "Smooth Red Standstone"
+    },
+    {
+      "internalName": "door_acacia_upper",
+      "displayName": "Acacia Door (Top)"
+    },
+    {
+      "internalName": "door_birch_upper",
+      "displayName": "Birch Door (Top)"
+    },
+    {
+      "internalName": "door_dark_oak_upper",
+      "displayName": "Dark Oak Door (Top)"
+    },
+    {
+      "internalName": "door_jungle_upper",
+      "displayName": "Jungle Door (Top)"
+    },
+    {
+      "internalName": "door_spruce_upper",
+      "displayName": "Spruce Door (Top)"
+    },
+    {
+      "internalName": "chorus_flower",
+      "displayName": "Chorus Flower"
+    },
+    {
+      "internalName": "chorus_flower_dead",
+      "displayName": "Chorus Flower (Dead)"
+    },
+    {
+      "internalName": "chorus_flower_plant",
+      "displayName": "Chorus Plant"
+    },
+    {
+      "internalName": "end_bricks",
+      "displayName": "End Stone Bricks"
+    },
+    {
+      "internalName": "grass_path_side",
+      "displayName": "Grass Path (Side)"
+    },
+    {
+      "internalName": "grass_path_top",
+      "displayName": "Grass Path (Top)"
+    },
+    {
+      "internalName": "barrier",
+      "displayName": "Barrier"
+    },
+    {
+      "internalName": "ice_packed",
+      "displayName": "Packed Ice"
+    },
+    {
+      "internalName": "sea_lantern",
+      "displayName": "Sea Lantern"
+    },
+    {
+      "internalName": "daylight_detector_inverted_top",
+      "displayName": "Daylight Sensor (Inverted) (Top)"
+    },
+    {
+      "internalName": "iron_trapdoor",
+      "displayName": "Iron Trapdoor"
+    },
+    {
+      "internalName": "door_acacia_lower",
+      "displayName": "Acacia Door (Bottom)"
+    },
+    {
+      "internalName": "door_birch_lower",
+      "displayName": "Birch Door (Bottom)"
+    },
+    {
+      "internalName": "door_dark_oak_lower",
+      "displayName": "Dark Oak Door (Bottom)"
+    },
+    {
+      "internalName": "door_jungle_lower",
+      "displayName": "Jungle Door (Bottom)"
+    },
+    {
+      "internalName": "door_spruce_lower",
+      "displayName": "Spruce Door (Bottom)"
+    },
+    {
+      "internalName": "purpur_block",
+      "displayName": "Purpur Block"
+    },
+    {
+      "internalName": "purpur_pillar",
+      "displayName": "Purpur Pillar (Side)"
+    },
+    {
+      "internalName": "purpur_pillar_top",
+      "displayName": "Purpur Pillar (Top)"
+    },
+    {
+      "internalName": "end_rod",
+      "displayName": "End Rod"
+    },
+    {
+      "internalName": "magma",
+      "displayName": "Magma Block"
+    },
+    {
+      "internalName": "nether_wart_block",
+      "displayName": "Nether Wart Block"
+    },
+    {
+      "internalName": "red_nether_brick",
+      "displayName": "Red Nether Brick"
+    },
+    {
+      "internalName": "frosted_ice_0",
+      "displayName": "Frosted Ice (Stage 1)"
+    },
+    {
+      "internalName": "frosted_ice_1",
+      "displayName": "Frosted Ice (Stage 2)"
+    },
+    {
+      "internalName": "frosted_ice_2",
+      "displayName": "Frosted Ice (Stage 3)"
+    },
+    {
+      "internalName": "frosted_ice_3",
+      "displayName": "Frosted Ice (Stage 4)"
+    },
+    {
+      "internalName": "beetroots_stage_0",
+      "displayName": "Beetroots (Stage 1)"
+    },
+    {
+      "internalName": "beetroots_stage_1",
+      "displayName": "Beetroots (Stage 2)"
+    },
+    {
+      "internalName": "beetroots_stage_2",
+      "displayName": "Beetroots (Stage 3)"
+    },
+    {
+      "internalName": "beetroots_stage_3",
+      "displayName": "Beetroots (Stage 4)"
+    },
+    {
+      "internalName": "chain_command_block_back",
+      "displayName": "Chain Command Block (Back)"
+    },
+    {
+      "internalName": "chain_command_block_conditional",
+      "displayName": "Chain Command Block (Conditional) (Side)"
+    },
+    {
+      "internalName": "chain_command_block_front",
+      "displayName": "Chain Command Block (Front)"
+    },
+    {
+      "internalName": "chain_command_block_side",
+      "displayName": "Chain Command Block (Side)"
+    },
+    {
+      "internalName": "command_block_back",
+      "displayName": "Command Block (Back)"
+    },
+    {
+      "internalName": "command_block_conditional",
+      "displayName": "Command Block (Conditional) (Side)"
+    },
+    {
+      "internalName": "command_block_front",
+      "displayName": "Command Block (Front)"
+    },
+    {
+      "internalName": "command_block_side",
+      "displayName": "Command Block (Side)"
+    },
+    {
+      "internalName": "repeating_command_block_back",
+      "displayName": "Repeating Command Block (Back)"
+    },
+    {
+      "internalName": "repeating_command_block_conditional",
+      "displayName": "Repeating Command Block (Conditional) (Side)"
+    },
+    {
+      "internalName": "repeating_command_block_front",
+      "displayName": "Repeating Command Block (Front)"
+    },
+    {
+      "internalName": "repeating_command_block_side",
+      "displayName": "Repeating Command Block (Side)"
+    },
+    {
+      "internalName": "bone_block_side",
+      "displayName": "Bone Block (Side)"
+    },
+    {
+      "internalName": "bone_block_top",
+      "displayName": "Bone Block (Top)"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "observer_front",
+      "displayName": "Observer (Front)"
+    },
+    {
+      "internalName": "observer_side",
+      "displayName": "Observer (Side)"
+    },
+    {
+      "internalName": "observer_back",
+      "displayName": "Observer (Back)"
+    },
+    {
+      "internalName": "observer_back_lit",
+      "displayName": "Observer (On) (Back)"
+    },
+    {
+      "internalName": "observer_top",
+      "displayName": "Observer (Top and Bottom)"
+    },
+    {
+      "internalName": "goldRing",
+      "displayName": "Gold Score Ring"
+    },
+    {
+      "internalName": "emeraldRing",
+      "displayName": "Emerald Score Ring"
+    },
+    {
+      "internalName": "structure_block",
+      "displayName": "Structure Block"
+    },
+    {
+      "internalName": "structure_block_corner",
+      "displayName": "Structure Block (Corner)"
+    },
+    {
+      "internalName": "structure_block_data",
+      "displayName": "Structure Block (Data)"
+    },
+    {
+      "internalName": "structure_block_load",
+      "displayName": "Structure Block (Load)"
+    },
+    {
+      "internalName": "structure_block_save",
+      "displayName": "Structure Block (Save)"
+    },
+    {
+      "internalName": "concrete_black",
+      "displayName": "Black Concrete"
+    },
+    {
+      "internalName": "concrete_blue",
+      "displayName": "Blue Concrete"
+    },
+    {
+      "internalName": "concrete_brown",
+      "displayName": "Brown Concrete"
+    },
+    {
+      "internalName": "concrete_cyan",
+      "displayName": "Cyan Concrete"
+    },
+    {
+      "internalName": "concrete_gray",
+      "displayName": "Gray Concrete"
+    },
+    {
+      "internalName": "concrete_green",
+      "displayName": "Green Concrete"
+    },
+    {
+      "internalName": "concrete_light_blue",
+      "displayName": "Light Blue Concrete"
+    },
+    {
+      "internalName": "concrete_lime",
+      "displayName": "Lime Concrete"
+    },
+    {
+      "internalName": "concrete_magenta",
+      "displayName": "Magenta Concrete"
+    },
+    {
+      "internalName": "concrete_orange",
+      "displayName": "Orange Concrete"
+    },
+    {
+      "internalName": "concrete_pink",
+      "displayName": "Pink Concrete"
+    },
+    {
+      "internalName": "concrete_purple",
+      "displayName": "Purple Concrete"
+    },
+    {
+      "internalName": "concrete_red",
+      "displayName": "Red Concrete"
+    },
+    {
+      "internalName": "concrete_silver",
+      "displayName": "Light Gray Concrete"
+    },
+    {
+      "internalName": "concrete_white",
+      "displayName": "White Concrete"
+    },
+    {
+      "internalName": "concrete_yellow",
+      "displayName": "Yellow Concrete"
+    },
+    {
+      "internalName": "concrete_powder_black",
+      "displayName": "Black Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_blue",
+      "displayName": "Blue Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_brown",
+      "displayName": "Brown Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_cyan",
+      "displayName": "Cyan Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_gray",
+      "displayName": "Gray Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_green",
+      "displayName": "Green Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_light_blue",
+      "displayName": "Light Blue Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_lime",
+      "displayName": "Lime Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_magenta",
+      "displayName": "Magenta Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_orange",
+      "displayName": "Orange Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_pink",
+      "displayName": "Pink Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_purple",
+      "displayName": "Purple Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_red",
+      "displayName": "Red Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_silver",
+      "displayName": "Light Gray Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_white",
+      "displayName": "White Concrete Powder"
+    },
+    {
+      "internalName": "concrete_powder_yellow",
+      "displayName": "Yellow Concrete Powder"
+    },
+    {
+      "internalName": "glazed_terracotta_black",
+      "displayName": "Black Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_blue",
+      "displayName": "Blue Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_brown",
+      "displayName": "Brown Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_cyan",
+      "displayName": "Cyan Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_gray",
+      "displayName": "Gray Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_green",
+      "displayName": "Green Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_light_blue",
+      "displayName": "Light Blue Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_lime",
+      "displayName": "Lime Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_magenta",
+      "displayName": "Magenta Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_orange",
+      "displayName": "Orange Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_pink",
+      "displayName": "Pink Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_purple",
+      "displayName": "Purple Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_red",
+      "displayName": "Red Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_silver",
+      "displayName": "Light Gray Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_white",
+      "displayName": "White Glazed Terracotta"
+    },
+    {
+      "internalName": "glazed_terracotta_yellow",
+      "displayName": "Yellow Glazed Terracotta"
+    },
+    {
+      "internalName": "shulker_top",
+      "displayName": "Shulker Box (Break Particles)",
+      "colorKey": "Shulker_Box_Color"
+    },
+    {
+      "internalName": "shulker_top_overlay",
+      "displayName": "Shulker Box (Break Particles) (Overlay) (Unused)"
+    },
+    {
+      "internalName": "cauldron_water",
+      "displayName": "Cauldron Water",
+      "allowCustomColour": true,
+      "colorKey": "Cauldron_Water_Effect"
+    },
+    {
+      "internalName": "seagrass_doubletall_top",
+      "displayName": "Double Tall Seagrass (Top)"
+    },
+    {
+      "internalName": "coral_blue",
+      "displayName": "Tube Coral Block"
+    },
+    {
+      "internalName": "coral_purple",
+      "displayName": "Bubble Coral Block"
+    },
+    {
+      "internalName": "coral_pink",
+      "displayName": "Brain Coral Block"
+    },
+    {
+      "internalName": "coral_red",
+      "displayName": "Fire Coral Block"
+    },
+    {
+      "internalName": "coral_yellow",
+      "displayName": "Horn Coral Block"
+    },
+    {
+      "internalName": "coral_plant_blue",
+      "displayName": "Tube Coral"
+    },
+    {
+      "internalName": "coral_plant_purple",
+      "displayName": "Bubble Coral"
+    },
+    {
+      "internalName": "coral_plant_pink",
+      "displayName": "Brain Coral"
+    },
+    {
+      "internalName": "coral_plant_red",
+      "displayName": "Fire Coral"
+    },
+    {
+      "internalName": "coral_plant_yellow",
+      "displayName": "Horn Coral"
+    },
+    {
+      "internalName": "sea_pickle",
+      "displayName": "Sea Pickle"
+    },
+    {
+      "internalName": "blue_ice",
+      "displayName": "Blue Ice"
+    },
+    {
+      "internalName": "dried_kelp_top",
+      "displayName": "Dried Kelp Block (Top)"
+    },
+    {
+      "internalName": "dried_kelp_side",
+      "displayName": "Dried Kelp Block (Side)"
+    },
+    {
+      "internalName": "seagrass_carried",
+      "displayName": "Seagrass (Item)"
+    },
+    {
+      "internalName": "seagrass_doubletall_bottom",
+      "displayName": "Double Tall Seagrass (Bottom)"
+    },
+    {
+      "internalName": "coral_blue_dead",
+      "displayName": "Dead Tube Coral Block"
+    },
+    {
+      "internalName": "coral_purple_dead",
+      "displayName": "Dead Bubble Coral Block"
+    },
+    {
+      "internalName": "coral_pink_dead",
+      "displayName": "Dead Brain Coral Block"
+    },
+    {
+      "internalName": "coral_red_dead",
+      "displayName": "Dead Fire Coral Block"
+    },
+    {
+      "internalName": "coral_yellow_dead",
+      "displayName": "Dead Horn Coral Block"
+    },
+    {
+      "internalName": "coral_fan_blue",
+      "displayName": "Tube Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_purple",
+      "displayName": "Bubble Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_pink",
+      "displayName": "Brain Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_red",
+      "displayName": "Fire Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_yellow",
+      "displayName": "Horn Coral Fan"
+    },
+    {
+      "internalName": "bamboo_stem",
+      "displayName": "Bamboo (Stem) [PS4 ONLY]"
+    },
+    {
+      "internalName": "bamboo_leaf_small",
+      "displayName": "Bamboo (Small Leaves) [PS4 ONLY]"
+    },
+    {
+      "internalName": "kelp_a",
+      "displayName": "Kelp (Bottom)"
+    },
+    {
+      "internalName": "kelp_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "kelp_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "kelp_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "kelp_top_a",
+      "displayName": "Kelp (Top)"
+    },
+    {
+      "internalName": "kelp_top_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "kelp_top_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "kelp_top_a",
+      "displayName": ""
+    },
+    {
+      "internalName": "seagrass",
+      "displayName": "Seagrass"
+    },
+    {
+      "internalName": "coral_fan_blue_dead",
+      "displayName": "Dead Tube Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_purple_dead",
+      "displayName": "Dead Bubble Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_pink_dead",
+      "displayName": "Dead Brain Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_red_dead",
+      "displayName": "Dead Fire Coral Fan"
+    },
+    {
+      "internalName": "coral_fan_yellow_dead",
+      "displayName": "Dead Horn Coral Fan"
+    },
+    {
+      "internalName": "bamboo_leaf",
+      "displayName": "Bamboo (Leaves) [PS4 ONLY]"
+    },
+    {
+      "internalName": "spruce_trapdoor",
+      "displayName": "Spruce Trapdoor"
+    },
+    {
+      "internalName": "stripped_log_oak",
+      "displayName": "Stripped Oak Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_oak_top",
+      "displayName": "Stripped Oak Log (Top)"
+    },
+    {
+      "internalName": "stripped_log_acacia",
+      "displayName": "Stripped Acacia Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_acacia_top",
+      "displayName": "Stripped Acacia Log (Top)"
+    },
+    {
+      "internalName": "stripped_log_birch",
+      "displayName": "Stripped Birch Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_birch_top",
+      "displayName": "Stripped Birch Log (Top)"
+    },
+    {
+      "internalName": "stripped_log_dark_oak",
+      "displayName": "Stripped Dark Oak Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_dark_oak_top",
+      "displayName": "Stripped Dark Oak Log (Top)"
+    },
+    {
+      "internalName": "stripped_log_jungle",
+      "displayName": "Stripped Jungle Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_jungle_top",
+      "displayName": "Stripped Birch Log (Top)"
+    },
+    {
+      "internalName": "stripped_log_spruce",
+      "displayName": "Stripped Spruce Log (Side)"
+    },
+    {
+      "internalName": "stripped_log_spruce_top",
+      "displayName": "Stripped Spruce Log (Top)"
+    },
+    {
+      "internalName": "acacia_trapdoor",
+      "displayName": "Acacia Trapdoor"
+    },
+    {
+      "internalName": "birch_trapdoor",
+      "displayName": "Birch Trapdoor"
+    },
+    {
+      "internalName": "dark_oak_trapdoor",
+      "displayName": "Dark Oak Trapdoor"
+    },
+    {
+      "internalName": "jungle_trapdoor",
+      "displayName": "Jungle Trapdoor"
+    },
+    {
+      "internalName": "bamboo_sapling",
+      "displayName": "Bamboo Sapling [PS4 ONLY]"
+    },
+    {
+      "internalName": "bamboo_singleleaf",
+      "displayName": "Bamboo (Single Leaf) [PS4 ONLY]"
+    },
+    {
+      "internalName": "flower_lily_of_the_valley",
+      "displayName": "Lily of the Valley [PS4 ONLY]"
+    },
+    {
+      "internalName": "flower_cornflower",
+      "displayName": "Cornflower [PS4 ONLY]"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "berry_bush_sapling",
+      "displayName": "Sweet Berry Bush (Stage 1) [PS4 ONLY]"
+    },
+    {
+      "internalName": "berry_bush_no_berries",
+      "displayName": "Sweet Berry Bush (Stage 2) [PS4 ONLY]"
+    },
+    {
+      "internalName": "berry_bush_some_berries",
+      "displayName": "Sweet Berry Bush (Stage 3) [PS4 ONLY]"
+    },
+    {
+      "internalName": "berry_bush_full_berries",
+      "displayName": "Sweet Berry Bush (Stage 4) [PS4 ONLY]"
+    },
+    {
+      "internalName": "campfire_log",
+      "displayName": "Campfire (Log) [PS4 ONLY]"
+    },
+    {
+      "internalName": "campfire_log_lit",
+      "displayName": "Campfire (Log) (Lit) [PS4 ONLY]"
+    },
+    {
+      "internalName": "campfire_smoke",
+      "displayName": "Campfire (Smoke) [PS4 ONLY]"
+    },
+    {
+      "internalName": "campfire",
+      "displayName": "Campfire (Flame) [PS4 ONLY]"
+    },
+    {
+      "internalName": "scaffolding_side",
+      "displayName": "Scaffolding (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "scaffolding_bottom",
+      "displayName": "Scaffolding (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "scaffolding_top",
+      "displayName": "Scaffolding (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "barrel_side",
+      "displayName": "Barrel (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "barrel_top",
+      "displayName": "Barrel (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "barrel_bottom",
+      "displayName": "Barrel (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "bell_side",
+      "displayName": "Bell (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "bell_top",
+      "displayName": "Bell (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "bell_bottom",
+      "displayName": "Bell (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "lantern",
+      "displayName": "Lantern [PS4 ONLY]"
+    },
+    {
+      "internalName": "jigsaw_side",
+      "displayName": "Jigsaw (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "jigsaw_top",
+      "displayName": "Jigsaw (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "blast_furnace_front",
+      "displayName": "Blast Furnace (Front) [PS4 ONLY]"
+    },
+    {
+      "internalName": "blast_furnace_front_on",
+      "displayName": "Blast Furnace (Front) (Lit) [PS4 ONLY]"
+    },
+    {
+      "internalName": "blast_furnace_side",
+      "displayName": "Blast Furnace (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "blast_furnace_top",
+      "displayName": "Blast Furnace (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "grindstone_side",
+      "displayName": "Grindstone (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "grindstone_round",
+      "displayName": "Grindstone (Round) [PS4 ONLY]"
+    },
+    {
+      "internalName": "grindstone_pivot",
+      "displayName": "Grindstone (Pivot) [PS4 ONLY]"
+    },
+    {
+      "internalName": "cartography_table_side1",
+      "displayName": "Cartography Table (Back) [PS4 ONLY]"
+    },
+    {
+      "internalName": "cartography_table_side2",
+      "displayName": "Cartography Table (Right Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "cartography_table_side3",
+      "displayName": "Cartography Table (Front and Left Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "cartography_table_top",
+      "displayName": "Cartography Table (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "lectern_sides",
+      "displayName": "Lectern (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "lectern_front",
+      "displayName": "Lectern (Front) [PS4 ONLY]"
+    },
+    {
+      "internalName": "lectern_base",
+      "displayName": "Lectern (Base) [PS4 ONLY]"
+    },
+    {
+      "internalName": "lectern_top",
+      "displayName": "Lectern (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "loom_side",
+      "displayName": "Loom (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "loom_front",
+      "displayName": "Loom (Front) [PS4 ONLY]"
+    },
+    {
+      "internalName": "loom_top",
+      "displayName": "Loom (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "loom_bottom",
+      "displayName": "Loom (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smithing_table_side",
+      "displayName": "Smithing Table (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smithing_table_front",
+      "displayName": "Smithing Table (Front) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smithing_table_top",
+      "displayName": "Smithing Table (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "composter_top",
+      "displayName": "Composter (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "fletcher_table_side2",
+      "displayName": "Fletching Table (Front and Back) [PS4 ONLY]"
+    },
+    {
+      "internalName": "fletcher_table_side1",
+      "displayName": "Fletching Table (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "fletcher_table_top",
+      "displayName": "Fletching Table (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "stonecutter2_saw",
+      "displayName": "Stonecutter (Saw) [PS4 ONLY]"
+    },
+    {
+      "internalName": "stonecutter2_side",
+      "displayName": "Stonecutter (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "stonecutter2_top",
+      "displayName": "Stonecutter (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "stonecutter2_bottom",
+      "displayName": "Stonecutter (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smoker_side",
+      "displayName": "Smoker (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smoker_front",
+      "displayName": "Smoker (Front) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smoker_front_on",
+      "displayName": "Smoker (Front) (Lit) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smoker_top",
+      "displayName": "Smoker (Top) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smoker_bottom",
+      "displayName": "Smoker (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "compost",
+      "displayName": "Compost [PS4 ONLY]"
+    },
+    {
+      "internalName": "compost_ready",
+      "displayName": "Compost (Ready) [PS4 ONLY]"
+    },
+    {
+      "internalName": "composter_bottom",
+      "displayName": "Composter (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "composter_side",
+      "displayName": "Composter (Side) [PS4 ONLY]"
+    },
+    {
+      "internalName": "barrel_top_open",
+      "displayName": "Barrel (Top) (Open) [PS4 ONLY]"
+    },
+    {
+      "internalName": "smithing_table_bottom",
+      "displayName": "Smithing Table (Bottom) [PS4 ONLY]"
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    },
+    {
+      "internalName": "",
+      "displayName": ""
+    }
+  ]
 }

@@ -32,22 +32,22 @@ namespace PckStudio.Forms.Editor
             inflationUpDown.Enabled = hasInflation;
 
 			parentComboBox.SelectedIndex = parentComboBox.Items.IndexOf(box.Type);
-			PosXUpDown.Value = (decimal)box.Pos.X;
-			PosYUpDown.Value = (decimal)box.Pos.Y;
-			PosZUpDown.Value = (decimal)box.Pos.Z;
+			PosXUpDown.Value = (decimal)box.Position.X;
+			PosYUpDown.Value = (decimal)box.Position.Y;
+			PosZUpDown.Value = (decimal)box.Position.Z;
 			SizeXUpDown.Value = (decimal)box.Size.X;
 			SizeYUpDown.Value = (decimal)box.Size.Y;
 			SizeZUpDown.Value = (decimal)box.Size.Z;
-			uvXUpDown.Value = (decimal)box.UV.X;
-			uvYUpDown.Value = (decimal)box.UV.Y;
+			uvXUpDown.Value = (decimal)box.Uv.X;
+			uvYUpDown.Value = (decimal)box.Uv.Y;
 			boxVisibilityComboBox.SelectedItem = Enum.GetName(typeof(SkinBOX.BoxVisibility), box.Visibility);
 			mirrorCheckBox.Checked = box.Mirror;
-			inflationUpDown.Value = (decimal)box.Scale;
+			inflationUpDown.Value = (decimal)box.Inflate;
 		}
 
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-            SkinBOX.BoxVisibility visibility = Enum.TryParse(boxVisibilityComboBox.SelectedItem.ToString(), out SkinBOX.BoxVisibility v) ? v : default;
+            SkinBOX.BoxVisibility visibility = Enum.TryParse(boxVisibilityComboBox.SelectedItem?.ToString(), out SkinBOX.BoxVisibility v) ? v : default;
 			Vector3 pos = new Vector3((float)PosXUpDown.Value, (float)PosYUpDown.Value, (float)PosZUpDown.Value);
 			Vector3 size = new Vector3((float)SizeXUpDown.Value, (float)SizeYUpDown.Value, (float)SizeZUpDown.Value);
 			Vector2 uv = new Vector2((int)uvXUpDown.Value, (int)uvYUpDown.Value);

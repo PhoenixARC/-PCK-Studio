@@ -16,20 +16,15 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
-using MetroFramework.Forms;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Forms.Additional_Popups.Animation
 {
-	internal partial class FilterPrompt : MetroForm
+	internal partial class FilterPrompt : UserControl
 	{
-		public string AcceptButtonText { get => acceptButton.Text; set => acceptButton.Text = value; }
-		public string CancelButtonText { get => cancelButton.Text; set => cancelButton.Text = value; }
-
-		public Color PageBackColor { get; set; } = Color.FromArgb(64, 64, 64);
-
 		private object _selectedItem;
 		public object SelectedItem => _selectedItem;
 
@@ -48,26 +43,64 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			InitializeComponent();
         }
 
-		public TreeView AddFilterPage(string categoryName, string key, FilterPredicate filterPredicate)
+        public new void Update()
+        {
+			base.Update();
+            foreach (TabPage tabpage in tabController.TabPages)
+            {
+                if (tabpage.Controls[0] is not TreeView pageView || pageView.Tag is not TreeView backingView)
+                    continue;
+
+                pageView.BeginUpdate();
+				pageView.ContextMenuStrip = backingView.ContextMenuStrip;
+				pageView.ImageList = backingView.ImageList;
+                pageView.Nodes.Clear();
+                pageView.Show();
+                FilterPredicate filerPredicate = tabpage.Tag as FilterPredicate;
+                foreach (TreeNode node in backingView.Nodes.GetLeafNodes())
+                {
+                    if (string.IsNullOrEmpty(filterTextBox.Text) ||
+						node.FullPath.ToLower().Contains(filterTextBox.Text.ToLower()) ||
+						(filerPredicate?.Invoke(filterTextBox.Text, node.Tag) ?? false))
+                    {
+						TreeNode n = pageView.Nodes.BuildNodeTreeBySeperator(node.FullPath, backingView.PathSeparator);
+						n.Tag = node.Tag;
+						n.ImageIndex = node.ImageIndex;
+						n.SelectedImageIndex = node.SelectedImageIndex;
+                    }
+                }
+                pageView.EndUpdate();
+            }
+        }
+
+        public TreeView AddFilterPage(string categoryName, string key, FilterPredicate filterPredicate)
 		{
 			_ = categoryName ?? throw new ArgumentNullException(nameof(categoryName));
 			TabPage page = new TabPage(categoryName);
+			page.BorderStyle = BorderStyle.None;
 			page.Name = key ?? categoryName;
 			page.Tag = filterPredicate;
 			var pageView = new TreeView()
 			{
 				Dock = DockStyle.Fill,
-				BackColor = PageBackColor,
-			};
+				BackColor = BackColor,
+                ForeColor = ForeColor,
+            };
 			pageView.AfterSelect += (sender, e) =>
 			{
 				_selectedItem = e.Node.Tag;
 				Events[nameof(OnSelectedItemChanged)]?.DynamicInvoke(this, EventArgs.Empty);
             };
-            pageView.Tag = new List<TreeNode>(4);
+			var backingView = new TreeView()
+            {
+                Dock = DockStyle.Fill,
+                BackColor = BackColor,
+				ForeColor = ForeColor,
+            };
+            pageView.Tag = backingView;
             page.Controls.Add(pageView);
 			tabController.TabPages.Add(page);
-			return pageView;
+			return backingView;
         }
 
 		public TreeView GetByKey(string key)
@@ -77,43 +110,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 
 		private void filter_TextChanged(object sender, EventArgs e)
 		{
-			// Some code in this function is modified code from this StackOverflow answer - MattNL
-			// https://stackoverflow.com/questions/8260322/filter-a-treeview-with-a-textbox-in-a-c-sharp-winforms-app
-
-			// block re-painting control until all objects are loaded
-			foreach (TabPage tabpage in tabController.TabPages)
-			{
-				if (tabpage.Tag is not FilterPredicate filerPredicate || tabpage.Controls[0] is not TreeView pageView || pageView.Tag is not List<TreeNode> pageCache)
-					continue;
-
-                if (string.IsNullOrEmpty(filterTextBox.Text))
-				{
-					pageView.Nodes.Clear();
-					pageView.Nodes.AddRange(pageCache.ToArray());
-					continue;
-				}
-
-                pageView.BeginUpdate();
-                pageView.Nodes.Clear();
-				foreach (TreeNode _node in pageCache)
-				{
-                    if (_node.Text.ToLower().Contains(filterTextBox.Text.ToLower()) || filerPredicate(filterTextBox.Text, _node.Tag))
-					{
-						pageView.Nodes.Add((TreeNode)_node.Clone());
-					}
-				}
-				pageView.EndUpdate();
-			}
-		}
-
-		private void CancelBtn_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-		}
-
-		private void AcceptBtn_Click(object sender, EventArgs e)
-		{
-            DialogResult = _selectedItem is null ? DialogResult.Cancel : DialogResult.OK;
+			Update();
 		}
 	}
 }

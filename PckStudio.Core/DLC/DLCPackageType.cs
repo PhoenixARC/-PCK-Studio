@@ -2,8 +2,8 @@
 {
     public enum DLCPackageType : int
     {
-        Unknown = -1,
-        Invalid,
+        Invalid = -1,
+        RawAssets,
         SkinPack,
         TexturePack,
         MashUpPack,

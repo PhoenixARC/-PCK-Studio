@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -29,6 +30,7 @@ namespace PckStudio.Json
         public static JsonTiles JsonPaintingData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.paintingData);
         public static JsonTiles JsonBannerData { get; } = JsonConvert.DeserializeObject<JsonTiles>(Resources.bannerData);
 
+        public static ReadOnlyDictionary<string, JsonColorEntry> ColorEntries { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonColorEntry>>(Resources.colorEntries);
         public static List<JsonTileInfo> ItemTileInfos => JsonItemData.Entries;
         public static List<JsonTileInfo> BlockTileInfos => JsonBlockData.Entries;
         public static List<JsonTileInfo> ParticleTileInfos => JsonParticleData.Entries;

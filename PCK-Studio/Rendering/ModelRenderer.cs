@@ -132,7 +132,7 @@ namespace PckStudio.Rendering
                 return;
             }
 
-            for (int i = -1; i < modelMetaData.UvOffsets.Length; i++)
+            foreach (JsonModelMetaLayer layer in modelMetaData.Layers)
             {
                 bool tryGetPart(string name, out ModelPart modelPart)
                 {
@@ -141,13 +141,8 @@ namespace PckStudio.Rendering
                         modelPart = default;
                         return false;
                     }
-                    if (i == -1 || !modelMetaData.UvOffsets.IndexInRange(i))
-                    {
-                        modelPart = originalModelPart;
-                        return true;
-                    }
-                    System.Numerics.Vector2 uvoffset = modelMetaData.UvOffsets[i];
-                    modelPart = new ModelPart(originalModelPart.Name, originalModelPart.ParentName, originalModelPart.Translation, originalModelPart.Rotation, originalModelPart.AdditionalRotation);
+                    System.Numerics.Vector2 uvoffset = layer.Uv;
+                    modelPart = new ModelPart(layer.Name ?? originalModelPart.Name, originalModelPart.ParentName, originalModelPart.Translation, originalModelPart.Rotation, originalModelPart.AdditionalRotation);
                     modelPart.AddBoxes(originalModelPart.GetBoxes().Select(box => new ModelBox(box.Position, box.Size, box.Uv + uvoffset, box.Inflate, box.Mirror)));
                     return true;
                 }

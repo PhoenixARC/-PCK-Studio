@@ -105,30 +105,28 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;entries&quot;: [
-        ///		{
-        ///			&quot;internalName&quot;: &quot;base&quot;,
-        ///			&quot;displayName&quot;: &quot;Base&quot;,
-        ///
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;Banner_White&quot;,
-        ///				&quot;variants&quot;: [
-        ///					&quot;Banner_Black&quot;,
-        ///					&quot;Banner_Blue&quot;,
-        ///					&quot;Banner_Brown&quot;,
-        ///					&quot;Banner_Cyan&quot;,
-        ///					&quot;Banner_Gray&quot;,
-        ///					&quot;Banner_Green&quot;,
-        ///					&quot;Banner_Light_Blue&quot;,
-        ///					&quot;Banner_Lime&quot;,
-        ///					&quot;Banner_Magenta&quot;,
-        ///					&quot;Banner_Orange&quot;,
-        ///					&quot;Banner_Pink&quot;,
-        ///					&quot;Banner_Purple&quot;,
-        ///					&quot;Banner_Red&quot;,
-        ///					&quot;Banner_Silver&quot;,
-        ///					&quot;Banner [rest of string was truncated]&quot;;.
+        ///  &quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///  &quot;entries&quot;: [
+        ///    {
+        ///      &quot;internalName&quot;: &quot;base&quot;,
+        ///      &quot;displayName&quot;: &quot;Base&quot;,
+        ///      &quot;colorKey&quot;: &quot;Banner_Color&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;border&quot;,
+        ///      &quot;displayName&quot;: &quot;Bordure&quot;,
+        ///      &quot;colorKey&quot;: &quot;Banner_Color&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;bricks&quot;,
+        ///      &quot;displayName&quot;: &quot;Field Masoned&quot;,
+        ///      &quot;colorKey&quot;: &quot;Banner_Color&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;circle&quot;,
+        ///      &quot;displayName&quot;: &quot;Roundel&quot;,
+        ///      &quot;colorKey&quot;: &quot;Banner_Color&quot;
+        ///    }, [rest of string was truncated]&quot;;.
         /// </summary>
         public static string bannerData {
             get {
@@ -157,12 +155,7 @@ namespace PckStudio.Core.Properties {
         ///
         ///			&quot;colourEntry&quot;: {
         ///				&quot;defaultName&quot;: &quot;Grass_Common&quot;,
-        ///				&quot;variants&quot;: [
-        ///					&quot;Grass_Common&quot;,
-        ///					&quot;Grass_Mesa&quot;,
-        ///					&quot;Grass_Swamp1&quot;,
-        ///					&quot;Grass_Swamp2&quot;
-        ///				]
+        ///				&quot;colorCategory&quot;: [&quot;Grass&quot;]
         ///			}
         ///		},
         ///		{
@@ -171,7 +164,11 @@ namespace PckStudio.Core.Properties {
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;dirt&quot;,
-        ///			&quot;displayName&quot; [rest of string was truncated]&quot;;.
+        ///			&quot;displayName&quot;: &quot;Dirt&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;grass_side&quot;,
+        ///			&quot;displayName&quot;: &quot;Grass [rest of string was truncated]&quot;;.
         /// </summary>
         public static string blockData {
             get {
@@ -222,6 +219,47 @@ namespace PckStudio.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap clouds {
+            get {
+                object obj = ResourceManager.GetObject("clouds", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;Particle&quot;: {
+        ///    &quot;variants&quot;: [
+        ///      &quot;Particle_Smoke&quot;,
+        ///      &quot;Particle_NetherPortal&quot;,
+        ///      &quot;Particle_EnderPortal&quot;,
+        ///      &quot;Particle_Ender&quot;,
+        ///      &quot;Particle_DragonBreathMin&quot;,
+        ///      &quot;Particle_DragonBreathMax&quot;
+        ///    ]
+        ///  },
+        ///  &quot;Particle_EnchantmentTable&quot;: {
+        ///    &quot;defaultName&quot;: &quot;Particle_EnchantmentTable&quot;
+        ///  },
+        ///  &quot;Particle_ScoreRing&quot;: {
+        ///    &quot;variants&quot;: [
+        ///      &quot;Particle_ScoreRing_Small&quot;,
+        ///      &quot;Particle_ScoreRing_Medium&quot;,
+        ///      &quot;Particle_ScoreRing_Large&quot;
+        ///    ]
+        ///  },
+        ///  &quot;Potion_Effect&quot;: {
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string colorEntries {
+            get {
+                return ResourceManager.GetString("colorEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Comparison {
             get {
                 object obj = ResourceManager.GetObject("Comparison", resourceCulture);
@@ -236,6 +274,29 @@ namespace PckStudio.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("compass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;bat&quot;: {
+        ///    &quot;textureSize&quot;: { &quot;X&quot;: 64, &quot;Y&quot;: 64 },
+        ///    &quot;parts&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;head&quot;,
+        ///        &quot;boxes&quot;: [
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -3, &quot;Y&quot;: -3, &quot;Z&quot;: -3 }, &quot;size&quot;: { &quot;X&quot;: 6, &quot;Y&quot;: 6, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 0 } }
+        ///        ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;body&quot;,
+        ///        &quot;boxes&quot;: [
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -3, &quot;Y&quot;: 4, &quot;Z&quot;: -3 }, &quot;size&quot;: { &quot;X&quot;: 6, &quot;Y&quot;: 12, &quot;Z&quot;: 6 }, &quot;uv&quot;: { &quot;X&quot;: 0, &quot;Y&quot;: 16 } },
+        ///          { &quot;pos&quot;: { &quot;X&quot;: -5, &quot;Y&quot;: 16, &quot;Z&quot;: 0 }, &quot;size&quot;: { &quot;X&quot;: 10, &quot;Y&quot;: 6, &quot;Z&quot;: [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string defaultModels {
+            get {
+                return ResourceManager.GetString("defaultModels", resourceCulture);
             }
         }
         
@@ -265,24 +326,23 @@ namespace PckStudio.Core.Properties {
         ///	&quot;entries&quot;: [
         ///		{
         ///			&quot;internalName&quot;: &quot;experience_orb_0&quot;,
-        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 1)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;experience_orb&quot;,
-        ///				&quot;variants&quot;: [&quot;experience_orb&quot;]
-        ///			}
+        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 1)&quot;
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;experience_orb_1&quot;,
-        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 2)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;experience_orb&quot;,
-        ///				&quot;variants&quot;: [&quot;experience_orb&quot;]
-        ///			}
+        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 2)&quot;
         ///		},
         ///		{
-        ///			&quot; [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;: &quot;experience_orb_2&quot;,
+        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 3)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;experience_orb_3&quot;,
+        ///			&quot;displayName&quot;: &quot;Experience Orb (Size 4)&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;experience_orb_4&quot;,
+        ///			&quot;displayName&quot;: &quot;Experience Or [rest of string was truncated]&quot;;.
         /// </summary>
         public static string experienceOrbData {
             get {
@@ -292,28 +352,26 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
-        ///	&quot;entries&quot;: [
-        ///		{
-        ///			&quot;internalName&quot;: &quot;explosion_0&quot;,
-        ///			&quot;displayName&quot;: &quot;Explosion (Stage 1)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;Particle_Explode&quot;,
-        ///				&quot;variants&quot;: [
-        ///					&quot;Particle_Explode&quot;,
-        ///					&quot;Particle_HugeExplosion&quot;
-        ///				]
-        ///			}
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;explosion_1&quot;,
-        ///			&quot;displayName&quot;: &quot;Explosion (Stage 2)&quot;,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;Particle_Explode&quot;,
-        ///				&quot;variants&quot;: [
-        ///					 [rest of string was truncated]&quot;;.
+        ///  &quot;COMMENT_1&quot;: &quot;JSON by MattNL&quot;,
+        ///  &quot;entries&quot;: [
+        ///    {
+        ///      &quot;internalName&quot;: &quot;explosion_0&quot;,
+        ///      &quot;displayName&quot;: &quot;Explosion (Stage 1)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Particle_Explode&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;explosion_1&quot;,
+        ///      &quot;displayName&quot;: &quot;Explosion (Stage 2)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Particle_Explode&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;explosion_2&quot;,
+        ///      &quot;displayName&quot;: &quot;Explosion (Stage 3)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Particle_Explode&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;explosion_3&quot;,
+        ///       [rest of string was truncated]&quot;;.
         /// </summary>
         public static string explosionData {
             get {
@@ -380,18 +438,19 @@ namespace PckStudio.Core.Properties {
         ///			&quot;internalName&quot;: &quot;helmetCloth&quot;,
         ///			&quot;displayName&quot;: &quot;Leather Cap&quot;,
         ///			&quot;allowCustomColour&quot;: true,
-        ///			&quot;hasColourEntry&quot;: true,
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;Armour_Default_Leather_Colour&quot;,
-        ///				&quot;variants&quot;: [ &quot;Armour_Default_Leather_Colour&quot; ]
-        ///			}
+        ///			&quot;colorKey&quot;: &quot;Armour_Default_Leather_Colour&quot;
         ///		},
         ///		{
         ///			&quot;internalName&quot;: &quot;helmetChain&quot;,
         ///			&quot;displayName&quot;: &quot;Chain Helmet&quot;
         ///		},
         ///		{
-        ///			&quot;internalName&quot;:  [rest of string was truncated]&quot;;.
+        ///			&quot;internalName&quot;: &quot;helmetIron&quot;,
+        ///			&quot;displayName&quot;: &quot;Iron Helmet&quot;
+        ///		},
+        ///		{
+        ///			&quot;internalName&quot;: &quot;helmetDiamond&quot;,
+        ///			&quot;displayName&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         public static string itemData {
             get {
@@ -410,49 +469,39 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;anvil&quot;: &quot;anvil_base&quot;,
-        ///  &quot;anvil_top&quot;: &quot;anvil_top_damaged_0&quot;,
-        ///  &quot;chipped_anvil_top&quot;: &quot;anvil_top_damaged_1&quot;,
-        ///  &quot;damaged_anvil_top&quot;: &quot;anvil_top_damaged_2&quot;,
-        ///  &quot;beetroots_stage0&quot;: &quot;beetroots_stage_0&quot;,
-        ///  &quot;beetroots_stage1&quot;: &quot;beetroots_stage_1&quot;,
-        ///  &quot;beetroots_stage2&quot;: &quot;beetroots_stage_2&quot;,
-        ///  &quot;beetroots_stage3&quot;: &quot;beetroots_stage_3&quot;,
-        ///  &quot;bricks&quot;: &quot;brick&quot;,
-        ///  &quot;carrots_stage0&quot;: &quot;carrots_stage_0&quot;,
-        ///  &quot;carrots_stage1&quot;: &quot;carrots_stage_1&quot;,
-        ///  &quot;carrots_stage2&quot;: &quot;carrots_stage_2&quot;,
-        ///  &quot;carrots_stage3&quot;: &quot;carrots_sta [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;Bow Pulling&quot;,
+        ///    &quot;row&quot;: 5,
+        ///    &quot;column&quot;: 6,
+        ///    &quot;frameCount&quot;: 3,
+        ///    &quot;frameTime&quot;: 6,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Leather Cap&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 0,
+        ///    &quot;overlay&quot;: { &quot;row&quot;: 0, &quot;column&quot;: 9 }
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Leather Tunic&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 1,
+        ///    &quot;overlay&quot;: { &quot;row&quot;: 0, &quot;column&quot;: 10 }
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Leather Pants&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;overlay&quot;: { &quot;row&quot;: 0, &quot;column&quot;: 11 }
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Leather  [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string latest2lce_blocks {
+        public static string items_groups {
             get {
-                return ResourceManager.GetString("latest2lce_blocks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;apple_golden&quot;: &quot;appleGold&quot;,
-        ///  &quot;beef_cooked&quot;: &quot;beefCooked&quot;,
-        ///  &quot;beef_raw&quot;: &quot;beefRaw&quot;,
-        ///  &quot;blaze_powder&quot;: &quot;blazePowder&quot;,
-        ///  &quot;blaze_rod&quot;: &quot;blazeRod&quot;,
-        ///  &quot;oak_boat&quot;: &quot;boat&quot;,
-        ///  &quot;book_normal&quot;: &quot;book&quot;,
-        ///  &quot;chainmail_boots&quot;: &quot;bootsChain&quot;,
-        ///  &quot;leather_boots&quot;: &quot;bootsCloth&quot;,
-        ///  &quot;leather_boots_overlay&quot;: &quot;bootsCloth_overlay&quot;,
-        ///  &quot;diamond_boots&quot;: &quot;bootsDiamond&quot;,
-        ///  &quot;gold_boots&quot;: &quot;bootsGold&quot;,
-        ///  &quot;iron_boots&quot;: &quot;bootsIron&quot;,
-        ///  &quot;bow_standby&quot;: &quot;bow&quot;,
-        ///  &quot;bow_pulling_0&quot;: &quot;bow_pull_0&quot;,
-        ///  &quot;bow_pulling_1&quot;: &quot;bow_pull_1&quot;,        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string latest2lce_items {
-            get {
-                return ResourceManager.GetString("latest2lce_items", resourceCulture);
+                return ResourceManager.GetString("items_groups", resourceCulture);
             }
         }
         
@@ -504,6 +553,40 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;bat&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/mob/bat&quot;
+        ///    ],
+        ///    &quot;materialName&quot;: &quot;bat&quot;,
+        ///    &quot;parts&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;head&quot;,
+        ///        &quot;children&quot;: [
+        ///          { &quot;name&quot;: &quot;rightEar&quot; },
+        ///          { &quot;name&quot;: &quot;leftEar&quot; }
+        ///        ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;body&quot;,
+        ///        &quot;children&quot;: [
+        ///          {
+        ///            &quot;name&quot;: &quot;rightWing&quot;,
+        ///            &quot;children&quot;: [
+        ///              { &quot;name&quot;: &quot;rightWingTip&quot; }
+        ///            ]
+        ///          },
+        ///          {
+        ///            &quot;name&quot;: &quot;leftWing&quot;,
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string modelMetaData {
+            get {
+                return ResourceManager.GetString("modelMetaData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap moon_phases_atlas {
@@ -544,6 +627,45 @@ namespace PckStudio.Core.Properties {
         public static string moonPhaseData {
             get {
                 return ResourceManager.GetString("moonPhaseData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;The Pool&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Bonjour Monsiuer Courbet&quot;,
+        ///    &quot;row&quot;: 2,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Seaside&quot;,
+        ///    &quot;row&quot;: 4,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;: 1,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;sunset_dense&quot;,
+        ///    &quot;row&quot;: 6,
+        ///    &quot;column&quot;: 2,
+        ///    &quot;rowSpan&quot;: 2,
+        ///    &quot;columnSpan&quot;:  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string painting_groups {
+            get {
+                return ResourceManager.GetString("painting_groups", resourceCulture);
             }
         }
         
@@ -594,21 +716,22 @@ namespace PckStudio.Core.Properties {
         ///    {
         ///      &quot;internalName&quot;: &quot;generic_0&quot;,
         ///      &quot;displayName&quot;: &quot;Generic (Stage 1)&quot;,
-        ///      &quot;colourEntry&quot;: {
-        ///        &quot;defaultName&quot;: &quot;None&quot;,
-        ///        &quot;variants&quot;: [
-        ///          &quot;None&quot;,
-        ///          &quot;Particle_Smoke&quot;,
-        ///          &quot;Particle_NetherPortal&quot;,
-        ///          &quot;Particle_EnderPortal&quot;,
-        ///          &quot;Particle_Ender&quot;,
-        ///          &quot;Particle_DragonBreathMin&quot;,
-        ///          &quot;Particle_DragonBreathMax&quot;
-        ///        ]
-        ///      }
+        ///      &quot;colorKey&quot;: &quot;Particle&quot;
         ///    },
         ///    {
-        ///      &quot;internalName&quot;: &quot;generic_1&quot;, [rest of string was truncated]&quot;;.
+        ///      &quot;internalName&quot;: &quot;generic_1&quot;,
+        ///      &quot;displayName&quot;: &quot;Generic (Stage 2)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Particle&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;generic_2&quot;,
+        ///      &quot;displayName&quot;: &quot;Generic (Stage 3)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Particle&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;generic_3&quot;,
+        ///      &quot;displayName&quot;: &quot;Generic (Stage 4)&quot;,
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         public static string particleData {
             get {
@@ -627,33 +750,62 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;grass_block_top&quot;: 0,
-        ///  &quot;grass_block_side&quot;: 3,
-        ///  &quot;oak_planks&quot;: 4,
-        ///  &quot;smooth_stone_slab_side&quot;: 5,
-        ///  &quot;smooth_stone&quot;: 6,
-        ///  &quot;bricks&quot;: 7,
-        ///  &quot;cobweb&quot;: 11,
-        ///  &quot;poppy&quot;: 12,
-        ///  &quot;dandelion&quot;: 13,
-        ///  &quot;nether_portal&quot;: 14,
-        ///  &quot;oak_sapling&quot;: 15,
-        ///  &quot;oak_log&quot;: 20,
-        ///  &quot;oak_log_top&quot;: 21,
-        ///  &quot;dropper_front&quot;: 27,
-        ///  &quot;jungle_sapling&quot;: 30,
-        ///  &quot;mossy_cobblestone&quot;: 36,
-        ///  &quot;grass_block_side_overlay&quot;: 38,
-        ///  &quot;grass&quot;: 39,
-        ///  &quot;stone_bricks&quot;: 54,
-        ///  &quot;crafting_table_top&quot;: 43,
-        ///  &quot;dead_bush&quot;: 55,
-        ///  &quot;crafting_table_side&quot;: 59,        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;Generic&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 0,
+        ///    &quot;frameCount&quot;: 8,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Splash&quot;,
+        ///    &quot;row&quot;: 3,
+        ///    &quot;column&quot;: 1,
+        ///    &quot;frameCount&quot;: 4,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Drip&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 7,
+        ///    &quot;frameCount&quot;: 3,
+        ///    &quot;frameTime&quot;: 4,
+        ///    &quot;direction&quot;: 0
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Effect&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 8,
+        ///    &quot;frameCount&quot;: 8,
+        ///    &quot;frameTime&quot;: 2,
+        ///    &quot;direction&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string resourceFormat_6 {
+        public static string particles_groups {
             get {
-                return ResourceManager.GetString("resourceFormat_6", resourceCulture);
+                return ResourceManager.GetString("particles_groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rain {
+            get {
+                object obj = ResourceManager.GetObject("rain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap snow {
+            get {
+                object obj = ResourceManager.GetObject("snow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -664,6 +816,46 @@ namespace PckStudio.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("terrain_atlas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;Oak Door&quot;,
+        ///    &quot;row&quot;: 1,
+        ///    &quot;column&quot;: 5,
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Iron Door&quot;,
+        ///    &quot;row&quot;: 2,
+        ///    &quot;column&quot;: 5,
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Acacia Door&quot;,
+        ///    &quot;row&quot;: 0,
+        ///    &quot;column&quot;: 23,
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;direction&quot;: 1
+        ///  },
+        ///  {
+        ///    &quot;name&quot;: &quot;Birch Door&quot;,
+        ///    &quot;row&quot;: 1,
+        ///    &quot;column&quot;: 23,
+        ///    &quot;rowSpan&quot;: 1,
+        ///    &quot;columnSpan&quot;: 2,
+        ///    &quot;di [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string terrain_groups {
+            get {
+                return ResourceManager.GetString("terrain_groups", resourceCulture);
             }
         }
         

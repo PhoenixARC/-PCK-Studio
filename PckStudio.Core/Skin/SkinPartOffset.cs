@@ -53,7 +53,10 @@ namespace PckStudio.Core.Skin
         {
             string[] offset = ReplaceWhitespace(offsetFormatString.TrimEnd('\n', '\r', ' '), ",").Split(',');
             if (offset.Length < 3)
-                throw new InvalidDataException("Format string does not contain enough data.");
+            {
+                Trace.TraceError("Format string does not contain enough data.");
+                return new SkinPartOffset();
+            }
 
             string type = offset[0];
 
