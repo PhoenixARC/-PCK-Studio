@@ -1,13 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Cyotek.Data.Nbt;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using OMI;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Core
 {
+    public class SaveData
+    {
+        public NbtDocument LevelData { get; }
+        public IDictionary<Guid, NbtDocument> Players { get; }
+
+
+        private IDictionary<string, byte[]> _worldArchive;
+
+        public SaveData(IDictionary<string, byte[]> worldArchive)
+        {
+            _worldArchive = worldArchive;
+            if (_worldArchive.TryGetValue("levels.dat", out byte[] levelData))
+            {
+                Stream stream = new MemoryStream(levelData);
+                LevelData = NbtDocument.LoadDocument(stream);
+            }
+            Players = _worldArchive
+                .Where(kv => kv.Key.StartsWith("players/"))
+                .ToDictionary(
+                    kv => Guid.Parse(Path.GetFileNameWithoutExtension(kv.Key)), 
+                    kv => NbtDocument.LoadDocument(new MemoryStream(kv.Value)));
+        }
+    }
+
+
     public class MapReader
     {
-        public static IDictionary<string, byte[]> OpenSave(Stream stream)
+        public static SaveData OpenSaveData(Stream stream)
         {
             EndiannessAwareBinaryReader reader = new EndiannessAwareBinaryReader(stream, ByteOrder.BigEndian);
             _ = reader.ReadInt32();
@@ -35,7 +64,7 @@ namespace PckStudio.Core
 
                 res.Add(path, data);
             }
-            return res;
+            return new SaveData(res);
         }
     }
 }

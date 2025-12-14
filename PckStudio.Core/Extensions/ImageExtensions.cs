@@ -273,9 +273,9 @@ namespace PckStudio.Core.Extensions
             return bitmapResult;
         }
 
-        public static Image Interpolate(this Image source, Image target, double delta)
+        public static Image Interpolate(this Image source, Image target, float delta)
         {
-            delta = MathExtensions.Clamp(delta, 0.0, 1.0);
+            delta = MathExtensions.Clamp(delta, 0.0f, 1.0f);
             if (source is not Bitmap baseImage || target is not Bitmap overlayImage ||
                 source.Width != target.Width || source.Height != target.Height)
                 return source;

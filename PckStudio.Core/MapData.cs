@@ -39,8 +39,8 @@ namespace PckStudio.Core
             Thumbnail = thumbnail;
             World = world;
 
-            var levelData = MapReader.OpenSave(new MemoryStream(world.Value))["level.dat"];
-            TagCompound? levelDat = NbtDocument.LoadDocument(new MemoryStream(levelData))!.DocumentRoot?["Data"] as TagCompound;
+            SaveData saveData = MapReader.OpenSaveData(new MemoryStream(world.Value));
+            TagCompound? levelDat = saveData.LevelData.DocumentRoot?["Data"] as TagCompound;
             _ = levelDat ?? throw new NullReferenceException(nameof(levelDat));
             Vector3 spawn = levelDat.GetVector3("Spawn");
 

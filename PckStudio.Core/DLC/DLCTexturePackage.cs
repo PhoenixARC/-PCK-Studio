@@ -6,13 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using OMI.Formats.Color;
-using OMI.Formats.Material;
-using OMI.Formats.Model;
-using OMI.Formats.Pck;
-using OMI.Workers.Color;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
+using PckStudio.Core.Model;
 using PckStudio.Core.Properties;
 
 namespace PckStudio.Core.DLC
@@ -43,11 +39,11 @@ namespace PckStudio.Core.DLC
             public Image IconImg { get; } = iconImg;
         }
 
-        public sealed class EnvironmentData
+        public sealed class EnvironmentData(Image clouds, Image rain, Image snow)
         {
-            public Image Clouds;
-            public Image Rain;
-            public Image Snow;
+            public Image Clouds = clouds;
+            public Image Rain = rain;
+            public Image Snow = snow;
         }
 
         public MetaData Info { get; }
@@ -56,20 +52,32 @@ namespace PckStudio.Core.DLC
         //! => colours.col
         private IDictionary<string, Color> _colors;
         private IDictionary<string, (Color surface, Color underwater, Color fog)> _waterColors;
-        private ModelContainer _customModels; //! can be null.. => models.bin
-        private MaterialContainer _materials; //! can be null.. 
+        private AbstractModelContainer _customModels; //! can be null.. => models.bin
+        private IDictionary<string, string> _materials; //! can be null.. 
 
         //! terrain mipmaps will be generated automatically. Add mipmap option to settings menu ? -null
         private Atlas _terrainAtlas;
         private Atlas _itemsAtlas;
         private Atlas _particlesAtlas;
         private Atlas _paintingAtlas;
-        private ArmorSet[] _armorSets = new ArmorSet[6];
+        private Atlas _moonPhaseAtlas;
+        private ArmorSet _leatherArmorSet;
+        private ArmorSet _chainArmorSet;
+        private ArmorSet _ironArmorSet;
+        private ArmorSet _goldArmorSet;
+        private ArmorSet _diamondArmorSet;
+        private ArmorSet _turtleArmorSet;
+        private Atlas _mapIconsAtlas;
+        private Atlas _additionalMapIconsAtlas;
         private EnvironmentData _environmentData;
 
         private Animation _blockEntityBreakAnimation;
         private IDictionary<string, Animation> _itemAnimations;
         private IDictionary<string, Animation> _blockAnimations;
+        private Image _sun;
+        private Image _moon;
+
+        //! TODO: add resources from "res/misc/"
 
         internal DLCTexturePackage(
             string name,
@@ -81,14 +89,25 @@ namespace PckStudio.Core.DLC
             Atlas itemsAtlas,
             Atlas particlesAtlas,
             Atlas paintingAtlas,
-            ArmorSet[] armorSets,
+            Atlas moonPhaseAtlas,
+            Atlas mapIconsAtlas,
+            Atlas additionalMapIconsAtlas,
+            ArmorSet leatherArmorSet,
+            ArmorSet chainArmorSet,
+            ArmorSet ironArmorSet,
+            ArmorSet goldArmorSet,
+            ArmorSet diamondArmorSet,
+            ArmorSet turtleArmorSet,
+            EnvironmentData environmentData,
             IDictionary<string, Color> colors,
             IDictionary<string, (Color surface, Color underwater, Color fog)> waterColors,
-            ModelContainer customModels,
-            MaterialContainer materials,
+            AbstractModelContainer customModels,
+            IDictionary<string, string> materials,
             Animation blockEntityBreakAnimation,
             IDictionary<string, Animation> itemAnimations,
             IDictionary<string, Animation> blockAnimations,
+            Image sun,
+            Image moon,
             IDLCPackage parentPackage
             )
             : base(name, identifier, parentPackage)
@@ -100,14 +119,25 @@ namespace PckStudio.Core.DLC
             _itemsAtlas = itemsAtlas;
             _particlesAtlas = particlesAtlas;
             _paintingAtlas = paintingAtlas;
-            _armorSets = armorSets;
-            _colors = colors;
-            _waterColors = waterColors;
+            _moonPhaseAtlas = moonPhaseAtlas;
+            _mapIconsAtlas = mapIconsAtlas;
+            _additionalMapIconsAtlas = additionalMapIconsAtlas;
+            _leatherArmorSet = leatherArmorSet;
+            _chainArmorSet = chainArmorSet;
+            _ironArmorSet = ironArmorSet;
+            _goldArmorSet = goldArmorSet;
+            _diamondArmorSet = diamondArmorSet;
+            _turtleArmorSet = turtleArmorSet;
+            _environmentData = environmentData;
+            _colors = colors ?? new Dictionary<string, Color>();
+            _waterColors = waterColors ?? new Dictionary<string, (Color, Color, Color)>();
             _customModels = customModels;
             _materials = materials;
             _blockEntityBreakAnimation = blockEntityBreakAnimation;
-            _itemAnimations = itemAnimations;
-            _blockAnimations = blockAnimations;
+            _itemAnimations = itemAnimations ?? new Dictionary<string, Animation>();
+            _blockAnimations = blockAnimations ?? new Dictionary<string, Animation>();
+            _sun = sun;
+            _moon = moon;
         }
 
         public TextureResolution GetResolution() => _resolution;
@@ -166,28 +196,36 @@ namespace PckStudio.Core.DLC
             Atlas items = Atlas.FromResourceLocation(Resources.items_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ItemAtlas)));
             Atlas particles = Atlas.FromResourceLocation(Resources.particles_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ParticleAtlas)));
             Atlas painting = Atlas.FromResourceLocation(Resources.paintings_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.PaintingAtlas)));
+            Atlas moonPhases = Atlas.FromResourceLocation(Resources.moon_phases_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.MoonPhaseAtlas)));
+            Atlas mapIconsAtlas = Atlas.FromResourceLocation(Resources.map_icons_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.MapIconAtlas)));
+            Atlas additionalMapIconsAtlas = Atlas.FromResourceLocation(Resources.additional_map_icons_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.AdditionalMapIconsAtlas)));
             //ColorContainer colors = new COLFileReader().FromStream(new MemoryStream());
             IDictionary<string, Color> colors = null;
             IDictionary<string, (Color, Color, Color)> waterColors = null;
-            
+
             Animation blockEntityBreakAnimation = new Animation(terrain.GetRange(0, 15, 10, ImageLayoutDirection.Horizontal).Select(t => t.Texture).ToArray(), true, 3);
-            
-            ArmorSet[] armorSets = GetArmorSets();
 
             IDictionary<string, Animation> itemAnimations = GetItemAnimations();
-
             IDictionary<string, Animation> blockAnimations = GetBlockAnimations();
 
             return new DLCTexturePackage(
                 name, description, identifier, metadata, resolution,
-                terrain, items, particles, painting,
-                armorSets,
+                terrain, items, particles, painting, moonPhases, mapIconsAtlas, additionalMapIconsAtlas,
+                new ArmorSet(ArmorSetDescription.CLOTH, Resources.cloth, Resources.cloth_b),
+                new ArmorSet(ArmorSetDescription.CHAIN, Resources.chain, default),
+                new ArmorSet(ArmorSetDescription.IRON, Resources.iron, default),
+                new ArmorSet(ArmorSetDescription.GOLD, Resources.gold, default),
+                new ArmorSet(ArmorSetDescription.DIAMOND, Resources.diamond, default),
+                new ArmorSet(ArmorSetDescription.TURTLE, Resources.turtle, default),
+                new EnvironmentData(Resources.clouds, Resources.rain, Resources.snow),
                 colors, waterColors,
-                new ModelContainer(),
-                new MaterialContainer(),
+                new AbstractModelContainer(),
+                new Dictionary<string, string>(),
                 blockEntityBreakAnimation,
                 itemAnimations,
                 blockAnimations,
+                sun: null,
+                moon: null,
                 parentPackage
                 );
         }
@@ -199,19 +237,6 @@ namespace PckStudio.Core.DLC
         internal Atlas GetParticleAtlas() => _particlesAtlas;
 
         internal Atlas GetPaintingAtlas() => _paintingAtlas;
-
-        private static ArmorSet[] GetArmorSets()
-        {
-            return new ArmorSet[6]
-            {
-                new ArmorSet(ArmorSetDescription.CLOTH, Resources.cloth, Resources.cloth_b),
-                new ArmorSet(ArmorSetDescription.CHAIN, Resources.chain, default),
-                new ArmorSet(ArmorSetDescription.IRON, Resources.iron, default),
-                new ArmorSet(ArmorSetDescription.GOLD, Resources.gold, default),
-                new ArmorSet(ArmorSetDescription.DIAMOND, Resources.diamond, default),
-                new ArmorSet(ArmorSetDescription.TURTLE, Resources.turtle, default)
-            };
-        }
 
         private static IDictionary<string, Animation> GetItemAnimations()
         {

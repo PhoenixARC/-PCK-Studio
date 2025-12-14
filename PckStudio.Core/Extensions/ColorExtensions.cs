@@ -54,15 +54,15 @@ namespace PckStudio.Core.Extensions
             return MathExtensions.Clamp(resultValue, 0.0f, 1.0f);
         }
 
-        public static byte Mix(double ratio, byte val1, byte val2)
+        public static byte Mix(float ratio, byte val1, byte val2)
         {
-            ratio = MathExtensions.Clamp(ratio, 0.0, 1.0);
+            ratio = MathExtensions.Clamp(ratio, 0.0f, 1.0f);
             return (byte)(ratio * val1 + (1.0 - ratio) * val2);
         }
 
-        public static Color Mix(this Color c1, Color c2, double ratio)
+        public static Color Mix(this Color c1, Color c2, float ratio)
         {
-            ratio = MathExtensions.Clamp(ratio, 0.0, 1.0);
+            ratio = MathExtensions.Clamp(ratio, 0.0f, 1.0f);
             return Color.FromArgb(c1.A,
                 Mix(ratio, c1.R, c2.R),
                 Mix(ratio, c1.G, c2.G),

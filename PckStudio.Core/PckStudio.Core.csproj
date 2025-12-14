@@ -77,9 +77,12 @@
     <Compile Include="DLC\DLCMashUpPackage.cs" />
     <Compile Include="DLC\DLCMiniGamePackage.cs" />
     <Compile Include="DLC\DLCPackage.cs" />
+    <Compile Include="DLC\DLCPackageContent.cs" />
+    <Compile Include="DLC\DLCPackageContentSerilasationType.cs" />
     <Compile Include="DLC\DLCPackageRegistry.cs" />
     <Compile Include="DLC\DLCSkinPackage.cs" />
     <Compile Include="DLC\DLCTexturePackage.cs" />
+    <Compile Include="DLC\PckFileCompiler.cs" />
     <Compile Include="DLC\RawAssetDLCPackage.cs" />
     <Compile Include="Extensions\AnimationExtensions.cs" />
     <Compile Include="Extensions\BlendMode.cs" />
