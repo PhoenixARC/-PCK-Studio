@@ -56,7 +56,31 @@ namespace PckStudio.Core
         public static Vector3 GetSkinPartPivot(string partName) => GetPositioningInfo(partName).Pivot;
 
         public static Vector3 GetSkinPartTranslation(string partName) => GetPositioningInfo(partName).Translation;
+        
+        public enum DyeColor
+        {
+            White,
+            Orange,
+            Magenta,
+            LightBlue,
+            Yellow,
+            Lime,
+            Pink,
+            Gray,
+            LightGray,
+            Cyan,
+            Purple,
+            Blue,
+            Brown,
+            Green,
+            Red,
+            Black,
+        }
 
+        public static Color GetDyeColor(DyeColor dyeColor)
+        {
+            return Enum.IsDefined(typeof(DyeColor), dyeColor) && dyeColor >= 0 && (int)dyeColor < DyeColors.Length ? DyeColors[(int)dyeColor] : Color.Transparent;
+        }
 
         // See: https://minecraft.fandom.com/wiki/Dye#Color_values for more information.
         public static readonly Color[] DyeColors = [
