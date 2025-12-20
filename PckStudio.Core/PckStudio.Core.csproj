@@ -257,11 +257,9 @@
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
     <None Include="Resources\java\latest2lce_paintings.json" />
-    <None Include="Resources\modelMetaData.json" />
-    <None Include="Resources\java\blocks_1.6.1.json" />
+    <None Include="Resources\entityModelMetaData.json" />
     <None Include="Resources\java\latest2lce_items.json" />
     <None Include="Resources\java\latest2lce_blocks.json" />
-    <None Include="Resources\java\resourceFormat_6.json" />
     <None Include="Resources\TexturePackIcon.png" />
   </ItemGroup>
   <ItemGroup>

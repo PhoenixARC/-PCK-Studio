@@ -279,7 +279,7 @@ namespace PckStudio.Controls
                     }
 
                     string texturePath = asset.Filename.Substring(0, asset.Filename.Length - Path.GetExtension(asset.Filename).Length);
-                    string[] modelNames = GameModelImporter.ModelMetaData.Where(kv => kv.Value.TextureLocations.Contains(texturePath)).Select(kv => kv.Key).ToArray();
+                    string[] modelNames = GameModelImporter.EntityModelMetaData.Where(kv => kv.Value.TextureLocations.Contains(texturePath)).Select(kv => kv.Key).ToArray();
 
                     if (modelNames.Length == 0)
                     {

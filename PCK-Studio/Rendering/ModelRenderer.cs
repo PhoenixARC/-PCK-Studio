@@ -169,7 +169,7 @@ namespace PckStudio.Rendering
 
         private bool TryGetModelMetaData(Model model, out JsonModelMetaData modelMetaData)
         {
-            if (!GameModelImporter.ModelMetaData.TryGetValue(model.Name, out modelMetaData))
+            if (!GameModelImporter.EntityModelMetaData.TryGetValue(model.Name, out modelMetaData))
             {
                 Trace.TraceError($"[{nameof(ModelRenderer)}@{nameof(TryGetModelMetaData)}] Couldn't get meta data for model: '{model.Name}'");
                 return false;

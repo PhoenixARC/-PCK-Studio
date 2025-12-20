@@ -314,6 +314,40 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;bat&quot;: {
+        ///    &quot;textureLocations&quot;: [
+        ///      &quot;res/mob/bat&quot;
+        ///    ],
+        ///    &quot;materialName&quot;: &quot;bat&quot;,
+        ///    &quot;parts&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;head&quot;,
+        ///        &quot;children&quot;: [
+        ///          { &quot;name&quot;: &quot;rightEar&quot; },
+        ///          { &quot;name&quot;: &quot;leftEar&quot; }
+        ///        ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;body&quot;,
+        ///        &quot;children&quot;: [
+        ///          {
+        ///            &quot;name&quot;: &quot;rightWing&quot;,
+        ///            &quot;children&quot;: [
+        ///              { &quot;name&quot;: &quot;rightWingTip&quot; }
+        ///            ]
+        ///          },
+        ///          {
+        ///            &quot;name&quot;: &quot;leftWing&quot;,
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string entityModelMetaData {
+            get {
+                return ResourceManager.GetString("entityModelMetaData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap experience_orbs_atlas {
@@ -600,40 +634,6 @@ namespace PckStudio.Core.Properties {
         public static string mapIconData {
             get {
                 return ResourceManager.GetString("mapIconData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;bat&quot;: {
-        ///    &quot;textureLocations&quot;: [
-        ///      &quot;res/mob/bat&quot;
-        ///    ],
-        ///    &quot;materialName&quot;: &quot;bat&quot;,
-        ///    &quot;parts&quot;: [
-        ///      {
-        ///        &quot;name&quot;: &quot;head&quot;,
-        ///        &quot;children&quot;: [
-        ///          { &quot;name&quot;: &quot;rightEar&quot; },
-        ///          { &quot;name&quot;: &quot;leftEar&quot; }
-        ///        ]
-        ///      },
-        ///      {
-        ///        &quot;name&quot;: &quot;body&quot;,
-        ///        &quot;children&quot;: [
-        ///          {
-        ///            &quot;name&quot;: &quot;rightWing&quot;,
-        ///            &quot;children&quot;: [
-        ///              { &quot;name&quot;: &quot;rightWingTip&quot; }
-        ///            ]
-        ///          },
-        ///          {
-        ///            &quot;name&quot;: &quot;leftWing&quot;,
-        ///    [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string modelMetaData {
-            get {
-                return ResourceManager.GetString("modelMetaData", resourceCulture);
             }
         }
         

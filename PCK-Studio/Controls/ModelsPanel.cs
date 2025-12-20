@@ -83,9 +83,9 @@ namespace PckStudio.Controls
 
         private static IEnumerable<NamedData<Image>> GetModelTextures(string modelName, ITryGet<string, Image> tryGet)
         {
-            if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
+            if (!GameModelImporter.EntityModelMetaData.ContainsKey(modelName) || GameModelImporter.EntityModelMetaData[modelName]?.TextureLocations?.Length <= 0)
                 yield break;
-            foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
+            foreach (var textureLocation in GameModelImporter.EntityModelMetaData[modelName].TextureLocations)
             {
                 if (tryGet.TryGet(textureLocation, out Image img))
                     yield return new NamedData<Image>(Path.GetFileName(textureLocation), img);

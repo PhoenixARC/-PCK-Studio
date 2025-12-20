@@ -237,7 +237,7 @@ namespace PckStudio.Forms.Editor
                     modelViewport.Texture = textures[0].Value;
 
                 modelViewport.LoadModel(modelNode.Model);
-                if (GameModelImporter.ModelMetaData.TryGetValue(modelNode.Model.Name, out JsonModelMetaData modelMetaData) && !string.IsNullOrEmpty(modelMetaData.MaterialName) &&
+                if (GameModelImporter.EntityModelMetaData.TryGetValue(modelNode.Model.Name, out JsonModelMetaData modelMetaData) && !string.IsNullOrEmpty(modelMetaData.MaterialName) &&
                     _tryGetEntityMaterial.TryGet(modelMetaData.MaterialName, out MaterialContainer.Material entityMaterial) ||
                     _tryGetEntityMaterial.TryGet(modelNode.Model.Name, out entityMaterial))
                 {
@@ -259,9 +259,9 @@ namespace PckStudio.Forms.Editor
 
         private IEnumerable<NamedData<Image>> GetModelTextures(string modelName)
         {
-            if (!GameModelImporter.ModelMetaData.ContainsKey(modelName) || GameModelImporter.ModelMetaData[modelName]?.TextureLocations?.Length <= 0)
+            if (!GameModelImporter.EntityModelMetaData.ContainsKey(modelName) || GameModelImporter.EntityModelMetaData[modelName]?.TextureLocations?.Length <= 0)
                 yield break;
-            foreach (var textureLocation in GameModelImporter.ModelMetaData[modelName].TextureLocations)
+            foreach (var textureLocation in GameModelImporter.EntityModelMetaData[modelName].TextureLocations)
             {
                 if (_textures.TryGet(textureLocation, out Image img))
                     yield return new NamedData<Image>(Path.GetFileName(textureLocation), img);

@@ -17,7 +17,7 @@ namespace PckStudio.Core.Model
 {
     public class AbstractModelContainer
     {
-        static Dictionary<string, JsonModelMetaData> _metaData = JsonConvert.DeserializeObject<Dictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
+        static Dictionary<string, JsonModelMetaData> _metaData = JsonConvert.DeserializeObject<Dictionary<string, JsonModelMetaData>>(Resources.entityModelMetaData);
 
         private IDictionary<string, AbstractModel> _models = new Dictionary<string, AbstractModel>();
 

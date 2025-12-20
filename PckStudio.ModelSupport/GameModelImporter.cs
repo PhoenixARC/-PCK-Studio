@@ -56,7 +56,7 @@ namespace PckStudio.ModelSupport
         
         public ModelImportSettings ImportSettings { get; } = new ModelImportSettings();
 
-        public static ReadOnlyDictionary<string, JsonModelMetaData> ModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.modelMetaData);
+        public static ReadOnlyDictionary<string, JsonModelMetaData> EntityModelMetaData { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, JsonModelMetaData>>(Resources.entityModelMetaData);
         public static ReadOnlyDictionary<string, DefaultModel> DefaultModels { get; } = JsonConvert.DeserializeObject<ReadOnlyDictionary<string, DefaultModel>>(Resources.defaultModels);
         
         private GameModelImporter()
@@ -76,7 +76,7 @@ namespace PckStudio.ModelSupport
 
             List<Element> elements = new List<Element>(modelInfo.Model.PartCount);
 
-            if (!ModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
+            if (!EntityModelMetaData.TryGetValue(modelInfo.Model.Name, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ExportBlockBenchModel)}] Failed to get model meta data for '{modelInfo.Model.Name}'.");
                 return;
@@ -165,7 +165,7 @@ namespace PckStudio.ModelSupport
                 return null;
             }
 
-            if (!ModelMetaData.TryGetValue(blockBenchModel.ModelIdentifier, out JsonModelMetaData modelMetaData))
+            if (!EntityModelMetaData.TryGetValue(blockBenchModel.ModelIdentifier, out JsonModelMetaData modelMetaData))
             {
                 Trace.TraceError($"[{nameof(GameModelImporter)}:{nameof(ImportBlockBenchModel)}] Failed to import model '{blockBenchModel.ModelIdentifier}': No model meta data found.");
                 return null;
