@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JavaTextFormatForm));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.importWorker = new System.ComponentModel.BackgroundWorker();
-            this.cancelButton = new System.Windows.Forms.Button();
+            this.importButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -53,24 +53,24 @@
             this.importWorker.WorkerReportsProgress = true;
             this.importWorker.WorkerSupportsCancellation = true;
             // 
-            // cancelButton
+            // importButton
             // 
-            this.cancelButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cancelButton.Location = new System.Drawing.Point(0, 411);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(754, 23);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.importButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.importButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.importButton.Location = new System.Drawing.Point(0, 411);
+            this.importButton.Name = "importButton";
+            this.importButton.Size = new System.Drawing.Size(754, 23);
+            this.importButton.TabIndex = 1;
+            this.importButton.Text = "Cancel";
+            this.importButton.UseVisualStyleBackColor = true;
+            this.importButton.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // JavaTextFormatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(754, 434);
-            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.importButton);
             this.Controls.Add(this.richTextBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JavaTextFormatForm";
@@ -83,6 +83,6 @@
 
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.ComponentModel.BackgroundWorker importWorker;
-        private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button importButton;
     }
 }

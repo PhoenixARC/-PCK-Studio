@@ -51,12 +51,20 @@ namespace PckStudio.Controls
         public JavaTextFormatForm(FileInfo fileInfo)
         {
             InitializeComponent();
-            var zip = new ZipArchive(fileInfo.OpenRead(), ZipArchiveMode.Read);
-            ResourcePackImporter importer = new ResourcePackImporter(zip, default);
-            FormatPackDescription(fileInfo.Name, importer.ReadPackMeta(zip).Description);
             importWorker.DoWork += Import;
             importWorker.ProgressChanged += ImportProgressChanged;
             importWorker.RunWorkerCompleted += ImportCompleted;
+            StartImport(fileInfo);
+        }
+
+        private void StartImport(FileInfo fileInfo)
+        {
+            importButton.Click -= Import_Click;
+            importButton.Click += Cancel_Click;
+            importButton.Text = "Cancel";
+            var zip = new ZipArchive(fileInfo.OpenRead(), ZipArchiveMode.Read);
+            ResourcePackImporter importer = new ResourcePackImporter(zip, default);
+            FormatPackDescription(Path.GetFileNameWithoutExtension(fileInfo.Name), importer.ReadPackMeta(zip).Description);
             importWorker.RunWorkerAsync(importer);
         }
 
@@ -70,7 +78,11 @@ namespace PckStudio.Controls
         private void Import(object sender, DoWorkEventArgs eventArgs)
         {
             if (sender is not BackgroundWorker worker)
-                throw new Exception();
+            {
+                Debug.WriteLine("Sender was not a background worker.");
+                eventArgs.Cancel = true;
+                return;
+            }
             if (eventArgs.Argument is not ResourcePackImporter importer)
             {
                 worker.ReportProgressError("Invalid argument passed to background worker.");
@@ -81,8 +93,8 @@ namespace PckStudio.Controls
             
             while(!(eventArgs.Cancel = worker.CancellationPending))
             {
-                AtlasResource.AtlasType atlasType = AtlasResource.AtlasType.BlockAtlas;
-                ImportResult<Atlas, ResourcePackImporter.ImportStats> res = importer.ImportAtlas(ResourceLocations.GetFromCategory(AtlasResource.GetId(atlasType)) as AtlasResource);
+                AtlasResource.AtlasType atlasType = AtlasResource.AtlasType.ParticleAtlas;
+                ImportResult<(Atlas atlas, IDictionary<string, Animation> animations), ResourcePackImporter.ImportStats> res = importer.ImportAtlas(ResourceLocations.GetFromCategory(AtlasResource.GetId(atlasType)) as AtlasResource, true);
                 worker.ReportProgressDebug("Import Stats");
                 worker.ReportProgressDebug($"Textures: {res.Stats.Textures}/{res.Stats.MaxTextures}({res.Stats.MissingTextures} missing)");
                 worker.ReportProgressDebug($"Animations: {res.Stats.Animations}");
@@ -98,21 +110,24 @@ namespace PckStudio.Controls
 
         private void ImportCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            importButton.Click -= Cancel_Click;
+            importButton.Click += Import_Click;
+            importButton.Text = "Import";
             if (e.Cancelled)
             {
                 MessageBox.Show("Import cancelled", $"Import cancelled.");
                 return;
             }
             MessageBox.Show("Import successful", $"");
+            (Atlas atlas, IDictionary<string, Animation> animations) res = ((Atlas atlas, IDictionary<string, Animation> animations))e.Result;
             var f = new Form();
             f.Size = new Size(600, 600);
             var picBox = new InterpolationPictureBox();
             picBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             picBox.SizeMode = PictureBoxSizeMode.Zoom;
             picBox.Dock = DockStyle.Fill;
-            picBox.Image = e.Result as Atlas;
+            picBox.Image = res.atlas;
             f.Controls.Add(picBox);
-            cancelButton.Enabled = false;
             f.ShowDialog();
         }
 
@@ -120,17 +135,33 @@ namespace PckStudio.Controls
         {
             richTextBox1.SelectionAlignment = HorizontalAlignment.Center;
             richTextBox1.AppendLine("Name: ");
-            richTextBox1.AppendLine(title);
+            if (!FormatJavaFormatString(title))
+            {
+                richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+                return;
+            }
             richTextBox1.AppendLine("Description: ");
+            if (!FormatJavaFormatString(text))
+            {
+                richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+                return;
+            }
+            richTextBox1.AppendLine("");
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+        }
+
+        private bool FormatJavaFormatString(string text)
+        {
             if (!text.Contains("§"))
             {
                 richTextBox1.AppendLine(text);
-                richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                return;
+                richTextBox1.AppendLine("");
+                return false;
             }
 
             foreach (KeyValuePair<string, string> textSection in text.Split(['§'], StringSplitOptions.RemoveEmptyEntries).Select(s => new KeyValuePair<string, string>("§" + char.ToLower(s[0]), string.IsNullOrWhiteSpace(s) ? string.Empty : s.Substring(1))))
             {
+                FontStyle fontStyle = FontStyle.Regular;
                 switch (textSection.Key)
                 {
                     // obfuscated/MTS*
@@ -138,26 +169,26 @@ namespace PckStudio.Controls
                         var rng = new Random();
                         string value = new string(textSection.Value.Select(c => Convert.ToChar(c + rng.Next(26 - (char.ToLower(c) - 0x30)))).ToArray());
                         richTextBox1.AppendText(value);
-                        break;
+                        continue;
                     // bold
                     case "§l":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Bold))
-                            richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Bold);
+                            fontStyle |= FontStyle.Bold;
                         break;
                     // strikethrough
                     case "§m":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Strikeout))
-                            richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Strikeout);
+                            fontStyle |= FontStyle.Strikeout;
                         break;
                     // underline
                     case "§n":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Underline))
-                            richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Underline);
+                            fontStyle |= FontStyle.Underline;
                         break;
                     // italic
                     case "§o":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Italic))
-                            richTextBox1.SelectionFont = new Font(richTextBox1.SelectionFont, FontStyle.Italic);
+                            fontStyle |= FontStyle.Italic;
                         break;
                     // reset
                     case "§r":
@@ -165,18 +196,19 @@ namespace PckStudio.Controls
                         richTextBox1.SelectionFont = richTextBox1.Font;
                         break;
                     default:
-                        if (_javaColorCodeToColor.TryGetValue(textSection.Key, out RichTextBoxColor textColor))
-                        {
-                            richTextBox1.AppendText(textSection.Value, textColor);
-                            break;
-                        }
-                        richTextBox1.AppendText(textSection.Key);
-                        richTextBox1.AppendText(textSection.Value);
                         break;
                 }
+                richTextBox1.SelectionFont = new Font(richTextBox1.Font, fontStyle);
+                if (_javaColorCodeToColor.TryGetValue(textSection.Key, out RichTextBoxColor textColor))
+                {
+                    richTextBox1.AppendText(textSection.Value, textColor);
+                    break;
+                }
+                richTextBox1.AppendText(textSection.Key);
+                richTextBox1.AppendText(textSection.Value);
             }
             richTextBox1.AppendLine("");
-            richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
+            return true;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -189,12 +221,26 @@ namespace PckStudio.Controls
             base.OnFormClosing(e);
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void Import_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = "Minecraft texturepack|*.zip"
+            };
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+                return;
+            StartImport(new FileInfo(fileDialog.FileName));
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
         {
             if (importWorker.IsBusy)
             {
                 importWorker.CancelAsync();
-                cancelButton.Enabled = false;
+                importButton.Click -= Cancel_Click;
+                importButton.Click += Import_Click;
+                importButton.Text = "Import";
             } 
         }
     }
