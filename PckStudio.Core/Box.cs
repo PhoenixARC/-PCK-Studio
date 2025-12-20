@@ -15,10 +15,10 @@ namespace PckStudio.Core
         [JsonProperty("uv", Required = Required.Always)]
         public Vector2 Uv { get; } = uv;
 
-        [JsonProperty("mirror", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("inflate", NullValueHandling = NullValueHandling.Ignore)]
         public float Inflate { get; } = inflate;
 
-        [JsonProperty("inflate", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("mirror", NullValueHandling = NullValueHandling.Ignore)]
         public bool Mirror { get; } = mirror;
     }
 }
