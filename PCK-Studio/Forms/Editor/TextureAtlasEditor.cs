@@ -256,26 +256,6 @@ namespace PckStudio.Forms.Editor
             selectTilePictureBox.Image = null;
         }
 
-        private void ResetView()
-        {
-            tileNameLabel.Text = string.Empty;
-            internalTileNameLabel.Text = string.Empty;
-
-            colorSlider.Visible = false;
-            colorSliderLabel.Visible = false;
-            variantComboBox.Visible = false;
-
-            variantComboBox.SelectedItem = null;
-            variantComboBox.Enabled = false;
-            variantComboBox.Items.Clear();
-            clearColorButton.Enabled = false;
-
-            if (selectTilePictureBox.IsPlaying)
-                selectTilePictureBox.Stop();
-            selectTilePictureBox.UseBlendColor = false;
-            selectTilePictureBox.Image = null;
-        }
-
         private static int GetSelectedImageIndex(
             Size pictureBoxSize,
             Size imageSize,
@@ -413,15 +393,6 @@ namespace PckStudio.Forms.Editor
         {
             if (string.IsNullOrWhiteSpace(colorKey))
                 return Color.White;
-
-            // Enchanted hits are modified critical hit particles
-            if (tileInfo.InternalName == "enchanted_hit")
-            {
-                // This is directly based on Java's source code for handling enchanted hits
-                // it just multiplies the red by 0.3 and green by .8 of the color assigned to the critical hit particle
-                var c = Color.FromArgb(colorSlider.Value, colorSlider.Value, colorSlider.Value);
-                return Color.FromArgb((int)(c.R * 0.3f), (int)(c.R * 0.8f), c.B);
-            }
 
             // basic way to check for classic water colors
             if (!isWaterColour && !colorKey.StartsWith("Water_") && _colorTable.Colors.FirstOrDefault(entry => entry.Name == colorKey) is ColorContainer.Color color)
