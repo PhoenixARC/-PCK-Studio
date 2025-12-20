@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using PckStudio.Controls;
@@ -85,16 +86,16 @@ namespace PckStudio.Forms
                 Theme = MetroFramework.MetroThemeStyle.Dark,
                 Style = MetroFramework.MetroColorStyle.Silver,
             };
-            object[] values = Enum.GetNames(type);
+            object[] values =  Enum.GetNames(type).Skip(type == typeof(ConsolePlatform) ? 1: 0).Select(s => s.Replace("_", " ")).ToArray();
             control.Items.AddRange(values);
-            control.Text = propertyValue.PropertyValue.ToString();
-            control.SelectedItem = propertyValue.PropertyValue;
+            control.Text = propertyValue.PropertyValue.ToString().Replace("_", " ");
+            control.SelectedItem = propertyValue.PropertyValue.ToString().Replace("_", " ");
 
             void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
             {
                 if (sender is ComboBox comboBox && comboBox.Tag is string settingsKey && settings[settingsKey].GetType() == type)
                 {
-                    settings[settingsKey] = Enum.Parse(type, (string)comboBox.SelectedItem, true);
+                    settings[settingsKey] = Enum.Parse(type, ((string)comboBox.SelectedItem).Replace(" ", "_"), true);
                 }
             }
 

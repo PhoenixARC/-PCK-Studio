@@ -30,7 +30,7 @@
       <Value Profile="(Default)">Unknown</Value>
     </Setting>
     <Setting Name="UserLanguage" Type="PckStudio.Core.AppLanguage" Scope="User">
-      <Value Profile="(Default)">SystemDefault</Value>
+      <Value Profile="(Default)">System_Default</Value>
     </Setting>
   </Settings>
 </SettingsFile>

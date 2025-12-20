@@ -129,7 +129,7 @@ namespace PckStudio.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SystemDefault")]
+        [global::System.Configuration.DefaultSettingValueAttribute("System_Default")]
         public global::PckStudio.Core.App.AppLanguage UserLanguage {
             get {
                 return ((global::PckStudio.Core.App.AppLanguage)(this["UserLanguage"]));

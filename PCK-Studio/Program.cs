@@ -38,9 +38,9 @@ namespace PckStudio
             if (Settings.Default.Platform == Core.ConsolePlatform.Unknown)
             {
                 MessageBox.Show("Please choose on which console you're playing on.", "Select Platform", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                var platformChooser = new ItemSelectionPopUp(Enum.GetNames(typeof(Core.ConsolePlatform)).Skip(1).ToArray());
-                if (platformChooser.ShowDialog() == DialogResult.OK && Enum.IsDefined(typeof(ConsolePlatform), platformChooser.SelectedItem))
-                    Settings.Default.Platform = (Core.ConsolePlatform)Enum.Parse(typeof(ConsolePlatform), platformChooser.SelectedItem);
+                var platformChooser = new ItemSelectionPopUp(Enum.GetNames(typeof(Core.ConsolePlatform)).Skip(1).Select(s => s.Replace("_", " ")).ToArray());
+                if (platformChooser.ShowDialog() == DialogResult.OK && Enum.IsDefined(typeof(ConsolePlatform), platformChooser.SelectedItem.Replace(" ", "_")))
+                    Settings.Default.Platform = (Core.ConsolePlatform)Enum.Parse(typeof(ConsolePlatform), platformChooser.SelectedItem.Replace(" ", "_"));
             }
 
             ApplicationScope.Initialize();

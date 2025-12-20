@@ -3,12 +3,12 @@
     public enum ConsolePlatform
     {
         Unknown,
-        Xbox360,
-        XboxOne,
-        PS3,
-        PS4,
-        PSVita,
-        WiiU,
+        Xbox_360,
+        Xbox_One,
+        PS_3,
+        PS_4,
+        PS_Vita,
+        Wii_U,
         Switch
     }
 }
