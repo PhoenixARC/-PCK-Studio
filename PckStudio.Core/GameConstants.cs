@@ -90,6 +90,7 @@ namespace PckStudio.Core
                 LCEGameVersion._1_14 when atlasType == AtlasResource.AtlasType.ItemAtlas => 18,
                 LCEGameVersion._1_14 when atlasType == AtlasResource.AtlasType.BlockAtlas => 39,
                 _ when atlasType == AtlasResource.AtlasType.PaintingAtlas => 16,
+                _ when atlasType == AtlasResource.AtlasType.ParticleAtlas => 16,
                _ => throw new NotImplementedException()
             };
         }

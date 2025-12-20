@@ -146,29 +146,27 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
-        ///	&quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
-        ///	&quot;entries&quot;: [
-        ///		{
-        ///			&quot;internalName&quot;: &quot;grass_top&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
-        ///
-        ///			&quot;colourEntry&quot;: {
-        ///				&quot;defaultName&quot;: &quot;Grass_Common&quot;,
-        ///				&quot;colorCategory&quot;: [&quot;Grass&quot;]
-        ///			}
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;stone&quot;,
-        ///			&quot;displayName&quot;: &quot;Stone&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;dirt&quot;,
-        ///			&quot;displayName&quot;: &quot;Dirt&quot;
-        ///		},
-        ///		{
-        ///			&quot;internalName&quot;: &quot;grass_side&quot;,
-        ///			&quot;displayName&quot;: &quot;Grass [rest of string was truncated]&quot;;.
+        ///  &quot;COMMENT_1&quot;: &quot;Tile data research by MattNL&quot;,
+        ///  &quot;COMMENT_2&quot;: &quot;JSON by PhoenixARC, MattNL, and NessieHax (Miku-666)&quot;,
+        ///  &quot;entries&quot;: [
+        ///    {
+        ///      &quot;internalName&quot;: &quot;grass_top&quot;,
+        ///      &quot;displayName&quot;: &quot;Grass Block (Top)&quot;,
+        ///      &quot;colorKey&quot;: &quot;Grass&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;stone&quot;,
+        ///      &quot;displayName&quot;: &quot;Stone&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;dirt&quot;,
+        ///      &quot;displayName&quot;: &quot;Dirt&quot;
+        ///    },
+        ///    {
+        ///      &quot;internalName&quot;: &quot;grass_side&quot;,
+        ///      &quot;displayName&quot;: &quot;Grass Block (Side)&quot;
+        ///    },
+        ///    { [rest of string was truncated]&quot;;.
         /// </summary>
         public static string blockData {
             get {
@@ -228,28 +226,33 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///  &quot;Grass&quot;: {
+        ///    &quot;variants&quot;: [
+        ///      &quot;Grass_Common&quot;,
+        ///      &quot;Grass_Mesa&quot;,
+        ///      &quot;Grass_Swamp1&quot;,
+        ///      &quot;Grass_Swamp2&quot;
+        ///    ]
+        ///  },
+        ///  &quot;Foliage&quot;: {
+        ///    &quot;variants&quot;: [
+        ///      &quot;Foliage_Default&quot;,
+        ///      &quot;Foliage_Evergreen&quot;,
+        ///      &quot;Foliage_Birch&quot;,
+        ///      &quot;Foliage_Mesa&quot;,
+        ///      &quot;Foliage_Swampland&quot;
+        ///    ]
+        ///  },
+        ///  &quot;RedstoneDust&quot;: {
+        ///    &quot;variants&quot;: [
+        ///      &quot;Tile_RedstoneDust&quot;,
+        ///      &quot;Tile_RedstoneDustUnlit&quot;,
+        ///      &quot;Tile_RedstoneDustLitMin&quot;,
+        ///      &quot;Tile_RedstoneDustLitMax&quot;
+        ///    ]
+        ///  },
         ///  &quot;Particle&quot;: {
-        ///    &quot;variants&quot;: [
-        ///      &quot;Particle_Smoke&quot;,
-        ///      &quot;Particle_NetherPortal&quot;,
-        ///      &quot;Particle_EnderPortal&quot;,
-        ///      &quot;Particle_Ender&quot;,
-        ///      &quot;Particle_DragonBreathMin&quot;,
-        ///      &quot;Particle_DragonBreathMax&quot;
-        ///    ]
-        ///  },
-        ///  &quot;Particle_EnchantmentTable&quot;: {
-        ///    &quot;defaultName&quot;: &quot;Particle_EnchantmentTable&quot;
-        ///  },
-        ///  &quot;Particle_ScoreRing&quot;: {
-        ///    &quot;variants&quot;: [
-        ///      &quot;Particle_ScoreRing_Small&quot;,
-        ///      &quot;Particle_ScoreRing_Medium&quot;,
-        ///      &quot;Particle_ScoreRing_Large&quot;
-        ///    ]
-        ///  },
-        ///  &quot;Potion_Effect&quot;: {
-        ///     [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string colorEntries {
             get {
@@ -502,6 +505,54 @@ namespace PckStudio.Core.Properties {
         public static string items_groups {
             get {
                 return ResourceManager.GetString("items_groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;anvil&quot;: &quot;anvil_base&quot;,
+        ///  &quot;anvil_top&quot;: &quot;anvil_top_damaged_0&quot;,
+        ///  &quot;chipped_anvil_top&quot;: &quot;anvil_top_damaged_1&quot;,
+        ///  &quot;damaged_anvil_top&quot;: &quot;anvil_top_damaged_2&quot;,
+        ///  &quot;beetroots_stage0&quot;: &quot;beetroots_stage_0&quot;,
+        ///  &quot;beetroots_stage1&quot;: &quot;beetroots_stage_1&quot;,
+        ///  &quot;beetroots_stage2&quot;: &quot;beetroots_stage_2&quot;,
+        ///  &quot;beetroots_stage3&quot;: &quot;beetroots_stage_3&quot;,
+        ///  &quot;bricks&quot;: &quot;brick&quot;,
+        ///  &quot;carrots_stage0&quot;: &quot;carrots_stage_0&quot;,
+        ///  &quot;carrots_stage1&quot;: &quot;carrots_stage_1&quot;,
+        ///  &quot;carrots_stage2&quot;: &quot;carrots_stage_2&quot;,
+        ///  &quot;carrots_stage3&quot;: &quot;carrots_sta [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_blocks {
+            get {
+                return ResourceManager.GetString("latest2lce_blocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;apple_golden&quot;: &quot;appleGold&quot;,
+        ///  &quot;golden_apple&quot;: &quot;appleGold&quot;,
+        ///  &quot;beef_cooked&quot;: &quot;beefCooked&quot;,
+        ///  &quot;beef_raw&quot;: &quot;beefRaw&quot;,
+        ///  &quot;beef&quot;: &quot;beefRaw&quot;,
+        ///  &quot;blaze_powder&quot;: &quot;blazePowder&quot;,
+        ///  &quot;blaze_rod&quot;: &quot;blazeRod&quot;,
+        ///  &quot;oak_boat&quot;: &quot;boat&quot;,
+        ///  &quot;book_normal&quot;: &quot;book&quot;,
+        ///  &quot;chainmail_boots&quot;: &quot;bootsChain&quot;,
+        ///  &quot;leather_boots&quot;: &quot;bootsCloth&quot;,
+        ///
+        ///  &quot;crossbow_standby&quot;: &quot;crossbow&quot;,
+        ///  &quot;crossbow_pulling_0&quot;: &quot;crossbow_pull_0&quot;,
+        ///  &quot;crossbow_pulling_1&quot;: &quot;crossbow_pull_1&quot;,
+        ///  &quot;crossbow_pulling_2&quot;: &quot;crossbow_pull_2&quot;,
+        ///  &quot;campfire&quot;: &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_items {
+            get {
+                return ResourceManager.GetString("latest2lce_items", resourceCulture);
             }
         }
         
