@@ -74,7 +74,7 @@ namespace PckStudio.Core.DLC
             return platform switch
             {
                 ConsolePlatform.Switch => ByteOrder.LittleEndian,
-                ConsolePlatform.PS4 => ByteOrder.LittleEndian,
+                ConsolePlatform.PS_4 => ByteOrder.LittleEndian,
                 _ => ByteOrder.BigEndian
             };
         }
@@ -422,16 +422,16 @@ namespace PckStudio.Core.DLC
         {
             switch (platform)
             {
-                case ConsolePlatform.Xbox360:
+                case ConsolePlatform.Xbox_360:
                     return GameRuleFile.CompressionType.XMem;
 
-                case ConsolePlatform.PS3:
+                case ConsolePlatform.PS_3:
                     return GameRuleFile.CompressionType.Deflate;
 
-                case ConsolePlatform.XboxOne:
-                case ConsolePlatform.PS4:
-                case ConsolePlatform.PSVita:
-                case ConsolePlatform.WiiU:
+                case ConsolePlatform.Xbox_One:
+                case ConsolePlatform.PS_4:
+                case ConsolePlatform.PS_Vita:
+                case ConsolePlatform.Wii_U:
                 case ConsolePlatform.Switch:
                     return GameRuleFile.CompressionType.Zlib;
 
@@ -447,46 +447,46 @@ namespace PckStudio.Core.DLC
         {
             return appLanguage switch
             {
-                AppLanguage.SystemDefault => LOCFile.ValidLanguages.Contains(CultureInfo.CurrentUICulture.Name) ? CultureInfo.CurrentUICulture.Name : AvailableLanguages.English,
-                AppLanguage.CzechCzechia => AvailableLanguages.CzechCzechia,
+                AppLanguage.System_Default => LOCFile.ValidLanguages.Contains(CultureInfo.CurrentUICulture.Name) ? CultureInfo.CurrentUICulture.Name : AvailableLanguages.English,
+                AppLanguage.Czech_Czechia => AvailableLanguages.CzechCzechia,
                 AppLanguage.Czechia => AvailableLanguages.Czechia,
                 AppLanguage.Danish => AvailableLanguages.Danish,
-                AppLanguage.DenmarkDanish => AvailableLanguages.DenmarkDanish,
-                AppLanguage.GermanAustria => AvailableLanguages.GermanAustria,
+                AppLanguage.Denmark_Danish => AvailableLanguages.DenmarkDanish,
+                AppLanguage.German_Austria => AvailableLanguages.GermanAustria,
                 AppLanguage.German => AvailableLanguages.German,
-                AppLanguage.GreekGreece => AvailableLanguages.GreekGreece,
+                AppLanguage.Greek_Greece => AvailableLanguages.GreekGreece,
                 AppLanguage.Greece => AvailableLanguages.Greece,
-                AppLanguage.EnglishAustralia => AvailableLanguages.EnglishAustralia,
-                AppLanguage.EnglishCanada => AvailableLanguages.EnglishCanada,
+                AppLanguage.English_Australia => AvailableLanguages.EnglishAustralia,
+                AppLanguage.English_Canada => AvailableLanguages.EnglishCanada,
                 AppLanguage.English => AvailableLanguages.English,
-                AppLanguage.EnglishUnitedKingdom => AvailableLanguages.EnglishUnitedKingdom,
-                AppLanguage.EnglishIreland => AvailableLanguages.EnglishIreland,
-                AppLanguage.EnglishNewZealand => AvailableLanguages.EnglishNewZealand,
-                AppLanguage.EnglishUnitedStatesOfAmerica => AvailableLanguages.EnglishUnitedStatesOfAmerica,
-                AppLanguage.SpanishSpain => AvailableLanguages.SpanishSpain,
-                AppLanguage.SpanishMexico => AvailableLanguages.SpanishMexico,
-                AppLanguage.FinnishFinland => AvailableLanguages.FinnishFinland,
-                AppLanguage.FrenchFrance => AvailableLanguages.FrenchFrance,
-                AppLanguage.FrenchCanada => AvailableLanguages.FrenchCanada,
-                AppLanguage.ItalianItaly => AvailableLanguages.ItalianItaly,
-                AppLanguage.JapaneseJapan => AvailableLanguages.JapaneseJapan,
-                AppLanguage.KoreanSouthKorea => AvailableLanguages.KoreanSouthKorea,
+                AppLanguage.English_UnitedKingdom => AvailableLanguages.EnglishUnitedKingdom,
+                AppLanguage.English_Ireland => AvailableLanguages.EnglishIreland,
+                AppLanguage.English_NewZealand => AvailableLanguages.EnglishNewZealand,
+                AppLanguage.English_USA=> AvailableLanguages.EnglishUnitedStatesOfAmerica,
+                AppLanguage.Spanish_Spain => AvailableLanguages.SpanishSpain,
+                AppLanguage.Spanish_Mexico => AvailableLanguages.SpanishMexico,
+                AppLanguage.Finnish_Finland => AvailableLanguages.FinnishFinland,
+                AppLanguage.French_France => AvailableLanguages.FrenchFrance,
+                AppLanguage.French_Canada => AvailableLanguages.FrenchCanada,
+                AppLanguage.Italian_Italy => AvailableLanguages.ItalianItaly,
+                AppLanguage.Japanese_Japan => AvailableLanguages.JapaneseJapan,
+                AppLanguage.Korean_South_Korea => AvailableLanguages.KoreanSouthKorea,
                 AppLanguage.Latin => AvailableLanguages.Latin,
-                AppLanguage.NorwegianNorway => AvailableLanguages.NorwegianNorway,
-                AppLanguage.NorwegianBokmålNorway => AvailableLanguages.NorwegianBokmålNorway,
-                AppLanguage.DutchNetherlands => AvailableLanguages.DutchNetherlands,
-                AppLanguage.DutchBelgium => AvailableLanguages.DutchBelgium,
-                AppLanguage.PolishPoland => AvailableLanguages.PolishPoland,
-                AppLanguage.PortugueseBrazil => AvailableLanguages.PortugueseBrazil,
-                AppLanguage.PortuguesePortugal => AvailableLanguages.PortuguesePortugal,
-                AppLanguage.RussianRussia => AvailableLanguages.RussianRussia,
-                AppLanguage.SlovakSlovakia => AvailableLanguages.SlovakSlovakia,
-                AppLanguage.SwedishSweden => AvailableLanguages.SwedishSweden,
-                AppLanguage.TurkishTurkey => AvailableLanguages.TurkishTurkey,
-                AppLanguage.ChineseChina => AvailableLanguages.ChineseChina,
-                AppLanguage.ChineseHongKong => AvailableLanguages.ChineseHongKong,
-                AppLanguage.ChineseSingapore => AvailableLanguages.ChineseSingapore,
-                AppLanguage.ChineseTaiwan => AvailableLanguages.ChineseTaiwan,
+                AppLanguage.Norwegian_Norway => AvailableLanguages.NorwegianNorway,
+                AppLanguage.Norwegian_Bokmål_Norway => AvailableLanguages.NorwegianBokmålNorway,
+                AppLanguage.Dutch_Netherlands => AvailableLanguages.DutchNetherlands,
+                AppLanguage.Dutch_Belgium => AvailableLanguages.DutchBelgium,
+                AppLanguage.Polish_Poland => AvailableLanguages.PolishPoland,
+                AppLanguage.Portuguese_Brazil => AvailableLanguages.PortugueseBrazil,
+                AppLanguage.Portuguese_Portugal => AvailableLanguages.PortuguesePortugal,
+                AppLanguage.Russian_Russia => AvailableLanguages.RussianRussia,
+                AppLanguage.Slovak_Slovakia => AvailableLanguages.SlovakSlovakia,
+                AppLanguage.Swedish_Sweden => AvailableLanguages.SwedishSweden,
+                AppLanguage.Turkish_Turkey => AvailableLanguages.TurkishTurkey,
+                AppLanguage.Chinese_China => AvailableLanguages.ChineseChina,
+                AppLanguage.Chinese_HongKong => AvailableLanguages.ChineseHongKong,
+                AppLanguage.Chinese_Singapore => AvailableLanguages.ChineseSingapore,
+                AppLanguage.Chinese_Taiwan => AvailableLanguages.ChineseTaiwan,
                 _ => AvailableLanguages.English,
             };
         }
