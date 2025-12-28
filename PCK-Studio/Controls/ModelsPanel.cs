@@ -69,7 +69,7 @@ namespace PckStudio.Controls
             _imageList.Images.Clear();
             textureTreeView.Nodes.Clear();
 
-            foreach ((int i, NamedData<Image> item) in textures.enumerate())
+            foreach ((int i, NamedData<Image> item) in textures.Enumerate())
             {
                 _imageList.Images.Add(item.Value);
                 textureTreeView.Nodes.Add(new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i });

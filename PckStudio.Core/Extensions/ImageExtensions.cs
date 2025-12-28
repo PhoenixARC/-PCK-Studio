@@ -39,6 +39,13 @@ namespace PckStudio.Core.Extensions
             return img;
         }
 
+        public static Color GetColor(this Image image, Point location) => image.GetColor(location.X, location.Y);
+        public static Color GetColor(this Image image, int x, int y) => new Bitmap(image).GetPixel(x, y);
+
+        public static Image GetArea(this Image source, int x, int y, int width, int height)
+            => source.GetArea(new Point(x, y), new Size(width, height));
+        public static Image GetArea(this Image source, Point location, Size size)
+            => source.GetArea(new Rectangle(location, size));
         public static Image GetArea(this Image source, Rectangle area)
         {
             Image result = new Bitmap(area.Width, area.Height);
@@ -60,7 +67,7 @@ namespace PckStudio.Core.Extensions
 
         public static Image CreateMipMap(this Image image, int level)
         {
-            int factor = (int)Math.Pow(2, level - 1);
+            int factor = Math.Max(1, (int)Math.Pow(2, level - 1));
             int newWidth = Math.Max(image.Width / factor, 1);
             int newHeight = Math.Max(image.Height / factor, 1);
 
@@ -143,7 +150,7 @@ namespace PckStudio.Core.Extensions
             using (var graphic = Graphics.FromImage(image))
             {
                 graphic.ApplyConfig(GraphicsConfig.PixelPerfect());
-                foreach ((int i, Image texture) in sources.enumerate())
+                foreach ((int i, Image texture) in sources.Enumerate())
                 {
                     int x = Math.DivRem(i, columns, out int y);
                     if (horizontal)
@@ -173,15 +180,17 @@ namespace PckStudio.Core.Extensions
             return size;
         }
 
-        public static Image Resize(this Image image, Size size, GraphicsConfig graphicsConfig)
-        {
-            return image.Resize(size.Width, size.Height, graphicsConfig);
-        }
-
         public static Image Resize(this Image image, int width, int height, GraphicsConfig graphicsConfig)
         {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
+            return image.Resize(new Size(width, height), graphicsConfig);
+        }
+
+        public static Image Resize(this Image image, Size size, GraphicsConfig graphicsConfig)
+        {
+            if (image.Size == size)
+                return image;
+            var destRect = new Rectangle(Point.Empty, size);
+            var destImage = new Bitmap(size.Width, size.Height);
 
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 

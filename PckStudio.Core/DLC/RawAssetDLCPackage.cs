@@ -14,7 +14,10 @@ namespace PckStudio.Core.DLC
         public ByteOrder ByteOrder { get; }
 
         public RawAssetDLCPackage(string name, PckFile pckFile, ByteOrder byteOrder)
-            : base(name ?? nameof(RawAssetDLCPackage), -1, default)
+            : this(name, -1, pckFile, byteOrder)
+        { }
+        public RawAssetDLCPackage(string name, int id, PckFile pckFile, ByteOrder byteOrder)
+            : base(name ?? nameof(RawAssetDLCPackage), id, default)
         {
             PckFile = pckFile;
             ByteOrder = byteOrder;

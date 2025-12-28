@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using PckStudio.Core.Extensions;
 using PckStudio.Interfaces;
 
@@ -45,6 +46,7 @@ namespace PckStudio.Core
             LayerCount = Math.Min(Math.Max(layerCount, 0), ('z' - 'b'));
             TextureCount = Math.Max(textureCount, 1);
             AssetCount = (LayerCount + 1) * TextureCount;
+            _pathLookUp.Add(name, this);
             foreach (var path in GetArmorNames())
             {
                 _pathLookUp.Add(path, this);
@@ -73,6 +75,28 @@ namespace PckStudio.Core
                 }
             }
             return result;
+        }
+
+        public static IEnumerable<NamedData<Image>> GetArmorSetTextures(ArmorSet armorSet)
+        {
+            if (!_pathLookUp.TryGetValue(armorSet.Name, out ArmorSetDescription armorSetDescription))
+                return Enumerable.Empty<NamedData<Image>>();
+
+            IEnumerable<NamedData<Image>> textures = armorSet.BaseTexture.Split(new Size(armorSet.BaseTexture.Width, armorSet.BaseTexture.Height / 2), ImageLayoutDirection.Horizontal)
+                .Enumerate()
+                .Select(e => new NamedData<Image>($"{armorSet.Name}_{e.index + 1}", e.value));
+
+            if (armorSetDescription.LayerCount > 0 && armorSet.Layer is not null)
+            {
+                textures = textures.Concat(armorSet.Layer.Split(new Size(armorSet.Layer.Width, armorSet.Layer.Height / 2), ImageLayoutDirection.Horizontal)
+                    .Enumerate()
+                    .Select(e => new NamedData<Image>($"{armorSet.Name}_{e.index + 1}_{Convert.ToChar('b')}", e.value)));
+            }
+
+            if (armorSet.Name == TURTLE)
+                return textures.Take(1);
+
+            return textures;
         }
 
         public ArmorSet GetArmorSet(ITryGet<string, Image> tryGetTexture)

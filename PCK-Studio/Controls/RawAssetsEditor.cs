@@ -234,7 +234,7 @@ namespace PckStudio.Controls
             RawAssetDLCPackage rawAssetDLCPackage = new RawAssetDLCPackage(asset.Filename, pckFile, _originalEndianness);
 
             // TODO: may change to use a new tab page that will be closed when the main pck is closed
-            //Program.MainInstance.OpenNewPckTab(caption, identifier, RawAssetDLCPackage, saveContext);
+            Program.MainInstance.OpenNewPckTab(caption, identifier, rawAssetDLCPackage, saveContext);
         }
 
         private void HandleTextureFile(PckAsset asset)

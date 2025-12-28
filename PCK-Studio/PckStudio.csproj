@@ -157,11 +157,11 @@
     <Compile Include="Controls\ImmersiveForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\JavaTextFormatForm.cs">
+    <Compile Include="Controls\JavaImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\JavaTextFormatForm.Designer.cs">
-      <DependentUpon>JavaTextFormatForm.cs</DependentUpon>
+    <Compile Include="Controls\JavaImportForm.Designer.cs">
+      <DependentUpon>JavaImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModelsPanel.cs">
       <SubType>UserControl</SubType>
@@ -433,8 +433,8 @@
     <EmbeddedResource Include="Controls\DefaultPanel.resx">
       <DependentUpon>DefaultPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\JavaTextFormatForm.resx">
-      <DependentUpon>JavaTextFormatForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\JavaImportForm.resx">
+      <DependentUpon>JavaImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModelsPanel.resx">
       <DependentUpon>ModelsPanel.cs</DependentUpon>

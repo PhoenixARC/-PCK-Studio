@@ -1,6 +1,6 @@
 ﻿namespace PckStudio.Controls
 {
-    partial class JavaTextFormatForm
+    partial class JavaImportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JavaTextFormatForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JavaImportForm));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.importWorker = new System.ComponentModel.BackgroundWorker();
             this.importButton = new System.Windows.Forms.Button();

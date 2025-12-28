@@ -41,7 +41,7 @@ namespace PckStudio.Core.Extensions
             if (string.IsNullOrWhiteSpace(nodeText))
                 return BuildNodeTreeBySeperator(root, subPath, seperator, maxDepth - 1);
 
-            TreeNode subNode = root.ContainsKey(nodeText) ? root[nodeText] : root.CreateNode(nodeText);
+            TreeNode subNode = root.ContainsKey(nodeText) ? root.Find(nodeText, searchAllChildren: false).FirstOrDefault(node => node.Tag is null) ?? root.CreateNode(nodeText) : root.CreateNode(nodeText);
             return BuildNodeTreeBySeperator(subNode.Nodes, subPath, seperator, maxDepth - 1);
         }
 

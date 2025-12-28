@@ -138,5 +138,17 @@ namespace PckStudio.Properties {
                 this["UserLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Local")]
+        public global::PckStudio.Core.DLC.DLCPackageContentSerilasationType PackageType {
+            get {
+                return ((global::PckStudio.Core.DLC.DLCPackageContentSerilasationType)(this["PackageType"]));
+            }
+            set {
+                this["PackageType"] = value;
+            }
+        }
     }
 }

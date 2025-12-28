@@ -7,7 +7,7 @@ namespace PckStudio.Core.Extensions
 {
     public static class EnumerableExtensions
     {
-        public static IEnumerable<(int index, T value)>enumerate<T>(this IEnumerable<T> array)
+        public static IEnumerable<(int index, T value)>Enumerate<T>(this IEnumerable<T> array)
         {
             int i = 0;
             foreach (T item in array)
@@ -33,15 +33,7 @@ namespace PckStudio.Core.Extensions
             .Select(t => t.ToString())
             .Aggregate((res, next) => string.IsNullOrWhiteSpace(next) ? res : res + seperator + next);
 
-        public static bool EqualsAny<T>(this T type, params T[] items)
-        {
-            foreach (T item in items)
-            {
-                if (item.Equals(type))
-                    return true;
-            }
-            return false;
-        }
+        public static bool EqualsAny<T>(this T type, params T[] items) => items.Any(item => item.Equals(type));
 
         public static bool ContainsAny<T>(this IEnumerable<T> source, params T[] items) => source.Any(t => items.Contains(t));
     }

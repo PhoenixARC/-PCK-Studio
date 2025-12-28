@@ -10,12 +10,12 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using PckStudio.Core;
+using PckStudio.Core.DLC;
 using PckStudio.Core.IO.Java;
-using PckStudio.ToolboxItems;
 
 namespace PckStudio.Controls
 {
-    public partial class JavaTextFormatForm : ImmersiveForm
+    public partial class JavaImportForm : ImmersiveForm
     {
         static Dictionary<string, RichTextBoxColor> _javaColorCodeToColor = new Dictionary<string, RichTextBoxColor>()
         {
@@ -47,13 +47,21 @@ namespace PckStudio.Controls
             ["§t"] = new RichTextBoxColor(Color.FromArgb(0x21, 0x49, 0x7B), Color.FromArgb(0x08, 0x12, 0x1E)),
             ["§u"] = new RichTextBoxColor(Color.FromArgb(0x9A, 0x5C, 0xC6), Color.FromArgb(0x26, 0x17, 0x31)),
         };
-        
-        public JavaTextFormatForm(FileInfo fileInfo)
+        private ResourcePackImporter _importer;
+        private readonly DLCManager _dlcManager;
+        private readonly ImportStatusReport _importStatusReport;
+
+        public DLCPackageContent Result { get; private set; }
+
+        public JavaImportForm(FileInfo fileInfo, DLCManager dlcManager)
         {
             InitializeComponent();
             importWorker.DoWork += Import;
             importWorker.ProgressChanged += ImportProgressChanged;
             importWorker.RunWorkerCompleted += ImportCompleted;
+            _importer = new ResourcePackImporter(default);
+            _dlcManager = dlcManager;
+            _importStatusReport = ImportStatusReport.CreateCustom(importWorker.ReportProgressInfo);
             StartImport(fileInfo);
         }
 
@@ -63,9 +71,13 @@ namespace PckStudio.Controls
             importButton.Click += Cancel_Click;
             importButton.Text = "Cancel";
             var zip = new ZipArchive(fileInfo.OpenRead(), ZipArchiveMode.Read);
-            ResourcePackImporter importer = new ResourcePackImporter(zip, default);
-            FormatPackDescription(Path.GetFileNameWithoutExtension(fileInfo.Name), importer.ReadPackMeta(zip).Description);
-            importWorker.RunWorkerAsync(importer);
+
+            string name = Path.GetFileNameWithoutExtension(fileInfo.Name);
+            if (_importer.StartImport(name, zip, _importStatusReport))
+            {
+                FormatPackDescription(Path.GetFileNameWithoutExtension(fileInfo.Name), _importer.ReadPackMeta(zip).Description);
+                importWorker.RunWorkerAsync(zip);
+            }
         }
 
         private void ImportProgressChanged(object sender, ProgressChangedEventArgs eventArgs)
@@ -83,26 +95,26 @@ namespace PckStudio.Controls
                 eventArgs.Cancel = true;
                 return;
             }
-            if (eventArgs.Argument is not ResourcePackImporter importer)
+            if (eventArgs.Argument is not ZipArchive zip)
             {
                 worker.ReportProgressError("Invalid argument passed to background worker.");
                 eventArgs.Cancel = true;
                 return;
             }
             worker.ReportProgressInfo($"Start import");
-            
             while(!(eventArgs.Cancel = worker.CancellationPending))
             {
-                AtlasResource.AtlasType atlasType = AtlasResource.AtlasType.ParticleAtlas;
-                ImportResult<(Atlas atlas, IDictionary<string, Animation> animations), ResourcePackImporter.ImportStats> res = importer.ImportAtlas(ResourceLocations.GetFromCategory(AtlasResource.GetId(atlasType)) as AtlasResource, true);
+                ImportResult<DLCTexturePackage, ResourcePackImporter.TextureImportStats> res = _importer.ImportAsTexturePack();
+                DLCPackageContent pck = _dlcManager.CompilePackage(res.Result);
+
                 worker.ReportProgressDebug("Import Stats");
                 worker.ReportProgressDebug($"Textures: {res.Stats.Textures}/{res.Stats.MaxTextures}({res.Stats.MissingTextures} missing)");
                 worker.ReportProgressDebug($"Animations: {res.Stats.Animations}");
                 // on success do:
-                if (true)
+                if (!worker.CancellationPending)
                 {
                     worker.ReportProgressInfo($"Import successful");
-                    eventArgs.Result = res.Result;
+                    eventArgs.Result = pck;
                     break;
                 }
             }
@@ -113,39 +125,23 @@ namespace PckStudio.Controls
             importButton.Click -= Cancel_Click;
             importButton.Click += Import_Click;
             importButton.Text = "Import";
-            if (e.Cancelled)
+            if (e.Cancelled || importWorker.CancellationPending)
             {
                 MessageBox.Show("Import cancelled", $"Import cancelled.");
                 return;
             }
             MessageBox.Show("Import successful", $"");
-            (Atlas atlas, IDictionary<string, Animation> animations) res = ((Atlas atlas, IDictionary<string, Animation> animations))e.Result;
-            var f = new Form();
-            f.Size = new Size(600, 600);
-            var picBox = new InterpolationPictureBox();
-            picBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            picBox.SizeMode = PictureBoxSizeMode.Zoom;
-            picBox.Dock = DockStyle.Fill;
-            picBox.Image = res.atlas;
-            f.Controls.Add(picBox);
-            f.ShowDialog();
+            Result = (DLCPackageContent)e.Result;
+            DialogResult = DialogResult.OK;
         }
 
-        private void FormatPackDescription(string title, string text)
+        private void FormatPackDescription(string title, string description)
         {
             richTextBox1.SelectionAlignment = HorizontalAlignment.Center;
             richTextBox1.AppendLine("Name: ");
-            if (!FormatJavaFormatString(title))
-            {
-                richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                return;
-            }
+            FormatJavaFormatString(title);
             richTextBox1.AppendLine("Description: ");
-            if (!FormatJavaFormatString(text))
-            {
-                richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
-                return;
-            }
+            FormatJavaFormatString(description);
             richTextBox1.AppendLine("");
             richTextBox1.SelectionAlignment = HorizontalAlignment.Left;
         }
@@ -156,10 +152,10 @@ namespace PckStudio.Controls
             {
                 richTextBox1.AppendLine(text);
                 richTextBox1.AppendLine("");
-                return false;
+                return true;
             }
 
-            foreach (KeyValuePair<string, string> textSection in text.Split(['§'], StringSplitOptions.RemoveEmptyEntries).Select(s => new KeyValuePair<string, string>("§" + char.ToLower(s[0]), string.IsNullOrWhiteSpace(s) ? string.Empty : s.Substring(1))))
+            foreach (KeyValuePair<string, string> textSection in text.Split(['§'], StringSplitOptions.RemoveEmptyEntries).Select(s => new KeyValuePair<string, string>("§" + s[0], string.IsNullOrWhiteSpace(s) ? string.Empty : s.Substring(1))))
             {
                 FontStyle fontStyle = FontStyle.Regular;
                 switch (textSection.Key)
@@ -196,16 +192,19 @@ namespace PckStudio.Controls
                         richTextBox1.SelectionFont = richTextBox1.Font;
                         break;
                     default:
+                        richTextBox1.SelectionFont = new Font(richTextBox1.Font, fontStyle);
+                        if (_javaColorCodeToColor.TryGetValue(textSection.Key, out RichTextBoxColor textColor))
+                        {
+                            richTextBox1.AppendText(textSection.Value, textColor);
+                            break;
+                        }
+                        Debug.WriteLine(textSection);
+                        richTextBox1.AppendText(textSection.Key);
+                        richTextBox1.AppendText(textSection.Value);
+                        richTextBox1.AppendText(textSection.Key.Substring(1));
+                        richTextBox1.AppendText(textSection.Value);
                         break;
                 }
-                richTextBox1.SelectionFont = new Font(richTextBox1.Font, fontStyle);
-                if (_javaColorCodeToColor.TryGetValue(textSection.Key, out RichTextBoxColor textColor))
-                {
-                    richTextBox1.AppendText(textSection.Value, textColor);
-                    break;
-                }
-                richTextBox1.AppendText(textSection.Key);
-                richTextBox1.AppendText(textSection.Value);
             }
             richTextBox1.AppendLine("");
             return true;

@@ -115,7 +115,8 @@ namespace PckStudio.Core
                 LCEGameVersion._1_14 when atlasType == AtlasResource.AtlasType.BlockAtlas => 39,
                 _ when atlasType == AtlasResource.AtlasType.PaintingAtlas => 16,
                 _ when atlasType == AtlasResource.AtlasType.ParticleAtlas => 16,
-               _ => throw new NotImplementedException()
+                _ when atlasType == AtlasResource.AtlasType.MoonPhaseAtlas => 2,
+               _ => 0
             };
         }
     }

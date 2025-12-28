@@ -6,13 +6,15 @@ namespace PckStudio.Core.DLC
 {
     public class DLCPackageContent
     {
-        public static DLCPackageContent Empty => new DLCPackageContent(default);
+        public static DLCPackageContent Empty => new DLCPackageContent(nameof(Empty), default);
 
-        internal bool IsEmpty { get; }
+        public bool IsEmpty { get; }
 
-        internal PckFile MainPck { get; }
+        public string Name { get; }
+        public PckFile MainPck { get; }
 
-        internal DLCDataFolderContent DataFolder { get; }
+        public bool HasDataFolder => DataFolder != null;
+        public DLCDataFolderContent DataFolder { get; }
 
         public record DLCDataFolderContent
         {
@@ -30,18 +32,19 @@ namespace PckStudio.Core.DLC
             public void AddFile(string name, byte[] data) => AddFile(new NamedData<byte[]>(name, data));
         }
 
-        public DLCPackageContent(PckFile mainPck, NamedData<PckFile> texturePck, NamedData<byte[]>[] dataFiles)
-            : this(mainPck, new(texturePck, dataFiles ?? Array.Empty<NamedData<byte[]>>()))
+        public DLCPackageContent(string name, PckFile mainPck, NamedData<PckFile> texturePck, NamedData<byte[]>[] dataFiles)
+            : this(name, mainPck, new(texturePck, dataFiles ?? Array.Empty<NamedData<byte[]>>()))
         {
         }
 
-        public DLCPackageContent(PckFile mainPck, DLCDataFolderContent dataFolderContent)
+        public DLCPackageContent(string name, PckFile mainPck, DLCDataFolderContent dataFolderContent)
         {
             MainPck = mainPck;
             DataFolder = dataFolderContent;
+            Name = name;
             IsEmpty = mainPck is null;
         }
 
-        public DLCPackageContent(PckFile mainPck) : this(mainPck, default) { }
+        public DLCPackageContent(string name, PckFile mainPck) : this(name, mainPck, default) { }
     }
 }

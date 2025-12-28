@@ -19,7 +19,7 @@ namespace PckStudio.Core.Extensions
 {
     public static class PckAssetExtensions
     {
-        private const string MIPMAP_LEVEL = "MipMapLevel";
+        internal const string MIPMAP_LEVEL = "MipMapLevel";
 
         public static Image GetTexture(this PckAsset asset)
         {

@@ -22,13 +22,12 @@ namespace PckStudio.Core.Extensions
             graphics.PixelOffsetMode = config.PixelOffsetMode;
         }
 
-        public static Graphics Fill(this Graphics graphics, Rectangle area, Color color)
+        public static void Fill(this Graphics graphics, Rectangle area, Color color)
         {
             Region clip = graphics.Clip;
             graphics.SetClip(area, CombineMode.Replace);
             graphics.Clear(color);
             graphics.SetClip(clip, CombineMode.Replace);
-            return graphics;
         }
     }
 }

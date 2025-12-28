@@ -5,6 +5,7 @@ using System.IO;
 using OMI.Formats.Pck;
 using PckStudio.Interfaces;
 using PckStudio.Core.IO.TGA;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Core.Deserializer
 {
@@ -24,7 +25,7 @@ namespace PckStudio.Core.Deserializer
 
             Image img = Path.GetExtension(asset.Filename) == ".tga"
                 ? TGADeserializer.DeserializeFromStream(stream)
-                : Image.FromStream(stream);
+                : Image.FromStream(stream).ReleaseFromFile();
             return img.RawFormat != ImageFormat.Jpeg || img.RawFormat != ImageFormat.Png ? new Bitmap(img) : img;
         }
     }

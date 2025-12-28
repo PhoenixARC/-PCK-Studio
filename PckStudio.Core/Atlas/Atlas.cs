@@ -42,7 +42,7 @@ namespace PckStudio.Core
         private readonly ImageLayoutDirection _layoutDirection;
         private readonly List<AtlasGroup> _groups;
 
-        public static implicit operator Image(Atlas atlas) => atlas.BuildFinalImage();
+        public static implicit operator Image(Atlas atlas) => atlas?.BuildFinalImage();
         
 
         private Atlas(string name, int rows, int columns, IEnumerable<AtlasTile> tiles, Size tileSize, ImageLayoutDirection layoutDirection)
@@ -63,7 +63,8 @@ namespace PckStudio.Core
             Size tileArea = atlasResource.GetTileArea(source.Size);
             int rows = source.Width / tileArea.Width;
             int columns = GameConstants.GetColumnCountForGameVersion(atlasResource.Type, gameVersion);
-            IEnumerable<AtlasTile> tiles = source.Split(tileArea, imageLayout).enumerate().Select(((int index, Image img) data) => new AtlasTile(data.img, GetSelectedPoint(data.index, out int col, rows, columns, imageLayout), col, index: data.index, userData: tilesInfo.IndexInRange(data.index) ? tilesInfo[data.index] : default));
+            columns = columns == 0 ? source.Height / tileArea.Height : columns;
+            IEnumerable <AtlasTile> tiles = source.Split(tileArea, imageLayout).Enumerate().Select(((int index, Image img) data) => new AtlasTile(data.img, GetSelectedPoint(data.index, out int col, rows, columns, imageLayout), col, index: data.index, userData: tilesInfo.IndexInRange(data.index) ? tilesInfo[data.index] : default));
             var atlas = new Atlas(atlasResource.Path, rows, columns, tiles, tileArea, imageLayout);
             atlas.AddGroups(atlasResource.AtlasGroups);
             return atlas;
@@ -73,7 +74,7 @@ namespace PckStudio.Core
         {
             ImageLayoutDirection layoutDirection = default;
             Image none = new Bitmap(res, res);
-            IEnumerable<AtlasTile> tiles = Enumerable.Repeat(none, rows * columns).enumerate().Select(iv => new AtlasTile(iv.value, GetSelectedPoint(iv.index, out int col, rows, columns, layoutDirection), col, iv.index, default));
+            IEnumerable<AtlasTile> tiles = Enumerable.Repeat(none, rows * columns).Enumerate().Select(iv => new AtlasTile(iv.value, GetSelectedPoint(iv.index, out int col, rows, columns, layoutDirection), col, iv.index, default));
             return new Atlas(atlasResource.Path, rows, columns, tiles, none.Size, layoutDirection);
         }
 
@@ -304,7 +305,7 @@ namespace PckStudio.Core
                 AtlasResource.AtlasType.AdditionalMapIconsAtlas => Resources.additional_map_icons_atlas,
                 _ => throw new InvalidOperationException()
             };
-            return FromResourceLocation(defaultAtlas, atlasResource);
+            return FromResourceLocation(defaultAtlas, atlasResource, gameVersion);
         }
     }
 }

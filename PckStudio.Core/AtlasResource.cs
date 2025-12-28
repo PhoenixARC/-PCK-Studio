@@ -21,7 +21,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using PckStudio.Core.Json;
-using static PckStudio.Core.AtlasResource;
 
 namespace PckStudio.Core
 {
@@ -89,5 +88,7 @@ namespace PckStudio.Core
         }
 
         public static ResourceCategory GetId(AtlasType atlasType) => (ResourceCategory)((int)ResourceCategory.Atlas | (int)atlasType);
+
+        internal static AtlasResource Get(AtlasType atlasType) => ResourceLocations.GetFromCategory(GetId(atlasType)) as AtlasResource;
     }
 }

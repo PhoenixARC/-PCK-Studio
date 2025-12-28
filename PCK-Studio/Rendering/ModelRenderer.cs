@@ -224,11 +224,8 @@ namespace PckStudio.Rendering
             if (e.Cancel)
                 return;
 
-            if (Context.IsCurrent)
-            {
-                _modelRenderTexture.SetTexture(e.NewTexture);
-                GLErrorCheck();
-            }
+            _modelRenderTexture.SetTexture(e.NewTexture);
+            GLErrorCheck();
         }
 
         protected override void OnPaint(PaintEventArgs e)

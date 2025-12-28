@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,10 +18,29 @@ namespace PckStudio.Core.Extensions
     public static class PckFileExtensions
     {
         public static PckAsset AddTexture(this PckFile pck, string assetPath, Image texture)
+            => pck.AddTexture(assetPath, texture, 0);
+        public static PckAsset AddTexture(this PckFile pck, string assetPath, Image texture, int mipMapCount)
         {
-            PckAsset asset = new PckAsset(assetPath, PckAssetType.TextureFile);
+            if (string.IsNullOrEmpty(assetPath) || texture is null)
+                return default;
+
+            PckAsset asset = pck.CreateNewAsset(assetPath, PckAssetType.TextureFile);
             asset.SetTexture(texture);
-            pck.AddAsset(asset);
+            string textureExtension = Path.GetExtension(assetPath);
+            string dir = Path.GetDirectoryName(assetPath);
+            string name = Path.GetFileNameWithoutExtension(assetPath);
+            for (int i = 0; i < mipMapCount; i++)
+            {
+                int mipMapLevel = i + 2;
+                string mippedPath = $"{dir}/{name}{PckAssetExtensions.MIPMAP_LEVEL}{mipMapLevel}{textureExtension}";
+                Debug.WriteLine(mippedPath);
+                if (pck.HasAsset(mippedPath, PckAssetType.TextureFile))
+                    pck.RemoveAsset(pck.GetAsset(mippedPath, PckAssetType.TextureFile));
+                Image mippedTexture = texture.CreateMipMap(mipMapLevel);
+
+                PckAsset mipMappedAsset = pck.CreateNewAsset(mippedPath, PckAssetType.TextureFile);
+                mipMappedAsset.SetTexture(mippedTexture);
+            }
             return asset;
         }
 

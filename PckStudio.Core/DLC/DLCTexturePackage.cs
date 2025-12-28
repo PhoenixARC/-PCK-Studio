@@ -50,26 +50,27 @@ namespace PckStudio.Core.DLC
 
         public MetaData Info { get; }
 
-        //! Data for x{16}Data.pck
-        //! => colours.col
         private AbstractColorContainer _colorContainter;
         private AbstractModelContainer _customModels; //! can be null.. => models.bin
         private IDictionary<string, string> _materials; //! can be null.. 
+        private IDictionary<string, Image> _itemModelTextures; //! can be null.. 
+        private IDictionary<string, Image> _mobModelTextures; //! can be null.. 
 
-        //! terrain mipmaps will be generated automatically. Add mipmap option to settings menu ? -null
         private Atlas _terrainAtlas;
         private Atlas _itemsAtlas;
         private Atlas _particlesAtlas;
         private Atlas _paintingAtlas;
         private Atlas _moonPhaseAtlas;
+        private Atlas _mapIconsAtlas;
+        private Atlas _additionalMapIconsAtlas;
+
         private ArmorSet _leatherArmorSet;
         private ArmorSet _chainArmorSet;
         private ArmorSet _ironArmorSet;
         private ArmorSet _goldArmorSet;
         private ArmorSet _diamondArmorSet;
         private ArmorSet _turtleArmorSet;
-        private Atlas _mapIconsAtlas;
-        private Atlas _additionalMapIconsAtlas;
+        
         private EnvironmentData _environmentData;
 
         private Animation _blockEntityBreakAnimation;
@@ -101,6 +102,8 @@ namespace PckStudio.Core.DLC
             ArmorSet turtleArmorSet,
             EnvironmentData environmentData,
             AbstractColorContainer colorContainter,
+            IDictionary<string, Image> itemModelTextures,
+            IDictionary<string, Image> mobModelTextures,
             AbstractModelContainer customModels,
             IDictionary<string, string> materials,
             Animation blockEntityBreakAnimation,
@@ -108,8 +111,7 @@ namespace PckStudio.Core.DLC
             IDictionary<string, Animation> blockAnimations,
             Image sun,
             Image moon,
-            IDLCPackage parentPackage
-            )
+            IDLCPackage parentPackage)
             : base(name, identifier, parentPackage)
         {
             Description = description;
@@ -132,11 +134,51 @@ namespace PckStudio.Core.DLC
             _colorContainter = colorContainter;
             _customModels = customModels;
             _materials = materials;
-            _blockEntityBreakAnimation = blockEntityBreakAnimation;
+            _blockEntityBreakAnimation = blockEntityBreakAnimation ?? new Animation(terrainAtlas.GetRange(0, 15, 10, ImageLayoutDirection.Horizontal).Select(t => t.Texture).ToArray(), true);
             _itemAnimations = itemAnimations ?? new Dictionary<string, Animation>();
             _blockAnimations = blockAnimations ?? new Dictionary<string, Animation>();
             _sun = sun;
-            _moon = moon;
+            _moon = moon ?? moonPhaseAtlas?[0]?.Texture ?? default;
+
+            foreach (KeyValuePair<string, Animation> item in GetDefaultItemAnimations())
+            {
+                if (!_itemAnimations.ContainsKey(item.Key))
+                    _itemAnimations.Add(item);
+            }
+
+            foreach (KeyValuePair<string, Animation> item in GetDefaultBlockAnimations())
+            {
+                if (!_blockAnimations.ContainsKey(item.Key))
+                    _blockAnimations.Add(item);
+            }
+
+            _itemModelTextures = itemModelTextures;
+            _mobModelTextures = mobModelTextures;
+            SetTextureSizeForResolution();
+        }
+
+        private void SetTextureSizeForResolution()
+        {
+            Size size = GetTextureSize();
+
+            Atlas[] atlases = [_terrainAtlas, _itemsAtlas, _particlesAtlas, _paintingAtlas];
+            foreach (Atlas item in atlases)
+            {
+                item?.SetTileSize(size);
+            }
+
+            _blockEntityBreakAnimation.Resize(size);
+
+            foreach (KeyValuePair<string, Animation> item in _itemAnimations)
+            {
+                item.Value.Resize(size);
+            }
+
+            foreach (KeyValuePair<string, Animation> item in _blockAnimations)
+            {
+                item.Value.Resize(size);
+            }
+
         }
 
         public TextureResolution GetResolution() => _resolution;
@@ -155,6 +197,23 @@ namespace PckStudio.Core.DLC
                 TextureResolution.x112 => new Size(112, 112),
                 TextureResolution.x128 => new Size(128, 128),
                 _ => Size.Empty
+            };
+        }
+
+        public static TextureResolution GetTextureResolution(Size size)
+        {
+            return size switch
+            {
+                { Width: 8, Height: 8 } => TextureResolution.x8,
+                { Width: 16, Height: 16 } => TextureResolution.x16,
+                { Width: 32, Height: 32 } => TextureResolution.x32,
+                { Width: 48, Height: 48 } => TextureResolution.x48,
+                { Width: 64, Height: 64 } => TextureResolution.x64,
+                { Width: 80, Height: 80 } => TextureResolution.x80,
+                { Width: 96, Height: 96 } => TextureResolution.x96,
+                { Width: 112, Height: 112 } => TextureResolution.x112,
+                { Width: 128, Height: 128 } => TextureResolution.x128,
+                _ => TextureResolution.x16
             };
         }
 
@@ -191,12 +250,12 @@ namespace PckStudio.Core.DLC
 
             MetaData metadata = new MetaData(Resources.Comparison, Resources.TexturePackIcon);
 
-            Atlas terrain = Atlas.FromResourceLocation(Resources.terrain_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.BlockAtlas)));
-            Atlas items = Atlas.FromResourceLocation(Resources.items_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ItemAtlas)));
-            Atlas particles = Atlas.FromResourceLocation(Resources.particles_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.ParticleAtlas)));
-            Atlas painting = Atlas.FromResourceLocation(Resources.paintings_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.PaintingAtlas)));
-            Atlas moonPhases = Atlas.FromResourceLocation(Resources.moon_phases_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.MoonPhaseAtlas)));
-            Atlas mapIconsAtlas = Atlas.FromResourceLocation(Resources.map_icons_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.MapIconAtlas)));
+            Atlas terrain = AtlasResource.Get(AtlasResource.AtlasType.BlockAtlas).GetDefaultAtlas();
+            Atlas items = AtlasResource.Get(AtlasResource.AtlasType.ItemAtlas).GetDefaultAtlas();
+            Atlas particles = AtlasResource.Get(AtlasResource.AtlasType.ParticleAtlas).GetDefaultAtlas();
+            Atlas painting = AtlasResource.Get(AtlasResource.AtlasType.PaintingAtlas).GetDefaultAtlas();
+            Atlas moonPhases = AtlasResource.Get(AtlasResource.AtlasType.MoonPhaseAtlas).GetDefaultAtlas();
+            Atlas mapIconsAtlas = AtlasResource.Get(AtlasResource.AtlasType.MapIconAtlas).GetDefaultAtlas();
             Atlas additionalMapIconsAtlas = Atlas.FromResourceLocation(Resources.additional_map_icons_atlas, ResourceLocation.GetFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.AdditionalMapIconsAtlas)));
             //ColorContainer colors = new COLFileReader().FromStream(new MemoryStream());
             IDictionary<string, Color> colors = null;
@@ -204,8 +263,8 @@ namespace PckStudio.Core.DLC
 
             Animation blockEntityBreakAnimation = new Animation(terrain.GetRange(0, 15, 10, ImageLayoutDirection.Horizontal).Select(t => t.Texture).ToArray(), true, 3);
 
-            IDictionary<string, Animation> itemAnimations = GetItemAnimations();
-            IDictionary<string, Animation> blockAnimations = GetBlockAnimations();
+            IDictionary<string, Animation> itemAnimations = GetDefaultItemAnimations();
+            IDictionary<string, Animation> blockAnimations = GetDefaultBlockAnimations();
 
             return new DLCTexturePackage(
                 name, description, identifier, metadata, resolution,
@@ -218,26 +277,30 @@ namespace PckStudio.Core.DLC
                 new ArmorSet(ArmorSetDescription.TURTLE, Resources.turtle, default),
                 new EnvironmentData(Resources.clouds, Resources.rain, Resources.snow),
                 new AbstractColorContainer(colors, waterColors),
-                new AbstractModelContainer(),
-                new Dictionary<string, string>(),
-                blockEntityBreakAnimation,
-                itemAnimations,
-                blockAnimations,
+                itemModelTextures: null,
+                mobModelTextures: null,
+                customModels: new AbstractModelContainer(),
+                materials: new Dictionary<string, string>(),
+                blockEntityBreakAnimation: blockEntityBreakAnimation,
+                itemAnimations: itemAnimations,
+                blockAnimations: blockAnimations,
                 sun: null,
                 moon: null,
-                parentPackage
+                parentPackage: parentPackage
                 );
         }
 
-        internal Atlas GetTerrainAtlas() => _terrainAtlas;
+        internal Atlas GetTerrainAtlas() => _terrainAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.BlockAtlas).GetDefaultAtlas();
+        internal Atlas GetItemsAtlas() => _itemsAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.ItemAtlas).GetDefaultAtlas();
+        internal Atlas GetParticleAtlas() => _particlesAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.ParticleAtlas).GetDefaultAtlas();
+        internal Atlas GetPaintingAtlas() => _paintingAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.PaintingAtlas).GetDefaultAtlas();
+        internal Atlas GetMoonPhaseAtlas() => _moonPhaseAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.MoonPhaseAtlas).GetDefaultAtlas();
+        internal IDictionary<string, Animation> GetItemAnimations() => _itemAnimations;
+        internal IDictionary<string, Animation> GetBlockAnimations() => _blockAnimations;
+        internal IEnumerable<ArmorSet> GetArmorSets() => new ArmorSet[] { _leatherArmorSet, _chainArmorSet, _ironArmorSet, _goldArmorSet, _diamondArmorSet, _turtleArmorSet }.Where(armorSet => armorSet is not null);
+        internal Animation GetBlockEntityBreakAnimation() => _blockEntityBreakAnimation;
 
-        internal Atlas GetItemsAtlas() => _itemsAtlas;
-
-        internal Atlas GetParticleAtlas() => _particlesAtlas;
-
-        internal Atlas GetPaintingAtlas() => _paintingAtlas;
-
-        private static IDictionary<string, Animation> GetItemAnimations()
+        private static IDictionary<string, Animation> GetDefaultItemAnimations()
         {
             return new Dictionary<string, Animation>()
             {
@@ -246,7 +309,7 @@ namespace PckStudio.Core.DLC
             };
         }
 
-        private static IDictionary<string, Animation> GetBlockAnimations()
+        private static IDictionary<string, Animation> GetDefaultBlockAnimations()
         {
             return new Dictionary<string, Animation>()
             {
@@ -254,5 +317,13 @@ namespace PckStudio.Core.DLC
                 ["fire_1"] = new Animation(Resources.fire_layer_1.Split(ImageLayoutDirection.Vertical), true)
             };
         }
+
+        internal Image GetSunTexture() => _sun;
+
+        internal Image GetMoonTexture() => _moon;
+
+        internal IEnumerable<KeyValuePair<string, Image>> GetItemModelTextures() => _itemModelTextures;
+
+        internal IEnumerable<KeyValuePair<string, Image>> GetMobModelTextures() => _mobModelTextures;
     }
 }

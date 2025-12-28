@@ -1,3 +1,6 @@
 ﻿{
-  "paintings_kristoffer_zetterstrand": "kz"
+  "paintings_kristoffer_zetterstrand": {
+    "lce_name": "kz",
+    "passThrough": true
+  }
 }

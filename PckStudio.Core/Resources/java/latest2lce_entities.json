@@ -1,0 +1,565 @@
+{
+  "bed/white": {
+    "lce_name": "item/bed"
+    //"texture_remap": {
+    //  "source_size": { "width": 64, "height": 64 },
+    //  "target_size": { "width": 64, "height": 128 },
+    //  "areas": [
+    //    {
+    //      "size": { "width": 32, "height": 32 },
+    //      "from": { "x": 0, "y": 0 },
+    //      "to": { "x": 0, "y": 0 }
+    //    },
+    //    {
+    //      "size": { "width": 32, "weight": 32 },
+    //      "from": { "x": 0, "y": 0 },
+    //      "to": { "x": 0, "y": 0 }
+    //    }
+    //  ]
+    //}
+  },
+  "alex": { "lce_name": "mob/alex" },
+  "steve": { "lce_name": "mob/char" },
+
+  "pig/pig": { "lce_name": "mob/pig" },
+  "pig/pig_saddle": { "lce_name": "mob/saddle" },
+
+  "cow/cow": { "lce_name": "mob/cow" },
+  "cow/mooshroom": { "lce_name": "mob/redcow" },
+
+  "cat/black": { "lce_name": "mob/cat_black" },
+  "cat/ocelot": { "lce_name": "mob/ozelot" },
+  "cat/red": { "lce_name": "mob/cat_red" },
+  "cat/siamese": { "lce_name": "mob/cat_siamese" },
+
+  "sheep/sheep": { "lce_name": "mob/sheep" },
+  "sheep/sheep_fur": { "lce_name": "mob/sheep_fur" },
+
+  "chicken": { "lce_name": "mob/chicken" },
+
+  "dolphin": {
+    "lce_name": "mob/dolphin",
+    "texture_remap": {
+      "areas":
+      [
+        {
+          "size": { "width": 16, "height": 13 },
+          "from": { "x": 35, "y": 0 },
+          "to": { "x": 13, "y": 13 }
+        },
+        {
+          "size": { "width": 42, "height": 7 },
+          "from": { "x": 22, "y": 13 },
+          "to": { "x": 0, "y": 26 }
+        },
+        {
+          "size": { "width": 20, "height": 6 },
+          "from": { "x": 25, "y": 20 },
+          "to": { "x": 6, "y": 49 }
+        },
+        {
+          "size": { "width": 32, "height": 1 },
+          "from": { "x": 19, "y": 26 },
+          "to": { "x": 0, "y": 55 }
+        },
+        {
+          "size": { "width": 8, "height": 11 },
+          "from": { "x": 11, "y": 9 },
+          "to": { "x": 11, "y": 33 }
+        },
+        {
+          "size": { "width": 30, "height": 5 },
+          "from": { "x": 0, "y": 30 },
+          "to": { "x": 0, "y": 44 }
+        },
+        {
+          "size": { "width": 5, "height": 4 },
+          "from": { "x": 51, "y": 5 },
+          "to": { "x": 29, "y": 4 },
+          "rotation": 90
+        },
+        {
+          "size": { "width": 5, "height": 4 },
+          "from": { "x": 57, "y": 5 },
+          "to": { "x": 34, "y": 4 },
+          "rotation": -90
+        },
+        {
+          "size": { "width": 1, "height": 4 },
+          "from": { "x": 56, "y": 5 },
+          "to": { "x": 33, "y": 0 },
+          "rotation": 180
+        },
+        {
+          "size": { "width": 1, "height": 4 },
+          "from": { "x": 62, "y": 5 },
+          "to": { "x": 34, "y": 0 },
+          "rotation": 180
+        },
+        {
+          "size": { "width": 1, "height": 5 },
+          "from": { "x": 56, "y": 0 },
+          "to": { "x": 33, "y": 4 },
+          "rotation": 180
+        },
+        {
+          "size": { "width": 1, "height": 5 },
+          "from": { "x": 57, "y": 0 },
+          "to": { "x": 38, "y": 4 },
+          "rotation": 180
+        }
+      ]
+    }
+  },
+
+  "bat": { "lce_name": "mob/bat" },
+  
+  "snow_golem": { "lce_name": "mob/snowman" },
+  
+  "iron_golem": { "lce_name": "mob/villager_golem" },
+  
+  "squid": { "lce_name": "mob/squid" },
+  "squid/squid": { "lce_name": "mob/squid" },
+
+  "bear/polarbear": { "lce_name": "mob/bear/polarbear" },
+
+  "parrot/parrot_blue": { "lce_name": "mob/parrot/parrot_blue" },
+  "parrot/parrot_green": { "lce_name": "mob/parrot/parrot_green" },
+  "parrot/parrot_grey": { "lce_name": "mob/parrot/parrot_grey" },
+  "parrot/parrot_red_blue": { "lce_name": "mob/parrot/parrot_red_blue" },
+  "parrot/parrot_yellow_blue": { "lce_name": "mob/parrot/parrot_yellow_blue" },
+  
+
+  "llama/brown": { "lce_name": "mob/llama/llama_brown" },
+  "llama/creamy": { "lce_name": "mob/llama/llama_creamy" },
+  "llama/gray": { "lce_name": "mob/llama/llmma_gray" },
+  "llama/white": { "lce_name": "mob/llama/llama_white" },
+  "llama/spit": { "lce_name": "mob/llama/spit" },
+
+  "llama/decor/black": { "lce_name": "mob/llama/decor/decor_black" },
+  "llama/decor/blue": { "lce_name": "mob/llama/decor/decor_blue" },
+  "llama/decor/brown": { "lce_name": "mob/llama/decor/decor_brown" },
+  "llama/decor/cyan": { "lce_name": "mob/llama/decor/decor_cyan" },
+  "llama/decor/gray": { "lce_name": "mob/llama/decor/decor_gray" },
+  "llama/decor/green": { "lce_name": "mob/llama/decor/decor_green" },
+  "llama/decor/light_blue": { "lce_name": "mob/llama/decor/decor_light_blue" },
+  "llama/decor/light_gray": { "lce_name": "mob/llama/decor/decor_silver" },
+  "llama/decor/lime": { "lce_name": "mob/llama/decor/decor_lime" },
+  "llama/decor/magenta": { "lce_name": "mob/llama/decor/decor_magenta" },
+  "llama/decor/orange": { "lce_name": "mob/llama/decor/decor_orange" },
+  "llama/decor/pink": { "lce_name": "mob/llama/decor/decor_pink" },
+  "llama/decor/purple": { "lce_name": "mob/llama/decor/decor_purple" },
+  "llama/decor/red": { "lce_name": "mob/llama/decor/decor_red" },
+  "llama/decor/white": { "lce_name": "mob/llama/decor/decor_white" },
+  "llama/decor/yellow": { "lce_name": "mob/llama/decor/decor_yellow" },
+
+  "horse/donkey": { "lce_name": "mob/horse/donkey" },
+  "horse/horse_black": { "lce_name": "mob/horse/horse_black" },
+  "horse/horse_brown": { "lce_name": "mob/horse/horse_brown" },
+  "horse/horse_chestnut": { "lce_name": "mob/horse/horse_chestnut" },
+  "horse/horse_creamy": { "lce_name": "mob/horse/horse_creamy" },
+  "horse/horse_darkbrown": { "lce_name": "mob/horse/horse_darkbrown" },
+  "horse/horse_gray": { "lce_name": "mob/horse/horse_gray" },
+  "horse/horse_markings_blackdots": { "lce_name": "mob/horse/horse_markings_blackdots" },
+  "horse/horse_markings_white": { "lce_name": "mob/horse/horse_markings_white" },
+  "horse/horse_markings_whitedots": { "lce_name": "mob/horse/horse_markings_whitedots" },
+  "horse/horse_markings_whitefield": { "lce_name": "mob/horse/horse_markings_whitefield" },
+  "horse/horse_skeleton": { "lce_name": "mob/horse/horse_skeleton" },
+  "horse/horse_white": { "lce_name": "mob/horse/horse_white" },
+  "horse/horse_zombie": { "lce_name": "mob/horse/horse_zombie" },
+  "horse/mule": { "lce_name": "mob/horse/mule" },
+
+  // TODO
+  "horse/armor/horse_armor_leather": { "lce_name": "mob/horse/armor/horse_armor_leather_1" },
+  "horse/armor/horse_armor_leather_1": { "lce_name": "mob/horse/armor/horse_armor_leather_1_b" },
+
+  "horse/armor/horse_armor_iron": { "lce_name": "mob/horse/armor/horse_armor_iron" },
+  "horse/armor/horse_armor_gold": { "lce_name": "mob/horse/armor/horse_armor_gold" },
+  "horse/armor/horse_armor_diamond": { "lce_name": "mob/horse/armor/horse_armor_diamond" },
+
+  "fish/cod": { "lce_name": "mob/fish/cod" },
+  "fish/pufferfish": { "lce_name": "mob/fish/pufferfish" },
+  "fish/salmon": { "lce_name": "mob/fish/salmon" },
+  
+  "fish/tropical_a": { "lce_name": "mob/fish/tropical_a" },
+  "fish/tropical_a_pattern_1": { "lce_name": "mob/fish/tropical_a_pattern_1" },
+  "fish/tropical_a_pattern_2": { "lce_name": "mob/fish/tropical_a_pattern_2" },
+  "fish/tropical_a_pattern_3": { "lce_name": "mob/fish/tropical_a_pattern_3" },
+  "fish/tropical_a_pattern_4": { "lce_name": "mob/fish/tropical_a_pattern_4" },
+  "fish/tropical_a_pattern_5": { "lce_name": "mob/fish/tropical_a_pattern_5" },
+  "fish/tropical_a_pattern_6": { "lce_name": "mob/fish/tropical_a_pattern_6" },
+
+  "fish/tropical_b": { "lce_name": "mob/fish/tropical_b" },
+  "fish/tropical_b_pattern_1": { "lce_name": "mob/fish/tropical_b_pattern_1" },
+  "fish/tropical_b_pattern_2": { "lce_name": "mob/fish/tropical_b_pattern_2" },
+  "fish/tropical_b_pattern_3": { "lce_name": "mob/fish/tropical_b_pattern_3" },
+  "fish/tropical_b_pattern_4": { "lce_name": "mob/fish/tropical_b_pattern_4" },
+  "fish/tropical_b_pattern_5": { "lce_name": "mob/fish/tropical_b_pattern_5" },
+  "fish/tropical_b_pattern_6": { "lce_name": "mob/fish/tropical_b_pattern_6" },
+
+  "rabbit/black": { "lce_name": "mob/rabbit/black" },
+  "rabbit/brown": { "lce_name": "mob/rabbit/brown" },
+  "rabbit/caerbannog": { "lce_name": "mob/rabbit/caerbannog" },
+  "rabbit/gold": { "lce_name": "mob/rabbit/gold" },
+  "rabbit/salt": { "lce_name": "mob/rabbit/salt" },
+  "rabbit/toast": { "lce_name": "mob/rabbit/toast" },
+  "rabbit/white": { "lce_name": "mob/rabbit/white" },
+  "rabbit/white_splotched": { "lce_name": "mob/rabbit/white_splotched" },
+  
+  "creeper/creeper": { "lce_name": "mob/creeper" },
+  "creeper/creeper_armor": { "lce_name": "armor/power" },
+
+  "illager/evoker": { "lce_name": "mob/illager/evoker" },
+  "illager/evoker_fangs": { "lce_name": "mob/illager/fangs" },
+  "illager/illusioner": { "lce_name": "mob/illager/illusionist" },
+  "illager/vex": { "lce_name": "mob/illager/vex" },
+  "illager/vex_charging": { "lce_name": "mob/illager/vex_charging" },
+  "illager/vindicator": { "lce_name": "mob/illager/vindicator" },
+
+  "end_crystal/end_crystal": { "lce_name": "mob/enderdragon/crystal" },
+  "end_crystal/end_crystal_beam": { "lce_name": "mob/enderdragon/beam" },
+
+  "enderdragon/dragon": { "lce_name": "mob/enderdragon/ender" },
+  "enderdragon/dragon_eyes": { "lce_name": "mob/enderdragon/ender_eyes" },
+  "enderdragon/dragon_fireball": { "lce_name": "mob/enderdragon/dragon_fireball" },
+  "enderman/enderman": { "lce_name": "mob/enderman" },
+  "enderman/enderman_eyes": { "lce_name": "mob/enderman_eyes" },
+
+  "ghast/ghast": { "lce_name": "mob/ghast" },
+  "ghast/ghast_shooting": { "lce_name": "mob/ghast_fire" },
+  "phantom": { "lce_name": "mob/phantom" },
+  "guardian": { "lce_name": "mob/guardian" },
+  "guardian_beam": { "lce_name": "mob/guardian_beam" },
+  "guardian_elder": { "lce_name": "mob/guardian_elder" },
+  "endermite": { "lce_name": "mob/endermite" },
+  "witch": { "lce_name": "mob/witch" },
+  "zombie_pigman": { "lce_name": "mob/pigzombie" },
+  "silverfish": { "lce_name": "mob/silverfish" },
+  "blaze": { "lce_name": "mob/fire" },
+
+  "slime/magmacube": { "lce_name": "mob/lava" },
+  "slime/slime": { "lce_name": "mob/slime" },
+
+  "spider/spider": { "lce_name": "mob/spider" },
+  "spider_eyes": { "lce_name": "mob/spider_eyes" },
+  "spider/cave_spider": { "lce_name": "mob/cavespider" },
+
+  "skeleton/skeleton": { "lce_name": "mob/skeleton" },
+  "skeleton/stray": { "lce_name": "mob/skeleton/stray" },
+  "skeleton/stray_overlay": { "lce_name": "mob/skeleton/stray_overlay" },
+
+  "skeleton/wither_skeleton": { "lce_name": "mob/skeleton_wither" },
+
+
+  "villager/butcher": { "lce_name": "mob/butcher" },
+  "villager/farmer": { "lce_name": "mob/farmer" },
+  "villager/librarian": { "lce_name": "mob/librarian" },
+  "villager/priest": { "lce_name": "mob/priest" },
+  "villager/smith": { "lce_name": "mob/smith" },
+  "villager/villager": { "lce_name": "mob/villager" },
+
+  "zombie_villager/zombie_butcher": { "lce_name": "mob/zombie_villager/zombie_butcher" },
+  "zombie_villager/zombie_farmer": { "lce_name": "mob/zombie_villager/zombie_farmer" },
+  "zombie_villager/zombie_librarian": { "lce_name": "mob/zombie_villager/zombie_librarian" },
+  "zombie_villager/zombie_priest": { "lce_name": "mob/zombie_villager/zombie_priest" },
+  "zombie_villager/zombie_smith": { "lce_name": "mob/zombie_villager/zombie_smith" },
+  "zombie_villager/zombie_villager": { "lce_name": "mob/zombie_villager/zombie_villager" },
+
+  "turtle/big_sea_turtle": { "lce_name": "mob/sea_turtle" },
+
+  "wither/wither/wither": { "lce_name": "mob/wither/wither" },
+  "wither/wither/wither_armor": { "lce_name": "mob/wither/wither_armor" },
+  "wither/wither/wither_invulnerable": { "lce_name": "mob/wither/wither_invulnerable" },
+
+  "wolf/wolf": { "lce_name": "mob/wolf" },
+  "wolf/wolf_angry": { "lce_name": "mob/wolf_angry" },
+  "wolf/wolf_collar": { "lce_name": "mob/wolf_collar" },
+  "wolf/wolf_tame": { "lce_name": "mob/wolf_tame" },
+
+  "zombie/zombie": { "lce_name": "mob/zombie" },
+  "zombie/zombie_villager": { "lce_name": "mob/zombie_villager" },
+  "zombie/husk": { "lce_name": "mob/zombie/husk" },
+  "zombie/drowned": { "lce_name": "mob/zombie/drowned" },
+
+  "shulker/shulker_white": {
+    "lce_name": "mob/shulker/endergolem",
+    "texture_remap": {
+      "source_size": { "width": 64, "height": 64 },
+      "target_size": { "width": 64, "height": 128 },
+      "areas": [
+        {
+          "size": { "width": 64, "height": 52 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        },
+        {
+          "size": { "width": 24, "height": 12 },
+          "from": { "x": 0, "y": 52 },
+          "to": { "x": 0, "y": 116 }
+        }
+      ]
+    }
+  },
+
+  "armorstand/wood": { "lce_name": "item/armorstand/wood" },
+
+  "banner_base": { "lce_name": "item/banner/banner_base" },
+
+  "boat/acacia": { "lce_name": "item/boat/boat_acacia" },
+  "boat/birch": { "lce_name": "item/boat/boat_birch" },
+  "boat/dark_oak": { "lce_name": "item/boat/boat_dark_oak" },
+  "boat/jungle": { "lce_name": "item/boat/boat_jungle" },
+  "boat/spruce": { "lce_name": "item/boat/boat_spruce" },
+
+  "sign": { "lce_name": "item/sign" },
+  "signs/oak": { "lce_name": "item/sign" },
+  "projectiles/arrow": { "lce_name": "item/arrows" },
+  "lead_knot": { "lce_name": "item/lead_knot" },
+  "trident": { "lce_name": "item/trident" },
+  "trident_riptide": { "lce_name": "item/trident_riptide" },
+  "enchanting_table_book": { "lce_name": "item/book" },
+  "minecart": { "lce_name": "item/cart" },
+
+  "elytra": { "lce_name": "item/elytra" },
+  "equipment/wings/elytra": { "lce_name": "item/elytra" },
+
+  "chest/normal": {
+    "lce_name": "item/chest",
+
+    "texture_remap": {
+      "format": 6,
+      "areas": [
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 0 },
+          "to": { "x": 28, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 0 },
+          "to": { "x": 14, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 19 },
+          "to": { "x": 28, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 19 },
+          "to": { "x": 14, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 0, "y": 33 },
+          "to": { "x": 28, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 28, "y": 33 },
+          "to": { "x": 0, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 0, "y": 14 },
+          "to": { "x": 28, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 28, "y": 14 },
+          "to": { "x": 0, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 6, "height": 5 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
+  "chest/normal_double": { "lce_name": "item/largechest" },
+  "chest/trapped": {
+    "lce_name": "item/trapped",
+    
+    "texture_remap": {
+      "format": 6,
+      "areas": [
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 0 },
+          "to": { "x": 28, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 0 },
+          "to": { "x": 14, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 19 },
+          "to": { "x": 28, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 19 },
+          "to": { "x": 14, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 0, "y": 33 },
+          "to": { "x": 28, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 28, "y": 33 },
+          "to": { "x": 0, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 0, "y": 14 },
+          "to": { "x": 28, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 28, "y": 14 },
+          "to": { "x": 0, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 6, "height": 5 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
+  "chest/trapped_double": { "lce_name": "item/trapped_double" },
+  
+  "chest/ender": { 
+    "lce_name": "item/enderchest",
+    "texture_remap": {
+      "format": 6,
+      "areas": [
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 0 },
+          "to": { "x": 28, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 0 },
+          "to": { "x": 14, "y": 0 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 14, "y": 19 },
+          "to": { "x": 28, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 14, "height": 14 },
+          "from": { "x": 28, "y": 19 },
+          "to": { "x": 14, "y": 19 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 0, "y": 33 },
+          "to": { "x": 28, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 10 },
+          "from": { "x": 28, "y": 33 },
+          "to": { "x": 0, "y": 33 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 0, "y": 14 },
+          "to": { "x": 28, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 28, "height": 5 },
+          "from": { "x": 28, "y": 14 },
+          "to": { "x": 0, "y": 14 },
+          "flip": "y"
+        },
+        {
+          "size": { "width": 6, "height": 5 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
+
+  "conduit/base": {
+    "lce_name": "item/conduit/conduit_base",
+    "texture_remap": {
+    "format": 6,
+    "source_size": { "width": 32, "height": 16 },
+    "target_size": { "width": 24, "height": 12 },
+    "areas": [
+      {
+        "size": { "width": 24, "height": 12 },
+        "from": { "x": 0, "y": 0 },
+        "to": { "x": 0, "y": 0 },
+      }
+    ]
+  }
+  },
+  "conduit/cage": { "lce_name": "item/conduit/conduit_cage" },
+  "conduit/closed_eye": { 
+    "lce_name": "item/conduit/conduit_closed",
+    "texture_remap": {
+    "format": 6,
+    "source_size": { "width": 16, "height": 16 },
+    "target_size": { "width": 8, "height": 8 },
+    "areas": [
+      {
+        "size": { "width": 8, "height": 8 },
+        "from": { "x": 0, "y": 0 },
+        "to": { "x": 0, "y": 0 },
+      }
+      ]
+    }
+  },
+  "conduit/open_eye": { 
+    "lce_name": "item/conduit/conduit_open",
+    "texture_remap": {
+    "format": 6,
+    "source_size": { "width": 16, "height": 16 },
+    "target_size": { "width": 8, "height": 8 },
+    "areas": [
+      {
+        "size": { "width": 8, "height": 8 },
+        "from": { "x": 0, "y": 0 },
+        "to": { "x": 0, "y": 0 },
+      }
+      ]
+    }
+  },
+  "conduit/wind": { "lce_name": "item/conduit/conduit_wind_horizontal" },
+  "conduit/wind_vertical": { "lce_name": "item/conduit/conduit_wind_vertical" },
+
+
+}

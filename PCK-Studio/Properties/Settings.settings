@@ -29,8 +29,11 @@
     <Setting Name="Platform" Type="PckStudio.Core.ConsolePlatform" Scope="User">
       <Value Profile="(Default)">Unknown</Value>
     </Setting>
-    <Setting Name="UserLanguage" Type="PckStudio.Core.AppLanguage" Scope="User">
+    <Setting Name="UserLanguage" Type="PckStudio.Core.App.AppLanguage" Scope="User">
       <Value Profile="(Default)">System_Default</Value>
+    </Setting>
+    <Setting Name="PackageType" Type="PckStudio.Core.DLC.DLCPackageContentSerilasationType" Scope="User">
+      <Value Profile="(Default)">Local</Value>
     </Setting>
   </Settings>
 </SettingsFile>

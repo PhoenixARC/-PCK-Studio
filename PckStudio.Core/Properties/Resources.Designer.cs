@@ -544,19 +544,16 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;anvil&quot;: &quot;anvil_base&quot;,
-        ///  &quot;anvil_top&quot;: &quot;anvil_top_damaged_0&quot;,
-        ///  &quot;chipped_anvil_top&quot;: &quot;anvil_top_damaged_1&quot;,
-        ///  &quot;damaged_anvil_top&quot;: &quot;anvil_top_damaged_2&quot;,
-        ///  &quot;beetroots_stage0&quot;: &quot;beetroots_stage_0&quot;,
-        ///  &quot;beetroots_stage1&quot;: &quot;beetroots_stage_1&quot;,
-        ///  &quot;beetroots_stage2&quot;: &quot;beetroots_stage_2&quot;,
-        ///  &quot;beetroots_stage3&quot;: &quot;beetroots_stage_3&quot;,
-        ///  &quot;bricks&quot;: &quot;brick&quot;,
-        ///  &quot;carrots_stage0&quot;: &quot;carrots_stage_0&quot;,
-        ///  &quot;carrots_stage1&quot;: &quot;carrots_stage_1&quot;,
-        ///  &quot;carrots_stage2&quot;: &quot;carrots_stage_2&quot;,
-        ///  &quot;carrots_stage3&quot;: &quot;carrots_sta [rest of string was truncated]&quot;;.
+        ///  &quot;anvil&quot;: { &quot;lce_name&quot;: &quot;anvil_base&quot; },
+        ///  &quot;anvil_top&quot;: { &quot;lce_name&quot;: &quot;anvil_top_damaged_0&quot; },
+        ///  &quot;chipped_anvil_top&quot;: { &quot;lce_name&quot;: &quot;anvil_top_damaged_1&quot; },
+        ///  &quot;damaged_anvil_top&quot;: { &quot;lce_name&quot;: &quot;anvil_top_damaged_2&quot; },
+        ///  &quot;beetroots_stage0&quot;: { &quot;lce_name&quot;: &quot;beetroots_stage_0&quot; },
+        ///  &quot;beetroots_stage1&quot;: { &quot;lce_name&quot;: &quot;beetroots_stage_1&quot; },
+        ///  &quot;beetroots_stage2&quot;: { &quot;lce_name&quot;: &quot;beetroots_stage_2&quot; },
+        ///  &quot;beetroots_stage3&quot;: { &quot;lce_name&quot;: &quot;beetroots_stage_3&quot; },
+        ///  &quot;bricks&quot;: { &quot;lce_name&quot;: &quot;brick&quot; },
+        ///  &quot;carro [rest of string was truncated]&quot;;.
         /// </summary>
         public static string latest2lce_blocks {
             get {
@@ -566,23 +563,44 @@ namespace PckStudio.Core.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;apple_golden&quot;: &quot;appleGold&quot;,
-        ///  &quot;golden_apple&quot;: &quot;appleGold&quot;,
-        ///  &quot;beef_cooked&quot;: &quot;beefCooked&quot;,
-        ///  &quot;beef_raw&quot;: &quot;beefRaw&quot;,
-        ///  &quot;beef&quot;: &quot;beefRaw&quot;,
-        ///  &quot;blaze_powder&quot;: &quot;blazePowder&quot;,
-        ///  &quot;blaze_rod&quot;: &quot;blazeRod&quot;,
-        ///  &quot;oak_boat&quot;: &quot;boat&quot;,
-        ///  &quot;book_normal&quot;: &quot;book&quot;,
-        ///  &quot;chainmail_boots&quot;: &quot;bootsChain&quot;,
-        ///  &quot;leather_boots&quot;: &quot;bootsCloth&quot;,
+        ///  &quot;bed/white&quot;: {
+        ///    &quot;lce_name&quot;: &quot;item/bed&quot;
+        ///    //&quot;texture_remap&quot;: {
+        ///    //  &quot;source_size&quot;: { &quot;width&quot;: 64, &quot;height&quot;: 64 },
+        ///    //  &quot;target_size&quot;: { &quot;width&quot;: 64, &quot;height&quot;: 128 },
+        ///    //  &quot;areas&quot;: [
+        ///    //    {
+        ///    //      &quot;size&quot;: { &quot;width&quot;: 32, &quot;height&quot;: 32 },
+        ///    //      &quot;from&quot;: { &quot;x&quot;: 0, &quot;y&quot;: 0 },
+        ///    //      &quot;to&quot;: { &quot;x&quot;: 0, &quot;y&quot;: 0 }
+        ///    //    },
+        ///    //    {
+        ///    //      &quot;size&quot;: { &quot;width&quot;: 32, &quot;weight&quot;: 32 },
+        ///    //      &quot;from&quot;: { &quot;x&quot;: 0, &quot;y&quot;: 0 },
+        ///    //      &quot;to&quot;: { &quot;x&quot;: 0, &quot;y&quot;: 0 }
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_entities {
+            get {
+                return ResourceManager.GetString("latest2lce_entities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;apple_golden&quot;: { &quot;lce_name&quot;: &quot;appleGold&quot; },
+        ///  &quot;golden_apple&quot;: { &quot;lce_name&quot;: &quot;appleGold&quot; },
+        ///  &quot;beef_cooked&quot;: { &quot;lce_name&quot;: &quot;beefCooked&quot; },
+        ///  &quot;beef_raw&quot;: { &quot;lce_name&quot;: &quot;beefRaw&quot; },
+        ///  &quot;beef&quot;: { &quot;lce_name&quot;: &quot;beefRaw&quot; },
+        ///  &quot;blaze_powder&quot;: { &quot;lce_name&quot;: &quot;blazePowder&quot; },
+        ///  &quot;blaze_rod&quot;: { &quot;lce_name&quot;: &quot;blazeRod&quot; },
+        ///  &quot;oak_boat&quot;: { &quot;lce_name&quot;: &quot;boat&quot; },
+        ///  &quot;book_normal&quot;: { &quot;lce_name&quot;: &quot;book&quot; },
+        ///  &quot;chainmail_boots&quot;: { &quot;lce_name&quot;: &quot;bootsChain&quot; },
+        ///  &quot;leather_boots&quot;: { &quot;lce_name&quot;: &quot;bootsCloth&quot; },
         ///
-        ///  &quot;crossbow_standby&quot;: &quot;crossbow&quot;,
-        ///  &quot;crossbow_pulling_0&quot;: &quot;crossbow_pull_0&quot;,
-        ///  &quot;crossbow_pulling_1&quot;: &quot;crossbow_pull_1&quot;,
-        ///  &quot;crossbow_pulling_2&quot;: &quot;crossbow_pull_2&quot;,
-        ///  &quot;campfire&quot;: &quot; [rest of string was truncated]&quot;;.
+        ///  &quot;cro [rest of string was truncated]&quot;;.
         /// </summary>
         public static string latest2lce_items {
             get {

@@ -140,6 +140,19 @@ namespace PckStudio.Core
 			yield break;
 		}
 
+		public void Resize(Size size)
+		{
+            GraphicsConfig gc = GraphicsConfig.PixelPerfect();
+			(int texId, int ticks)[] textureIndecies = _frames.Select(f => (_textures.IndexOf(f.Texture), f.Ticks)).ToArray();
+            IEnumerable<Image> resizedTextures = _textures.Select(t => t.Resize(size, gc)).ToArray();
+			_textures.Clear();
+			_frames.Clear();
+			_textures.AddRange(resizedTextures);
+			foreach ((int texId, int ticks) in textureIndecies)
+			{
+				AddFrame(texId, ticks);
+			}
+		}
 
         public IReadOnlyCollection<Image> GetTextures()
 		{

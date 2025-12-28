@@ -63,7 +63,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			};
             TreeView view = filterPrompt.AddFilterPage(name, null, filterPredicate);
 			view.ImageList = images.ToImageList();
-			foreach ((int i, JsonTileInfo tileData) in textureInfos?.enumerate())
+			foreach ((int i, JsonTileInfo tileData) in textureInfos?.Enumerate())
 			{
 				if (string.IsNullOrEmpty(tileData.InternalName) || view.Nodes.ContainsKey(tileData.InternalName))
 					continue;

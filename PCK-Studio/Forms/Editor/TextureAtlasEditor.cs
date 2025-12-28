@@ -464,7 +464,7 @@ namespace PckStudio.Forms.Editor
                 e.Location,
                 originalPictureBox.SizeMode,
                 _imageLayout);
-
+            Debug.WriteLine(index);
             if (index != -1)
             {
                 SelectedIndex = index;

@@ -210,6 +210,7 @@ namespace PckStudio.Controls
             skinRenderer.Visible = false;
             displayNameLabel.Visible = false;
             themeNameLabel.Visible = false;
+            texSizeLabel.Visible = false;
             ButtonText = null;
             _currentAsset = null;
             _onModified = null;
@@ -226,8 +227,13 @@ namespace PckStudio.Controls
                 case PckAssetType.CapeFile:
                 case PckAssetType.TextureFile:
                 {
-                    previewPictureBox.Image = asset.GetTexture();
+                    Image img = asset.GetTexture();
 
+                    img = SetBackgroundColor(img, Color.YellowGreen);
+
+                    previewPictureBox.Image = img;
+                    texSizeLabel.Text = $"{previewPictureBox.Image.Width}x{previewPictureBox.Image.Height}";
+                    texSizeLabel.Visible = true;
                     if (skinRenderer.IsInitialized)
                     {
 
@@ -287,6 +293,21 @@ namespace PckStudio.Controls
                     break;
             }
             ReloadMetaTreeView();
+        }
+
+        private static Image SetBackgroundColor(Image img, Color bgColor)
+        {
+#if DEBUG
+            Image nImg = new Bitmap(img);
+            using (Graphics g = Graphics.FromImage(nImg))
+            {
+                g.FillRectangle(new SolidBrush(bgColor), new(Point.Empty, nImg.Size));
+                g.DrawImage(img, new Rectangle(Point.Empty, nImg.Size));
+            }
+            return nImg;
+#else
+            return img;
+#endif
         }
     }
 }

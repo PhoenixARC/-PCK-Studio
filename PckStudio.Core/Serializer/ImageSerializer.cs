@@ -20,25 +20,42 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
 using OMI.Formats.Pck;
 using PckStudio.Core.IO.TGA;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Core.Serializer
 {
+    static class FindEncoderExt
+    {
+        public static ImageCodecInfo FindEncoder(this ImageFormat format)
+        {
+            MethodInfo findEncoderMethod = typeof(ImageFormat).GetMethod("FindEncoder", BindingFlags.NonPublic | BindingFlags.Instance,
+            null, new Type[] {}, null);
+            return (ImageCodecInfo)findEncoderMethod.Invoke(format, null);
+        }
+    }
+
     internal sealed class ImageSerializer : IPckAssetSerializer<Image>
     {
         public static readonly ImageSerializer DefaultSerializer = new ImageSerializer();
 
         public void Serialize(Image obj, ref PckAsset asset)
         {
+            if (obj is null)
+                return;
             var stream = new MemoryStream();
             try
             {
                 if (Path.GetExtension(asset.Filename) == ".tga")
                     TGASerializer.SerializeToStream(stream, obj);
                 else
-                    obj.Save(stream, ImageFormat.Png);
+                {
+                    var encoder = ImageFormat.Png.FindEncoder();
+                    var encParams = new EncoderParameters(1) { Param = [new EncoderParameter(Encoder.ColorDepth, 32)] };
+                    obj.Save(stream, encoder, encParams);
+                }
                 asset.SetData(stream.ToArray());
             }
             catch (Exception ex)

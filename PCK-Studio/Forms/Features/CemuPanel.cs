@@ -34,9 +34,11 @@ namespace PckStudio.Forms.Features
     /// </summary>
     public partial class CemuPanel : UserControl
     {
-        private const string TitleId_EUR = "101d7500";
-        private const string TitleId_USA = "101d9d00";
-        private const string TitleId_JPN = "101dbe00";
+        internal const string TITLE_ID_EUR = "101d7500";
+        internal const string TITLE_ID_USA = "101d9d00";
+        internal const string TITLE_ID_JPN = "101dbe00";
+        internal const string BASE_ID = "00050000";
+        internal const string UPDATE_ID = "0005000e";
 
         public CemuPanel()
         {
@@ -89,10 +91,11 @@ namespace PckStudio.Forms.Features
             return false;
         }
 
-        private bool TryApplyPermanentCemuConfig()
+        public static bool TryGetCemuMLCPath(out DirectoryInfo mlcDir)
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Cemu");
             string filepath = Path.Combine(path, "perm_setting.xml");
+            mlcDir = null;
             if (Directory.Exists(path) && File.Exists(filepath))
             {
                 try
@@ -105,9 +108,7 @@ namespace PckStudio.Forms.Features
                     }
                     XmlNode configNode = xml.SelectSingleNode("config");
                     XmlNode mlcpathNode = configNode.SelectSingleNode("MlcPath");
-                    GameDirectoryTextBox.Text = mlcpathNode.InnerText;
-                    GameDirectoryTextBox.Enabled = false;
-                    BrowseDirectoryBtn.Enabled = false;
+                    mlcDir = new DirectoryInfo(mlcpathNode.InnerText);
                     return true;
                 }
                 catch (Exception ex)
@@ -119,19 +120,31 @@ namespace PckStudio.Forms.Features
             return false;
         }
 
+        private bool TryApplyPermanentCemuConfig()
+        {
+            if (TryGetCemuMLCPath(out DirectoryInfo mlcDir))
+            {
+                GameDirectoryTextBox.Text = mlcDir.FullName;
+                GameDirectoryTextBox.Enabled = false;
+                BrowseDirectoryBtn.Enabled = false;
+                return true;
+            }
+            return false;
+        }
+
         private string GetSelectedRegionTitleId()
         {
             if (radioButtonEur.Checked)
             {
-                return TitleId_EUR;
+                return TITLE_ID_EUR;
             }
             if (radioButtonUs.Checked)
             {
-                return TitleId_USA;
+                return TITLE_ID_USA;
             }
             if (radioButtonJap.Checked)
             {
-                return TitleId_JPN;
+                return TITLE_ID_JPN;
             }
             throw new Exception("how did you get here ?");
         }
@@ -329,9 +342,9 @@ namespace PckStudio.Forms.Features
         {
             if (IsValidInstallDirectory())
             {
-                radioButtonEur.Enabled = Directory.Exists(GetGameContentPath(TitleId_EUR));
-                radioButtonUs.Enabled = Directory.Exists(GetGameContentPath(TitleId_USA));
-                radioButtonJap.Enabled = Directory.Exists(GetGameContentPath(TitleId_JPN));
+                radioButtonEur.Enabled = Directory.Exists(GetGameContentPath(TITLE_ID_EUR));
+                radioButtonUs.Enabled = Directory.Exists(GetGameContentPath(TITLE_ID_USA));
+                radioButtonJap.Enabled = Directory.Exists(GetGameContentPath(TITLE_ID_JPN));
             }
             ListDLCs();
         }

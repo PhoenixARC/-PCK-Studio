@@ -44,7 +44,7 @@ namespace PckStudio.Core.DLC
 
         public ConsolePlatform Platform => _platform;
 
-        public DLCPackageContentSerilasationType ContentSerilasationType { get; set; } = DLCPackageContentSerilasationType.Local;
+        public DLCPackageContentSerilasationType ContentSerilasationType => _packageContentSerilasationType;
 
         /// <summary>
         /// See <see cref="AvailableLanguages"/> for details.
@@ -55,17 +55,20 @@ namespace PckStudio.Core.DLC
         private readonly Random _rng = new Random();
         private ByteOrder _byteOrder;
         private ConsolePlatform _platform;
+        private readonly AppLanguage _preferredAppLanguage;
+        private readonly DLCPackageContentSerilasationType _packageContentSerilasationType;
         private PckFileCompiler _pckFileCompiler;
 
 
         /// <param name="byteOrder"></param>
         /// <param name="platform"></param>
         /// <param name="preferredLanguage">See <see cref="AvailableLanguages"/> for details.</param>
-        public DLCManager(ConsolePlatform platform, AppLanguage preferredLanguage)
+        public DLCManager(ConsolePlatform platform, AppLanguage preferredLanguage, DLCPackageContentSerilasationType packageContentSerilasationType)
         {
             _platform = platform;
+            _preferredAppLanguage = preferredLanguage;
+            _packageContentSerilasationType = packageContentSerilasationType;
             _byteOrder = GetByteOrderForPlatform(Platform);
-            _pckFileCompiler = new PckFileCompiler(_byteOrder, GetPlatformCompressionType(), GameRuleFile.CompressionLevel.None);
             SetPreferredLanguage(preferredLanguage);
         }
 
@@ -147,14 +150,14 @@ namespace PckStudio.Core.DLC
             {
                 _packageRegistry.RegisterPackage(identifier, package, localisation);
             }
-            return new RawAssetDLCPackage(fileInfo.Name, pckFile, ByteOrder);
+            return new RawAssetDLCPackage(fileInfo.Name, identifier, pckFile, ByteOrder);
         }
 
         public bool CloseDLCPackage(int identifier) => _packageRegistry.UnregisterPackage(identifier);
 
         internal LOCFile GetLocalisation(int identifier)
         {
-            return _packageRegistry.ContainsPackage(identifier) ? _packageRegistry.GetLocalisation(identifier) : default;
+            return _packageRegistry.ContainsPackage(identifier) ? _packageRegistry.GetLocalisation(identifier) : new LOCFile();
         }
 
         private bool IsValidPckFile(FileInfo fileInfo)
@@ -364,12 +367,14 @@ namespace PckStudio.Core.DLC
                 ArmorSetDescription.Turtle.GetArmorSet(tryGetTexture),
                 environmentData,
                 AbstractColorContainer.FromColorContainer(colorContainer),
-                customModels,
-                materials, 
-                blockEntityBreakAnimation, 
-                itemAnimations, 
-                blockAnimations, 
-                sun, moon,
+                null,
+                null,
+                customModels: customModels,
+                materials: materials,
+                blockEntityBreakAnimation: blockEntityBreakAnimation,
+                itemAnimations: itemAnimations,
+                blockAnimations: blockAnimations,
+                sun: sun, moon: moon,
                 parentPackage: null);
         }
 
@@ -441,41 +446,29 @@ namespace PckStudio.Core.DLC
             }
         }
 
-        private GameRuleFile.CompressionType GetPlatformCompressionType() => GetCompressionTypeForPlatform(Platform);
+        internal GameRuleFile.CompressionType GetPlatformCompressionType() => GetCompressionTypeForPlatform(Platform);
 
-        private static string GetPreferredLanguage(AppLanguage appLanguage)
+        internal static string GetPreferredLanguage(AppLanguage appLanguage)
         {
             return appLanguage switch
             {
                 AppLanguage.System_Default => LOCFile.ValidLanguages.Contains(CultureInfo.CurrentUICulture.Name) ? CultureInfo.CurrentUICulture.Name : AvailableLanguages.English,
                 AppLanguage.Czech_Czechia => AvailableLanguages.CzechCzechia,
                 AppLanguage.Czechia => AvailableLanguages.Czechia,
-                AppLanguage.Danish => AvailableLanguages.Danish,
                 AppLanguage.Denmark_Danish => AvailableLanguages.DenmarkDanish,
-                AppLanguage.German_Austria => AvailableLanguages.GermanAustria,
                 AppLanguage.German => AvailableLanguages.German,
-                AppLanguage.Greek_Greece => AvailableLanguages.GreekGreece,
                 AppLanguage.Greece => AvailableLanguages.Greece,
-                AppLanguage.English_Australia => AvailableLanguages.EnglishAustralia,
-                AppLanguage.English_Canada => AvailableLanguages.EnglishCanada,
                 AppLanguage.English => AvailableLanguages.English,
                 AppLanguage.English_UnitedKingdom => AvailableLanguages.EnglishUnitedKingdom,
-                AppLanguage.English_Ireland => AvailableLanguages.EnglishIreland,
-                AppLanguage.English_NewZealand => AvailableLanguages.EnglishNewZealand,
-                AppLanguage.English_USA=> AvailableLanguages.EnglishUnitedStatesOfAmerica,
                 AppLanguage.Spanish_Spain => AvailableLanguages.SpanishSpain,
                 AppLanguage.Spanish_Mexico => AvailableLanguages.SpanishMexico,
                 AppLanguage.Finnish_Finland => AvailableLanguages.FinnishFinland,
                 AppLanguage.French_France => AvailableLanguages.FrenchFrance,
-                AppLanguage.French_Canada => AvailableLanguages.FrenchCanada,
                 AppLanguage.Italian_Italy => AvailableLanguages.ItalianItaly,
                 AppLanguage.Japanese_Japan => AvailableLanguages.JapaneseJapan,
                 AppLanguage.Korean_South_Korea => AvailableLanguages.KoreanSouthKorea,
-                AppLanguage.Latin => AvailableLanguages.Latin,
-                AppLanguage.Norwegian_Norway => AvailableLanguages.NorwegianNorway,
                 AppLanguage.Norwegian_Bokmål_Norway => AvailableLanguages.NorwegianBokmålNorway,
                 AppLanguage.Dutch_Netherlands => AvailableLanguages.DutchNetherlands,
-                AppLanguage.Dutch_Belgium => AvailableLanguages.DutchBelgium,
                 AppLanguage.Polish_Poland => AvailableLanguages.PolishPoland,
                 AppLanguage.Portuguese_Brazil => AvailableLanguages.PortugueseBrazil,
                 AppLanguage.Portuguese_Portugal => AvailableLanguages.PortuguesePortugal,
@@ -484,9 +477,6 @@ namespace PckStudio.Core.DLC
                 AppLanguage.Swedish_Sweden => AvailableLanguages.SwedishSweden,
                 AppLanguage.Turkish_Turkey => AvailableLanguages.TurkishTurkey,
                 AppLanguage.Chinese_China => AvailableLanguages.ChineseChina,
-                AppLanguage.Chinese_HongKong => AvailableLanguages.ChineseHongKong,
-                AppLanguage.Chinese_Singapore => AvailableLanguages.ChineseSingapore,
-                AppLanguage.Chinese_Taiwan => AvailableLanguages.ChineseTaiwan,
                 _ => AvailableLanguages.English,
             };
         }
@@ -501,6 +491,7 @@ namespace PckStudio.Core.DLC
 
         public DLCPackageContent CompilePackage(IDLCPackage package)
         {
+            _pckFileCompiler = new PckFileCompiler(this);
             LOCFile localisation = GetLocalisation(package.Identifier);
             switch (package.GetDLCPackageType())
             {
@@ -518,6 +509,84 @@ namespace PckStudio.Core.DLC
                     break;
             }
             return DLCPackageContent.Empty;
+        }
+
+        private enum ConsoleRegion
+        {
+            US,
+            EU,
+            JP
+        }
+
+        public string GetInstallPath()
+        {
+            switch (Platform)
+            {
+                case ConsolePlatform.Wii_U:
+                    ConsoleRegion region = GetRegionFromLanguage();
+                    string titleId = region switch
+                    {
+                        ConsoleRegion.US => "101d9d00",
+                        ConsoleRegion.EU => "101d7500",
+                        ConsoleRegion.JP => "101dbe00",
+                        _ => throw new Exception()
+                    };
+                    return $"usr/title/0005000e/{titleId}/content/WiiU/DLC";
+                default:
+                    return "";
+            }
+        }
+
+        private ConsoleRegion GetRegionFromLanguage()
+        {
+            switch (_preferredAppLanguage)
+            {
+                case AppLanguage.System_Default:
+                case AppLanguage.Czech_Czechia:
+                case AppLanguage.Czechia:
+                case AppLanguage.Danish:
+                case AppLanguage.Denmark_Danish:
+                case AppLanguage.German_Austria:
+                case AppLanguage.German:
+                case AppLanguage.Greek_Greece:
+                case AppLanguage.English_UnitedKingdom:
+                case AppLanguage.English_Ireland:
+                case AppLanguage.Spanish_Spain:
+                case AppLanguage.Finnish_Finland:
+                case AppLanguage.French_France:
+                case AppLanguage.Dutch_Netherlands:
+                case AppLanguage.Dutch_Belgium:
+                case AppLanguage.Polish_Poland:
+                case AppLanguage.Norwegian_Norway:
+                case AppLanguage.Norwegian_Bokmål_Norway:
+                case AppLanguage.Italian_Italy:
+                case AppLanguage.Slovak_Slovakia:
+                case AppLanguage.Swedish_Sweden:
+                case AppLanguage.Turkish_Turkey:
+                case AppLanguage.Russian_Russia:
+                case AppLanguage.Greece:
+                    return ConsoleRegion.EU;
+                case AppLanguage.English_Australia:
+                case AppLanguage.English_Canada:
+                case AppLanguage.English:
+                case AppLanguage.English_NewZealand:
+                case AppLanguage.Spanish_Mexico:
+                case AppLanguage.French_Canada:
+                case AppLanguage.English_USA:
+                    return ConsoleRegion.US;
+                case AppLanguage.Korean_South_Korea:
+                case AppLanguage.Chinese_China:
+                case AppLanguage.Chinese_HongKong:
+                case AppLanguage.Chinese_Singapore:
+                case AppLanguage.Chinese_Taiwan:
+                case AppLanguage.Japanese_Japan:
+                    return ConsoleRegion.JP;
+                case AppLanguage.Portuguese_Brazil:
+                case AppLanguage.Portuguese_Portugal:
+                case AppLanguage.Latin:
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }

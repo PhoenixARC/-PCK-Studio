@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using MetroFramework.Forms;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
 using OMI.Formats.Pck;
+using OMI.Workers;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
 using OMI.Workers.Pck;
@@ -50,7 +52,7 @@ namespace PckStudio
 
             pckOpen.AllowDrop = true;
 
-            _dlcManager = new DLCManager(Settings.Default.Platform, Settings.Default.UserLanguage);
+            _dlcManager = new DLCManager(Settings.Default.Platform, Settings.Default.UserLanguage, Settings.Default.PackageType);
             Internal.SettingsManager.Default.RegisterPropertyChangedCallback<AppLanguage>(nameof(Settings.Default.UserLanguage), _dlcManager.SetPreferredLanguage);
             Internal.SettingsManager.Default.RegisterPropertyChangedCallback<ConsolePlatform>(nameof(Settings.Default.Platform), _dlcManager.SetPlatform);
         }
@@ -178,6 +180,7 @@ namespace PckStudio
             if (TryGetEditor(page, out IEditor<RawAssetDLCPackage> editor))
             {
                 editor.Close();
+                _dlcManager.CloseDLCPackage(editor.EditorValue.Identifier);
                 RemoveOpenFile(page);
                 collection.Remove(page);
             }
@@ -561,7 +564,79 @@ namespace PckStudio
             };
             if (fileDialog.ShowDialog() != DialogResult.OK)
                 return;
-            new JavaTextFormatForm(new FileInfo(fileDialog.FileName)).ShowDialog();
+            var importDialog = new JavaImportForm(new FileInfo(fileDialog.FileName), _dlcManager);
+            if (importDialog.ShowDialog() == DialogResult.OK)
+            {
+                var dlcPackage = new RawAssetDLCPackage(importDialog.Result.Name, importDialog.Result.MainPck, _dlcManager.ByteOrder);
+                var datadlcPackage = new RawAssetDLCPackage(importDialog.Result.DataFolder?.TexturePck.Name, importDialog.Result.DataFolder?.TexturePck.Value, _dlcManager.ByteOrder);
+
+                if (CemuPanel.TryGetCemuMLCPath(out DirectoryInfo mlcDir) &&
+                    MessageBoxEx.AskQuestion("Install pack locally ?", "Install", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.Yes)
+                {
+                    string path = _dlcManager.GetInstallPath();
+                    DirectoryInfo dlcDir = mlcDir.CombineWithDirectoryName(path);
+                    if (!dlcDir.Exists)
+                    {
+                        MessageBoxEx.ShowError("Failed to find dlc folder", "DLC Folder not found");
+                        return;
+                    }
+                    DirectoryInfo installDir = dlcDir.CreateSubdirectory(importDialog.Result.Name);
+                    FileSystemInfo res = null;
+                    if (_dlcManager.ContentSerilasationType == DLCPackageContentSerilasationType.Local)
+                        res = CreateLocalPackage(installDir, importDialog.Result);
+                    if (_dlcManager.ContentSerilasationType == DLCPackageContentSerilasationType.Share)
+                        res = CreateSharablePackage(fileDialog.FileName, importDialog.Result);
+                    Process.Start("explorer.exe", res.FullName);
+                }
+
+
+                AddEditorPage(dlcPackage);
+                AddEditorPage(datadlcPackage);
+            }
+        }
+
+        private FileInfo CreateSharablePackage(string name, DLCPackageContent packageContent)
+        {
+            var fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(name), Path.GetFileNameWithoutExtension(name) + "_pck.zip"));
+            Stream zipStream = fileInfo.OpenWrite();
+            
+            using var zip = new ZipArchive(zipStream, ZipArchiveMode.Create);
+            {
+                zip.WriteEntry($"{(packageContent.HasDataFolder ? "TexturePack" : "Pack")}.pck", new PckFileWriter(packageContent.MainPck, _dlcManager.ByteOrder));
+            }
+
+            if (packageContent.HasDataFolder)
+            {
+                zip.WriteEntry($"Data/{packageContent.DataFolder.TexturePck.Name}", new PckFileWriter(packageContent.DataFolder.TexturePck.Value, _dlcManager.ByteOrder));
+                    
+                foreach (NamedData<byte[]> file in packageContent.DataFolder.Files)
+                {
+                    zip.WriteEntry($"Data/{file.Name}", file.Value);
+                }
+            }
+            return fileInfo;
+        }
+
+        private DirectoryInfo CreateLocalPackage(DirectoryInfo directory, DLCPackageContent packageContent)
+        {
+            directory.CombineWithFileName($"{(packageContent.HasDataFolder ? "TexturePack" : "Pack")}.pck")
+                .Write(new PckFileWriter(packageContent.MainPck, _dlcManager.ByteOrder));
+
+            if (packageContent.HasDataFolder)
+            {
+                DirectoryInfo dataDir = directory.CombineWithDirectoryName("Data");
+                if (!dataDir.Exists)
+                    dataDir.Create();
+
+                dataDir.CombineWithFileName($"{packageContent.DataFolder.TexturePck.Name}")
+                    .Write(new PckFileWriter(packageContent.DataFolder.TexturePck.Value, _dlcManager.ByteOrder));
+
+                foreach (NamedData<byte[]> file in packageContent.DataFolder.Files)
+                {
+                    dataDir.CombineWithFileName(file.Name).Write(file.Value);
+                }
+            }
+            return directory;
         }
     }
 }

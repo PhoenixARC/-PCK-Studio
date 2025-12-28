@@ -9,6 +9,7 @@ namespace PckStudio.Core.App
     public enum AppLanguage : int
     {
         System_Default,
+
         Czech_Czechia,
         Czechia,
         Danish,

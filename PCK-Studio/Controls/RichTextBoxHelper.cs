@@ -29,7 +29,14 @@ namespace PckStudio.Controls
         {
             if (!text.EndsWith("\n") && !text.EndsWith("\r\n"))
                 text += Environment.NewLine;
-            box.AppendText(text);
+
+            object Write()
+            {
+                box.AppendText(text);
+                box.Update();
+                return box;
+            }
+            _ = box.InvokeRequired ? box.Invoke(Write) : Write();
         }
 
         public static void AppendText(this RichTextBox box, string text, RichTextBoxColor colors)

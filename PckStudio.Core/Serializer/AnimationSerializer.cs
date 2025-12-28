@@ -43,15 +43,15 @@ namespace PckStudio.Core.Serializer
 
         private static string SerializeAnim(Animation animation)
         {
-            StringBuilder stringBuilder = new StringBuilder(animation.Interpolate ? "#" : string.Empty);
-            foreach (Animation.Frame frame in animation.GetFrames())
-                stringBuilder.Append($"{animation.GetTextureIndex(frame.Texture)}*{frame.Ticks},");
-            return stringBuilder.ToString(0, stringBuilder.Length - 1);
+            string anim = animation.GetFrames().Select(frame => $"{animation.GetTextureIndex(frame.Texture)}*{frame.Ticks}").ToString(",");
+            return (animation.Interpolate ? "#" : string.Empty) + anim;
         }
 
         public static Image SerializeTexture(Animation animation)
         {
             IReadOnlyCollection<Image> textures = animation.GetTextures();
+            if (!textures.Any())
+                return null;
             Size size = textures.First().Size;
             if (size.Width != size.Height)
                 throw new Exception("Invalid size");

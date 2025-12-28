@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Drawing;
+using Newtonsoft.Json;
 
 namespace PckStudio.Core.IO.Java
 {
@@ -8,10 +9,17 @@ namespace PckStudio.Core.IO.Java
         public McPack Pack;
         public struct McPack
         {
-            [JsonProperty("pack_format")]
-            public int Format;
+            [JsonIgnore]
+            public Image Icon;
+            
+            [JsonIgnore]
+            public int Format => _format;
+            
             [JsonProperty("description")]
             public string Description;
+
+            [JsonProperty("pack_format")]
+            private int _format;
         }
     }
 }

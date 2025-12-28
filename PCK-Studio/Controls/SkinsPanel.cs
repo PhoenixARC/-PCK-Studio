@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DiscordRPC;
 using OMI.Formats.Pck;
 using OMI.Workers.Pck;
+using PckStudio.Core.DLC;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Skin;
 
@@ -18,9 +20,8 @@ namespace PckStudio.Controls
     {
         readonly PckFileReader _reader;
         readonly ImageList _imageList;
-        public SkinsPanel(OMI.ByteOrder byteOrder)
+        public SkinsPanel(OMI.ByteOrder byteOrder) : this()
         {
-            InitializeComponent();
             _reader = new PckFileReader(byteOrder);
             _imageList = new ImageList()
             {
@@ -30,13 +31,23 @@ namespace PckStudio.Controls
             treeView1.ImageList = _imageList;
         }
 
+        public SkinsPanel(DLCSkinPackage skinPackage) : this()
+        {
+            Reset();
+            LoadTreeview(skinPackage.GetSkins());
+        }
+
         public override void LoadAsset(PckAsset asset, Action onChange)
         {
             Reset();
+            LoadTreeview(asset.GetData(_reader).GetAssetsByType(PckAssetType.SkinFile).Select(PckAssetExtensions.GetSkin));
+        }
+
+        private void LoadTreeview(IEnumerable<Skin> skins)
+        {
             treeView1.Nodes.AddRange(
-                asset.GetData(_reader).GetAssetsByType(PckAssetType.SkinFile)
-                .Select(PckAssetExtensions.GetSkin)
-                .enumerate()
+                skins
+                .Enumerate()
                 .Select(a =>
                 {
                     _imageList.Images.Add(a.value.GetPreviewImage(_imageList.ImageSize));
@@ -44,6 +55,11 @@ namespace PckStudio.Controls
                 })
                 .ToArray()
                 );
+        }
+
+        private SkinsPanel()
+        {
+            InitializeComponent();
         }
 
         public override void Reset()

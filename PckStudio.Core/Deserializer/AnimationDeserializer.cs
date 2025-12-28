@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
@@ -71,8 +72,8 @@ namespace PckStudio.Core.Deserializer
         {
             IEnumerable<Image> textures = texture.Split(ImageLayoutDirection.Vertical);
             Animation result = new Animation(textures);
-            if (jsonObject["animation"] is not JToken animation)
-                return result;
+            if (jsonObject["animation"] is not JToken animation || !animation.HasValues)
+                return new Animation(textures, true);
 
             int frameTime = Animation.MINIMUM_FRAME_TIME;
 
@@ -89,15 +90,14 @@ namespace PckStudio.Core.Deserializer
                     if (frame.Type == JTokenType.Object &&
                         frame["index"] is JToken frame_index &&
                         frame_index.Type == JTokenType.Integer &&
+                        frame_index.ToObject<int>().IsWithinRangeOf(0, result.TextureCount - 1) &&
                         frame["time"] is JToken frame_time &&
                         frame_time.Type == JTokenType.Integer)
                     {
-                        Debug.WriteLine("Index: {0}, Time: {1}", frame_index, frame_time);
                         result.AddFrame((int)frame_index, (int)frame_time);
                     }
-                    else if (frame.Type == JTokenType.Integer)
+                    else if (frame.Type == JTokenType.Integer && frame.ToObject<int>().IsWithinRangeOf(0, result.TextureCount - 1))
                     {
-                        Debug.WriteLine("Index: {0}, Time: {1}", frame, frameTime);
                         result.AddFrame((int)frame, frameTime);
                     }
                 }

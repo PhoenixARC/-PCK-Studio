@@ -228,7 +228,7 @@ namespace PckStudio.Forms.Editor
                 textureImageList.Images.Clear();
                 namedTexturesTreeView.Nodes.Clear();
 
-                foreach ((int i, NamedData<Image> item) in textures.enumerate())
+                foreach ((int i, NamedData<Image> item) in textures.Enumerate())
                 {
                     textureImageList.Images.Add(item.Value);
                     namedTexturesTreeView.Nodes.Add(new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i });
