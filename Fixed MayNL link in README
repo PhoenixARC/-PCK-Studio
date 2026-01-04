@@ -48,7 +48,7 @@ $ cd PCK-Studio
 
 ## Active Developers:
 >  [PhoenixARC](https://github.com/PhoenixARC)<br>
->  [MattNL](https://github.com/MattN-L)<br>
+>  [MayNL](https://github.com/MayN-L)<br>
 >  [Miku-666](https://github.com/NessieHax)<br>
 >  [EternalModz](https://github.com/EternalModz)<br>
 
