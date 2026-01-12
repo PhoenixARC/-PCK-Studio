@@ -64,7 +64,7 @@ namespace PckStudio.Core
             int rows = source.Width / tileArea.Width;
             int columns = GameConstants.GetColumnCountForGameVersion(atlasResource.Type, gameVersion);
             columns = columns == 0 ? source.Height / tileArea.Height : columns;
-            IEnumerable <AtlasTile> tiles = source.Split(tileArea, imageLayout).Enumerate().Select(((int index, Image img) data) => new AtlasTile(data.img, GetSelectedPoint(data.index, out int col, rows, columns, imageLayout), col, index: data.index, userData: tilesInfo.IndexInRange(data.index) ? tilesInfo[data.index] : default));
+            IEnumerable <AtlasTile> tiles = source.Split(tileArea, imageLayout).Select((Image img, int index) => new AtlasTile(img, GetSelectedPoint(index, out int col, rows, columns, imageLayout), col, index: index, userData: tilesInfo.IndexInRange(index) ? tilesInfo[index] : default));
             var atlas = new Atlas(atlasResource.Path, rows, columns, tiles, tileArea, imageLayout);
             atlas.AddGroups(atlasResource.AtlasGroups);
             return atlas;
@@ -74,7 +74,7 @@ namespace PckStudio.Core
         {
             ImageLayoutDirection layoutDirection = default;
             Image none = new Bitmap(res, res);
-            IEnumerable<AtlasTile> tiles = Enumerable.Repeat(none, rows * columns).Enumerate().Select(iv => new AtlasTile(iv.value, GetSelectedPoint(iv.index, out int col, rows, columns, layoutDirection), col, iv.index, default));
+            IEnumerable<AtlasTile> tiles = Enumerable.Repeat(none, rows * columns).Select((v, i) => new AtlasTile(v, GetSelectedPoint(i, out int col, rows, columns, layoutDirection), col, i, default));
             return new Atlas(atlasResource.Path, rows, columns, tiles, none.Size, layoutDirection);
         }
 
@@ -271,8 +271,9 @@ namespace PckStudio.Core
 
         public bool SetGroup(AtlasGroup group, Image texture)
         {
-            Image[] images = texture.Split(TileSize, _layoutDirection).ToArray();
-            if (!images.All(img => img.Size == TileSize))
+            Size splitSize = group.IsLargeTile() ? new Size(texture.Width / ((AtlasLargeTile)group).RowSpan, texture.Height /((AtlasLargeTile)group).ColumnSpan) : TileSize;
+            Image[] images = texture.Split(splitSize, _layoutDirection).ToArray();
+            if (!images.All(img => img.Size == splitSize))
                 return false;
             if (images.Length != group.Count)
                 return false;

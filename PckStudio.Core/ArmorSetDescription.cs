@@ -83,14 +83,12 @@ namespace PckStudio.Core
                 return Enumerable.Empty<NamedData<Image>>();
 
             IEnumerable<NamedData<Image>> textures = armorSet.BaseTexture.Split(new Size(armorSet.BaseTexture.Width, armorSet.BaseTexture.Height / 2), ImageLayoutDirection.Horizontal)
-                .Enumerate()
-                .Select(e => new NamedData<Image>($"{armorSet.Name}_{e.index + 1}", e.value));
+                .Select((e, i) => new NamedData<Image>($"{armorSet.Name}_{i + 1}", e));
 
             if (armorSetDescription.LayerCount > 0 && armorSet.Layer is not null)
             {
                 textures = textures.Concat(armorSet.Layer.Split(new Size(armorSet.Layer.Width, armorSet.Layer.Height / 2), ImageLayoutDirection.Horizontal)
-                    .Enumerate()
-                    .Select(e => new NamedData<Image>($"{armorSet.Name}_{e.index + 1}_{Convert.ToChar('b')}", e.value)));
+                    .Select((e, i) => new NamedData<Image>($"{armorSet.Name}_{i + 1}_{Convert.ToChar('b')}", e)));
             }
 
             if (armorSet.Name == TURTLE)

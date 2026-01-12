@@ -47,11 +47,10 @@ namespace PckStudio.Controls
         {
             treeView1.Nodes.AddRange(
                 skins
-                .Enumerate()
-                .Select(a =>
+                .Select((skin, i) =>
                 {
-                    _imageList.Images.Add(a.value.GetPreviewImage(_imageList.ImageSize));
-                    return new TreeNode(a.value.MetaData.Name) { ImageIndex = a.index, SelectedImageIndex = a.index, Tag = a.value };
+                    _imageList.Images.Add(skin.GetPreviewImage(_imageList.ImageSize));
+                    return new TreeNode(skin.MetaData.Name) { ImageIndex = i, SelectedImageIndex = i, Tag = skin };
                 })
                 .ToArray()
                 );

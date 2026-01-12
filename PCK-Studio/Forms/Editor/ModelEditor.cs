@@ -228,11 +228,12 @@ namespace PckStudio.Forms.Editor
                 textureImageList.Images.Clear();
                 namedTexturesTreeView.Nodes.Clear();
 
-                foreach ((int i, NamedData<Image> item) in textures.Enumerate())
+                namedTexturesTreeView.Nodes.AddRange(textures.Select((item, i) =>
                 {
                     textureImageList.Images.Add(item.Value);
-                    namedTexturesTreeView.Nodes.Add(new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i });
-                }
+                    return new NamedTextureTreeNode(item) { ImageIndex = i, SelectedImageIndex = i };
+                }).ToArray());
+
                 if (textures.Length != 0)
                     modelViewport.Texture = textures[0].Value;
 

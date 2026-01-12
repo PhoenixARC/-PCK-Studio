@@ -40,7 +40,7 @@ namespace PckStudio.Core.Extensions
 
             Image[] secondTextures = second.GetTextures().ToArray();
 
-            Animation animation = new Animation(first.GetTextures().Enumerate().Select(ift => ift.value.Combine(secondTextures[ift.index], layoutDirection)));
+            Animation animation = new Animation(first.GetTextures().Select((tex, i) => tex.Combine(secondTextures[i], layoutDirection)));
             foreach ((int texId, int frameTime) item in first.GetFrames().Select(f => (texId: first.GetTextureIndex(f.Texture), frameTime: f.Ticks)))
             {
                 animation.AddFrame(item.texId, item.frameTime);

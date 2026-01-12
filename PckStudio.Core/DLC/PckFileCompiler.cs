@@ -131,9 +131,10 @@ namespace PckStudio.Core.DLC
                 }
 
                 {
-                    foreach ((int i, Animation.Frame frame) in texturePackage.GetBlockEntityBreakAnimation().GetFrames().Enumerate())
+                    int i = 0;
+                    foreach (Animation.Frame frame in texturePackage.GetBlockEntityBreakAnimation().GetFrames())
                     {
-                        texturePck.AddTexture($"res/textures/destroy_stage_{i}.png", frame.Texture);
+                        texturePck.AddTexture($"res/textures/destroy_stage_{i++}.png", frame.Texture);
                     }
                 }
 

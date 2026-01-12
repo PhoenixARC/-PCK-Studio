@@ -7,16 +7,6 @@ namespace PckStudio.Core.Extensions
 {
     public static class EnumerableExtensions
     {
-        public static IEnumerable<(int index, T value)>Enumerate<T>(this IEnumerable<T> array)
-        {
-            int i = 0;
-            foreach (T item in array)
-            {
-                yield return (i++, item);
-            }
-            yield break;
-        }
-
         public static ImageList ToImageList(this IEnumerable<Image> images)
         {
             ImageList imageList = new ImageList

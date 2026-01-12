@@ -150,11 +150,13 @@ namespace PckStudio.Core.Extensions
             using (var graphic = Graphics.FromImage(image))
             {
                 graphic.ApplyConfig(GraphicsConfig.PixelPerfect());
-                foreach ((int i, Image texture) in sources.Enumerate())
+                int i = 0;
+                foreach (Image texture in sources)
                 {
                     int x = Math.DivRem(i, columns, out int y);
                     if (horizontal)
                         y = Math.DivRem(i, rows, out x);
+                    i++;
                     graphic.DrawImage(texture, new Rectangle(new Point(x * texture.Width, y * texture.Height), texture.Size));
                 }
             }
