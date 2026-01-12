@@ -169,9 +169,10 @@ namespace PckStudio.Forms.Features
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog
             {
-                Title = "Select Cemu mlc01 Directory"
+                Title = "Select Cemu mlc01 Directory",
+                CheckPath = true
             };
-            if (openFolderDialog.ShowDialog(Handle) == true && Directory.Exists(openFolderDialog.ResultPath))
+            if (openFolderDialog.ShowDialog(Handle) == DialogResult.OK)
             {
                 GameDirectoryTextBox.Text = openFolderDialog.ResultPath;
             }

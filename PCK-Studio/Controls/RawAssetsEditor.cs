@@ -1325,7 +1325,7 @@ namespace PckStudio.Controls
         private void importExtractedSkinsFolder(object sender, EventArgs e)
         {
             OpenFolderDialog contents = new OpenFolderDialog();
-            if (contents.ShowDialog(Handle) == true)
+            if (contents.ShowDialog(Handle) == DialogResult.OK)
             {
                 //checks to make sure selected path exist
                 if (!Directory.Exists(contents.ResultPath))
@@ -1503,7 +1503,7 @@ namespace PckStudio.Controls
                 OpenFolderDialog dialog = new OpenFolderDialog();
                 dialog.Title = @"Select destination folder";
 
-                if (dialog.ShowDialog(Handle) == true)
+                if (dialog.ShowDialog(Handle) == DialogResult.OK)
                     extractFolder(dialog.ResultPath);
             }
             else if (node.TryGetTagData(out PckAsset asset))

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Forms;
 
 namespace PckStudio.Core.Misc
 {
@@ -18,6 +19,7 @@ namespace PckStudio.Core.Misc
         public virtual string Title { get; set; }
         public virtual string OkButtonLabel { get; set; }
         public virtual string FileNameLabel { get; set; }
+        public bool CheckPath { get; set; }
 
         protected virtual int SetOptions(int options)
         {
@@ -25,17 +27,21 @@ namespace PckStudio.Core.Misc
             {
                 options |= (int)FOS.FOS_FORCEFILESYSTEM;
             }
+            if (CheckPath)
+            {
+                options |= (int)FOS.FOS_PATHMUSTEXIST;
+            }
             return options;
         }
 
         // for all .NET
-        public virtual bool? ShowDialog(IntPtr owner, bool throwOnError = false)
+        public virtual DialogResult ShowDialog(IntPtr owner, bool throwOnError = false)
         {
             var dialog = (IFileOpenDialog)new FileOpenDialog();
             if (!string.IsNullOrEmpty(InputPath))
             {
                 if (CheckHr(SHCreateItemFromParsingName(InputPath, null, typeof(IShellItem).GUID, out IShellItem item), throwOnError) != 0)
-                    return null;
+                    return DialogResult.Abort;
 
                 dialog.SetFolder(item);
             }
@@ -70,16 +76,16 @@ namespace PckStudio.Core.Misc
 
             var hr = dialog.Show(owner);
             if (hr == ERROR_CANCELLED)
-                return null;
+                return DialogResult.Cancel;
 
             if (CheckHr(hr, throwOnError) != 0)
-                return null;
+                return DialogResult.Abort;
 
             if (CheckHr(dialog.GetResult(out IShellItem result), throwOnError) != 0)
-                return null;
+                return DialogResult.Abort;
 
             if (CheckHr(result.GetDisplayName(SIGDN.SIGDN_DESKTOPABSOLUTEPARSING, out var path), throwOnError) != 0)
-                return null;
+                return DialogResult.Abort;
 
             ResultPath = path;
 
@@ -87,16 +93,13 @@ namespace PckStudio.Core.Misc
             {
                 ResultName = path;
             }
-            return true;
+            return DialogResult.OK;
         }
 
         private static int CheckHr(int hr, bool throwOnError)
         {
-            if (hr != 0)
-            {
-                if (throwOnError)
-                    Marshal.ThrowExceptionForHR(hr);
-            }
+            if (hr != 0 && throwOnError)
+                Marshal.ThrowExceptionForHR(hr);
             return hr;
         }
 
