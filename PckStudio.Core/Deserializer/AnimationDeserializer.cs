@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using OMI.Formats.Pck;
 using PckStudio.Core;
 using PckStudio.Core.Extensions;
+using PckStudio.Core.IO.Java;
 using PckStudio.Interfaces;
 
 namespace PckStudio.Core.Deserializer
@@ -68,12 +69,14 @@ namespace PckStudio.Core.Deserializer
             return true;
         }
 
-        public Animation DeserializeJavaAnimation(JObject jsonObject, Image texture)
+        public Animation DeserializeJavaAnimation(McMeta mcMeta, Image texture)
         {
-            IEnumerable<Image> textures = texture.Split(ImageLayoutDirection.Vertical);
+            if (!mcMeta.TryGetValue("animation", out JObject animation) || !animation.HasValues)
+                return Animation.CreateEmpty();
+
+            Size splitSize = animation.TryGetValue("height", out int frameHeight) ? new Size(texture.Width, frameHeight) : new Size(texture.Width, texture.Width);
+            IEnumerable<Image> textures = texture.Split(splitSize, ImageLayoutDirection.Vertical);
             Animation result = new Animation(textures);
-            if (jsonObject["animation"] is not JToken animation || !animation.HasValues)
-                return new Animation(textures, true);
 
             int frameTime = Animation.MINIMUM_FRAME_TIME;
 
