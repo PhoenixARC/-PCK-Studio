@@ -4,12 +4,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PckStudio.Core.Extensions;
 
 namespace PckStudio.Core.IO.Java
 {
-    internal class JavaConstants
+    public class JavaConstants
     {
-
         public static Dictionary<string, (Color foreground, Color background)> JavaColorCodeToColor { get; } = new Dictionary<string, (Color foreground, Color background)>()
         {
             ["§0"] = (Color.FromArgb(0x00, 0x00, 0x00), Color.FromArgb(18, 18, 18)),
@@ -46,5 +46,82 @@ namespace PckStudio.Core.IO.Java
         public static readonly Color LilyPad = Color.FromArgb(unchecked((int)0xFF_208030));
         public static readonly Color AttachedMelonStem = Color.FromArgb(unchecked((int)0xFF_E0C71C));
         public static readonly Color AttachedPumpkinStem = Color.FromArgb(unchecked((int)0xFF_E0C71C));
+
+        public static string EsapceMiencarftJavaFormat(string text) 
+            => text.Split(['§'], StringSplitOptions.RemoveEmptyEntries).ToString("");
+
+
+        public struct HTMLString(string value)
+        {
+            private string value = value;
+
+            private List<string> _front = new();
+            private List<string> _back = new();
+
+            public void AddTag(string tagName, params string[] parameters)
+            {
+                string param = string.Join(" ", parameters);
+                _front.Add($"<{new string[] { tagName, param }.ToString(" ")}>");
+                _back.Insert(0, $"</{tagName}>");
+            }
+
+            public override string ToString()
+            {
+                return string.Join("", _front) + value + string.Join("", _back);
+            }
+        }
+
+        public static string ConvertJavaTextFormatToHTML(string text)
+        {
+            string[] sections = text.Split(['§'], StringSplitOptions.RemoveEmptyEntries);
+            if (sections.Length == 0)
+                return text;
+            Color textColor = Color.White;
+            string formatText = string.Join("", sections
+                .Select(s =>
+                {
+                    if (string.IsNullOrWhiteSpace(s))
+                        return "";
+                    string colorFormat = "§" + s[0];
+                    if (JavaColorCodeToColor.TryGetValue(colorFormat, out (Color foreground, Color background) color))
+                    {
+                        textColor = color.foreground;
+                    }
+
+                    if (s.Length == 1)
+                        return "";
+
+                    string colorText = s.Substring(1);
+                    bool hasNewLineAtEnd = colorText.EndsWith("\n");
+                    string text = hasNewLineAtEnd ? colorText.Substring(0, colorText.Length - 1) : colorText;
+                    string cr = hasNewLineAtEnd ? "\n" : "";
+                    HTMLString htmlString = new HTMLString(colorText);
+                    if (colorFormat == "§r")
+                    {
+                        textColor = Color.White;
+                    }
+                    if (textColor != Color.White)
+                    {
+                        string htmlForegroundColor = textColor.ToHTMLColor();
+                        htmlString.AddTag("font", $"color=\"{htmlForegroundColor}\"");
+                    }
+                    // italic
+                    if (colorFormat == "§o")
+                        htmlString.AddTag("i");
+                    // bold
+                    if (colorFormat == "§l")
+                        htmlString.AddTag("b");
+                    // strikethrough
+                    if (colorFormat == "§m")
+                        htmlString.AddTag("s");
+                    // underline
+                    if (colorFormat == "§n")
+                        htmlString.AddTag("u");
+
+                    return $"{htmlString}{cr}";
+                }
+                ));
+            return formatText;
+        }
     }
 }
