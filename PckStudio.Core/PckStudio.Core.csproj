@@ -59,12 +59,13 @@
     <Compile Include="IO\Java\ImportStatusReport.cs" />
     <Compile Include="IO\Java\IVersion.cs" />
     <Compile Include="IO\Java\JavaConstants.cs" />
+    <Compile Include="IO\Java\McMeta.cs" />
     <Compile Include="IO\Java\SingleVersion.cs" />
     <Compile Include="IO\Java\SizeJsonConverter.cs" />
     <Compile Include="IO\Java\SpecificVerions.cs" />
     <Compile Include="IO\Java\VersionRange.cs" />
     <Compile Include="LCEGameVersion.cs" />
-    <Compile Include="IO\Java\McPackmeta.cs" />
+    <Compile Include="IO\Java\McPack.cs" />
     <Compile Include="IO\Java\ResourcePackImporter.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="App\AppLanguage.cs" />
