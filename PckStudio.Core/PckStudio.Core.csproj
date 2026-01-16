@@ -60,6 +60,7 @@
     <Compile Include="IO\Java\IVersion.cs" />
     <Compile Include="IO\Java\JavaConstants.cs" />
     <Compile Include="IO\Java\McMeta.cs" />
+    <Compile Include="IO\Java\PointJsonConverter.cs" />
     <Compile Include="IO\Java\SingleVersion.cs" />
     <Compile Include="IO\Java\SizeJsonConverter.cs" />
     <Compile Include="IO\Java\SpecificVerions.cs" />
