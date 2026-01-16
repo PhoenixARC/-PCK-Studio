@@ -22,6 +22,7 @@ namespace PckStudio.Core.Model
         private IDictionary<string, AbstractModel> _models = new Dictionary<string, AbstractModel>();
 
         public AbstractModel GetModelByName(string name) => _models[name];
+        
         public bool AddModel(AbstractModel model)
         {
             if (model == null || _models.ContainsKey(model.Name))
@@ -32,7 +33,7 @@ namespace PckStudio.Core.Model
 
         public bool RemoveModel(AbstractModel model) => model is not null && _models.Remove(model.Name);
 
-        public static AbstractModelContainer FromModelContainer(OMI.Formats.Model.ModelContainer models, ITryGet<string, Image> texture)
+        public static AbstractModelContainer FromModelContainer(ModelContainer models, ITryGet<string, Image> texture)
         {
             var abstractModelContainer = new AbstractModelContainer();
             if (models is null)

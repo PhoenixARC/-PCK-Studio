@@ -24,6 +24,9 @@ namespace PckStudio.Core.Model
             _subParts = new List<AbstractModelPart>();
         }
 
+        public void AddBox(Vector3 position, Vector3 size, Vector2 uv, float inflate, bool mirror)
+            => AddBox(new Box(position, size, uv, inflate, mirror));
+
         public void AddBox(Box box) => _boxes.Add(box);
 
         internal void AddParts(IEnumerable<AbstractModelPart> parts) => _subParts.AddRange(parts);
