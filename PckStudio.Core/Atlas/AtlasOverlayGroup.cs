@@ -12,8 +12,8 @@ namespace PckStudio.Core
     {
         private JsonRowAndColumn _overlayAtlasLocation;
 
-        public AtlasOverlayGroup(string name, int row, int column, JsonRowAndColumn overlayAtlasLocation, bool allowCustomColor)
-            : base(name, row, column, allowCustomColor)
+        public AtlasOverlayGroup(string name, string internalName, int row, int column, JsonRowAndColumn overlayAtlasLocation, bool allowCustomColor)
+            : base(name, internalName, row: row, column: column, allowCustomColor: allowCustomColor)
         {
             _overlayAtlasLocation = overlayAtlasLocation;
         }

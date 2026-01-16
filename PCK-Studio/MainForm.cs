@@ -21,6 +21,7 @@ using PckStudio.Core.App;
 using PckStudio.Core.DLC;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
+using PckStudio.Core.IO.Java;
 using PckStudio.External.API.Miles;
 using PckStudio.Forms;
 using PckStudio.Forms.Additional_Popups;
@@ -567,7 +568,7 @@ namespace PckStudio
             var importDialog = new JavaImportForm(new FileInfo(fileDialog.FileName), _dlcManager);
             if (importDialog.ShowDialog() == DialogResult.OK)
             {
-                var dlcPackage = new RawAssetDLCPackage(importDialog.Result.Name, importDialog.Result.MainPck, _dlcManager.ByteOrder);
+                var dlcPackage = new RawAssetDLCPackage("TexturePack.pck", importDialog.Result.MainPck, _dlcManager.ByteOrder);
                 var datadlcPackage = new RawAssetDLCPackage(importDialog.Result.DataFolder?.TexturePck.Name, importDialog.Result.DataFolder?.TexturePck.Value, _dlcManager.ByteOrder);
 
                 if (CemuPanel.TryGetCemuMLCPath(out DirectoryInfo mlcDir) &&
@@ -580,18 +581,23 @@ namespace PckStudio
                         MessageBoxEx.ShowError("Failed to find dlc folder", "DLC Folder not found");
                         return;
                     }
-                    DirectoryInfo installDir = dlcDir.CreateSubdirectory(importDialog.Result.Name);
+                    string name = JavaConstants.EsapceMiencarftJavaFormat(Path.GetFileNameWithoutExtension(fileDialog.SafeFileName));
+
+                    DirectoryInfo installDir = dlcDir.CreateSubdirectory(name);
                     FileSystemInfo res = null;
                     if (_dlcManager.ContentSerilasationType == DLCPackageContentSerilasationType.Local)
                         res = CreateLocalPackage(installDir, importDialog.Result);
                     if (_dlcManager.ContentSerilasationType == DLCPackageContentSerilasationType.Share)
-                        res = CreateSharablePackage(fileDialog.FileName, importDialog.Result);
-                    Process.Start("explorer.exe", res.FullName);
+                        res = CreateSharablePackage(fileDialog.FileName, importDialog.Result);                                                                                                                                                                                                                                                                                                
+                    MessageBoxEx.ShowInfo($"Imported '{Path.GetFileNameWithoutExtension(fileDialog.SafeFileName)}' into:\n{res.FullName}", "Import successful");
+                    //Process.Start("explorer.exe", res.FullName);
                 }
 
-
-                AddEditorPage(dlcPackage);
-                AddEditorPage(datadlcPackage);
+                if (MessageBoxEx.AskQuestion("Open pack ?", "Open", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.Yes)
+                {
+                    AddEditorPage(dlcPackage);
+                    AddEditorPage(datadlcPackage);
+                }
             }
         }
 
@@ -599,7 +605,7 @@ namespace PckStudio
         {
             var fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(name), Path.GetFileNameWithoutExtension(name) + "_pck.zip"));
             Stream zipStream = fileInfo.OpenWrite();
-            
+
             using var zip = new ZipArchive(zipStream, ZipArchiveMode.Create);
             {
                 zip.WriteEntry($"{(packageContent.HasDataFolder ? "TexturePack" : "Pack")}.pck", new PckFileWriter(packageContent.MainPck, _dlcManager.ByteOrder));
@@ -608,7 +614,7 @@ namespace PckStudio
             if (packageContent.HasDataFolder)
             {
                 zip.WriteEntry($"Data/{packageContent.DataFolder.TexturePck.Name}", new PckFileWriter(packageContent.DataFolder.TexturePck.Value, _dlcManager.ByteOrder));
-                    
+
                 foreach (NamedData<byte[]> file in packageContent.DataFolder.Files)
                 {
                     zip.WriteEntry($"Data/{file.Name}", file.Value);

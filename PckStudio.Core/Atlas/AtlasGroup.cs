@@ -16,6 +16,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
 **/
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using Newtonsoft.Json;
 
@@ -25,9 +26,16 @@ namespace PckStudio.Core
     {
         [JsonProperty("name", Required = Required.Always, Order = 0)]
         public string Name { get; set; }
+
+        [DefaultValue("")]
+        [JsonProperty("internalName")]
+        public string InternalName { get; set; }
+
         [JsonProperty("row", Required = Required.Always, Order = 1)]
         public int Row { get; }
+
         [JsonProperty("column", Required = Required.Always, Order = 2)]
+        
         public int Column { get; }
         [JsonProperty("allowCustomColor", DefaultValueHandling = DefaultValueHandling.Populate)]
         public bool AllowCustomColor { get; }
@@ -44,9 +52,10 @@ namespace PckStudio.Core
         [JsonProperty("direction")]
         public virtual ImageLayoutDirection Direction => Column > Row ? ImageLayoutDirection.Vertical : ImageLayoutDirection.Horizontal;
 
-        public AtlasGroup(string name, int row, int column, bool allowCustomColor)
+        public AtlasGroup(string name, string internalName, int row, int column, bool allowCustomColor)
         {
             Name = name;
+            InternalName = internalName;
             Row = Math.Max(0, row);
             Column = Math.Max(0, column);
             AllowCustomColor = allowCustomColor;

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="Extensions\FileInfoExtensions.cs" />
+    <Compile Include="Extensions\ListenerExtensions.cs" />
     <Compile Include="Extensions\MessageBoxEx.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ZipArchiveEntryExtensions.cs" />
@@ -265,6 +266,12 @@
     <None Include="Resources\entityBehavioursData.json" />
     <None Include="Resources\entityMaterialsData.json" />
     <None Include="Resources\entityModelsData.json" />
+    <None Include="Resources\fui\skinGraphics.fui" />
+    <None Include="Resources\fui\skinGraphicsHud.fui" />
+    <None Include="Resources\fui\skinGraphicsInGame.fui" />
+    <None Include="Resources\fui\skinGraphicsLabels.fui" />
+    <None Include="Resources\fui\skinHud.fui" />
+    <None Include="Resources\fui\skinWiiU.fui" />
     <None Include="Resources\java\latest2lce_entities.json" />
     <None Include="Resources\java\latest2lce_paintings.json" />
     <None Include="Resources\entityModelMetaData.json" />

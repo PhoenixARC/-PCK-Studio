@@ -54,8 +54,8 @@ namespace PckStudio.Core
 
         public override Size GetSize(Size tileSize) => new Size(RowSpan * tileSize.Width * (Direction == ImageLayoutDirection.Horizontal ? _frameCount : 1), ColumnSpan * tileSize.Height * (Direction == ImageLayoutDirection.Vertical ? _frameCount : 1));
 
-        public AtlasLargeTileAnimation(string name, int row, int column, int rowSpan, int columnSpan, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME, bool allowCustomColor = default)
-            : base(name, row, column, allowCustomColor)
+        public AtlasLargeTileAnimation(string name, string internalName, int row, int column, int rowSpan, int columnSpan, int frameCount, ImageLayoutDirection direction, int frameTime = Animation.MINIMUM_FRAME_TIME, bool allowCustomColor = default)
+            : base(name, internalName, row: row, column: column, allowCustomColor: allowCustomColor)
         {
             _frameCount = Math.Abs(frameCount);
             RowSpan = Math.Max(1, rowSpan);
@@ -69,7 +69,7 @@ namespace PckStudio.Core
         {
             for (int i = 0; i < _frameCount; i++)
             {
-                yield return new AtlasLargeTile($"{Name}_{i}", Row + (Direction == ImageLayoutDirection.Horizontal ? i * RowSpan : 0), Column + (Direction == ImageLayoutDirection.Vertical ? i * ColumnSpan : 0), RowSpan, ColumnSpan, AllowCustomColor);
+                yield return new AtlasLargeTile($"{Name}_{i}", $"{Name}_{i}", Row + (Direction == ImageLayoutDirection.Horizontal ? i * RowSpan : 0), Column + (Direction == ImageLayoutDirection.Vertical ? i * ColumnSpan : 0), RowSpan, ColumnSpan, AllowCustomColor);
             }
             yield break;
         }

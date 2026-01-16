@@ -7,6 +7,9 @@ using System.IO.Compression;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OMI.Formats.Archive;
+using OMI.Formats.FUI;
+using OMI.Workers.FUI;
 using PckStudio.Core.Deserializer;
 using PckStudio.Core.DLC;
 using PckStudio.Core.Extensions;
@@ -18,8 +21,7 @@ namespace PckStudio.Core.IO.Java
     public class ResourcePackImporter
     {
         internal const int TARGET_FORMAT_VERSION = 4;
-        private const string JAVA_RESOURCE_PACK_PATH = "assets/minecraft/";
-        private const string JAVA_TEXTURES_PATH = "textures";
+        private const string JAVA_RESOURCE_PACK_PATH = "assets/minecraft/textures";
 
         static readonly IReadOnlyDictionary<Version, IMinecraftJavaVersion> _formatVeriosnToGameVersion = new Dictionary<Version, IMinecraftJavaVersion>()
         {
@@ -71,7 +73,7 @@ namespace PckStudio.Core.IO.Java
         private readonly LCEGameVersion _gameVersion;
         private string _name;
         private ImportStatusReport _importStatus;
-        private McPackmeta.McPack _packMeta;
+        private McPack _packMeta;
         private Dictionary<string, ZipArchiveEntry> _resoursePackData;
 
         public ResourcePackImporter(LCEGameVersion gameVersion)
@@ -79,7 +81,9 @@ namespace PckStudio.Core.IO.Java
             _gameVersion = gameVersion;
         }
 
-        public static bool IsJavaResourcePack(ZipArchive zip) => zip.GetEntry("pack.mcmeta") is not null;
+        public static bool IsJavaResourcePack(ZipArchive zip)
+            => zip.GetEntry("pack.mcmeta") is not null &&
+            McMeta.LoadMcMeta(zip.GetEntry("pack.mcmeta").ReadAllText()).Contains("pack");
 
         public bool StartImport(string name, ZipArchive zip, ImportStatusReport importStatus)
         {
@@ -89,17 +93,16 @@ namespace PckStudio.Core.IO.Java
                 return false;
             }
             _name = name;
-            _importStatus = importStatus;
+            _importStatus = importStatus ?? ImportStatusReport.CreateEmpty();
             _packMeta = ReadPackMeta(zip);
-            string path = Path.Combine(JAVA_RESOURCE_PACK_PATH, JAVA_TEXTURES_PATH);
-            _resoursePackData = zip.GetDirectoryContent(path, includeSubDirectories: true).ToDictionary(e => e.FullName.Substring(path.Length + 1));
+            _resoursePackData = zip.GetDirectoryContent(JAVA_RESOURCE_PACK_PATH, includeSubDirectories: true).ToDictionary(e => e.FullName.Substring(JAVA_RESOURCE_PACK_PATH.Length + 1));
             return true;
         }
 
-        public McPackmeta.McPack ReadPackMeta(ZipArchive zip)
+        public McPack ReadPackMeta(ZipArchive zip)
         {
-            StreamReader packmeta = new StreamReader(zip.GetEntry("pack.mcmeta").Open());
-            McPackmeta.McPack pack = JsonConvert.DeserializeObject<McPackmeta>(packmeta.ReadToEnd()).Pack;
+            string json = zip.GetEntry("pack.mcmeta").ReadAllText();
+            McPack pack = McMeta.LoadMcMeta(json)["pack"].ToObject<McPack>();
             if (pack.Format == TARGET_FORMAT_VERSION)
                 _importStatus.Post("Target format version... less work?");
             _importStatus.Post($"Importing textures from resource pack of version: {GetJavaGameVersionFromResourcePackFormat(pack.Format)}(Format:{pack.Format})");
@@ -152,14 +155,36 @@ namespace PckStudio.Core.IO.Java
 
             ImportResult<(Dictionary<string, Image> mobs, Dictionary<string, Image> items), TextureImportStats> entityModelTextures = ImportEntityModels();
 
+            ImportResult<Dictionary<string, Image>, TextureImportStats> misc = ImportMisc();
+
+            const int cCHEST_BREAK_TEXTURE = 149;
+            const int cENDERCHEST_BREAK_TEXTURE = 150;
+            if (entityModelTextures.Result.items.TryGetValue("item/chest", out Image chest))
+            {
+                block.Result.Atlas[cCHEST_BREAK_TEXTURE].Texture = chest.Resize(block.Result.Atlas.TileSize, GraphicsConfig.PixelPerfect());
+                block.Stats.textures++;
+            }
+
+            if (entityModelTextures.Result.items.TryGetValue("item/enderchest", out Image enderchest))
+            {
+                block.Result.Atlas[cENDERCHEST_BREAK_TEXTURE].Texture = enderchest.Resize(block.Result.Atlas.TileSize, GraphicsConfig.PixelPerfect());
+                block.Stats.textures++;
+            }
+
+            ConsoleArchive mediaArc = default;
+            if (MessageBoxEx.AskQuestion("Import UI?\nThis will take more time to import!", "Include UI", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.Yes)
+            {
+                mediaArc = ImportUI();
+            }
+
             DLCTexturePackage.MetaData metaData = new DLCTexturePackage.MetaData(null, _packMeta.Icon);
 
             int id = new Random().Next(0, GameConstants.MAX_PACK_ID - 1);
 
-            TextureImportStats stats = block.Stats + item.Stats + particles.Stats + envData.Stats + armorSets.Stats + entityModelTextures.Stats;
+            TextureImportStats stats = block.Stats + item.Stats + particles.Stats + envData.Stats + armorSets.Stats + entityModelTextures.Stats + misc.Stats;
 
-            string name = ConvertJavaTextFormatToLCE(_name.Replace("_", " "));
-            string description = ConvertJavaTextFormatToLCE(_packMeta.Description);
+            string name = JavaConstants.EsapceMiencarftJavaFormat(_name.Replace("_", " "));
+            string description = JavaConstants.ConvertJavaTextFormatToHTML(_packMeta.Description);
 
             DLCTexturePackage dlcTexturePackage = new DLCTexturePackage(name, description, id,
                     metaData,
@@ -187,32 +212,27 @@ namespace PckStudio.Core.IO.Java
                     itemAnimations: item.Result.Animations,
                     blockAnimations: block.Result.Animations,
                     sun: envData.Result.sun,
-                    moon: null, parentPackage: null);
+                    moon: null,
+                    mediaArc: mediaArc,
+                    misc: misc.Result,
+                    parentPackage: null);
             return new ImportResult<DLCTexturePackage, TextureImportStats>(dlcTexturePackage, stats);
         }
 
-        private string ConvertJavaTextFormatToLCE(string text)
+        private ImportResult<Dictionary<string, Image>, TextureImportStats> ImportMisc()
         {
-            string[] sections = text.Split(['§'], StringSplitOptions.RemoveEmptyEntries);
-            if (sections.Length == 0 || sections.Length == 1)
-                return text;
-            string formatText = string.Join("", sections
-                .Select(s => {
-                    if (string.IsNullOrWhiteSpace(s) || !(s.Length > 1))
-                        return s;
-                    string colorFormat = "§" + s[0];
-                    string colorText = s.Substring(1);
-                    if (JavaConstants.JavaColorCodeToColor.TryGetValue(colorFormat, out (Color foreground, Color background) color))
-                    {
-                        string htmlColor = color.foreground.ToHTMLColor();
-                        if (colorText.EndsWith("\n"))
-                            return $"<font color=\"{htmlColor}\">{colorText.Substring(0, colorText.Length - 1)}</font>\n";
-                        return $"<font color=\"{htmlColor}\">{colorText}</font>";
-                    }
-                    return s;
+            Dictionary<string, Image> res = new Dictionary<string, Image>();
+            TextureImportStats stats = new TextureImportStats(latest2lce_misc.Count);
+            foreach (KeyValuePair<string, JavaResourceConvertJson> item in latest2lce_misc)
+            {
+                if (GetEntries(item.Key).FirstOrDefault().Value is ZipArchiveEntry entry)
+                {
+                    Image texture = entry.GetImage();
+                    res.Add(item.Value.LceName, texture);
+                    stats.textures++;
                 }
-                ));
-            return formatText;
+            }
+            return new ImportResult<Dictionary<string, Image>, TextureImportStats>(res, stats);
         }
 
         private Animation ImportAnimation(string suffix, AtlasResource.AtlasType atlasType)
@@ -232,42 +252,45 @@ namespace PckStudio.Core.IO.Java
 
         public ImportResult<(Atlas Atlas, IDictionary<string, Animation> Animations), TextureImportStats> ImportAtlas(AtlasResource atlasResource)
         {
-            _importStatus.Post($"[{nameof(ImportAtlas)}] Importing: '{atlasResource.Path}'");
+            _importStatus.Post($"[{nameof(ImportAtlas)}] Importing: Atlas('{atlasResource.Path}')");
             Atlas atlas = Atlas.CreateDefault(atlasResource, _gameVersion);
             string path = GetAtlasPathFromFormat(_packMeta.Format, atlasResource.Type);
             IDictionary<string, ZipArchiveEntry> entries = GetEntries(path);
 
             IReadOnlyDictionary<string, JavaResourceConvertJson> lookUpTable = GetVersionLookUpTable(atlasResource.Type);
 
-            IEnumerable<(int index, JsonTileInfo value)> a = atlasResource.TilesInfo.Enumerate().GroupBy(it => it.value.InternalName).Select(grp => grp.FirstOrDefault());
+            IEnumerable<(int index, JsonTileInfo value)> a = atlasResource.TilesInfo.Select((v, i) => (i, v)).GroupBy(it => it.v.InternalName).Select(grp => grp.FirstOrDefault());
             IReadOnlyDictionary<string, int> map = a.ToDictionary(tileInfo => string.IsNullOrEmpty(tileInfo.value.InternalName) ? $"{Guid.NewGuid()}.{tileInfo.index}" : tileInfo.value.InternalName.ToLowerInvariant(), it => it.index);
 
-            IReadOnlyDictionary<string, ZipArchiveEntry> javaAnimations = entries.Values.Where(e => e.FullName.EndsWith(".mcmeta")).ToDictionary(entry => entry.FullName);
+            IReadOnlyDictionary<string, ZipArchiveEntry> mcMetaFiles = entries.Values.Where(e => e.FullName.EndsWith(".mcmeta")).ToDictionary(entry => entry.FullName);
 
             TextureImportStats stats = new TextureImportStats(atlasResource.TilesInfo.Where(t => !string.IsNullOrWhiteSpace(t.InternalName)).Count());
             IDictionary<string, Animation> animations = new Dictionary<string, Animation>();
             foreach (ZipArchiveEntry entry in entries.Values)
             {
-                _importStatus.Post(entry.FullName);
                 if (!entry.FullName.EndsWith(".png"))
                     continue;
                 string name = Path.GetFileNameWithoutExtension(entry.FullName);
-                if (!map.TryGetValue(name, out int index) && !(lookUpTable.TryGetValue(name, out JavaResourceConvertJson lceKey) && map.TryGetValue(lceKey.LceName.ToLowerInvariant(), out index)) || !index.IsWithinRangeOf(0, atlas.TileCount - 1))
+                bool isPartOfGroup = atlasResource.AtlasGroups.Any(grp => grp.InternalName == name);
+                if (!map.TryGetValue(name, out int index) &&
+                    !isPartOfGroup &&
+                    !(lookUpTable.TryGetValue(name, out JavaResourceConvertJson lceKey) && map.TryGetValue(lceKey.LceName.ToLowerInvariant(), out index)) || !index.IsWithinRangeOf(0, atlas.TileCount - 1))
                     continue;
 
-                JsonTileInfo tileInfo = atlas[index]?.GetUserDataOfType<JsonTileInfo>();
+                AtlasGroup atlasGroup = atlasResource.AtlasGroups.FirstOrDefault(grp => grp.InternalName == name);
+                AtlasTile tile = isPartOfGroup ? atlas[atlasGroup.Row, atlasGroup.Column] : atlas[index];
+                JsonTileInfo tileInfo = tile?.GetUserDataOfType<JsonTileInfo>();
 
                 Image img = entry.GetImage();
-                bool hasMcMeta = javaAnimations.TryGetValue(entry.FullName + ".mcmeta", out ZipArchiveEntry archiveEntry);
+                bool hasMcMeta = mcMetaFiles.TryGetValue(entry.FullName + ".mcmeta", out ZipArchiveEntry archiveEntry);
                 if (hasMcMeta)
                 {
                     string jsonData = archiveEntry.ReadAllText();
-                    Debug.WriteLine(jsonData);
-                    JObject mcMetaJson = JObject.Parse(jsonData);
+                    McMeta mcMeta = McMeta.LoadMcMeta(jsonData);
                     string animationName = tileInfo?.InternalName ?? name;
-                    if (mcMetaJson["animation"] != null && !animations.ContainsKey(animationName))
+                    if (mcMeta.Contains("animation") && !animations.ContainsKey(animationName))
                     {
-                        Animation animation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcMetaJson, img);
+                        Animation animation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcMeta, img);
                         if (animation.FrameCount > 0)
                             animations.Add(animationName, animation);
                         stats.animations++;
@@ -275,7 +298,13 @@ namespace PckStudio.Core.IO.Java
                         stats.textures++;
                     }
                 }
-                atlas[index].Texture = img;
+                if (isPartOfGroup && atlasGroup is not null)
+                {
+                    atlas.SetGroup(atlasGroup, img);
+                    continue;
+                }
+
+                tile.Texture = img;
                 stats.textures++;
             }
             ImportResult<(Atlas atlas, IDictionary<string, Animation> animations), TextureImportStats> result = new ImportResult<(Atlas atlas, IDictionary<string, Animation> animations), TextureImportStats>((atlas, animations), stats);
@@ -288,6 +317,7 @@ namespace PckStudio.Core.IO.Java
         static readonly IReadOnlyDictionary<string, JavaResourceConvertJson> latest2lce_blocks = JsonConvert.DeserializeObject<Dictionary<string, JavaResourceConvertJson>>(Resources.latest2lce_blocks);
         static readonly IReadOnlyDictionary<string, JavaResourceConvertJson> latest2lce_items = JsonConvert.DeserializeObject<Dictionary<string, JavaResourceConvertJson>>(Resources.latest2lce_items);
         static readonly IReadOnlyDictionary<string, JavaResourceConvertJson> latest2lce_entities = JsonConvert.DeserializeObject<Dictionary<string, JavaResourceConvertJson>>(Resources.latest2lce_entities);
+        static readonly IReadOnlyDictionary<string, JavaResourceConvertJson> latest2lce_misc = JsonConvert.DeserializeObject<Dictionary<string, JavaResourceConvertJson>>(Resources.latest2lce_misc);
 
         class JavaResourceConvertJson
         {
@@ -353,11 +383,11 @@ namespace PckStudio.Core.IO.Java
             Size s = source.Size;
             if (textureRemap.SourceSize != Size.Empty || textureRemap.TargetSize != Size.Empty)
             {
-                xSclar = source.Width / textureRemap.SourceSize.Width;
-                ySclar = source.Height / textureRemap.SourceSize.Height;
+                xSclar = Math.Max(source.Width / textureRemap.SourceSize.Width, 1);
+                ySclar = Math.Max(source.Height / textureRemap.SourceSize.Height, 1);
                 s = textureRemap.TargetSize;
             }
-            Image res = new Bitmap(s.Width * xSclar, s.Height* ySclar);
+            Image res = new Bitmap(s.Width * xSclar, s.Height * ySclar);
 
             using Graphics g = Graphics.FromImage(res);
             g.ApplyConfig(GraphicsConfig.PixelPerfect());
@@ -372,7 +402,7 @@ namespace PckStudio.Core.IO.Java
                 {
                     if (remapArea.Rotation == 90f)
                         sourceAreaImg.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    if (remapArea.Rotation == -90f)
+                    if (remapArea.Rotation == -90f || remapArea.Rotation == 270f)
                         sourceAreaImg.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     if (remapArea.Rotation == 180f)
                         sourceAreaImg.RotateFlip(RotateFlipType.Rotate180FlipNone);
@@ -432,6 +462,7 @@ namespace PckStudio.Core.IO.Java
 
         private ImportResult<(ArmorSet Leather, ArmorSet Chain, ArmorSet Gold, ArmorSet Iron, ArmorSet Diamond, ArmorSet Turtle), TextureImportStats> ImportArmorSets()
         {
+            _importStatus.Post($"[{nameof(ImportArmorSets)}] Importing: Armor");
             string path = Path.Combine("models", "armor");
             IDictionary<string, ZipArchiveEntry> entries = GetEntries(path, ".png");
 
@@ -475,6 +506,8 @@ namespace PckStudio.Core.IO.Java
 
         private ImportResult<(DLCTexturePackage.EnvironmentData environmentData, Atlas moonPhases, Image sun), TextureImportStats> ImportEnvironmentData()
         {
+            _importStatus.Post($"[{nameof(ImportEnvironmentData)}] Importing: Environment Data");
+
             string path = Path.Combine("environment");
 
             IDictionary<string, ZipArchiveEntry> entries = GetEntries(path, ".png");
@@ -498,8 +531,11 @@ namespace PckStudio.Core.IO.Java
             return new ImportResult<(DLCTexturePackage.EnvironmentData environmentData, Atlas moonPhases, Image sun), TextureImportStats>((environmentData, moonPhases, sun), stats);
         }
 
+        //! TODO: fix villiager (v1.14 or higher), husk(64x64=>64x32), 
         private ImportResult<(Dictionary<string, Image> mobs, Dictionary<string, Image> items), TextureImportStats> ImportEntityModels()
         {
+            _importStatus.Post($"[{nameof(ImportArmorSets)}] Importing: Entity Models");
+
             string path = "entity";
             IDictionary<string, ZipArchiveEntry> entries = GetEntries(path, ".png", includeSubDirectories: true);
 
@@ -663,7 +699,7 @@ namespace PckStudio.Core.IO.Java
                 return false;
             }
 
-            if (_packMeta.Format > 5)
+            if (_packMeta.Format > TARGET_FORMAT_VERSION)
             {
                 if (!items.ContainsKey("item/largechest") && GetLargeChestTexture("normal", out Image texture))
                 {
@@ -675,8 +711,315 @@ namespace PckStudio.Core.IO.Java
                 }
             }
 
-
             return new ImportResult<(Dictionary<string, Image> mobs, Dictionary<string, Image> items), TextureImportStats>((mobs, items), stats);
+        }
+
+        private ConsoleArchive ImportUI()
+        {
+            _importStatus.Post($"[{nameof(ImportArmorSets)}] Importing: UI");
+
+            IDictionary<string, ZipArchiveEntry> javaGui = GetEntries("gui", includeSubDirectories: true);
+
+            ConsoleArchive mediaArc = new ConsoleArchive();
+
+            FourjUserInterface skinHud = new FourjUIReader().FromStream(new MemoryStream(Resources.skinHud));
+
+
+            FourjUserInterface skinGraphicsHud = new FourjUIReader().FromStream(new MemoryStream(Resources.skinGraphicsHud));
+            FourjUserInterface skinGraphicsInGame = new FourjUIReader().FromStream(new MemoryStream(Resources.skinGraphicsInGame));
+
+            FourjUserInterface skinPlatform = new FourjUIReader().FromStream(new MemoryStream(Resources.skinWiiU));
+            // skinWiiU.fui
+            if (
+                javaGui.TryGetValue("title/background/panorama_0.png", out ZipArchiveEntry panorama0Entry) &&
+                javaGui.TryGetValue("title/background/panorama_1.png", out ZipArchiveEntry panorama1Entry) &&
+                javaGui.TryGetValue("title/background/panorama_2.png", out ZipArchiveEntry panorama2Entry) &&
+                javaGui.TryGetValue("title/background/panorama_3.png", out ZipArchiveEntry panorama3Entry))
+            {
+
+                Image panorama0Texture = panorama0Entry.GetImage();
+                Image panorama1Texture = panorama1Entry.GetImage();
+                Image panorama2Texture = panorama2Entry.GetImage();
+                Image panorama3Texture = panorama3Entry.GetImage();
+
+                //! TODO: make more efficent !? -null
+                Image panorama = new Image[] { panorama0Texture, panorama1Texture, panorama2Texture, panorama3Texture }.Combine(ImageLayoutDirection.Horizontal);
+                panorama = panorama.Resize(new Size(820, 144), GraphicsConfig.PixelPerfect());
+                skinPlatform.SetSymbol("Panorama_Background_S", panorama);
+                skinPlatform.SetSymbol("Panorama_Background_N", panorama);
+
+            }
+            if (javaGui.TryGetValue("title/minecraft.png", out ZipArchiveEntry minecraftLogo))
+                skinPlatform.SetSymbol("MenuTitle", minecraftLogo.GetImage());
+
+            FuiTimeline hudTimeline = skinHud.GetNamedTimeline("fourj.FJ_Hud");
+
+            // base size : 256x256
+            if (javaGui.TryGetValue("widgets.png", out ZipArchiveEntry widgetsEntry))
+            {
+                Image widgetsTexture = widgetsEntry.GetImage();
+                Size baseSize = new Size(256, 256);
+                Size targetSize = widgetsTexture.Size;
+                Size scale = new Size(Math.Max(targetSize.Width / baseSize.Width, 1), Math.Max(targetSize.Height / baseSize.Height, 1));
+                Image hotbarItemBackTexture = widgetsTexture.GetArea(0, 0, 182, 22, scale);
+                Image hotbarItemSelectedTexture = widgetsTexture.GetArea(0, 22, 24, 24, scale);
+                Image hotbarOffhandSlotTexture = widgetsTexture.GetArea(24, 23, 22, 22, scale);
+                skinGraphicsHud.SetSymbol("hotbar_item_back", hotbarItemBackTexture);
+                skinGraphicsHud.SetSymbol("hotbar_item_selected", hotbarItemSelectedTexture);
+                skinGraphicsHud.SetSymbol("hotbar_offhand_slot", hotbarOffhandSlotTexture);
+
+                FuiTimelineEvent fuiTimelineEvent = hudTimeline.FindNamedEvent("HotBar");
+                FuiTimeline eventTimelineHotbar = skinHud.GetEventTimeline(fuiTimelineEvent);
+                // event 0 is a ref named "hotbar_item_back"
+                eventTimelineHotbar.Frames[0].Events[0].Matrix = System.Numerics.Matrix3x2.CreateScale(3f / scale.Width, 3f / scale.Height);
+                eventTimelineHotbar.FindNamedEvent("HotbarSelector").Matrix *= System.Numerics.Matrix3x2.CreateScale(1f / scale.Width, 1f / scale.Height);
+            }
+
+            // base size : 256x256
+            if (javaGui.TryGetValue("icons.png", out ZipArchiveEntry iconsEntry))
+            {
+                Image iconsTexture = iconsEntry.GetImage();
+                Size iconSize = new Size(9, 9);
+
+                Size baseSize = new Size(256, 256);
+                Size targetSize = iconsTexture.Size;
+                Size scale = new Size(Math.Max(targetSize.Width / baseSize.Width, 1), Math.Max(targetSize.Height / baseSize.Height, 1));
+                
+                skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("FJ_ArmourBar")).Frames[0].Events[0].Matrix *= System.Numerics.Matrix3x2.CreateScale(1f / scale.Width, 1f / scale.Height);
+                skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("ExpBar")).Frames[0].Events[0].Matrix *= System.Numerics.Matrix3x2.CreateScale(1f / scale.Width, 1f / scale.Height);
+                skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("FJ_FoodBar")).Frames[0].Events[0].Matrix *= System.Numerics.Matrix3x2.CreateScale(1f / scale.Width, 1f / scale.Height);
+
+                DebugEx.WriteLine(skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("FJ_ArmourBar")).Frames[0].Events);
+                DebugEx.WriteLine(skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("ExpBar")).Frames[0].Events);
+                DebugEx.WriteLine(skinHud.GetEventTimeline(hudTimeline.FindNamedEvent("FJ_FoodBar")).Frames[0].Events);
+         
+                skinGraphicsHud.SetSymbol("HUD_Crosshair", iconsTexture.GetArea(0, 0, 15, 15, scale));
+
+                skinGraphicsHud.SetSymbol("experience_bar_empty", iconsTexture.GetArea(0, 64, 182, 5, scale));
+
+                skinGraphicsHud.SetSymbol("experience_bar_full", iconsTexture.GetArea(0, 69, 182, 5, scale));
+
+                skinGraphicsHud.SetSymbol("HorseJump_bar_empty", iconsTexture.GetArea(0, 84, 182, 5, scale));
+
+                skinGraphicsHud.SetSymbol("HorseJump_bar_full", iconsTexture.GetArea(0, 89, 182, 5, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Background", iconsTexture.GetArea(new Point(16, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Background_Flash", iconsTexture.GetArea(new Point(25, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full", iconsTexture.GetArea(new Point(52, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half", iconsTexture.GetArea(new Point(61, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Flash", iconsTexture.GetArea(new Point(70, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Flash", iconsTexture.GetArea(new Point(79, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Poison", iconsTexture.GetArea(new Point(88, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Poison", iconsTexture.GetArea(new Point(97, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Poison_Flash", iconsTexture.GetArea(new Point(106, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Poison_Flash", iconsTexture.GetArea(new Point(115, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Wither", iconsTexture.GetArea(new Point(124, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Wither", iconsTexture.GetArea(new Point(133, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Wither_Flash", iconsTexture.GetArea(new Point(142, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Wither_Flash", iconsTexture.GetArea(new Point(151, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Full_Absorb", iconsTexture.GetArea(new Point(160, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("Health_Half_Absorb", iconsTexture.GetArea(new Point(169, 0), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Armour_Empty", iconsTexture.GetArea(new Point(16, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Armour_Half", iconsTexture.GetArea(new Point(25, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Armour_Full", iconsTexture.GetArea(new Point(34, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Air_Bubble", iconsTexture.GetArea(new Point(16, 18), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Air_Pop", iconsTexture.GetArea(new Point(25, 18), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Background", iconsTexture.GetArea(new Point(16, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Background_Flash", iconsTexture.GetArea(new Point(25, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Full", iconsTexture.GetArea(new Point(52, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Half", iconsTexture.GetArea(new Point(61, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Flash", iconsTexture.GetArea(new Point(70, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Flash", iconsTexture.GetArea(new Point(79, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Poison", iconsTexture.GetArea(new Point(88, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Poison", iconsTexture.GetArea(new Point(97, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Poison_Flash", iconsTexture.GetArea(new Point(106, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Poison_Flash", iconsTexture.GetArea(new Point(115, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HUD_Food_Background_Poison", iconsTexture.GetArea(new Point(133, 27), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HorseHealth_Full", iconsTexture.GetArea(new Point(88, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HorseHealth_Half", iconsTexture.GetArea(new Point(97, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HorseHealth_Full_Flash", iconsTexture.GetArea(new Point(106, 9), iconSize, scale));
+
+                skinGraphicsHud.SetSymbol("HorseHealth_Half_Flash", iconsTexture.GetArea(new Point(115, 9), iconSize, scale));
+
+            }
+
+            if (javaGui.TryGetValue("sprites/hud/crosshair.png", out ZipArchiveEntry crosshairEntry))
+                skinGraphicsHud.SetSymbol("HUD_Crosshair", crosshairEntry.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/hotbar.png", out ZipArchiveEntry hotbar))
+                skinGraphicsHud.SetSymbol("hotbar_item_back", hotbar.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/hotbar_selection.png", out ZipArchiveEntry hotbar_selection))
+                skinGraphicsHud.SetSymbol("hotbar_item_selected", hotbar_selection.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/hotbar_offhand_left.png", out ZipArchiveEntry hotbar_offhand_left))
+                skinGraphicsHud.SetSymbol("hotbar_offhand_slot", hotbar_offhand_left.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/experience_bar_background.png", out ZipArchiveEntry experienceBarBackgroundEntry))
+                skinGraphicsHud.SetSymbol("experience_bar_empty", experienceBarBackgroundEntry.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/experience_bar_progress.png", out ZipArchiveEntry experience_bar_progress))
+                skinGraphicsHud.SetSymbol("experience_bar_full", experience_bar_progress.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/jump_bar_background.png", out ZipArchiveEntry jump_bar_background))
+                skinGraphicsHud.SetSymbol("HorseJump_bar_empty", jump_bar_background.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/jump_bar_progress.png", out ZipArchiveEntry jump_bar_progress))
+                skinGraphicsHud.SetSymbol("HorseJump_bar_full", jump_bar_progress.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/armor_empty.png", out ZipArchiveEntry armor_empty))
+                skinGraphicsHud.SetSymbol("HUD_Armour_Empty", armor_empty.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/armor_half.png", out ZipArchiveEntry armor_half))
+                skinGraphicsHud.SetSymbol("HUD_Armour_Half", armor_half.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/armor_full.png", out ZipArchiveEntry armor_full))
+                skinGraphicsHud.SetSymbol("HUD_Armour_Full", armor_full.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/air.png", out ZipArchiveEntry air))
+                skinGraphicsHud.SetSymbol("HUD_Air_Bubble", air.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/air_bursting.png", out ZipArchiveEntry air_bursting))
+                skinGraphicsHud.SetSymbol("HUD_Air_Pop", air_bursting.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/container.png", out ZipArchiveEntry container))
+                skinGraphicsHud.SetSymbol("Health_Background", container.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/container_blinking.png", out ZipArchiveEntry container_blinking))
+                skinGraphicsHud.SetSymbol("Health_Background_Flash", container_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/full.png", out ZipArchiveEntry full))
+                skinGraphicsHud.SetSymbol("Health_Full", full.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/full_blinking.png", out ZipArchiveEntry full_blinking))
+                skinGraphicsHud.SetSymbol("Health_Full_Flash", full_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/half.png", out ZipArchiveEntry half))
+                skinGraphicsHud.SetSymbol("Health_Half", half.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/half_blinking.png", out ZipArchiveEntry half_blinking))
+                skinGraphicsHud.SetSymbol("Health_Half_Flash", half_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/poisoned_full.png", out ZipArchiveEntry poisoned_full))
+                skinGraphicsHud.SetSymbol("Health_Full_Poison", poisoned_full.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/poisoned_half.png", out ZipArchiveEntry poisoned_half))
+                skinGraphicsHud.SetSymbol("Health_Half_Poison", poisoned_half.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/poisoned_full_blinking.png", out ZipArchiveEntry poisoned_full_blinking))
+                skinGraphicsHud.SetSymbol("Health_Full_Poison_Flash", poisoned_full_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/poisoned_half_blinking.png", out ZipArchiveEntry poisoned_half_blinking))
+                skinGraphicsHud.SetSymbol("Health_Half_Poison_Flash", poisoned_half_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/withered_full.png", out ZipArchiveEntry withered_full))
+                skinGraphicsHud.SetSymbol("Health_Full_Wither", withered_full.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/withered_half.png", out ZipArchiveEntry withered_half))
+                skinGraphicsHud.SetSymbol("Health_Half_Wither", withered_half.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/withered_full_blinking.png", out ZipArchiveEntry withered_full_blinking))
+                skinGraphicsHud.SetSymbol("Health_Full_Wither_Flash", withered_full_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/withered_half_blinking.png", out ZipArchiveEntry withered_half_blinking))
+                skinGraphicsHud.SetSymbol("Health_Half_Wither_Flash", withered_half_blinking.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/absorbing_full.png", out ZipArchiveEntry absorbing_full))
+                skinGraphicsHud.SetSymbol("Health_Full_Absorb", absorbing_full.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/absorbing_half.png", out ZipArchiveEntry absorbing_half))
+                skinGraphicsHud.SetSymbol("Health_Half_Absorb", absorbing_half.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/food_empty.png", out ZipArchiveEntry food_empty))
+            {
+                Image food_emptyTexture = food_empty.GetImage();
+                skinGraphicsHud.SetSymbol("HUD_Food_Background", food_emptyTexture);
+                skinGraphicsHud.SetSymbol("HUD_Food_Background_Flash", food_emptyTexture);
+            }
+
+            if (javaGui.TryGetValue("sprites/hud/food_full.png", out ZipArchiveEntry food_full))
+            {
+                Image food_fullTexture = food_full.GetImage();
+                skinGraphicsHud.SetSymbol("HUD_Food_Full", food_fullTexture);
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Flash", food_fullTexture);
+            }
+
+            if (javaGui.TryGetValue("sprites/hud/food_half.png", out ZipArchiveEntry food_half))
+            {
+                Image food_halfTexture = food_half.GetImage();
+                skinGraphicsHud.SetSymbol("HUD_Food_Half", food_halfTexture);
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Flash", food_halfTexture);
+            }
+            if (javaGui.TryGetValue("sprites/hud/food_full_hunger.png", out ZipArchiveEntry food_full_hunger))
+            {
+                Image food_full_hungerTexture = food_full_hunger.GetImage();
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Poison", food_full_hungerTexture);
+                skinGraphicsHud.SetSymbol("HUD_Food_Full_Poison_Flash", food_full_hungerTexture);
+            }
+
+            if (javaGui.TryGetValue("sprites/hud/food_half_hunger.png", out ZipArchiveEntry food_half_hunger))
+            {
+                Image food_half_hungerTexture = food_half_hunger.GetImage();
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Poison", food_half_hungerTexture);
+                skinGraphicsHud.SetSymbol("HUD_Food_Half_Poison_Flash", food_half_hungerTexture);
+            }
+
+
+            if (javaGui.TryGetValue("sprites/hud/food_empty_hunger.png", out ZipArchiveEntry food_empty_hunger))
+                skinGraphicsHud.SetSymbol("HUD_Food_Background_Poison", food_empty_hunger.GetImage());
+
+            if (javaGui.TryGetValue("sprites/hud/heart/vehicle_full.png", out ZipArchiveEntry vehicle_full))
+            {
+                Image vehicle_fullfTexture = vehicle_full.GetImage();
+                skinGraphicsHud.SetSymbol("HorseHealth_Full", vehicle_fullfTexture);
+                skinGraphicsHud.SetSymbol("HorseHealth_Full_Flash", vehicle_fullfTexture);
+            }
+            if (javaGui.TryGetValue("sprites/hud/heart/vehicle_half.png", out ZipArchiveEntry vehicle_half))
+            {
+                Image vehicle_halfTexture = vehicle_half.GetImage();
+                skinGraphicsHud.SetSymbol("HorseHealth_Half", vehicle_halfTexture);
+                skinGraphicsHud.SetSymbol("HorseHealth_Half_Flash", vehicle_halfTexture);
+            }
+
+            mediaArc.Add("skinHud.fui", new FourjUIWriter(skinHud));
+            mediaArc.Add("skinWiiU.fui", new FourjUIWriter(skinPlatform));
+            mediaArc.Add("skinGraphicsHud.fui", new FourjUIWriter(skinGraphicsHud));
+
+            return mediaArc;
         }
     }
 }
