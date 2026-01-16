@@ -272,7 +272,7 @@ namespace PckStudio.Core
         public bool SetGroup(AtlasGroup group, Image texture)
         {
             Size splitSize = group.IsLargeTile() ? new Size(texture.Width / ((AtlasLargeTile)group).RowSpan, texture.Height /((AtlasLargeTile)group).ColumnSpan) : TileSize;
-            Image[] images = texture.Split(splitSize, _layoutDirection).ToArray();
+            Image[] images = texture.Split(splitSize, group.Direction).ToArray();
             if (!images.All(img => img.Size == splitSize))
                 return false;
             if (images.Length != group.Count)

@@ -609,6 +609,29 @@ namespace PckStudio.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;misc/pumpkinblur&quot;: { &quot;lce_name&quot;: &quot;pumpkinblur&quot; },
+        ///  &quot;misc/shadow&quot;: { &quot;lce_name&quot;: &quot;shadow&quot; },
+        ///  &quot;misc/vignette&quot;: { &quot;lce_name&quot;: &quot;vignette&quot; },
+        ///  &quot;misc/underwater&quot;: { &quot;lce_name&quot;: &quot;water&quot; },
+        ///  &quot;misc/enchanted_item_glint&quot;: { &quot;lce_name&quot;: &quot;glint&quot; },
+        ///
+        ///  &quot;map/map_background&quot;: { &quot;lce_name&quot;: &quot;mapbg&quot; },
+        ///  
+        ///  &quot;colormap/foliage&quot;: { &quot;lce_name&quot;: &quot;foliagecolor&quot; },
+        ///  &quot;colormap/grass&quot;: { &quot;lce_name&quot;: &quot;grasscolor&quot; },
+        ///
+        ///  &quot;environment/end_sky&quot;: { &quot;lce_name&quot;: &quot;tunnel&quot; },
+        ///
+        ///  &quot;particle/footprint&quot;: { &quot;lce_name&quot;: &quot;fo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string latest2lce_misc {
+            get {
+                return ResourceManager.GetString("latest2lce_misc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap map_icons_atlas {
@@ -865,6 +888,66 @@ namespace PckStudio.Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("rain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinGraphics {
+            get {
+                object obj = ResourceManager.GetObject("skinGraphics", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinGraphicsHud {
+            get {
+                object obj = ResourceManager.GetObject("skinGraphicsHud", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinGraphicsInGame {
+            get {
+                object obj = ResourceManager.GetObject("skinGraphicsInGame", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinGraphicsLabels {
+            get {
+                object obj = ResourceManager.GetObject("skinGraphicsLabels", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinHud {
+            get {
+                object obj = ResourceManager.GetObject("skinHud", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinWiiU {
+            get {
+                object obj = ResourceManager.GetObject("skinWiiU", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

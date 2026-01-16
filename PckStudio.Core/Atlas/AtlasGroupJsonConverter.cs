@@ -34,8 +34,10 @@ namespace PckStudio.Core
 
             bool allowCustomColor = default;
             jObject.TryGetValue("allowCustomColor", out allowCustomColor);
+            string internalName = default;
+            jObject.TryGetValue("internalName", out internalName);
             if (jObject.TryGetValue("overlay", out JsonRowAndColumn rowsAndColumns))
-                return new AtlasOverlayGroup(name, row, column, rowsAndColumns, allowCustomColor);
+                return new AtlasOverlayGroup(name, internalName, row, column, rowsAndColumns, allowCustomColor);
 
             int frameTime = Animation.MINIMUM_FRAME_TIME;
             int frameCount = default;
@@ -47,11 +49,11 @@ namespace PckStudio.Core
                 jObject.TryGetValue("direction", out direction);
             bool isLargeTile = jObject.TryGetValue("rowSpan", out rowSpan) && jObject.TryGetValue("columnSpan", out columnSpan);
             if (isAnimation && isLargeTile)
-                return new AtlasLargeTileAnimation(name, row, column, rowSpan, columnSpan, frameCount, direction, frameTime, allowCustomColor);
+                return new AtlasLargeTileAnimation(name, internalName, row, column, rowSpan, columnSpan, frameCount, direction, frameTime, allowCustomColor);
             if (isAnimation)
-                return new AtlasAnimation(name, row, column, frameCount, direction, frameTime, allowCustomColor);
+                return new AtlasAnimation(name, internalName, row, column, frameCount, direction, frameTime, allowCustomColor);
             if (isLargeTile)
-                return new AtlasLargeTile(name, row, column, rowSpan, columnSpan, allowCustomColor);
+                return new AtlasLargeTile(name, internalName, row, column, rowSpan, columnSpan, allowCustomColor);
             return default;
         }
 
