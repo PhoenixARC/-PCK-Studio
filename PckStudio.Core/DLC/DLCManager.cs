@@ -375,6 +375,8 @@ namespace PckStudio.Core.DLC
                 itemAnimations: itemAnimations,
                 blockAnimations: blockAnimations,
                 sun: sun, moon: moon,
+                mediaArc: null,
+                misc: null,
                 parentPackage: null);
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using OMI.Formats.Archive;
 using OMI.Formats.Color;
 using PckStudio.Core.Colors;
 using PckStudio.Core.Extensions;
@@ -73,6 +74,8 @@ namespace PckStudio.Core.DLC
         
         private EnvironmentData _environmentData;
 
+        private ConsoleArchive _mediaArc;
+
         private Animation _blockEntityBreakAnimation;
         private IDictionary<string, Animation> _itemAnimations;
         private IDictionary<string, Animation> _blockAnimations;
@@ -80,6 +83,7 @@ namespace PckStudio.Core.DLC
         private Image _moon;
 
         //! TODO: add resources from "res/misc/"
+        private readonly IDictionary<string, Image> _misc;
 
         internal DLCTexturePackage(
             string name,
@@ -111,6 +115,8 @@ namespace PckStudio.Core.DLC
             IDictionary<string, Animation> blockAnimations,
             Image sun,
             Image moon,
+            ConsoleArchive mediaArc,
+            IDictionary<string, Image> misc,
             IDLCPackage parentPackage)
             : base(name, identifier, parentPackage)
         {
@@ -154,6 +160,8 @@ namespace PckStudio.Core.DLC
 
             _itemModelTextures = itemModelTextures;
             _mobModelTextures = mobModelTextures;
+            _mediaArc = mediaArc;
+            _misc = misc;
             SetTextureSizeForResolution();
         }
 
@@ -286,6 +294,8 @@ namespace PckStudio.Core.DLC
                 blockAnimations: blockAnimations,
                 sun: null,
                 moon: null,
+                mediaArc: null, 
+                misc: null, 
                 parentPackage: parentPackage
                 );
         }
@@ -295,10 +305,13 @@ namespace PckStudio.Core.DLC
         internal Atlas GetParticleAtlas() => _particlesAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.ParticleAtlas).GetDefaultAtlas();
         internal Atlas GetPaintingAtlas() => _paintingAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.PaintingAtlas).GetDefaultAtlas();
         internal Atlas GetMoonPhaseAtlas() => _moonPhaseAtlas ?? AtlasResource.Get(AtlasResource.AtlasType.MoonPhaseAtlas).GetDefaultAtlas();
+
         internal IDictionary<string, Animation> GetItemAnimations() => _itemAnimations;
         internal IDictionary<string, Animation> GetBlockAnimations() => _blockAnimations;
         internal IEnumerable<ArmorSet> GetArmorSets() => new ArmorSet[] { _leatherArmorSet, _chainArmorSet, _ironArmorSet, _goldArmorSet, _diamondArmorSet, _turtleArmorSet }.Where(armorSet => armorSet is not null);
         internal Animation GetBlockEntityBreakAnimation() => _blockEntityBreakAnimation;
+        internal ConsoleArchive GetMediaArc() => _mediaArc;
+        internal EnvironmentData GetEnvironmentData() => _environmentData;
 
         private static IDictionary<string, Animation> GetDefaultItemAnimations()
         {
@@ -325,5 +338,7 @@ namespace PckStudio.Core.DLC
         internal IEnumerable<KeyValuePair<string, Image>> GetItemModelTextures() => _itemModelTextures;
 
         internal IEnumerable<KeyValuePair<string, Image>> GetMobModelTextures() => _mobModelTextures;
+
+        internal IDictionary<string, Image> GetMisc() => _misc;
     }
 }

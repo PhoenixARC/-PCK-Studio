@@ -1,21 +1,20 @@
-﻿using System;
+﻿/*
+ * Author: MikuX666 (Github: https://github.com/NessieHax)
+ * See License usage at the bottom of file!
+*/
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DiscordRPC;
 using OMI;
+using OMI.Formats.Archive;
 using OMI.Formats.GameRule;
 using OMI.Formats.Languages;
-using OMI.Formats.Model;
 using OMI.Formats.Pck;
-using OMI.Workers.Color;
+using OMI.Workers.Archive;
 using OMI.Workers.GameRule;
 using OMI.Workers.Language;
-using OMI.Workers.Model;
 using OMI.Workers.Pck;
 using PckStudio.Core.Extensions;
 using PckStudio.Core.Interfaces;
@@ -80,6 +79,8 @@ namespace PckStudio.Core.DLC
             if (package is not DLCTexturePackage texturePackage)
                 return DLCPackageContent.Empty;
 
+            string resourceFolderName = "res";
+
             PckFile texturePackInfoPck = new PckFile();
             {
                 Image comparison = texturePackage.Info?.ComparisonImg ?? Resources.Comparison;
@@ -99,8 +100,8 @@ namespace PckStudio.Core.DLC
                 texturePck.AddTexture(ResourceLocations.GetPathFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.PaintingAtlas)), texturePackage.GetPaintingAtlas());
                 texturePck.AddTexture(ResourceLocations.GetPathFromCategory(AtlasResource.GetId(AtlasResource.AtlasType.MoonPhaseAtlas)), texturePackage.GetMoonPhaseAtlas());
 
-                texturePck.AddTexture("res/terrain/sun.png", texturePackage.GetSunTexture());
-                texturePck.AddTexture("res/terrain/moon.png", texturePackage.GetMoonTexture());
+                texturePck.AddTexture($"{resourceFolderName}/terrain/sun.png", texturePackage.GetSunTexture());
+                texturePck.AddTexture($"{resourceFolderName}/terrain/moon.png", texturePackage.GetMoonTexture());
 
                 string itemAnimationsPath = ResourceLocations.GetPathFromCategory(ResourceCategory.ItemAnimation);
                 foreach (KeyValuePair<string, Animation> animation in texturePackage.GetItemAnimations())
@@ -129,6 +130,12 @@ namespace PckStudio.Core.DLC
                     PckAsset asset = texturePck.CreateNewAsset(path + ".png", PckAssetType.TextureFile);
                     asset.SetSerializedData(armorTexture.Value, ImageSerializer.DefaultSerializer);
                 }
+
+                DLCTexturePackage.EnvironmentData environmentData = texturePackage.GetEnvironmentData();
+
+                texturePck.AddTexture($"{resourceFolderName}/environment/rain.png", environmentData.Rain);
+                texturePck.AddTexture($"{resourceFolderName}/environment/snow.png", environmentData.Snow);
+                texturePck.AddTexture($"{resourceFolderName}/environment/clouds.png", environmentData.Clouds);
 
                 {
                     int i = 0;
@@ -160,19 +167,26 @@ namespace PckStudio.Core.DLC
                 {
                     foreach (KeyValuePair<string, Image> itemTexture in texturePackage.GetItemModelTextures())
                     {
-                        texturePck.AddTexture($"res/{itemTexture.Key}.png", itemTexture.Value);
+                        texturePck.AddTexture($"{resourceFolderName}/{itemTexture.Key}.png", itemTexture.Value);
                     }
                     foreach (KeyValuePair<string, Image> mobTexture in texturePackage.GetMobModelTextures())
                     {
-                        texturePck.AddTexture($"res/{mobTexture.Key}.png", mobTexture.Value);
+                        texturePck.AddTexture($"{resourceFolderName}/{mobTexture.Key}.png", mobTexture.Value);
                     }
                 }
+
+                {
+                    foreach (KeyValuePair<string, Image> item in texturePackage.GetMisc())
+                    {
+                        texturePck.AddTexture($"{resourceFolderName}/misc/{item.Key}.png", item.Value);
+                    }
+                }
+
             }
 
             if (package.IsRootPackage)
             {
-                foreach (string language in LOCFile.ValidLanguages)
-                    localisation.AddLanguage(language);
+                localisation.AddLanguage(_language);
                 PckFile mainPck = CreateRootPckFile(package.Identifier, 0);               
                 localisation.AddLocKey(DLCManager.PACKAGE_DISPLAYNAME_ID, package.Name);
                 localisation.AddLocKey(DLCTexturePackage.TEXTUREPACK_DESCRIPTION_ID, package.Description);
@@ -184,9 +198,19 @@ namespace PckStudio.Core.DLC
 
                 PckAsset loc = new PckAsset("languages.loc", PckAssetType.LocalisationFile);
                 loc.SetData(new LOCFileWriter(localisation, 2));
+
                 //! LOC file needs to be the first asset in the pack -_-.... don't ask why.. -null
                 mainPck.InsertAsset(0, loc);
-                return new DLCPackageContent(package.Name, mainPck, new NamedData<PckFile>($"{res}Data.pck", texturePck), default);
+
+                NamedData<byte[]>[] dataFiles = Array.Empty<NamedData<byte[]>>();
+                if (texturePackage.GetMediaArc() is ConsoleArchive arc)
+                {
+                    MemoryStream stream = new MemoryStream();
+                    new ARCFileWriter(arc).WriteToStream(stream);
+                    dataFiles = [new NamedData<byte[]>("media.arc", stream.ToArray())];
+                }
+
+                return new DLCPackageContent(package.Name, mainPck, new NamedData<PckFile>($"{res}Data.pck", texturePck), dataFiles);
             }
 
             return new DLCPackageContent(package.Name, texturePackInfoPck);
@@ -238,3 +262,20 @@ namespace PckStudio.Core.DLC
         }
     }
 }
+/* Copyright (c) 2026-present miku-666
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1.The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+**/
