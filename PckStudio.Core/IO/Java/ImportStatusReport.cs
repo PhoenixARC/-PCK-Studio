@@ -48,6 +48,11 @@ namespace PckStudio.Core.IO.Java
             return new ImportStatusReport(listener);
         }
 
+        public static ImportStatusReport CreateEmpty()
+        {
+            return new ImportStatusReport();
+        }
+
         public void Post(string message)
         {
             foreach (TraceListener listener in _listeners)

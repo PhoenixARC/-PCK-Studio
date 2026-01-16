@@ -31,7 +31,6 @@ namespace PckStudio.Controls
             importWorker.RunWorkerCompleted += ImportCompleted;
             _importer = new ResourcePackImporter(default);
             _dlcManager = dlcManager;
-            _importStatusReport = ImportStatusReport.CreateCustom(importWorker.ReportProgressInfo);
             StartImport(fileInfo);
         }
 
@@ -43,7 +42,7 @@ namespace PckStudio.Controls
             var zip = new ZipArchive(fileInfo.OpenRead(), ZipArchiveMode.Read);
 
             string name = Path.GetFileNameWithoutExtension(fileInfo.Name);
-            if (_importer.StartImport(name, zip, _importStatusReport))
+            if (_importer.StartImport(name, zip, ImportStatusReport.Debug))
             {
                 FormatPackDescription(Path.GetFileNameWithoutExtension(fileInfo.Name), _importer.ReadPackMeta(zip).Description);
                 importWorker.RunWorkerAsync(zip);
@@ -136,17 +135,17 @@ namespace PckStudio.Controls
                         string value = new string(textSection.Value.Select(c => Convert.ToChar(c + rng.Next(26 - (char.ToLower(c) - 0x30)))).ToArray());
                         richTextBox1.AppendText(value);
                         continue;
-                    // bold
+                    // bold §l
                     case "§l":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Bold))
                             fontStyle |= FontStyle.Bold;
                         break;
-                    // strikethrough
+                    // strikethrough §m
                     case "§m":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Strikeout))
                             fontStyle |= FontStyle.Strikeout;
                         break;
-                    // underline
+                    // underline §n
                     case "§n":
                         if (richTextBox1.Font.FontFamily.IsStyleAvailable(FontStyle.Underline))
                             fontStyle |= FontStyle.Underline;
