@@ -2,7 +2,7 @@
 
 namespace PckStudio.Core.IO.Java
 {
-    class SingleVersion(Version version) : IVersion
+    class SingleVersion(Version version) : IMinecraftJavaVersion
     {
         private readonly Version _version = version;
 

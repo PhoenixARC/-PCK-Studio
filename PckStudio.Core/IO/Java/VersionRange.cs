@@ -2,7 +2,7 @@
 
 namespace PckStudio.Core.IO.Java
 {
-    class VersionRange(Version min, Version max) : IVersion
+    class VersionRange(Version min, Version max) : IMinecraftJavaVersion
     {
         private readonly Version _min = min;
         private readonly Version _max = max;

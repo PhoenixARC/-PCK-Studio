@@ -3,7 +3,7 @@ using PckStudio.Core.Extensions;
 
 namespace PckStudio.Core.IO.Java
 {
-    class SpecificVerions(params Version[] versions) : IVersion
+    class SpecificVerions(params Version[] versions) : IMinecraftJavaVersion
     {
         private readonly Version[] _versions = versions;
 

@@ -2,7 +2,7 @@
 
 namespace PckStudio.Core.IO.Java
 {
-    interface IVersion : IEquatable<Version>
+    interface IMinecraftJavaVersion : IEquatable<Version>
     {
         string ToString(string seperator);
     }

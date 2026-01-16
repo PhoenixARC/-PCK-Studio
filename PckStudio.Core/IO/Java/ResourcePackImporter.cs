@@ -21,34 +21,34 @@ namespace PckStudio.Core.IO.Java
         private const string JAVA_RESOURCE_PACK_PATH = "assets/minecraft/";
         private const string JAVA_TEXTURES_PATH = "textures";
 
-        static readonly IReadOnlyDictionary<int, IVersion> _formatVeriosnToGameVersion = new Dictionary<int, IVersion>()
+        static readonly IReadOnlyDictionary<Version, IMinecraftJavaVersion> _formatVeriosnToGameVersion = new Dictionary<Version, IMinecraftJavaVersion>()
         {
-            [1] = new VersionRange("1.6.1", "1.8.9"),
-            [2] = new VersionRange("1.9", "1.10.2"),
-            [3] = new VersionRange("1.11", "1.12.2"),
+            [new (1, 0)] = new VersionRange("1.6.1", "1.8.9"),
+            [new (2, 0)] = new VersionRange("1.9", "1.10.2"),
+            [new (3, 0)] = new VersionRange("1.11", "1.12.2"),
 
             // ----- TARGET ----- //
-            [4] = new VersionRange("1.13", "1.14.4"),
+            [new (4, 0)] = new VersionRange("1.13", "1.14.4"),
             // ------------------ //
 
-            [5] = new VersionRange("1.15", "1.16.1"),
-            [6] = new VersionRange("1.16.2", "1.16.5"),
-            [7] = new VersionRange("1.17", "1.17.1"),
-            [8] = new VersionRange("1.18", "1.18.2"),
-            [9] = new VersionRange("1.19", "1.19.2"),
-            [12] = new SingleVersion("1.19.3"),
-            [13] = new SingleVersion("1.19.4"),
-            [15] = new VersionRange("1.20", "1.20.1"),
-            [18] = new SingleVersion("1.20.2"),
-            [22] = new VersionRange("1.20.3", "1.20.4"),
-            [32] = new VersionRange("1.20.5", "1.20.6"),
-            [34] = new VersionRange("1.21", "1.21.1"),
-            [42] = new VersionRange("1.21.2", "1.21.3"),
-            [46] = new SingleVersion("1.21.4"),
-            [55] = new SingleVersion("1.21.5"),
-            [63] = new SingleVersion("1.21.6"),
-            [64] = new VersionRange("1.21.7", "1.21.8"),
-            [69] = new VersionRange("1.21.9", "1.21.10"),
+            [new (5, 0)] = new VersionRange("1.15", "1.16.1"),
+            [new (6, 0)] = new VersionRange("1.16.2", "1.16.5"),
+            [new (7, 0)] = new VersionRange("1.17", "1.17.1"),
+            [new (8, 0)] = new VersionRange("1.18", "1.18.2"),
+            [new (9, 0)] = new VersionRange("1.19", "1.19.2"),
+            [new (12, 0)] = new SingleVersion("1.19.3"),
+            [new (13, 0)] = new SingleVersion("1.19.4"),
+            [new (15, 0)] = new VersionRange("1.20", "1.20.1"),
+            [new (18, 0)] = new SingleVersion("1.20.2"),
+            [new (22, 0)] = new VersionRange("1.20.3", "1.20.4"),
+            [new (32, 0)] = new VersionRange("1.20.5", "1.20.6"),
+            [new (34, 0)] = new VersionRange("1.21", "1.21.1"),
+            [new (42, 0)] = new VersionRange("1.21.2", "1.21.3"),
+            [new (46, 0)] = new SingleVersion("1.21.4"),
+            [new (55, 0)] = new SingleVersion("1.21.5"),
+            [new (63, 0)] = new SingleVersion("1.21.6"),
+            [new (64, 0)] = new VersionRange("1.21.7", "1.21.8"),
+            [new (69, 0)] = new VersionRange("1.21.9", "1.21.10"),
         };
 
         public class TextureImportStats(int maxTextures)
@@ -408,7 +408,7 @@ namespace PckStudio.Core.IO.Java
             };
         }
 
-        private static string GetJavaGameVersionFromResourcePackFormat(int format) => _formatVeriosnToGameVersion.TryGetValue(format, out IVersion versionRange) ? versionRange.ToString(" - ") : "unknown";
+        private static string GetJavaGameVersionFromResourcePackFormat(int format) => _formatVeriosnToGameVersion.TryGetValue(new (format, 0), out IMinecraftJavaVersion versionRange) ? versionRange.ToString(" - ") : "unknown";
 
         private static string GetAtlasPathFromFormat(int format, AtlasResource.AtlasType type)
         {
