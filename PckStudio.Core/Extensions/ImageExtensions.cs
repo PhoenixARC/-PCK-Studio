@@ -42,17 +42,31 @@ namespace PckStudio.Core.Extensions
         public static Color GetColor(this Image image, Point location) => image.GetColor(location.X, location.Y);
         public static Color GetColor(this Image image, int x, int y) => new Bitmap(image).GetPixel(x, y);
 
+        public static Image GetArea(this Image source, int x, int y, int width, int height, Size scale)
+            => source.GetArea(new Point(x,y), new Size(width, height), scale);
+        
         public static Image GetArea(this Image source, int x, int y, int width, int height)
             => source.GetArea(new Point(x, y), new Size(width, height));
+
         public static Image GetArea(this Image source, Point location, Size size)
             => source.GetArea(new Rectangle(location, size));
+        
+        public static Image GetArea(this Image source, Point location, Size size, Size scale)
+            => source.GetArea(new Rectangle(location, size), scale);
+        
         public static Image GetArea(this Image source, Rectangle area)
+            => source.GetArea(area, new Size(1,1));
+        public static Image GetArea(this Image source, Rectangle area, Size scale)
         {
-            Image result = new Bitmap(area.Width, area.Height);
+            Point srcLocation = new Point(area.X * scale.Width, area.Y * scale.Height);
+            Size srcSize = new Size(area.Width * scale.Width, area.Height * scale.Height);
+            Rectangle srcRect = new Rectangle(srcLocation, srcSize);
+
+            Image result = new Bitmap(srcSize.Width, srcSize.Height);
             using (Graphics gfx = Graphics.FromImage(result))
             {
                 gfx.ApplyConfig(GraphicsConfig.PixelPerfect());
-                gfx.DrawImage(source, new Rectangle(Point.Empty, area.Size), area, GraphicsUnit.Pixel);
+                gfx.DrawImage(source, new Rectangle(Point.Empty, result.Size), srcRect, GraphicsUnit.Pixel);
             }
             return result;
         }

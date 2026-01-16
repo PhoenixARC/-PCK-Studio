@@ -57,7 +57,7 @@
     <Compile Include="Extensions\ZipArchiveEntryExtensions.cs" />
     <Compile Include="IO\Java\ImportResult.cs" />
     <Compile Include="IO\Java\ImportStatusReport.cs" />
-    <Compile Include="IO\Java\IVersion.cs" />
+    <Compile Include="IO\Java\IMinecraftJavaVersion.cs" />
     <Compile Include="IO\Java\JavaConstants.cs" />
     <Compile Include="IO\Java\McMeta.cs" />
     <Compile Include="IO\Java\PointJsonConverter.cs" />
