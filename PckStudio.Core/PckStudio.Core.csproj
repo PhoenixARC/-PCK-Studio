@@ -269,6 +269,7 @@
     <None Include="Resources\entityModelMetaData.json" />
     <None Include="Resources\java\latest2lce_items.json" />
     <None Include="Resources\java\latest2lce_blocks.json" />
+    <None Include="Resources\java\latest2lce_misc.json" />
     <None Include="Resources\TexturePackIcon.png" />
   </ItemGroup>
   <ItemGroup>

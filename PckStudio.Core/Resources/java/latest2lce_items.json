@@ -19,6 +19,7 @@
 
   "leather_boots_overlay": { "lce_name": "bootsCloth_overlay" },
   "heart_of_the_sea": { "lce_name": "nautilus_core" },
+  "nautilus_shell": { "lce_name": "nautilus" },
   "scute": { "lce_name": "turtle_shell_piece" },
   "diamond_boots": { "lce_name": "bootsDiamond" },
   "golden_boots": { "lce_name": "bootsGold" },
@@ -159,7 +160,6 @@
   "writable_book": { "lce_name": "writingBook" },
   "written_book": { "lce_name": "writtenBook" },
   "totem_of_undying": { "lce_name": "totem" },
-  "turtle_egg": { "lce_name": "totem" },
   "poisonous_potato": { "lce_name": "potatoPoisonous" },
   "popped_chorus_fruit": { "lce_name": "chorus_fruit_popped" },
   "porkchop": { "lce_name": "porkchopRaw" },

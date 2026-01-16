@@ -1,0 +1,21 @@
+{
+  "misc/pumpkinblur": { "lce_name": "pumpkinblur" },
+  "misc/shadow": { "lce_name": "shadow" },
+  "misc/vignette": { "lce_name": "vignette" },
+  "misc/underwater": { "lce_name": "water" },
+  "misc/enchanted_item_glint": { "lce_name": "glint" },
+
+  "map/map_background": { "lce_name": "mapbg" },
+  
+  "colormap/foliage": { "lce_name": "foliagecolor" },
+  "colormap/grass": { "lce_name": "grasscolor" },
+
+  "environment/end_sky": { "lce_name": "tunnel" },
+
+  "particle/footprint": { "lce_name": "footprint" },
+
+  "entity/end_portal": { "lce_name": "particlefield" },
+  "entity/end_gateway_beam": { "lce_name": "end_gateway_beam" },
+  "entity/explosion": { "lce_name": "explosion" },
+  "entity/beacon_beam": { "lce_name": "beacon_beam" }
+}

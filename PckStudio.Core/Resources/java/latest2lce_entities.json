@@ -19,13 +19,42 @@
     //}
   },
   "alex": { "lce_name": "mob/alex" },
-  "steve": { "lce_name": "mob/char" },
+  "steve": { "lce_name": "mob/steve" },
 
   "pig/pig": { "lce_name": "mob/pig" },
   "pig/pig_saddle": { "lce_name": "mob/saddle" },
 
   "cow/cow": { "lce_name": "mob/cow" },
   "cow/mooshroom": { "lce_name": "mob/redcow" },
+
+  "cow/temperate_cow":
+  {
+    "lce_name": "mob/cow",
+    "texture_remap": {
+      "source_size": { "width": 64, "height": 64 },
+      "target_size": { "width": 64, "height": 32 },
+      "areas": [
+        {
+          "size": { "width": 64, "height": 32 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
+  "cow/red_mooshroom": { "lce_name": "mob/redcow",
+    "texture_remap": {
+      "source_size": { "width": 64, "height": 64 },
+      "target_size": { "width": 64, "height": 32 },
+      "areas": [
+        {
+          "size": { "width": 64, "height": 32 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
 
   "cat/black": { "lce_name": "mob/cat_black" },
   "cat/ocelot": { "lce_name": "mob/ozelot" },
@@ -276,9 +305,35 @@
   "wolf/wolf_collar": { "lce_name": "mob/wolf_collar" },
   "wolf/wolf_tame": { "lce_name": "mob/wolf_tame" },
 
-  "zombie/zombie": { "lce_name": "mob/zombie" },
+  "zombie/zombie": { 
+    "lce_name": "mob/zombie",
+    "texture_remap": {
+    "source_size": { "width": 64, "height": 64 },
+    "target_size": { "width": 64, "height": 32 },
+    "areas": [
+      {
+        "size": { "width": 64, "height": 32 },
+        "from": { "x": 0, "y": 0 },
+        "to": { "x": 0, "y": 0 }
+      }
+      ]
+    }
+  },
   "zombie/zombie_villager": { "lce_name": "mob/zombie_villager" },
-  "zombie/husk": { "lce_name": "mob/zombie/husk" },
+  "zombie/husk": { 
+    "lce_name": "mob/zombie/husk",
+    "texture_remap": {
+      "source_size": { "width": 64, "height": 64 },
+      "target_size": { "width": 64, "height": 32 },
+      "areas": [
+        {
+          "size": { "width": 64, "height": 32 },
+          "from": { "x": 0, "y": 0 },
+          "to": { "x": 0, "y": 0 }
+        }
+      ]
+    }
+  },
   "zombie/drowned": { "lce_name": "mob/zombie/drowned" },
 
   "shulker/shulker_white": {
@@ -322,6 +377,7 @@
 
   "elytra": { "lce_name": "item/elytra" },
   "equipment/wings/elytra": { "lce_name": "item/elytra" },
+  "experience_orb": { "lce_name": "item/xporb" },
 
   "chest/normal": {
     "lce_name": "item/chest",

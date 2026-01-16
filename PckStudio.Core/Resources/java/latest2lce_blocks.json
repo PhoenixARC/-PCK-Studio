@@ -94,6 +94,11 @@
   "fire_0": { "lce_name": "fire_layer_0" },
   "fire_1": { "lce_name": "fire_layer_1" },
   "allium": { "lce_name": "flower_alium" },
+
+  "turtle_egg": { "lce_name": "turtle_egg_hatch_0" },
+  "turtle_egg_slightly_cracked": { "lce_name": "turtle_egg_hatch_1" },
+  "turtle_egg_very_cracked": { "lce_name": "turtle_egg_hatch_2" },
+  
   "flower_allium": { "lce_name": "flower_alium" },
   "blue_orchid": { "lce_name": "flower_blue_orchid" },
   "dandelion": { "lce_name": "flower_dandelion" },
