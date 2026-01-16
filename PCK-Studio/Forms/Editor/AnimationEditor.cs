@@ -35,6 +35,7 @@ using PckStudio.Core.Serializer;
 using PckStudio.Core;
 using PckStudio.Interfaces;
 using PckStudio.Controls;
+using PckStudio.Core.IO.Java;
 
 namespace PckStudio.Forms.Editor
 {
@@ -328,7 +329,7 @@ namespace PckStudio.Forms.Editor
             try
 			{
                 Image img = Image.FromFile(textureFile).ReleaseFromFile();
-				JObject mcmeta = JObject.Parse(File.ReadAllText(fileDialog.FileName));
+				McMeta mcmeta = McMeta.LoadMcMeta(File.ReadAllText(fileDialog.FileName));
                 Animation javaAnimation = AnimationDeserializer.DefaultDeserializer.DeserializeJavaAnimation(mcmeta, img);
                 EditorValue = javaAnimation;
 				LoadAnimationTreeView();

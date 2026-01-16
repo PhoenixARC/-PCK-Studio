@@ -91,6 +91,14 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 				_selectedItem = e.Node.Tag;
 				Events[nameof(OnSelectedItemChanged)]?.DynamicInvoke(this, EventArgs.Empty);
             };
+			pageView.KeyPress += (s, e) =>
+			{
+				if ((e.KeyChar == '\n' || e.KeyChar == '\r') && Parent is Form f)
+				{
+					f.DialogResult = DialogResult.OK;
+					e.Handled = true;
+				}
+			};
 			var backingView = new TreeView()
             {
                 Dock = DockStyle.Fill,

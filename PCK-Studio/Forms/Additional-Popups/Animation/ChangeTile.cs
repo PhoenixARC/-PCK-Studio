@@ -63,7 +63,9 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 			};
             TreeView view = filterPrompt.AddFilterPage(name, null, filterPredicate);
 			view.ImageList = images.ToImageList();
-			foreach ((int i, JsonTileInfo tileData) in textureInfos?.Enumerate())
+
+			int i = 0;
+            foreach (JsonTileInfo tileData in textureInfos)
 			{
 				if (string.IsNullOrEmpty(tileData.InternalName) || view.Nodes.ContainsKey(tileData.InternalName))
 					continue;
@@ -73,6 +75,7 @@ namespace PckStudio.Forms.Additional_Popups.Animation
 					Tag = tileData
 				};
                 view.Nodes.Add(tileNode);
+				i++;
 			}
         }
 
