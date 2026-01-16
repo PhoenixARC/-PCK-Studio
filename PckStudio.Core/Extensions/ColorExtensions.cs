@@ -62,48 +62,6 @@ namespace PckStudio.Core.Extensions
             return (byte)(ratio * val1 + (1.0 - ratio) * val2);
         }
 
-        public static Color GetAvgColor(this Image source)
-        {
-            Bitmap bm = new Bitmap(source);
-            BitmapData srcData = bm.LockBits(
-            new Rectangle(0, 0, bm.Width, bm.Height),
-            ImageLockMode.ReadOnly,
-            PixelFormat.Format32bppArgb);
-
-            int stride = srcData.Stride;
-
-            IntPtr scan0 = srcData.Scan0;
-
-            long[] totals = new long[] { 0, 0, 0 };
-
-            int width = bm.Width;
-            int height = bm.Height;
-            int pixelCount = width * height;
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)scan0;
-
-                for (int y = 0; y < height; y++)
-                {
-                    for (int x = 0; x < width; x++)
-                    {
-                        int idx = (y * stride) + x * 4;
-
-                        totals[idx + 0] += p[idx];
-                        totals[idx + 1] += p[idx];
-                        totals[idx + 2] += p[idx];
-                    }
-                }
-            }
-            bm.UnlockBits(srcData);
-
-            int avgB = (int)(totals[0] / pixelCount);
-            int avgG = (int)(totals[1] / pixelCount);
-            int avgR = (int)(totals[2] / pixelCount);
-            return Color.FromArgb(avgR, avgG, avgB);
-        }
-
         public static Image ToGreyScale(this Image source, out Color avgColor)
         {
             Bitmap bm = new Bitmap(source);
@@ -156,10 +114,7 @@ namespace PckStudio.Core.Extensions
             return bm;
         }
 
-        public static string ToHTMLColor(this Color color)
-        {
-            return $"#{color.ToArgb().ToString("X").Substring(2)}";
-        }
+        public static string ToHTMLColor(this Color color) => $"#{color.ToArgb().ToString("X").Substring(2)}";
 
         public static Color Mix(this Color c1, Color c2, float ratio)
         {
